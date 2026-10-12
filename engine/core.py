@@ -43,7 +43,8 @@ class ScenarioConfig:
     # —— 场景 2.1 信用卡最低还款专用（可选）——
     min_payment_ratio: float = 0.02   # 最低还款 = 余额 × 比例
     min_payment_floor: float = 50.0   # 最低还款下限（元）
-    scenario_type: str = 'retire'     # 'retire'=躺平 / 'debt'=最低还款陷阱
+    scenario_type: str = 'retire'     # 'retire'=躺平 / 'debt'=最低还款陷阱 / 'savings_cut'=消费降级
+    savings_years: float = 20.0       # 消费降级场景：复利时间跨度（年）
 
 
 CELL_COLORS = {
@@ -227,22 +228,18 @@ def single_debt_result(cfg: ScenarioConfig, balance: float, rate: float) -> Matr
     )
 
 
-# ==================== 场景 7.1：消费降级隐形存款 ====================
+# ==================== 场景 7.1：消费降级（降多少才划算） ====================
 
-SAV_COLORS = {
-    'high': '#065f46',   # 累计 >=30 万（深绿）
-    'mid':  '#15803d',   # 累计 >=10 万（绿）
-    'low':  '#22c55e',   # 累计 >=3 万（亮绿）
-    'tiny': '#f59e0b',   # 累计 <3 万（琥珀）
+SAV_CUT_COLORS = {
+    'comfort': '#065f46',   # 降幅 <=10%（深绿）无痛省
+    'easy':    '#15803d',   # 降幅 <=20%（绿）轻松省
+    'hard':    '#f59e0b',   # 降幅 <=30%（琥珀）明显省，开始伤生活
+    'extreme': '#dc2626',   # 降幅 >30%（红）极限省
 }
 
 
 def savings_fv(monthly_save: float, years: float, rate: float = 0.05) -> float:
-    """消费降级隐形存款：每月节省 → 年化复利年金终值（万元）。
-
-    monthly_save: 每月节省金额（元）
-    years: 坚持年限
-    rate: 年化收益率（如 0.05）
+    """每月节省 → 年化复利年金终值（万元）。
 
     FV = 年投入 × ((1+r)^N - 1) / r，年投入 = 每月节省 × 12（年末计息）。
     """
@@ -253,19 +250,34 @@ def savings_fv(monthly_save: float, years: float, rate: float = 0.05) -> float:
     return fv / 10000
 
 
-def savings_level(amount_wan: float) -> str:
-    """按累计金额划分档位（正向：越多越绿）"""
-    if amount_wan >= 30:
-        return 'high'
-    if amount_wan >= 10:
-        return 'mid'
-    if amount_wan >= 3:
-        return 'low'
-    return 'tiny'
+def monthly_saved(monthly_spend: float, cut_ratio: float) -> float:
+    """消费降级：每月省下金额（元）= 当前月消费 × 降级幅度"""
+    return monthly_spend * cut_ratio
+
+
+def cut_level(cut_ratio: float) -> str:
+    """按降级幅度划分决策档位（核心断点：20% 为舒适区上限）"""
+    if cut_ratio <= 0.10:
+        return 'comfort'
+    if cut_ratio <= 0.20:
+        return 'easy'
+    if cut_ratio <= 0.30:
+        return 'hard'
+    return 'extreme'
+
+
+def cut_judgment(level: str) -> str:
+    """决策判词：该不该降、降到哪档的行动建议"""
+    return {
+        'comfort': '无痛省：不改变生活品质，直接照做',
+        'easy':    '轻松省：稍微克制，推荐执行',
+        'hard':    '明显省：开始影响生活，需明确目标（首付/教育金）',
+        'extreme': '极限省：牺牲生活品质，不建议硬扛',
+    }[level]
 
 
 def savings_display(amount_wan: float) -> str:
-    """消费降级单元格展示：X万 / X.X万 / 元"""
+    """金额展示：X万 / X.X万 / 元"""
     if amount_wan >= 10:
         return f'{int(round(amount_wan))}万'
     if amount_wan >= 1:
@@ -273,35 +285,41 @@ def savings_display(amount_wan: float) -> str:
     return f'{int(round(amount_wan * 10000 / 100)) * 100}元'
 
 
-def build_savings_matrix(cfg: ScenarioConfig) -> list:
-    """构建消费降级矩阵：行=每月节省，列=坚持年限"""
+def build_cut_matrix(cfg: ScenarioConfig) -> list:
+    """构建消费降级决策矩阵：行=当前月消费，列=降级幅度
+
+    每个单元格 = 每月省 X 元 → 固定年限后复利终值（万元），
+    颜色按降级幅度断点分级（comfort/easy/hard/extreme）。
+    """
     rows = []
-    for save in cfg.y_values:
+    for spend in cfg.y_values:
         row = []
-        for years in cfg.x_values:
-            amount = savings_fv(save, years, cfg.annual_return)
-            level = savings_level(amount)
+        for cut in cfg.x_values:
+            save = monthly_saved(spend, cut)
+            amount = savings_fv(save, cfg.savings_years, cfg.annual_return)
+            level = cut_level(cut)
             row.append(MatrixResult(
-                row_label=f'{save}{cfg.y_unit}',
-                col_label=f'{years}{cfg.x_unit}',
+                row_label=f'{spend}{cfg.y_unit}',
+                col_label=f'{int(cut * 100)}%',
                 years=amount,
-                display=savings_display(amount),
+                display=f'省{save:.0f}元 → {savings_display(amount)}',
                 level=level,
-                color=SAV_COLORS[level],
+                color=SAV_CUT_COLORS[level],
             ))
         rows.append(row)
     return rows
 
 
-def single_savings_result(cfg: ScenarioConfig, monthly_save: float, years: float) -> MatrixResult:
-    """消费降级单点查询：输入自己的月节省与年限直接出结论"""
-    amount = savings_fv(monthly_save, years, cfg.annual_return)
-    level = savings_level(amount)
+def single_cut_result(cfg: ScenarioConfig, monthly_spend: float, cut_ratio: float) -> MatrixResult:
+    """消费降级单点决策：输入自己的月消费与想降的幅度，直接出结论与判词"""
+    save = monthly_saved(monthly_spend, cut_ratio)
+    amount = savings_fv(save, cfg.savings_years, cfg.annual_return)
+    level = cut_level(cut_ratio)
     return MatrixResult(
-        row_label=f'{monthly_save}{cfg.y_unit}',
-        col_label=f'{years}{cfg.x_unit}',
+        row_label=f'{monthly_spend}{cfg.y_unit}',
+        col_label=f'{int(cut_ratio * 100)}%',
         years=amount,
-        display=savings_display(amount),
+        display=f'省{save:.0f}元 → {savings_display(amount)}',
         level=level,
-        color=SAV_COLORS[level],
+        color=SAV_CUT_COLORS[level],
     )

@@ -31,6 +31,10 @@ def savings_fv(monthly_save, years, rate=0.05):
     annual = monthly_save * 12
     return annual * ((1 + rate) ** years - 1) / rate / 10000
 
+def monthly_saved(spend, cut_ratio):
+    """月消费 × 降级幅度 → 每月省（元）"""
+    return spend * cut_ratio
+
 def build_matrix(cfg):
     xs, ys = cfg['x_values'], cfg['y_values']
     stype = cfg.get('scenario_type', 'retire')
@@ -50,6 +54,15 @@ def build_matrix(cfg):
         data = []
         for y in ys:
             row = [savings_fv(y, x, rate) for x in xs]
+            data.append(row)
+        vmax = max(max(row) for row in data)
+        return data, xs, ys, stype, vmax
+    if stype == 'savings_cut':
+        rate = cfg.get('annual_return', 0.05)
+        years = cfg.get('savings_years', 20.0)
+        data = []
+        for y in ys:
+            row = [savings_fv(monthly_saved(y, x), years, rate) for x in xs]
             data.append(row)
         vmax = max(max(row) for row in data)
         return data, xs, ys, stype, vmax
@@ -74,7 +87,7 @@ def render_png(cfg, out_path):
     norm = matplotlib.colors.Normalize(vmin=0, vmax=thr)
     if stype == 'debt':
         cmap = matplotlib.colors.LinearSegmentedColormap.from_list('dec', ['#15803d', '#f59e0b', '#dc2626', '#7f1d1d'])
-    elif stype == 'savings':
+    elif stype in ('savings', 'savings_cut'):
         cmap = matplotlib.colors.LinearSegmentedColormap.from_list('dec', ['#f59e0b', '#22c55e', '#15803d', '#065f46'])
     else:
         cmap = matplotlib.colors.LinearSegmentedColormap.from_list('dec', ['#dc2626', '#f59e0b', '#22c55e', '#15803d'])
@@ -102,6 +115,20 @@ def render_png(cfg, out_path):
         ax.set_xlabel('坚持年限', fontproperties=zh, fontsize=13)
         ax.set_ylabel('每月节省（元）', fontproperties=zh, fontsize=13)
         ax.set_title(cfg['title'] + '：每月节省 × 坚持年限 → 隐形存款（5% 复利）', fontproperties=zh, fontsize=18, pad=14)
+        for i in range(len(ys)):
+            for j in range(len(xs)):
+                n = data[i][j]
+                txt = (f'{n:.0f}万' if n >= 10 else (f'{n:.1f}万' if n >= 1 else f'{int(round(n*10000/100))*100}元'))
+                ax.text(j, i, txt, ha='center', va='center', fontsize=12, fontweight='bold', color='#ffffff', fontproperties=zh)
+    elif stype == 'savings_cut':
+        years = cfg.get('savings_years', 20.0)
+        ax.set_xticks(range(len(xs)))
+        ax.set_xticklabels([f'降{int(x*100)}%' for x in xs], fontproperties=zh, fontsize=11)
+        ax.set_yticks(range(len(ys)))
+        ax.set_yticklabels([f'{y:.0f}元/月' for y in ys], fontproperties=zh, fontsize=11)
+        ax.set_xlabel('降级幅度', fontproperties=zh, fontsize=13)
+        ax.set_ylabel('当前月消费（元）', fontproperties=zh, fontsize=13)
+        ax.set_title(cfg['title'] + f'：月消费 × 降级幅度 → {int(years)}年隐形存款（{cfg.get("annual_return",0.05)*100:.0f}% 复利）', fontproperties=zh, fontsize=18, pad=14)
         for i in range(len(ys)):
             for j in range(len(xs)):
                 n = data[i][j]
@@ -136,6 +163,16 @@ def render_png(cfg, out_path):
         fv20 = savings_fv(mid_save, 20, cfg.get('annual_return', 0.05))
         note = (f'{hook} 换算：每月省{mid_save}元≈每天{daily}元≈{cups}杯奶茶/天；'
                 f'5%复利20年后是{fv20:.1f}万。省下的每一块钱，都是你的隐形存款。测算不构成投资建议。')
+    elif stype == 'savings_cut':
+        years = cfg.get('savings_years', 20.0)
+        spend = min(cfg['y_values'], key=lambda v: abs(v - 5000))
+        cut = min(cfg['x_values'], key=lambda c: abs(c - 0.10))
+        save = monthly_saved(spend, cut)
+        daily = round(save / 30)
+        cups = round(daily / 20)
+        fv = savings_fv(save, years, cfg.get('annual_return', 0.05))
+        note = (f'{hook} 换算：月消费{spend:.0f}元、降{int(cut*100)}%→每月省{save:.0f}元≈每天{daily}元≈{cups}杯奶茶/天；'
+                f'{years:.0f}年后是{fv:.1f}万。降幅≤10%无痛、≤20%轻松、≤30%伤生活、>30%极限省。测算不构成投资建议。')
     else:
         mid = cfg['y_values'][len(cfg['y_values']) // 2]
         daily = round(mid * 10000 / 365)

@@ -1,24 +1,34 @@
 {
-  "scenario_type": "savings",
-  "title": "消费降级隐形存款",
-  "subtitle": "每月少花一点，坚持几年，是多少？",
-  "hook_title": "省下的每一块钱，都是你的隐形存款",
-  "hook_line": "每天一杯奶茶钱，20 年后是一辆车的首付。",
-  "emotion": "掌控感 + 爽感",
-  "x_name": "坚持年限",
-  "x_unit": "年",
-  "x_values": [1, 5, 10, 20],
-  "y_name": "每月节省",
-  "y_unit": "元",
-  "y_values": [100, 300, 500, 1000],
+  "id": "7.1",
+  "title": "消费降级，降多少才划算？",
+  "subtitle": "每月消费 × 降级幅度 → 隐形存款（20 年 5% 复利）",
+  "x_name": "降级幅度",
+  "x_unit": "",
+  "x_values": [
+    0.1,
+    0.2,
+    0.3,
+    0.5
+  ],
+  "y_name": "当前月消费",
+  "y_unit": "元/月",
+  "y_values": [
+    2000,
+    5000,
+    10000,
+    20000
+  ],
   "annual_return": 0.05,
+  "savings_years": 20,
   "perpetual_threshold": 80,
-  "convert": {
-    "label": "每天",
-    "unit": "元",
-    "extra": "≈ {cups} 杯奶茶/天"
-  },
-  "share_copy": "我算了一下：每月省 {saving} 元，坚持 {years} 年，是 {amount} 万。省下的每一块钱，都是你的隐形存款。#消费降级",
-  "disclaimer": "测算假设每月节省额定期投入、年化收益率 5%（简化复利模型）；实际收益随市场波动，可能高于或低于该假设。测算不构成投资建议。",
-  "watermark": "投资平权 · fin-decision-matrix"
+  "disclaimer": "测算基于 20 年 5% 年化复利（年末计息），未计通胀与中途取出；降级幅度按当前月消费估算，需结合个人生活必需开支调整。测算不构成投资建议。",
+  "watermark": "投资平权 · fin-decision-matrix",
+  "hook_title": "你的消费，降到几成不吃亏？",
+  "hook_line": "降 10% 无痛，降 20% 轻松，降 30% 开始伤生活——你的断点在哪？",
+  "emotion": "掌控感",
+  "convert": "每月省 500 ≈ 每天 17 元 ≈ 1 杯奶茶/天，20 年后 19.8 万",
+  "share_copy": "我算了一下：消费降 {cut}%，每月省 {saving} 元，20 年后是 {amount} 万。省下的每一块钱，都是我的隐形存款。",
+  "scenario_type": "savings_cut",
+  "min_payment_ratio": 0.02,
+  "min_payment_floor": 50.0
 }
