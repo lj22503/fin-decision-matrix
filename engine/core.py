@@ -40,6 +40,10 @@ class ScenarioConfig:
     emotion: str = ''               # 主情绪标签（后悔/幻想/焦虑/爽感/掌控感...）
     convert: dict = None            # 换算句配置 {label, unit, extra}
     share_copy: str = ''            # 可晒分享文案（含 {principal}/{spend}/{result} 占位）
+    # —— 场景 2.1 信用卡最低还款专用（可选）——
+    min_payment_ratio: float = 0.02   # 最低还款 = 余额 × 比例
+    min_payment_floor: float = 50.0   # 最低还款下限（元）
+    scenario_type: str = 'retire'     # 'retire'=躺平 / 'debt'=最低还款陷阱
 
 
 CELL_COLORS = {
@@ -121,4 +125,103 @@ def single_result(cfg: ScenarioConfig, principal: float, spend: float) -> Matrix
         display=format_years(years, cfg.perpetual_threshold),
         level=level,
         color=CELL_COLORS[level],
+    )
+
+
+# ==================== 场景 2.1：信用卡最低还款陷阱 ====================
+
+DEBT_COLORS = {
+    'never': '#7f1d1d',   # 永不还清（深黑红，视觉冲击最强）
+    'danger': '#dc2626',  # 还清需 >=30 年
+    'warn':   '#f59e0b',  # 还清需 10-30 年
+    'ok':     '#15803d',  # 还清需 <10 年
+}
+
+
+def debt_payoff_years(balance_wan: float, rate_pct: float,
+                      min_ratio: float = 0.02, min_floor: float = 50.0,
+                      max_years: float = 100.0):
+    """信用卡只还最低还款：还清所需年数与累计利息。
+
+    balance_wan: 债务余额（万元）
+    rate_pct: 年利率（%）
+    min_ratio: 最低还款 = 余额 × 比例（文档规范 1%-3%，默认 2%）
+    min_floor: 最低还款下限（元，默认 50）
+    max_years: 模拟上限年数（防止低利率无穷拖尾）
+
+    返回 (years, total_interest_wan, never)：
+      years: 还清所需年数；never=True 时无意义（inf）
+      total_interest_wan: 累计支付利息（万元）
+      never: 是否永不还清（最低还款 <= 当月利息，本金永远还不完）
+    """
+    B = balance_wan * 10000          # 元
+    m = rate_pct / 100 / 12          # 月利率
+    months = 0
+    total_interest = 0.0
+    max_months = int(max_years * 12)
+    while B > 0.01 and months < max_months:
+        interest = B * m
+        pay = max(B * min_ratio, min_floor)
+        if pay <= interest:
+            return float('inf'), float('inf'), True
+        B -= (pay - interest)
+        total_interest += interest
+        months += 1
+    years = months / 12
+    return years, total_interest / 10000, False
+
+
+def debt_level(years: float, never: bool) -> str:
+    """债务场景风险档位"""
+    if never:
+        return 'never'
+    if years >= 30:
+        return 'danger'
+    if years >= 10:
+        return 'warn'
+    return 'ok'
+
+
+def debt_display(years: float, never: bool) -> str:
+    """债务场景单元格展示：永不还清 / X年"""
+    if never:
+        return '永不还清'
+    if years >= 30:
+        return f'{int(round(years))}年'
+    return f'{years:.1f}年'
+
+
+def build_debt_matrix(cfg: ScenarioConfig) -> list:
+    """构建债务矩阵：行=债务余额，列=年利率"""
+    rows = []
+    for balance in cfg.y_values:
+        row = []
+        for rate in cfg.x_values:
+            years, interest, never = debt_payoff_years(
+                balance, rate, cfg.min_payment_ratio, cfg.min_payment_floor)
+            level = debt_level(years, never)
+            row.append(MatrixResult(
+                row_label=f'{balance}{cfg.y_unit}',
+                col_label=f'{rate}{cfg.x_unit}',
+                years=years,
+                display=debt_display(years, never),
+                level=level,
+                color=DEBT_COLORS[level],
+            ))
+        rows.append(row)
+    return rows
+
+
+def single_debt_result(cfg: ScenarioConfig, balance: float, rate: float) -> MatrixResult:
+    """债务单点查询：输入自己的余额与利率直接出结论"""
+    years, interest, never = debt_payoff_years(
+        balance, rate, cfg.min_payment_ratio, cfg.min_payment_floor)
+    level = debt_level(years, never)
+    return MatrixResult(
+        row_label=f'{balance}{cfg.y_unit}',
+        col_label=f'{rate}{cfg.x_unit}',
+        years=years,
+        display=debt_display(years, never),
+        level=level,
+        color=DEBT_COLORS[level],
     )

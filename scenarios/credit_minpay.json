@@ -1,0 +1,24 @@
+{
+  "scenario_type": "debt",
+  "title": "信用卡最低还款陷阱",
+  "subtitle": "债务余额 × 年利率 → 只还最低，多久能还清？",
+  "hook_title": "只还最低，多久能还清？",
+  "hook_line": "你以为在还钱，其实在给银行打工。",
+  "emotion": "震撼 + 后悔",
+  "x_name": "年利率",
+  "x_unit": "%",
+  "x_values": [12, 15, 18, 24, 36],
+  "y_name": "债务余额（万元）",
+  "y_unit": "万",
+  "y_values": [1, 3, 5, 10],
+  "min_payment_ratio": 0.02,
+  "min_payment_floor": 50,
+  "convert": {
+    "label": "每月光利息",
+    "unit": "元/月",
+    "extra": "≈ {cups} 杯奶茶/月"
+  },
+  "share_copy": "我算了一下：{balance} 万卡债、{rate}% 利率只还最低——{result}。很多人以为在还钱，其实在给银行打工。#信用卡最低还款",
+  "disclaimer": "测算基于最低还款额 = 余额×2%（不足 50 元按 50 元）的简化假设，未计违约金、循环复利罚息；实际还款规则因发卡行而异，可能显著延长还款年限。测算不构成还款建议。",
+  "watermark": "投资平权 · fin-decision-matrix"
+}
