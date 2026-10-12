@@ -24,6 +24,13 @@ def debt_payoff_years(B0, rate_pct, min_ratio=0.02, min_floor=50.0, max_years=10
         months += 1
     return months / 12, False
 
+def savings_fv(monthly_save, years, rate=0.05):
+    """每月节省 → 年化复利年金终值（万元）"""
+    if monthly_save <= 0 or years <= 0:
+        return 0.0
+    annual = monthly_save * 12
+    return annual * ((1 + rate) ** years - 1) / rate / 10000
+
 def build_matrix(cfg):
     xs, ys = cfg['x_values'], cfg['y_values']
     stype = cfg.get('scenario_type', 'retire')
@@ -38,6 +45,14 @@ def build_matrix(cfg):
                 row.append(years if not never else float('inf'))
             data.append(row)
         return data, xs, ys, stype, 30.0
+    if stype == 'savings':
+        rate = cfg.get('annual_return', 0.05)
+        data = []
+        for y in ys:
+            row = [savings_fv(y, x, rate) for x in xs]
+            data.append(row)
+        vmax = max(max(row) for row in data)
+        return data, xs, ys, stype, vmax
     r, thr = cfg['annual_return'], cfg['perpetual_threshold']
     data = []
     for y in ys:
@@ -59,6 +74,8 @@ def render_png(cfg, out_path):
     norm = matplotlib.colors.Normalize(vmin=0, vmax=thr)
     if stype == 'debt':
         cmap = matplotlib.colors.LinearSegmentedColormap.from_list('dec', ['#15803d', '#f59e0b', '#dc2626', '#7f1d1d'])
+    elif stype == 'savings':
+        cmap = matplotlib.colors.LinearSegmentedColormap.from_list('dec', ['#f59e0b', '#22c55e', '#15803d', '#065f46'])
     else:
         cmap = matplotlib.colors.LinearSegmentedColormap.from_list('dec', ['#dc2626', '#f59e0b', '#22c55e', '#15803d'])
 
@@ -76,6 +93,19 @@ def render_png(cfg, out_path):
             for j in range(len(xs)):
                 n = data[i][j]
                 txt = '永不还清' if math.isinf(n) else (f'{n:.0f}年' if n >= 20 else f'{n:.1f}年')
+                ax.text(j, i, txt, ha='center', va='center', fontsize=12, fontweight='bold', color='#ffffff', fontproperties=zh)
+    elif stype == 'savings':
+        ax.set_xticks(range(len(xs)))
+        ax.set_xticklabels([f'{x}年' for x in xs], fontproperties=zh, fontsize=11)
+        ax.set_yticks(range(len(ys)))
+        ax.set_yticklabels([f'{y}元/月' for y in ys], fontproperties=zh, fontsize=11)
+        ax.set_xlabel('坚持年限', fontproperties=zh, fontsize=13)
+        ax.set_ylabel('每月节省（元）', fontproperties=zh, fontsize=13)
+        ax.set_title(cfg['title'] + '：每月节省 × 坚持年限 → 隐形存款（5% 复利）', fontproperties=zh, fontsize=18, pad=14)
+        for i in range(len(ys)):
+            for j in range(len(xs)):
+                n = data[i][j]
+                txt = (f'{n:.0f}万' if n >= 10 else (f'{n:.1f}万' if n >= 1 else f'{int(round(n*10000/100))*100}元'))
                 ax.text(j, i, txt, ha='center', va='center', fontsize=12, fontweight='bold', color='#ffffff', fontproperties=zh)
     else:
         ax.set_xticks(range(len(xs)))
@@ -99,6 +129,13 @@ def render_png(cfg, out_path):
         cups = round(monthly / 20)
         note = (f'{hook} 换算：{mid_balance}万债务、{mid_rate}%利率每月光利息{monthly}元≈{cups}杯奶茶/月。'
                 f'最低还款=余额×2%，还款≤利息即永不还清。测算不构成还款建议。')
+    elif stype == 'savings':
+        mid_save = min(cfg['y_values'], key=lambda v: abs(v - 500))
+        daily = round(mid_save / 30)
+        cups = round(daily / 20)
+        fv20 = savings_fv(mid_save, 20, cfg.get('annual_return', 0.05))
+        note = (f'{hook} 换算：每月省{mid_save}元≈每天{daily}元≈{cups}杯奶茶/天；'
+                f'5%复利20年后是{fv20:.1f}万。省下的每一块钱，都是你的隐形存款。测算不构成投资建议。')
     else:
         mid = cfg['y_values'][len(cfg['y_values']) // 2]
         daily = round(mid * 10000 / 365)

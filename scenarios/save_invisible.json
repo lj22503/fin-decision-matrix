@@ -1,0 +1,24 @@
+{
+  "scenario_type": "savings",
+  "title": "消费降级隐形存款",
+  "subtitle": "每月少花一点，坚持几年，是多少？",
+  "hook_title": "省下的每一块钱，都是你的隐形存款",
+  "hook_line": "每天一杯奶茶钱，20 年后是一辆车的首付。",
+  "emotion": "掌控感 + 爽感",
+  "x_name": "坚持年限",
+  "x_unit": "年",
+  "x_values": [1, 5, 10, 20],
+  "y_name": "每月节省",
+  "y_unit": "元",
+  "y_values": [100, 300, 500, 1000],
+  "annual_return": 0.05,
+  "perpetual_threshold": 80,
+  "convert": {
+    "label": "每天",
+    "unit": "元",
+    "extra": "≈ {cups} 杯奶茶/天"
+  },
+  "share_copy": "我算了一下：每月省 {saving} 元，坚持 {years} 年，是 {amount} 万。省下的每一块钱，都是你的隐形存款。#消费降级",
+  "disclaimer": "测算假设每月节省额定期投入、年化收益率 5%（简化复利模型）；实际收益随市场波动，可能高于或低于该假设。测算不构成投资建议。",
+  "watermark": "投资平权 · fin-decision-matrix"
+}

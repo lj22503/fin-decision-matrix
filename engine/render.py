@@ -8,7 +8,9 @@
 """
 from .core import (ScenarioConfig, MatrixResult, build_matrix, single_result,
                    CELL_COLORS, build_debt_matrix, single_debt_result,
-                   debt_payoff_years, DEBT_COLORS)
+                   debt_payoff_years, DEBT_COLORS,
+                   build_savings_matrix, single_savings_result,
+                   savings_fv, SAV_COLORS)
 
 PAGE_CSS = """
   * { margin:0; padding:0; box-sizing:border-box; font-family:"Microsoft YaHei","PingFang SC",sans-serif; }
@@ -354,6 +356,166 @@ def render_debt_result_card(cfg: ScenarioConfig, balance: float, rate: float,
     html = f"""<!DOCTYPE html>
 <html lang="zh-CN"><head><meta charset="utf-8"><title>{cfg.title} · 结果卡</title>
 <style>{DEBT_CARD_CSS}</style></head><body>
+<div class="rcard">
+  <div class="rhead">{cfg.hook_title or cfg.title}</div>
+  <div class="rlabel">你的答案</div>
+  <div class="rbig" style="color:{r.color}">{big_text}</div>
+  <div class="rsub">{rsub}</div>
+  {convert_html}
+  {compare_html}
+  <div class="rquote">{quote}</div>
+  {share_html}
+  <div class="rdisclaimer">{cfg.disclaimer}</div>
+  <div class="rwatermark">{cfg.watermark}</div>
+</div>
+</body></html>"""
+    with open(out_path, 'w', encoding='utf-8') as f:
+        f.write(html)
+    return out_path
+
+
+# ==================== 场景 7.1：消费降级隐形存款 ====================
+
+SAV_PAGE_CSS = """
+  * { margin:0; padding:0; box-sizing:border-box; font-family:"Microsoft YaHei","PingFang SC",sans-serif; }
+  body { background:#f6f7fb; padding:24px; }
+  .card { background:#fff; border-radius:16px; box-shadow:0 4px 20px rgba(0,0,0,.08);
+          max-width:980px; margin:0 auto; padding:28px 32px; }
+  h1 { font-size:30px; color:#111827; text-align:center; }
+  .subtitle { text-align:center; color:#6b7280; font-size:14px; margin:6px 0 18px; }
+  .emotion { display:inline-block; background:#dcfce7; color:#166534; font-size:11px; padding:2px 8px;
+             border-radius:999px; margin-left:8px; vertical-align:middle; font-weight:700; }
+  .assume { background:#f3f4f6; border-radius:10px; padding:10px 14px; font-size:13px;
+            color:#374151; margin-bottom:16px; line-height:1.7; }
+  .assume b { color:#166534; }
+  table { width:100%; border-collapse:separate; border-spacing:4px; }
+  th { padding:10px 8px; font-size:14px; color:#111827; background:#eef2ff; border-radius:8px; }
+  th.rowhead { text-align:left; width:110px; }
+  td { padding:12px 8px; text-align:center; font-size:15px; font-weight:700;
+       color:#fff; border-radius:8px; min-width:64px; }
+  .foot { margin-top:16px; font-size:12px; color:#9ca3af; line-height:1.6; }
+  .watermark { margin-top:14px; text-align:center; font-size:12px; color:#9ca3af; letter-spacing:1px; }
+  .legend { display:flex; justify-content:center; gap:18px; margin:12px 0 16px; font-size:12px; color:#374151; }
+  .legend span { display:inline-flex; align-items:center; gap:6px; }
+  .dot { width:14px; height:14px; border-radius:4px; display:inline-block; }
+"""
+
+SAV_CARD_CSS = """
+  * { margin:0; padding:0; box-sizing:border-box; font-family:"Microsoft YaHei","PingFang SC",sans-serif; }
+  body { background:#0f172a; padding:24px; display:flex; justify-content:center; }
+  .rcard { background:linear-gradient(160deg,#1e293b,#0f172a); color:#fff; border-radius:20px;
+           max-width:640px; padding:32px; box-shadow:0 12px 40px rgba(0,0,0,.4); }
+  .rhead { font-size:20px; font-weight:700; color:#4ade80; line-height:1.5; }
+  .rlabel { font-size:13px; color:#94a3b8; margin-top:22px; }
+  .rbig { font-size:52px; font-weight:800; margin:4px 0 10px; letter-spacing:1px; }
+  .rsub { font-size:14px; color:#cbd5e1; line-height:1.7; }
+  .rcompare { background:#111827; border-radius:12px; padding:14px 18px; margin-top:18px; font-size:14px; line-height:2; }
+  .rcmp-hi { color:#4ade80; font-weight:700; }
+  .rcmp-lo { color:#94a3b8; font-weight:700; }
+  .rquote { margin-top:16px; font-size:15px; color:#4ade80; font-weight:700; text-align:center; }
+  .rconvert { margin-top:14px; background:#052e16; border:1px solid #166534; border-radius:10px;
+              padding:10px 14px; font-size:13px; color:#86efac; line-height:1.7; }
+  .rconvert b { color:#4ade80; font-size:15px; }
+  .rshare { margin-top:12px; background:#111827; border-left:3px solid #4ade80; border-radius:8px;
+            padding:10px 14px; font-size:13px; color:#e2e8f0; line-height:1.8; }
+  .rshare .tag { display:inline-block; background:#4ade80; color:#0f172a; font-size:11px; font-weight:700;
+                 padding:1px 8px; border-radius:6px; margin-right:8px; }
+  .rdisclaimer { margin-top:14px; font-size:11px; color:#64748b; line-height:1.6; }
+  .rwatermark { margin-top:10px; text-align:center; font-size:11px; color:#64748b; letter-spacing:1px; }
+"""
+
+
+def _savings_convert_note(cfg: ScenarioConfig) -> str:
+    """消费降级换算句：每天 X 元 ≈ Y 杯奶茶"""
+    mid_save = min(cfg.y_values, key=lambda v: abs(v - 500))
+    daily = mid_save / 30
+    cups = daily / 20
+    return (f"换算：每月省 {mid_save}{cfg.y_unit} ≈ 每天 <b>{daily:.0f} 元</b> ≈ <b>{cups:.0f} 杯奶茶/天</b>"
+            f"——这些钱放进 {cfg.annual_return*100:.0f}% 复利，20 年后是 <b>{savings_fv(mid_save, 20, cfg.annual_return):.0f} 万</b>。"
+            "省下的每一块钱，都是你的隐形存款。")
+
+
+def render_savings_matrix_html(cfg: ScenarioConfig, out_path: str) -> str:
+    """生成消费降级决策矩阵 HTML：行=每月节省，列=坚持年限"""
+    rows = build_savings_matrix(cfg)
+    head_cells = ''.join(
+        f'<th>{cfg.x_values[i]}{cfg.x_unit}</th>' for i in range(len(cfg.x_values)))
+    body_rows = []
+    for row in rows:
+        tds = ''.join(
+            f'<td style="background:{cell.color}">{cell.display}</td>' for cell in row)
+        body_rows.append(f'<tr><th class="rowhead">{row[0].row_label}</th>{tds}</tr>')
+    legend = (
+        '<div class="legend">'
+        f'<span><i class="dot" style="background:{SAV_COLORS["high"]}"></i>≥30万</span>'
+        f'<span><i class="dot" style="background:{SAV_COLORS["mid"]}"></i>≥10万</span>'
+        f'<span><i class="dot" style="background:{SAV_COLORS["low"]}"></i>≥3万</span>'
+        f'<span><i class="dot" style="background:{SAV_COLORS["tiny"]}"></i>&lt;3万</span>'
+        '</div>'
+    )
+    emotion = f'<span class="emotion">{cfg.emotion}</span>' if cfg.emotion else ''
+    convert_note = _savings_convert_note(cfg)
+    html = f"""<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>{cfg.title}</title>
+<style>{SAV_PAGE_CSS}</style></head><body>
+<div class="card">
+  <h1>{cfg.hook_title or cfg.title}</h1>
+  <div class="subtitle">{cfg.hook_line or cfg.subtitle}{emotion}</div>
+  <div class="assume">假设：每月节省额定期投入，年化收益率 <b>{cfg.annual_return*100:.1f}%</b>（复利模型，年末计息）；
+  未计通胀、未计中途取出；数字为到第 N 年末的累计金额。<br>{convert_note}</div>
+  {legend}
+  <table>
+    <tr><th class="rowhead">{cfg.y_name}</th>{head_cells}</tr>
+    {''.join(body_rows)}
+  </table>
+  <div class="foot">{cfg.disclaimer}</div>
+  <div class="watermark">{cfg.watermark}</div>
+</div>
+</body></html>"""
+    with open(out_path, 'w', encoding='utf-8') as f:
+        f.write(html)
+    return out_path
+
+
+def render_savings_result_card(cfg: ScenarioConfig, monthly_save: float, years: float,
+                               no_rate_years: float, out_path: str) -> str:
+    """生成消费降级单点结果卡 HTML
+
+    monthly_save: 每月节省（元）
+    years: 坚持年限
+    no_rate_years: 对比方案：同样存钱但不做复利投入的年限（默认=坚持年限）
+    """
+    r = single_savings_result(cfg, monthly_save, years)
+    amount = savings_fv(monthly_save, years, cfg.annual_return)
+    no_rate = monthly_save * 12 * no_rate_years / 10000   # 只存不投（万元）
+    extra = max(0.0, amount - no_rate)
+    daily = monthly_save / 30
+    cups = daily / 20
+    principal_wan = monthly_save * 12 * years / 10000
+    big_text = r.display
+    rsub = (f'每月省 {monthly_save:.0f} 元，坚持 {years:.0f} 年（年化 {cfg.annual_return*100:.1f}% 复利），'
+            f'你的隐形存款是 {amount:.1f} 万。')
+    compare_html = (
+        '<div class="rcompare">'
+        f'&nbsp;&nbsp;省了+复利：每月 {monthly_save:.0f} 元 × {years:.0f} 年 → <span class="rcmp-hi">{r.display}</span><br>'
+        f'&nbsp;&nbsp;如果当初没省：{years:.0f} 年后的你，还是 <span class="rcmp-lo">0 元</span><br>'
+        f'&nbsp;&nbsp;同样的钱，本金 {principal_wan:.1f} 万；多出来的 <b>{extra:.1f} 万</b>，是时间送你的。'
+        '</div>'
+    )
+    quote = '省下的每一块钱，都是你的隐形存款——现在开始，还来得及。'
+    convert_html = (
+        '<div class="rconvert">'
+        f'换算：每月省 {monthly_save:.0f} 元 ≈ 每天 <b>{daily:.0f} 元</b> ≈ <b>{cups:.0f} 杯奶茶/天</b>'
+        '</div>'
+    )
+    share_html = ''
+    if cfg.share_copy:
+        share_text = cfg.share_copy.format(
+            saving=f'{monthly_save:.0f}', years=f'{years:.0f}', amount=f'{amount:.0f}')
+        share_html = f'<div class="rshare"><span class="tag">可晒</span>{share_text}</div>'
+    html = f"""<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>{cfg.title} · 结果卡</title>
+<style>{SAV_CARD_CSS}</style></head><body>
 <div class="rcard">
   <div class="rhead">{cfg.hook_title or cfg.title}</div>
   <div class="rlabel">你的答案</div>

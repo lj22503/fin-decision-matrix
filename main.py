@@ -14,7 +14,8 @@ import json
 import sys
 from engine.core import ScenarioConfig
 from engine.render import (render_matrix_html, render_result_card,
-                           render_debt_matrix_html, render_debt_result_card)
+                           render_debt_matrix_html, render_debt_result_card,
+                           render_savings_matrix_html, render_savings_result_card)
 
 
 def load_config(path: str) -> ScenarioConfig:
@@ -58,6 +59,8 @@ def main():
     if args.mode == 'matrix':
         if cfg.scenario_type == 'debt':
             path = render_debt_matrix_html(cfg, args.out)
+        elif cfg.scenario_type == 'savings':
+            path = render_savings_matrix_html(cfg, args.out)
         else:
             path = render_matrix_html(cfg, args.out)
         print(f'[matrix] 已生成: {path}')
@@ -68,6 +71,9 @@ def main():
         if cfg.scenario_type == 'debt':
             extra = args.extra if args.extra else 500
             path = render_debt_result_card(cfg, args.arg1, args.arg2, extra, args.out)
+        elif cfg.scenario_type == 'savings':
+            no_rate = args.extra if args.extra else args.arg2
+            path = render_savings_result_card(cfg, args.arg1, args.arg2, no_rate, args.out)
         else:
             compare = args.extra if args.extra else cfg.x_values[0]
             path = render_result_card(cfg, args.arg1, args.arg2, compare, args.out)

@@ -225,3 +225,83 @@ def single_debt_result(cfg: ScenarioConfig, balance: float, rate: float) -> Matr
         level=level,
         color=DEBT_COLORS[level],
     )
+
+
+# ==================== 场景 7.1：消费降级隐形存款 ====================
+
+SAV_COLORS = {
+    'high': '#065f46',   # 累计 >=30 万（深绿）
+    'mid':  '#15803d',   # 累计 >=10 万（绿）
+    'low':  '#22c55e',   # 累计 >=3 万（亮绿）
+    'tiny': '#f59e0b',   # 累计 <3 万（琥珀）
+}
+
+
+def savings_fv(monthly_save: float, years: float, rate: float = 0.05) -> float:
+    """消费降级隐形存款：每月节省 → 年化复利年金终值（万元）。
+
+    monthly_save: 每月节省金额（元）
+    years: 坚持年限
+    rate: 年化收益率（如 0.05）
+
+    FV = 年投入 × ((1+r)^N - 1) / r，年投入 = 每月节省 × 12（年末计息）。
+    """
+    if monthly_save <= 0 or years <= 0:
+        return 0.0
+    annual_contrib = monthly_save * 12
+    fv = annual_contrib * ((1 + rate) ** years - 1) / rate
+    return fv / 10000
+
+
+def savings_level(amount_wan: float) -> str:
+    """按累计金额划分档位（正向：越多越绿）"""
+    if amount_wan >= 30:
+        return 'high'
+    if amount_wan >= 10:
+        return 'mid'
+    if amount_wan >= 3:
+        return 'low'
+    return 'tiny'
+
+
+def savings_display(amount_wan: float) -> str:
+    """消费降级单元格展示：X万 / X.X万 / 元"""
+    if amount_wan >= 10:
+        return f'{int(round(amount_wan))}万'
+    if amount_wan >= 1:
+        return f'{amount_wan:.1f}万'
+    return f'{int(round(amount_wan * 10000 / 100)) * 100}元'
+
+
+def build_savings_matrix(cfg: ScenarioConfig) -> list:
+    """构建消费降级矩阵：行=每月节省，列=坚持年限"""
+    rows = []
+    for save in cfg.y_values:
+        row = []
+        for years in cfg.x_values:
+            amount = savings_fv(save, years, cfg.annual_return)
+            level = savings_level(amount)
+            row.append(MatrixResult(
+                row_label=f'{save}{cfg.y_unit}',
+                col_label=f'{years}{cfg.x_unit}',
+                years=amount,
+                display=savings_display(amount),
+                level=level,
+                color=SAV_COLORS[level],
+            ))
+        rows.append(row)
+    return rows
+
+
+def single_savings_result(cfg: ScenarioConfig, monthly_save: float, years: float) -> MatrixResult:
+    """消费降级单点查询：输入自己的月节省与年限直接出结论"""
+    amount = savings_fv(monthly_save, years, cfg.annual_return)
+    level = savings_level(amount)
+    return MatrixResult(
+        row_label=f'{monthly_save}{cfg.y_unit}',
+        col_label=f'{years}{cfg.x_unit}',
+        years=amount,
+        display=savings_display(amount),
+        level=level,
+        color=SAV_COLORS[level],
+    )
