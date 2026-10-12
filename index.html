@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>人的一生，有多少个财务决策？| 普通人财务决策计算器</title>
+<!-- AIGC Content · fin-decision-matrix 场景首页 · 投资平权项目 -->
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:"Microsoft YaHei","PingFang SC",sans-serif; }
+  body { background:#f6f7fb; color:#111827; }
+  .wrap { max-width:960px; margin:0 auto; padding:0 20px 60px; }
+
+  /* Hero */
+  .hero { background:linear-gradient(160deg,#1e293b,#0f172a); color:#fff; padding:64px 20px 56px; text-align:center; }
+  .hero .tag { display:inline-block; background:rgba(251,191,36,.15); color:#fbbf24; border:1px solid rgba(251,191,36,.35);
+               border-radius:999px; padding:4px 14px; font-size:12px; letter-spacing:1px; margin-bottom:18px; }
+  .hero h1 { font-size:38px; font-weight:800; line-height:1.4; }
+  .hero h1 em { color:#fbbf24; font-style:normal; }
+  .hero p { color:#cbd5e1; font-size:16px; line-height:1.9; margin-top:14px; max-width:640px; margin-left:auto; margin-right:auto; }
+  .hero .stats { display:flex; justify-content:center; gap:44px; margin-top:26px; }
+  .hero .stats div { text-align:center; }
+  .hero .stats b { display:block; font-size:30px; color:#fbbf24; }
+  .hero .stats span { font-size:12px; color:#94a3b8; }
+
+  /* 引言 */
+  .intro { background:#fff; border-radius:16px; box-shadow:0 4px 20px rgba(0,0,0,.06); padding:28px 30px; margin-top:-28px; }
+  .intro h2 { font-size:18px; margin-bottom:10px; }
+  .intro p { color:#4b5563; line-height:1.9; font-size:14px; }
+  .intro .hl { color:#b45309; font-weight:700; }
+
+  /* 时间线 */
+  .tl { position:relative; margin-top:36px; }
+  .tl::before { content:""; position:absolute; left:22px; top:0; bottom:0; width:3px; background:linear-gradient(180deg,#fbbf24,#64748b); border-radius:2px; }
+  .tl-title { display:flex; align-items:center; gap:12px; margin-bottom:8px; }
+  .tl-title h2 { font-size:24px; }
+  .tl-title span { font-size:13px; color:#6b7280; }
+
+  .node { position:relative; margin-bottom:22px; padding-left:60px; }
+  .node .dot { position:absolute; left:13px; top:20px; width:22px; height:22px; border-radius:50%;
+               background:#fff; border:5px solid #f59e0b; box-shadow:0 0 0 4px #fef3c7; z-index:1; }
+  .node.live .dot { border-color:#16a34a; box-shadow:0 0 0 4px #dcfce7; }
+  .node .card { background:#fff; border-radius:14px; box-shadow:0 3px 14px rgba(0,0,0,.06); padding:18px 20px; border-left:4px solid #f59e0b; }
+  .node.live .card { border-left-color:#16a34a; }
+  .node .age { font-size:12px; font-weight:700; color:#6b7280; letter-spacing:1px; }
+  .node.live .age { color:#16a34a; }
+  .node h3 { font-size:17px; margin:4px 0 6px; }
+  .node .q { font-size:13px; color:#4b5563; line-height:1.7; }
+  .node .domains { margin-top:8px; display:flex; flex-wrap:wrap; gap:6px; }
+  .node .domains span { font-size:11px; background:#f3f4f6; color:#374151; padding:2px 10px; border-radius:999px; }
+  .node .btns { margin-top:12px; display:flex; gap:10px; flex-wrap:wrap; }
+  .btn { display:inline-block; text-decoration:none; font-size:13px; font-weight:700; padding:8px 18px; border-radius:10px; }
+  .btn-live { background:#16a34a; color:#fff; }
+  .btn-live:hover { background:#15803d; }
+  .btn-ghost { background:#f3f4f6; color:#6b7280; border-radius:10px; padding:8px 18px; font-size:13px; cursor:not-allowed; }
+  .badge { font-size:11px; font-weight:700; padding:2px 10px; border-radius:999px; margin-left:8px; }
+  .badge-live { background:#dcfce7; color:#15803d; }
+  .badge-soon { background:#fef3c7; color:#b45309; }
+
+  /* Footer */
+  .foot { text-align:center; margin-top:40px; color:#9ca3af; font-size:12px; line-height:2; }
+  .foot .watermark { letter-spacing:1px; color:#d1d5db; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <span class="tag">投资平权 · 二维决策图例法</span>
+  <h1>人的一生，有多少个<em>财务决策</em>？</h1>
+  <p>毕业、第一份工资、第一次刷卡、买房、成家、养娃、养老、退休……<br>
+  每一次选择都在悄悄改写你 60 岁时的账户余额。<br>
+  这里把一生拆成一张时间线，每个节点，都给你一个「两个变量就能看懂」的计算器。</p>
+  <div class="stats">
+    <div><b>30+</b><span>财务决策场景</span></div>
+    <div><b>8</b><span>大人生领域</span></div>
+    <div><b>2</b><span>个变量看懂一个决策</span></div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="intro">
+    <h2>为什么是「时间线」？</h2>
+    <p>理财教育最大的失败，是告诉你一堆<span class="hl">「正确」</span>，却不说<span class="hl">「什么时候」</span>该用它。
+    22 岁的应急金、28 岁的买房账、40 岁的教育金、60 岁的躺平线——同一个人的钱，在不同人生阶段要回答完全不同的问题。
+    这张时间线，就是普通人的财务人生地图：<b>到什么年纪，看什么决策；点进每一个节点，对号入座。</b></p>
+  </div>
+
+  <div class="tl">
+    <div class="tl-title"><h2>人生财务决策时间线</h2><span>每个节点 = 一个二维决策计算器</span></div>
+
+    <div class="node">
+      <div class="dot"></div>
+      <div class="card">
+        <div class="age">18 岁 · 大学时代</div>
+        <h3>这笔学费，值不值？<span class="badge badge-soon">即将上线</span></h3>
+        <p class="q">读大学 vs 直接工作，投入的学费和时光，多久能赚回来？</p>
+        <div class="domains"><span>教育金</span><span>学历 vs 技能</span><span>技能回收期</span></div>
+        <div class="btns"><span class="btn-ghost">教育投资计算器 · 筹备中</span></div>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="dot"></div>
+      <div class="card">
+        <div class="age">22 岁 · 第一份工资</div>
+        <h3>工资到账，第一件事做什么？<span class="badge badge-soon">即将上线</span></h3>
+        <p class="q">先存应急金还是先买快乐？3-6 个月开支的保命钱，到底怎么算？</p>
+        <div class="domains"><span>应急金</span><span>涨薪与储蓄</span></div>
+        <div class="btns"><span class="btn-ghost">应急金计算器 · 筹备中</span></div>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="dot"></div>
+      <div class="card">
+        <div class="age">25 岁 · 开始定投</div>
+        <h3>晚开始一年，到底差多少？<span class="badge badge-soon">即将上线</span></h3>
+        <p class="q">"再等等"是复利最大的敌人。同样的月定投，25 岁和 35 岁开始，60 岁差一辆车。</p>
+        <div class="domains"><span>定投复利</span><span>目标储蓄</span><span>定投 vs 一次性</span></div>
+        <div class="btns"><span class="btn-ghost">定投复利计算器 · 筹备中</span></div>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="dot"></div>
+      <div class="card">
+        <div class="age">26 岁 · 第一张信用卡</div>
+        <h3>只还最低还款，多久能还清？<span class="badge badge-soon">即将上线</span></h3>
+        <p class="q">很多人以为在还钱，其实在给银行打工。5 万债务 18% 利率只还最低 → 30 年 + 利息超过本金。</p>
+        <div class="domains"><span>最低还款陷阱</span><span>分期年化</span><span>贷款对比</span></div>
+        <div class="btns"><span class="btn-ghost">负债计算器 · 筹备中</span></div>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="dot"></div>
+      <div class="card">
+        <div class="age">28 岁 · 买房还是租房</div>
+        <h3>这套房，买还是租？<span class="badge badge-soon">即将上线</span></h3>
+        <p class="q">同样住 30 年，买房和租房的钱各流向哪里？首付、月供、利息，一张表看清。</p>
+        <div class="domains"><span>租房 vs 买房</span><span>首付月供</span><span>利率选择</span></div>
+        <div class="btns"><span class="btn-ghost">买房计算器 · 筹备中</span></div>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="dot"></div>
+      <div class="card">
+        <div class="age">30 岁 · 家庭支柱</div>
+        <h3>上有老下有小，保额买多少？<span class="badge badge-soon">即将上线</span></h3>
+        <p class="q">保险不是买得越多越好，是缺口有多大补多少。家庭支柱倒下了，钱够撑几年？</p>
+        <div class="domains"><span>保额测算</span><span>返还型 vs 消费型</span><span>双人财务合并</span></div>
+        <div class="btns"><span class="btn-ghost">保险计算器 · 筹备中</span></div>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="dot"></div>
+      <div class="card">
+        <div class="age">35 岁 · 消费与债务</div>
+        <h3>每月多还 1000，房贷省多少？<span class="badge badge-soon">即将上线</span></h3>
+        <p class="q">消费降级不是不花钱，是把钱花在刀刃上；提前还款不是无脑还，是算清利息差。</p>
+        <div class="domains"><span>提前还款</span><span>消费降级</span><span>债务雪崩 vs 雪球</span></div>
+        <div class="btns"><span class="btn-ghost">现金流计算器 · 筹备中</span></div>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="dot"></div>
+      <div class="card">
+        <div class="age">40 岁 · 孩子的教育金</div>
+        <h3>养一个孩子，教育要花多少钱？<span class="badge badge-soon">即将上线</span></h3>
+        <p class="q">教育金不是"到时候再说"，是现在每月存多少，18 年后刚好够。</p>
+        <div class="domains"><span>教育金</span><span>目标储蓄</span></div>
+        <div class="btns"><span class="btn-ghost">教育金计算器 · 筹备中</span></div>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="dot"></div>
+      <div class="card">
+        <div class="age">45 岁 · 养老储备</div>
+        <h3>退休的钱，从哪来？<span class="badge badge-soon">即将上线</span></h3>
+        <p class="q">现在每月存多少，退休才够花？早 5 年开始，每月少存多少？</p>
+        <div class="domains"><span>养老储蓄</span><span>延迟退休</span><span>养老替代率</span></div>
+        <div class="btns"><span class="btn-ghost">养老计算器 · 筹备中</span></div>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="dot"></div>
+      <div class="card">
+        <div class="age">50 岁 · 资产配置</div>
+        <h3>这笔钱，股债怎么配？<span class="badge badge-soon">即将上线</span></h3>
+        <p class="q">风险承受 × 投资期限 → 建议配比。同一笔钱，配比不同，最差年景亏多少天差地别。</p>
+        <div class="domains"><span>资产配置</span><span>定投 vs 一次性</span></div>
+        <div class="btns"><span class="btn-ghost">配置计算器 · 筹备中</span></div>
+      </div>
+    </div>
+
+    <div class="node live">
+      <div class="dot"></div>
+      <div class="card">
+        <div class="age">60 岁 · 退休当天 ★ 首个已上线场景</div>
+        <h3>躺平需要多少钱？<span class="badge badge-live">已上线</span></h3>
+        <p class="q">存款 × 年花费 → 你能躺平多久？两个变量对号入座，看你的钱会不会自己养自己。</p>
+        <div class="domains"><span>躺平退休</span><span>退休提取</span></div>
+        <div class="btns">
+          <a class="btn btn-live" href="output/躺平需要多少钱_决策矩阵.html">打开决策矩阵</a>
+          <a class="btn btn-live" href="output/躺平需要多少钱_结果卡_存款500万年花10万.html">看结果卡示例</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="dot"></div>
+      <div class="card">
+        <div class="age">65 岁+ · 退休提取</div>
+        <h3>退休后每年取多少安全？<span class="badge badge-soon">即将上线</span></h3>
+        <p class="q">取太猛怕花完，取太省怕白攒。安全提取率，是退休后的"限速标志"。</p>
+        <div class="domains"><span>退休提取率</span><span>继承规划</span></div>
+        <div class="btns"><span class="btn-ghost">提取率计算器 · 筹备中</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="foot">
+    <div class="watermark">投资平权 · fin-decision-matrix</div>
+    <div>本页面所有计算器均基于「二维决策图例法」：两个变量 × 一个清晰结论。测算不构成投资建议。</div>
+  </div>
+
+</div>
+</body>
+</html>
