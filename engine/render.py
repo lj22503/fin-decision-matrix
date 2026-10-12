@@ -15,6 +15,8 @@ PAGE_CSS = """
           max-width:980px; margin:0 auto; padding:28px 32px; }
   h1 { font-size:30px; color:#111827; text-align:center; }
   .subtitle { text-align:center; color:#6b7280; font-size:14px; margin:6px 0 18px; }
+  .emotion { display:inline-block; background:#fef3c7; color:#b45309; font-size:11px; padding:2px 8px;
+             border-radius:999px; margin-left:8px; vertical-align:middle; font-weight:700; }
   .assume { background:#f3f4f6; border-radius:10px; padding:10px 14px; font-size:13px;
             color:#374151; margin-bottom:16px; line-height:1.7; }
   table { width:100%; border-collapse:separate; border-spacing:4px; }
@@ -42,9 +44,28 @@ RESULT_CARD_CSS = """
   .rcmp-hi { color:#4ade80; font-weight:700; }
   .rcmp-lo { color:#f87171; font-weight:700; }
   .rquote { margin-top:16px; font-size:15px; color:#fbbf24; font-weight:700; text-align:center; }
+  .rconvert { margin-top:14px; background:#052e16; border:1px solid #166534; border-radius:10px;
+              padding:10px 14px; font-size:13px; color:#86efac; line-height:1.7; }
+  .rconvert b { color:#4ade80; font-size:15px; }
+  .rshare { margin-top:12px; background:#111827; border-left:3px solid #fbbf24; border-radius:8px;
+            padding:10px 14px; font-size:13px; color:#e2e8f0; line-height:1.8; }
+  .rshare .tag { display:inline-block; background:#fbbf24; color:#0f172a; font-size:11px; font-weight:700;
+                 padding:1px 8px; border-radius:6px; margin-right:8px; }
   .rdisclaimer { margin-top:14px; font-size:11px; color:#64748b; line-height:1.6; }
   .rwatermark { margin-top:10px; text-align:center; font-size:11px; color:#64748b; letter-spacing:1px; }
 """
+
+
+def _convert_note(cfg: ScenarioConfig) -> str:
+    """陈锦初换算句：抽象大数字 → 可感知行为（如每天 X 元 / X 杯奶茶）"""
+    if not cfg.convert:
+        return ''
+    mid = min(cfg.y_values, key=lambda v: abs(v - 10))
+    daily = mid * 10000 / 365
+    cups = round(daily / 20)
+    extra = cfg.convert.get('extra', '').replace('{cups}', f'{cups:.0f}')
+    return (f"换算：年花 {mid}{cfg.y_unit} ≈ 每天 <b>{daily:.0f} 元</b> ≈ {cups:.0f} 杯奶茶/天"
+            f"——你的存款，正在替你赚回来。")
 
 
 def render_matrix_html(cfg: ScenarioConfig, out_path: str) -> str:
@@ -65,14 +86,16 @@ def render_matrix_html(cfg: ScenarioConfig, out_path: str) -> str:
         f'<span><i class="dot" style="background:{CELL_COLORS["danger"]}"></i>&lt;10年</span>'
         '</div>'
     )
+    emotion = f'<span class="emotion">{cfg.emotion}</span>' if cfg.emotion else ''
+    convert_note = _convert_note(cfg)
     html = f"""<!DOCTYPE html>
 <html lang="zh-CN"><head><meta charset="utf-8"><title>{cfg.title}</title>
 <style>{PAGE_CSS}</style></head><body>
 <div class="card">
-  <h1>{cfg.title}</h1>
-  <div class="subtitle">{cfg.subtitle}</div>
+  <h1>{cfg.hook_title or cfg.title}</h1>
+  <div class="subtitle">{cfg.hook_line or cfg.subtitle}{emotion}</div>
   <div class="assume">假设：年化实际收益率 {cfg.annual_return*100:.1f}%（已扣除通胀）；年花费恒定、无大额一次性支出；
-  可持续年限超过 {cfg.perpetual_threshold:.0f} 年视为「花不完」。</div>
+  可持续年限超过 {cfg.perpetual_threshold:.0f} 年视为「花不完」。<br>{convert_note}</div>
   {legend}
   <table>
     <tr><th class="rowhead">{cfg.y_name}</th>{head_cells}</tr>
@@ -93,30 +116,51 @@ def render_result_card(cfg: ScenarioConfig, principal: float, spend: float,
     r = single_result(cfg, principal, spend)
     rc = single_result(cfg, compare_principal, spend)
     big_text = r.display if r.display == '花不完' else f'{r.display}'
+    daily = spend * 10000 / 365
     if r.display == '花不完':
-        rsub = f'本金 {principal}{cfg.x_unit}，每年花 {spend}{cfg.y_unit}：收益已覆盖开销，财务自由线内。'
-        quote = '你的钱，会自己养自己。'
+        rsub = f'存款 {principal}{cfg.x_unit}，每年花 {spend}{cfg.y_unit}：收益已覆盖开销，财务自由线内。'
+        quote = f'你的钱，会自己养自己——每天醒来，账户自动给你发 {daily:.0f} 元。'
     else:
         years_f = int(round(r.years)) if r.years >= 20 else f'{r.years:.1f}'
-        rsub = f'本金 {principal}{cfg.x_unit}，每年花 {spend}{cfg.y_unit}：可持续 {years_f} 年，之后归零。'
-        quote = '躺平的底气，是本金和欲望的差。'
+        gap = spend / cfg.annual_return - principal
+        rsub = f'存款 {principal}{cfg.x_unit}，每年花 {spend}{cfg.y_unit}：可持续 {years_f} 年，之后归零。'
+        quote = f'躺平的底气，是本金和欲望的差。还差 {gap:.0f} 万，才够躺平。'
+    if principal > compare_principal:
+        gap_line = (f'如果当初多存 {principal-compare_principal:.0f}{cfg.x_unit}——'
+                    f'从「{rc.display}」到「{r.display}」。一字之差，人生两条线。')
+    else:
+        gap_line = f'本金差 {abs(principal-compare_principal):.0f}{cfg.x_unit}，可持续性差一档。'
     compare_html = (
         '<div class="rcompare">'
-        f'&nbsp;&nbsp;你的方案：本金 {principal}{cfg.x_unit} / 年花 {spend}{cfg.y_unit} → <span class="rcmp-hi">{r.display}</span><br>'
-        f'&nbsp;&nbsp;对比方案：本金 {compare_principal}{cfg.x_unit} / 年花 {spend}{cfg.y_unit} → <span class="rcmp-lo">{rc.display}</span><br>'
-        f'&nbsp;&nbsp;差距：本金差 {abs(principal-compare_principal)}{cfg.x_unit}，可持续性差一档。'
+        f'&nbsp;&nbsp;你的方案：存款 {principal}{cfg.x_unit} / 年花 {spend}{cfg.y_unit} → <span class="rcmp-hi">{r.display}</span><br>'
+        f'&nbsp;&nbsp;对比方案：存款 {compare_principal}{cfg.x_unit} / 年花 {spend}{cfg.y_unit} → <span class="rcmp-lo">{rc.display}</span><br>'
+        f'&nbsp;&nbsp;{gap_line}'
         '</div>'
     )
+    convert_html = ''
+    if cfg.convert:
+        cups = daily / 20
+        convert_html = (
+            '<div class="rconvert">'
+            f'换算：年花 {spend}{cfg.y_unit} ≈ 每天 <b>{daily:.0f} 元</b> ≈ <b>{cups:.0f} 杯奶茶/天</b>'
+            '</div>'
+        )
+    share_html = ''
+    if cfg.share_copy:
+        share_text = cfg.share_copy.format(principal=principal, spend=spend, result=r.display)
+        share_html = f'<div class="rshare"><span class="tag">可晒</span>{share_text}</div>'
     html = f"""<!DOCTYPE html>
 <html lang="zh-CN"><head><meta charset="utf-8"><title>{cfg.title} · 结果卡</title>
 <style>{RESULT_CARD_CSS}</style></head><body>
 <div class="rcard">
-  <div class="rhead">{cfg.title}</div>
+  <div class="rhead">{cfg.hook_title or cfg.title}</div>
   <div class="rlabel">你的答案</div>
   <div class="rbig" style="color:{r.color}">{big_text}</div>
   <div class="rsub">{rsub}</div>
+  {convert_html}
   {compare_html}
   <div class="rquote">{quote}</div>
+  {share_html}
   <div class="rdisclaimer">{cfg.disclaimer}</div>
   <div class="rwatermark">{cfg.watermark}</div>
 </div>

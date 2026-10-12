@@ -40,15 +40,19 @@ def render_png(cfg, out_path):
     ax.set_xlabel('存款（万元）', fontproperties=zh, fontsize=13)
     ax.set_ylabel('年度花费（万元/年）', fontproperties=zh, fontsize=13)
     ax.set_title(cfg['title'] + '：存款 × 年花费 → 能躺平多久', fontproperties=zh, fontsize=18, pad=14)
-
     for i in range(len(ys)):
         for j in range(len(xs)):
             n = data[i][j]
             txt = '花不完' if (math.isinf(n) or n >= thr) else (f'{n:.0f}年' if n >= 20 else f'{n:.1f}年')
             ax.text(j, i, txt, ha='center', va='center', fontsize=12, fontweight='bold', color='#ffffff', fontproperties=zh)
 
-    assume = cfg.get('assumption_note', '')
-    ax.text(0.5, -0.14, assume + '超过 80 年视为「花不完」。测算不构成投资建议。',
+    hook = cfg.get('hook_line', '')
+    mid = cfg['y_values'][len(cfg['y_values']) // 2]
+    daily = round(mid * 10000 / 365)
+    cups = round(daily / 20)
+    note = (f'{hook} 换算：年花{mid}万≈每天{daily}元≈{cups}杯奶茶/天。'
+            f'超过 80 年视为「花不完」。测算不构成投资建议。')
+    ax.text(0.5, -0.14, note,
             transform=ax.transAxes, ha='center', fontsize=10, color='#555555', fontproperties=zh)
     ax.text(0.5, -0.21, '投资平权 · fin-decision-matrix',
             transform=ax.transAxes, ha='center', fontsize=10, color='#888888', fontproperties=zh)

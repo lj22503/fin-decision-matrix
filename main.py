@@ -28,6 +28,11 @@ def load_config(path: str) -> ScenarioConfig:
         perpetual_threshold=d['perpetual_threshold'],
         disclaimer=d['disclaimer'],
         watermark=d['watermark'],
+        hook_title=d.get('hook_title', ''),
+        hook_line=d.get('hook_line', ''),
+        emotion=d.get('emotion', ''),
+        convert=d.get('convert'),
+        share_copy=d.get('share_copy', ''),
     )
 
 

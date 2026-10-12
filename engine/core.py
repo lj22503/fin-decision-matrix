@@ -34,6 +34,12 @@ class ScenarioConfig:
     perpetual_threshold: float      # 超过该年数视为"花不完"
     disclaimer: str
     watermark: str
+    # —— 陈锦初营销层（可选）——
+    hook_title: str = ''            # 情绪钩子标题
+    hook_line: str = ''             # 一句话副标题（10 秒可读完）
+    emotion: str = ''               # 主情绪标签（后悔/幻想/焦虑/爽感/掌控感...）
+    convert: dict = None            # 换算句配置 {label, unit, extra}
+    share_copy: str = ''            # 可晒分享文案（含 {principal}/{spend}/{result} 占位）
 
 
 CELL_COLORS = {
