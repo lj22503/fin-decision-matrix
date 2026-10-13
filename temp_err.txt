@@ -1,8 +1,0 @@
-Traceback (most recent call last):
-  File "C:\Users\lj225\AppData\Roaming\Tencent\Marvis\User\oAN1i2RwDkV-GzedLV3hP8_l0OAo\workspace\conv_cf0ae1823c184753b8922149471024f8/temp/test_tuition.py", line 8, in <module>
-    p = render_tuition_result_card(cfg, 3, 5000, r'D:\claudework\fin-decision-matrix\output\学费值不值_结果卡_学费3万涨5000.html')
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\claudework\fin-decision-matrix\engine\render.py", line 868, in render_tuition_result_card
-    if math.isinf(months):
-       ^^^^
-NameError: name 'math' is not defined
