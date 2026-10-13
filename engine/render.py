@@ -22,7 +22,11 @@ from .core import (ScenarioConfig, MatrixResult, build_matrix, single_result,
                    emergency_fund_need, emergency_judgment,
                    emergency_level, EMERGENCY_COLORS,
                    build_dca_matrix, single_dca_result,
-                   dca_fv, dca_judgment, dca_level, dca_late_gap, DCA_COLORS)
+                   dca_fv, dca_judgment, dca_level, dca_late_gap, DCA_COLORS,
+                   build_house_matrix, single_house_result,
+                   house_decision, house_breakeven, house_judgment,
+                   buy_total_cost, rent_total_cost, mortgage_monthly,
+                   HOUSE_PRICE, HOUSE_COLORS)
 
 PAGE_CSS = """
   * { margin:0; padding:0; box-sizing:border-box; font-family:"Microsoft YaHei","PingFang SC",sans-serif; }
@@ -1081,6 +1085,164 @@ def render_tuition_result_card(cfg: ScenarioConfig, tuition_wan: float, salary_r
   <div class="rhead">{cfg.hook_title or cfg.title}</div>
   <div class="rlabel">你的决策</div>
   <div class="rbig" style="color:{r.color}">{big_text}</div>
+  <div class="rsub">{rsub}</div>
+  {verdict_html}
+  {convert_html}
+  {compare_html}
+  <div class="rquote">{quote}</div>
+  {share_html}
+  <div class="rdisclaimer">{cfg.disclaimer}</div>
+  <div class="rwatermark">{cfg.watermark}</div>
+</div>
+</body></html>"""
+    with open(out_path, 'w', encoding='utf-8') as f:
+        f.write(html)
+    return out_path
+
+
+# ==================== 场景 4.1：租房 vs 买房（住多久买房才不亏？） ====================
+
+HOUSE_PAGE_CSS = """
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Microsoft YaHei','PingFang SC',sans-serif; background:#f6f7fb; color:#1f2937; padding:24px; }
+.card { max-width:880px; margin:0 auto; background:#fff; border-radius:16px; padding:28px 32px; box-shadow:0 4px 20px rgba(0,0,0,.06); }
+h1 { font-size:26px; color:#0f172a; margin-bottom:6px; }
+.subtitle { color:#64748b; font-size:14px; margin-bottom:14px; }
+.emotion { display:inline-block; margin-left:8px; background:#fef2f2; color:#b91c1c; border-radius:20px; padding:2px 12px; font-size:12px; }
+.assume { background:#fef2f2; border-left:4px solid #dc2626; padding:10px 14px; border-radius:8px; color:#374151; font-size:13px; line-height:1.7; margin-bottom:14px; }
+.legend { margin:10px 0 14px; font-size:12px; color:#475569; display:flex; flex-wrap:wrap; gap:10px 16px; }
+.legend .dot { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:4px; vertical-align:middle; }
+table { width:100%; border-collapse:collapse; }
+th { background:#f1f5f9; color:#475569; font-size:14px; padding:10px 8px; border:1px solid #e2e8f0; }
+td { color:#fff; text-align:center; font-weight:700; font-size:15px; padding:12px 8px; border:1px solid #e2e8f0; }
+td small { display:block; font-weight:400; font-size:11px; opacity:.95; margin-top:2px; }
+th.rowhead { background:#e2e8f0; color:#1e293b; font-size:13px; }
+.foot { color:#94a3b8; font-size:11px; margin-top:14px; line-height:1.6; }
+.watermark { color:#cbd5e1; font-size:10px; text-align:right; margin-top:6px; }
+"""
+
+HOUSE_CARD_CSS = """
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Microsoft YaHei','PingFang SC',sans-serif; background:linear-gradient(160deg,#7f1d1d,#450a0a); min-height:100vh; padding:24px; display:flex; align-items:center; justify-content:center; }
+.rcard { max-width:560px; background:#fff; border-radius:20px; padding:32px 30px; box-shadow:0 12px 40px rgba(0,0,0,.35); }
+.rhead { font-size:20px; color:#0f172a; font-weight:700; margin-bottom:4px; }
+.rlabel { color:#94a3b8; font-size:12px; margin:18px 0 4px; }
+.rbig { font-size:44px; font-weight:800; line-height:1.15; }
+.rsub { color:#64748b; font-size:13px; margin:6px 0 14px; }
+.rverdict { background:#f8fafc; border-radius:10px; padding:12px 14px; font-size:13px; color:#334155; line-height:1.7; margin-bottom:10px; }
+.rverdict b { color:#b91c1c; }
+.rcompare { background:#fffbeb; border-radius:10px; padding:12px 14px; font-size:13px; color:#57534e; line-height:1.8; margin-bottom:10px; }
+.rcmp-lo { color:#dc2626; font-weight:700; }
+.rcmp-hi { color:#059669; font-weight:700; }
+.rconvert { background:#fef2f2; border-radius:10px; padding:12px 14px; font-size:13px; color:#b91c1c; line-height:1.7; margin-bottom:10px; }
+.rconvert b { color:#991b1b; }
+.rquote { font-size:14px; color:#475569; padding:8px 0 4px; font-style:italic; }
+.rshare { background:#fef2f2; border:1px dashed #fca5a5; border-radius:10px; padding:10px 14px; font-size:13px; color:#7f1d1d; margin:10px 0; }
+.rshare .tag { background:#dc2626; color:#fff; border-radius:4px; padding:1px 8px; font-size:11px; margin-right:6px; }
+.rdisclaimer { color:#94a3b8; font-size:10px; margin-top:12px; line-height:1.6; }
+.rwatermark { color:#cbd5e1; font-size:10px; text-align:right; margin-top:4px; }
+"""
+
+
+def render_house_matrix_html(cfg: ScenarioConfig, out_path: str) -> str:
+    """生成租房vs买房决策矩阵 HTML：行=居住年限，列=房价年涨幅"""
+    rows = build_house_matrix(cfg)
+    head_cells = ''.join(
+        f'<th>{cfg.x_values[i]*100:.0f}%</th>' for i in range(len(cfg.x_values)))
+    body_rows = []
+    for row in rows:
+        tds = ''.join(
+            f'<td style="background:{cell.color}">{cell.display}<small>vs 租房</small></td>'
+            for cell in row)
+        body_rows.append(f'<tr><th class="rowhead">{row[0].row_label}</th>{tds}</tr>')
+    legend = (
+        '<div class="legend">'
+        f'<span><i class="dot" style="background:{HOUSE_COLORS["buy"]}"></i>买房划算</span>'
+        f'<span><i class="dot" style="background:{HOUSE_COLORS["rent"]}"></i>租房划算</span>'
+        f'<span><i class="dot" style="background:{HOUSE_COLORS["flat"]}"></i>基本持平</span>'
+        '</div>'
+    )
+    emotion = f'<span class="emotion">{cfg.emotion}</span>' if cfg.emotion else ''
+    html = f"""<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>{cfg.title}</title>
+<style>{HOUSE_PAGE_CSS}</style></head><body>
+<div class="card">
+  <h1>{cfg.hook_title or cfg.title}</h1>
+  <div class="subtitle">{cfg.hook_line or cfg.subtitle}{emotion}</div>
+  <div class="assume">假设：总价 300 万、首付 30%、贷款 30 年等额本息（利率 3.5%）、月租 4000 元每年涨 2%、买房税费 3%。买房按第 N 年卖出并结清剩余贷款计算。单元格 = 买房净支出 vs 租房净支出（正=买房多花，负=买房更省）。</div>
+  {legend}
+  <table>
+    <tr><th class="rowhead">{cfg.y_name}</th>{head_cells}</tr>
+    {''.join(body_rows)}
+  </table>
+  <div class="foot">{cfg.disclaimer}</div>
+  <div class="watermark">{cfg.watermark}</div>
+</div>
+</body></html>"""
+    with open(out_path, 'w', encoding='utf-8') as f:
+        f.write(html)
+    return out_path
+
+
+def render_house_result_card(cfg: ScenarioConfig, years: float, growth: float,
+                             out_path: str) -> str:
+    """生成租房vs买房单点决策结果卡 HTML
+
+    years: 计划居住年限（3-20）
+    growth: 房价年涨幅假设（0-0.08）
+    """
+    r = single_house_result(cfg, years, growth)
+    buy = buy_total_cost(years, growth)
+    rent = rent_total_cost(years)
+    diff = buy - rent
+    verdict = r.level
+    be = house_breakeven(HOUSE_PRICE, growth)
+    judgment = house_judgment(verdict, years, growth)
+    if verdict == 'buy':
+        big_text = f'买房省 {diff*-1:.0f} 万'
+        color = HOUSE_COLORS['buy']
+    elif verdict == 'rent':
+        big_text = f'租房省 {diff:.0f} 万'
+        color = HOUSE_COLORS['rent']
+    else:
+        big_text = '基本持平'
+        color = HOUSE_COLORS['flat']
+    rsub = (f'住 {years:.0f} 年 × 房价年涨 {growth*100:.0f}%：'
+            f'买房净支出约 {buy:.0f} 万 vs 租房总支出约 {rent:.0f} 万。')
+    verdict_html = (
+        '<div class="rverdict">'
+        f'<b>决策判词：{judgment}</b>'
+        '</div>'
+    )
+    compare_html = (
+        '<div class="rcompare">'
+        f'&nbsp;&nbsp;买房净支出（第 {years:.0f} 年卖出）：<b>{buy:.0f} 万</b><br>'
+        f'&nbsp;&nbsp;租房总支出（租金年涨 2%）：&nbsp;&nbsp;<b>{rent:.0f} 万</b><br>'
+        f'&nbsp;&nbsp;盈亏平衡点：房价年涨 {growth*100:.0f}% 时，住到第 {be:.0f} 年买房反超。'
+        '</div>'
+    )
+    convert_html = (
+        '<div class="rconvert">'
+        f'换算：月租 4000 元 ≈ 每年 4.8 万；{years:.0f} 年租金约 <b>{rent:.0f} 万</b>——'
+        '而 300 万房款的首付+月供现金流，是这笔租金的 2-4 倍。'
+        '</div>'
+    )
+    quote = '住得越久，买房越值；住得越短，租房越香——先问自己：这房子，你住几年？'
+    share_html = ''
+    if cfg.share_copy:
+        verdict_word = '买房更划算' if verdict == 'buy' else ('基本持平' if verdict == 'flat' else '租房更划算')
+        share_text = cfg.share_copy.format(
+            years=f'{years:.0f}', growth=f'{growth*100:.0f}',
+            diff=f'{diff*-1 if verdict == "buy" else diff:.0f}',
+            verdict=verdict_word)
+        share_html = f'<div class="rshare"><span class="tag">可晒</span>{share_text}</div>'
+    html = f"""<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>{cfg.title} · 结果卡</title>
+<style>{HOUSE_CARD_CSS}</style></head><body>
+<div class="rcard">
+  <div class="rhead">{cfg.hook_title or cfg.title}</div>
+  <div class="rlabel">你的决策</div>
+  <div class="rbig" style="color:{color}">{big_text}</div>
   <div class="rsub">{rsub}</div>
   {verdict_html}
   {convert_html}

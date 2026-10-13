@@ -753,3 +753,149 @@ def single_dca_result(cfg: ScenarioConfig, monthly: float, start_age: float) -> 
         level=level,
         color=DCA_COLORS[level],
     )
+
+
+# ==================== 场景 4.1：租房 vs 买房（住多久买房才不亏？） ====================
+
+HOUSE_COLORS = {
+    'buy': '#15803d',    # 买房划算
+    'rent': '#dc2626',   # 租房划算
+    'flat': '#f59e0b',   # 接近持平
+}
+
+# 典型城市参数假设（透明度优先，见 disclaimer）
+HOUSE_PRICE = 300.0       # 房价总价（万）
+DOWN_RATIO = 0.30         # 首付比例
+MORTGAGE_RATE = 0.035     # 房贷年利率（LPR 口径）
+LOAN_YEARS = 30           # 贷款年限
+RENT_MONTH = 4000.0       # 月租金（元）
+RENT_GROWTH = 0.02        # 租金年涨幅
+BUY_FEE_RATIO = 0.03      # 买房一次性交易税费（契税等）
+
+
+def mortgage_monthly(price: float = HOUSE_PRICE, down_ratio: float = DOWN_RATIO,
+                     rate: float = MORTGAGE_RATE, years: float = LOAN_YEARS) -> float:
+    """等额本息月供（元）"""
+    loan = price * (1 - down_ratio) * 10000
+    if loan <= 0:
+        return 0.0
+    r = rate / 12
+    n = years * 12
+    return loan * r * (1 + r) ** n / ((1 + r) ** n - 1)
+
+
+def rent_total_cost(years: float) -> float:
+    """租房 N 年总支出（万元），租金按 RENT_GROWTH 年涨"""
+    if years <= 0:
+        return 0.0
+    total = 0.0
+    rent = RENT_MONTH
+    for _ in range(int(years)):
+        total += rent * 12
+        rent *= (1 + RENT_GROWTH)
+    return total / 10000
+
+
+def buy_total_cost(years: float, growth: float) -> float:
+    """买房 N 年净支出（万元）：首付+税费+月供×N - 第N年卖房所得（剩余贷款扣减后）"""
+    if years <= 0:
+        return 0.0
+    price = HOUSE_PRICE
+    down = price * DOWN_RATIO
+    fee = price * BUY_FEE_RATIO
+    monthly = mortgage_monthly()
+    paid = monthly * 12 * years / 10000
+    loan = price * (1 - DOWN_RATIO)
+    # 等额本息剩余本金：贷款额 × [(1+r)^n - (1+r)^paid_months] / [(1+r)^n - 1]
+    r = MORTGAGE_RATE / 12
+    n = LOAN_YEARS * 12
+    paid_months = min(int(years * 12), n)
+    if n > 0:
+        remain = loan * ((1 + r) ** n - (1 + r) ** paid_months) / ((1 + r) ** n - 1)
+    else:
+        remain = loan
+    sell = price * (1 + growth) ** years - remain   # 卖房所得 - 剩余贷款 = 净回收
+    return down + fee + paid - sell
+
+
+def house_decision(price: float, years: float, growth: float) -> tuple:
+    """租房 vs 买房：返回 (verdict, diff_wan)
+    verdict: 'buy' 买房划算 / 'rent' 租房划算 / 'flat' 接近持平
+    diff_wan: 买房净支出 - 租房净支出（负=买房省）
+    """
+    buy = buy_total_cost(years, growth)
+    rent = rent_total_cost(years)
+    diff = buy - rent
+    if diff < -3:
+        return 'buy', diff
+    if diff > 3:
+        return 'rent', diff
+    return 'flat', diff
+
+
+def house_breakeven(price: float, growth: float, max_years: int = 30) -> float:
+    """盈亏平衡年限：住到第几年，买房开始比租房划算"""
+    for y in range(1, max_years + 1):
+        verdict, _ = house_decision(price, y, growth)
+        if verdict == 'buy':
+            return y
+    return max_years + 1  # 30 年内都不划算
+
+
+def house_judgment(verdict: str, years: float, growth: float) -> str:
+    """买房/租房决策判词"""
+    be = house_breakeven(HOUSE_PRICE, growth)
+    if verdict == 'buy':
+        if be <= years:
+            return (f'住 {years:.0f} 年 → 买房更划算（第 {be:.0f} 年起反超）。'
+                    '房价年涨 ' + f'{growth*100:.0f}%' + ' 假设下，买得越久省得越多。')
+        return f'住 {years:.0f} 年 → 买房更划算，但盈亏平衡点在约第 {be:.0f} 年，短期波动请留意流动性。'
+    if verdict == 'flat':
+        return f'住 {years:.0f} 年 → 买房租房基本持平，建议优先考虑通勤、学区与家庭需求。'
+    return (f'住 {years:.0f} 年 → 租房更划算。'
+            f'按 {growth*100:.0f}% 房价涨幅，买房要到约第 {be:.0f} 年才回本——住得不够久，别急着上车。')
+
+
+def build_house_matrix(cfg: ScenarioConfig) -> list:
+    """构建租房vs买房决策矩阵：行=居住年限，列=房价年涨幅"""
+    rows = []
+    for years in cfg.y_values:
+        row = []
+        for growth in cfg.x_values:
+            verdict, diff = house_decision(HOUSE_PRICE, years, growth)
+            level = verdict
+            if verdict == 'buy':
+                display = f'买房省{diff*-1:.0f}万'
+            elif verdict == 'rent':
+                display = f'租房省{diff:.0f}万'
+            else:
+                display = '基本持平'
+            row.append(MatrixResult(
+                row_label=f'住{years:.0f}年',
+                col_label=f'{growth*100:.0f}%涨幅',
+                years=years,
+                display=display,
+                level=level,
+                color=HOUSE_COLORS[level],
+            ))
+        rows.append(row)
+    return rows
+
+
+def single_house_result(cfg: ScenarioConfig, years: float, growth: float) -> MatrixResult:
+    """租房vs买房单点决策"""
+    verdict, diff = house_decision(HOUSE_PRICE, years, growth)
+    if verdict == 'buy':
+        display = f'买房省{diff*-1:.0f}万'
+    elif verdict == 'rent':
+        display = f'租房省{diff:.0f}万'
+    else:
+        display = '基本持平'
+    return MatrixResult(
+        row_label=f'住{years:.0f}年',
+        col_label=f'{growth*100:.0f}%涨幅',
+        years=years,
+        display=display,
+        level=verdict,
+        color=HOUSE_COLORS[verdict],
+    )

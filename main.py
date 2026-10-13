@@ -20,7 +20,8 @@ from engine.render import (render_matrix_html, render_result_card,
                            render_prepay_matrix_html, render_prepay_result_card,
                            render_tuition_matrix_html, render_tuition_result_card,
                            render_emergency_matrix_html, render_emergency_result_card,
-                           render_dca_matrix_html, render_dca_result_card)
+                           render_dca_matrix_html, render_dca_result_card,
+                           render_house_matrix_html, render_house_result_card)
 
 
 def load_config(path: str) -> ScenarioConfig:
@@ -76,6 +77,8 @@ def main():
             path = render_emergency_matrix_html(cfg, args.out)
         elif cfg.scenario_type == 'dca':
             path = render_dca_matrix_html(cfg, args.out)
+        elif cfg.scenario_type == 'house':
+            path = render_house_matrix_html(cfg, args.out)
         else:
             path = render_matrix_html(cfg, args.out)
         print(f'[matrix] 已生成: {path}')
@@ -96,6 +99,8 @@ def main():
             path = render_emergency_result_card(cfg, args.arg1, args.arg2, args.out)
         elif cfg.scenario_type == 'dca':
             path = render_dca_result_card(cfg, args.arg1, args.arg2, args.out)
+        elif cfg.scenario_type == 'house':
+            path = render_house_result_card(cfg, args.arg1, args.arg2, args.out)
         else:
             compare = args.extra if args.extra else cfg.x_values[0]
             path = render_result_card(cfg, args.arg1, args.arg2, compare, args.out)

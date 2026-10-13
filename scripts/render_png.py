@@ -117,6 +117,63 @@ def dca_level(asset_wan):
     if asset_wan < 600: return 'big'
     return 'huge'
 
+# ---------- 场景 4.1：租房 vs 买房 ----------
+HOUSE_PRICE = 300.0
+DOWN_RATIO = 0.30
+MORTGAGE_RATE = 0.035
+LOAN_YEARS = 30
+RENT_MONTH = 4000.0
+RENT_GROWTH = 0.02
+BUY_FEE_RATIO = 0.03
+
+def mortgage_monthly(price=HOUSE_PRICE, down_ratio=DOWN_RATIO, rate=MORTGAGE_RATE, years=LOAN_YEARS):
+    """等额本息月供（元）"""
+    loan = price * (1 - down_ratio) * 10000
+    if loan <= 0: return 0.0
+    r = rate / 12
+    n = years * 12
+    return loan * r * (1 + r) ** n / ((1 + r) ** n - 1)
+
+def rent_total_cost(years):
+    """租房 N 年总支出（万元），租金年涨 2%"""
+    if years <= 0: return 0.0
+    total = 0.0
+    rent = RENT_MONTH
+    for _ in range(int(years)):
+        total += rent * 12
+        rent *= (1 + RENT_GROWTH)
+    return total / 10000
+
+def buy_total_cost(years, growth):
+    """买房 N 年净支出（万元）：首付+税费+月供×N - 卖房净回收"""
+    if years <= 0: return 0.0
+    price = HOUSE_PRICE
+    down = price * DOWN_RATIO
+    fee = price * BUY_FEE_RATIO
+    monthly = mortgage_monthly()
+    paid = monthly * 12 * years / 10000
+    loan = price * (1 - DOWN_RATIO)
+    r = MORTGAGE_RATE / 12
+    n = LOAN_YEARS * 12
+    paid_months = min(int(years * 12), n)
+    if n > 0:
+        remain = loan * ((1 + r) ** n - (1 + r) ** paid_months) / ((1 + r) ** n - 1)
+    else:
+        remain = loan
+    sell = price * (1 + growth) ** years - remain
+    return down + fee + paid - sell
+
+def house_decision(years, growth):
+    """返回 diff（万元）：买房净支出 - 租房净支出，负=买房划算"""
+    return buy_total_cost(years, growth) - rent_total_cost(years)
+
+def house_breakeven(growth, max_years=30):
+    """盈亏平衡年限：第几年买房开始划算"""
+    for y in range(1, max_years + 1):
+        if house_decision(y, growth) < -3:
+            return y
+    return max_years + 1
+
 def build_matrix(cfg):
     xs, ys = cfg['x_values'], cfg['y_values']
     stype = cfg.get('scenario_type', 'retire')
@@ -190,6 +247,15 @@ def build_matrix(cfg):
             data.append(row)
         vmax = max(max(row) for row in data)
         return data, xs, ys, stype, vmax
+    if stype == 'house':
+        data = []
+        for y in ys:
+            row = []
+            for x in xs:
+                row.append(house_decision(y, x))
+            data.append(row)
+        vmax = max(abs(v) for row in data for v in row)
+        return data, xs, ys, stype, vmax
     r, thr = cfg['annual_return'], cfg['perpetual_threshold']
     data = []
     for y in ys:
@@ -208,9 +274,14 @@ def render_png(cfg, out_path):
     arr = np.array([[float('inf') if math.isinf(v) else v for v in row] for row in data], dtype=float)
     arr_disp = arr.copy()
     arr_disp[arr >= thr] = thr
-    norm = matplotlib.colors.Normalize(vmin=0, vmax=thr)
+    if stype == 'house':
+        norm = matplotlib.colors.Normalize(vmin=-thr, vmax=thr)
+    else:
+        norm = matplotlib.colors.Normalize(vmin=0, vmax=thr)
     if stype == 'debt':
         cmap = matplotlib.colors.LinearSegmentedColormap.from_list('dec', ['#15803d', '#f59e0b', '#dc2626', '#7f1d1d'])
+    elif stype == 'house':
+        cmap = matplotlib.colors.LinearSegmentedColormap.from_list('dec', ['#065f46', '#22c55e', '#fef08a', '#f59e0b', '#dc2626', '#7f1d1d'])
     elif stype in ('savings', 'savings_cut', 'prepay', 'tuition', 'emergency', 'dca'):
         cmap = matplotlib.colors.LinearSegmentedColormap.from_list('dec', ['#f59e0b', '#22c55e', '#15803d', '#065f46'])
     else:
@@ -322,6 +393,27 @@ def render_png(cfg, out_path):
                 asset = dca_fv(ys[i], xs[j])
                 txt = f'{asset:.0f}万'
                 ax.text(j, i, txt, ha='center', va='center', fontsize=12, fontweight='bold', color='#ffffff', fontproperties=zh)
+    elif stype == 'house':
+        ax.set_xticks(range(len(xs)))
+        ax.set_xticklabels([f'{x*100:.0f}%' for x in xs], fontproperties=zh, fontsize=11)
+        ax.set_yticks(range(len(ys)))
+        ax.set_yticklabels([f'住{y:.0f}年' for y in ys], fontproperties=zh, fontsize=11)
+        ax.set_xlabel('房价年涨幅', fontproperties=zh, fontsize=13)
+        ax.set_ylabel('居住年限', fontproperties=zh, fontsize=13)
+        ax.set_title(cfg['title'] + '：居住年限 × 房价年涨幅 → 买房还是租房划算', fontproperties=zh, fontsize=18, pad=14)
+        for i in range(len(ys)):
+            for j in range(len(xs)):
+                diff = data[i][j]
+                if diff < -3:
+                    txt = f'买省{diff*-1:.0f}万'
+                    color = '#ffffff'
+                elif diff > 3:
+                    txt = f'租省{diff:.0f}万'
+                    color = '#ffffff'
+                else:
+                    txt = '持平'
+                    color = '#1e293b'
+                ax.text(j, i, txt, ha='center', va='center', fontsize=12, fontweight='bold', color=color, fontproperties=zh)
     else:
         ax.set_xticks(range(len(xs)))
         ax.set_xticklabels([f'{x}万' for x in xs], fontproperties=zh, fontsize=11)
@@ -395,6 +487,15 @@ def render_png(cfg, out_path):
                 f'从{age:.0f}岁开始60岁约{asset:.0f}万。'
                 f'档位：<50万储蓄率不足、50-150万有积累、150-300万复利发力、300-600万时间玫瑰、600万以上复利放大器。'
                 f'测算不构成投资建议。')
+    elif stype == 'house':
+        years = min(cfg['y_values'], key=lambda v: abs(v - 5))
+        growth = min(cfg['x_values'], key=lambda g: abs(g - 0.05))
+        diff = house_decision(years, growth)
+        be = house_breakeven(growth)
+        verdict = '买省' if diff < 0 else ('基本持平' if abs(diff) <= 3 else '租省')
+        note = (f'{hook} 换算：月租4000元≈每年4.8万；住{years:.0f}年、房价年涨{growth*100:.0f}%时，'
+                f'买房vs租房{verdict}{abs(diff):.0f}万；盈亏平衡点在第{be:.0f}年。'
+                f'判断：住3年就换买房必亏，住10年以上涨幅越高买房越值。测算不构成购房建议。')
     else:
         mid = cfg['y_values'][len(cfg['y_values']) // 2]
         daily = round(mid * 10000 / 365)
