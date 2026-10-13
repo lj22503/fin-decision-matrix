@@ -479,3 +479,101 @@ def single_prepay_result(cfg: ScenarioConfig, principal_wan: float, extra_monthl
         level=level,
         color=PREPAY_COLORS[level],
     )
+
+
+# ==================== 场景 6.2：技能投资回收期（这笔学费，值不值？） ====================
+
+TUITION_COLORS = {
+    'fast':  '#065f46',   # 回本 <=12 个月（深绿）闭眼投
+    'good':  '#15803d',   # 回本 12-24 个月（绿）划算
+    'okay':  '#f59e0b',   # 回本 24-36 个月（琥珀）一般
+    'slow':  '#dc2626',   # 回本 >36 个月（红）不值得
+}
+
+
+def tuition_payback_months(tuition_wan: float, salary_rise: float) -> float:
+    """技能投资回收期（月）= 学费(元) / 月薪涨幅(元/月)
+
+    tuition_wan: 学费/投入（万元）
+    salary_rise: 预期月薪涨幅（元/月）
+    """
+    if tuition_wan <= 0 or salary_rise <= 0:
+        return float('inf')
+    return tuition_wan * 10000 / salary_rise
+
+
+def tuition_level(payback_months: float) -> str:
+    """学费决策档位（核心断点：12 个月血赚、24 个月划算、36 个月需谨慎）"""
+    if payback_months <= 12:
+        return 'fast'
+    if payback_months <= 24:
+        return 'good'
+    if payback_months <= 36:
+        return 'okay'
+    return 'slow'
+
+
+def tuition_judgment(level: str) -> str:
+    """学费决策判词"""
+    return {
+        'fast':  '闭眼投：一年内回本，剩下的全是赚的',
+        'good':  '划算：两年内回本，值得认真考虑',
+        'okay':  '一般：两三年才回本，谨慎对比机会成本',
+        'slow':  '不值得：回本太慢，不如先存钱再学',
+    }[level]
+
+
+def tuition_display(payback_months: float) -> str:
+    """回本周期展示：X 个月 / X.X 年"""
+    if math.isinf(payback_months):
+        return '回不了本'
+    if payback_months < 24:
+        return f'{int(round(payback_months))}个月回本'
+    return f'{payback_months / 12:.1f}年回本'
+
+
+def tuition_extra_gain(tuition_wan: float, salary_rise: float, horizon_years: float = 5.0) -> float:
+    """回本后 X 年累计多赚（万元）= 月薪涨幅 × 12 × 年限"""
+    if salary_rise <= 0:
+        return 0.0
+    return salary_rise * 12 * horizon_years / 10000
+
+
+def build_tuition_matrix(cfg: ScenarioConfig) -> list:
+    """构建学费回收期决策矩阵：行=学费投入，列=预期月薪涨幅
+
+    单元格 = 回本周期 + 回本后 5 年累计多赚，颜色按回本周期分级。
+    """
+    rows = []
+    for tuition in cfg.y_values:
+        row = []
+        for rise in cfg.x_values:
+            months = tuition_payback_months(tuition, rise)
+            gain = tuition_extra_gain(tuition, rise)
+            level = tuition_level(months)
+            display = f'{tuition_display(months)} · 后5年多赚{gain:.0f}万'
+            row.append(MatrixResult(
+                row_label=f'{tuition}{cfg.y_unit}',
+                col_label=f'+{rise:.0f}元/月',
+                years=months,
+                display=display,
+                level=level,
+                color=TUITION_COLORS[level],
+            ))
+        rows.append(row)
+    return rows
+
+
+def single_tuition_result(cfg: ScenarioConfig, tuition_wan: float, salary_rise: float) -> MatrixResult:
+    """学费单点决策：输入学费与预期月薪涨幅，直接出结论"""
+    months = tuition_payback_months(tuition_wan, salary_rise)
+    gain = tuition_extra_gain(tuition_wan, salary_rise)
+    level = tuition_level(months)
+    return MatrixResult(
+        row_label=f'{tuition_wan}{cfg.y_unit}',
+        col_label=f'+{salary_rise:.0f}元/月',
+        years=months,
+        display=f'{tuition_display(months)} · 后5年多赚{gain:.0f}万',
+        level=level,
+        color=TUITION_COLORS[level],
+    )

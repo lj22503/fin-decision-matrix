@@ -77,6 +77,18 @@ def prepay_base_interest(P, rate_pct, years):
     """不提前还款时总利息（万元）"""
     return prepay_sim(P, rate_pct, years, 0.0)[1]
 
+def tuition_payback_months(tuition, rise):
+    """学费回收期（月）= 学费(元) / 月薪涨幅(元/月)"""
+    if tuition <= 0 or rise <= 0:
+        return float('inf')
+    return tuition * 10000 / rise
+
+def tuition_extra_gain(tuition, rise, horizon_years=5.0):
+    """回本后 horizon 年累计多赚（万元）"""
+    if rise <= 0:
+        return 0.0
+    return rise * 12 * horizon_years / 10000
+
 def build_matrix(cfg):
     xs, ys = cfg['x_values'], cfg['y_values']
     stype = cfg.get('scenario_type', 'retire')
@@ -122,6 +134,16 @@ def build_matrix(cfg):
             data.append(row)
         vmax = max(max(row) for row in data)
         return data, xs, ys, stype, vmax
+    if stype == 'tuition':
+        data = []
+        for y in ys:
+            row = []
+            for x in xs:
+                gain = tuition_extra_gain(y, x)
+                row.append(gain)
+            data.append(row)
+        vmax = max(max(row) for row in data)
+        return data, xs, ys, stype, vmax
     r, thr = cfg['annual_return'], cfg['perpetual_threshold']
     data = []
     for y in ys:
@@ -143,7 +165,7 @@ def render_png(cfg, out_path):
     norm = matplotlib.colors.Normalize(vmin=0, vmax=thr)
     if stype == 'debt':
         cmap = matplotlib.colors.LinearSegmentedColormap.from_list('dec', ['#15803d', '#f59e0b', '#dc2626', '#7f1d1d'])
-    elif stype in ('savings', 'savings_cut', 'prepay'):
+    elif stype in ('savings', 'savings_cut', 'prepay', 'tuition'):
         cmap = matplotlib.colors.LinearSegmentedColormap.from_list('dec', ['#f59e0b', '#22c55e', '#15803d', '#065f46'])
     else:
         cmap = matplotlib.colors.LinearSegmentedColormap.from_list('dec', ['#dc2626', '#f59e0b', '#22c55e', '#15803d'])
@@ -210,6 +232,24 @@ def render_png(cfg, out_path):
                 else:
                     txt = f'省{saved:.0f}万'
                 ax.text(j, i, txt, ha='center', va='center', fontsize=12, fontweight='bold', color='#ffffff', fontproperties=zh)
+    elif stype == 'tuition':
+        ax.set_xticks(range(len(xs)))
+        ax.set_xticklabels([f'+{x:.0f}元/月' for x in xs], fontproperties=zh, fontsize=11)
+        ax.set_yticks(range(len(ys)))
+        ax.set_yticklabels([f'{y:.0f}万' for y in ys], fontproperties=zh, fontsize=11)
+        ax.set_xlabel('预期月薪涨幅（元/月）', fontproperties=zh, fontsize=13)
+        ax.set_ylabel('学费/投入（万元）', fontproperties=zh, fontsize=13)
+        ax.set_title(cfg['title'] + '：学费 × 月薪涨幅 → 回本周期 + 后5年多赚', fontproperties=zh, fontsize=18, pad=14)
+        for i in range(len(ys)):
+            for j in range(len(xs)):
+                months = tuition_payback_months(ys[i], xs[j])
+                if math.isinf(months):
+                    txt = '回不了本'
+                elif months < 24:
+                    txt = f'{int(round(months))}个月'
+                else:
+                    txt = f'{months/12:.1f}年'
+                ax.text(j, i, txt, ha='center', va='center', fontsize=12, fontweight='bold', color='#ffffff', fontproperties=zh)
     else:
         ax.set_xticks(range(len(xs)))
         ax.set_xticklabels([f'{x}万' for x in xs], fontproperties=zh, fontsize=11)
@@ -260,6 +300,14 @@ def render_png(cfg, out_path):
         note = (f'{hook} 换算：{principal:.0f}万房贷、{rate:.1f}%利率，月供{monthly:.0f}元；'
                 f'每月多还{extra:.0f}元→还清缩到{months/12:.0f}年，省利息{saved:.1f}万。'
                 f'节省≥50%强烈建议、30-50%划算、10-30%一般、<10%不值得。测算不构成还款建议。')
+    elif stype == 'tuition':
+        tuition = min(cfg['y_values'], key=lambda v: abs(v - 3))
+        rise = min(cfg['x_values'], key=lambda r: abs(r - 5000))
+        months = tuition_payback_months(tuition, rise)
+        gain = tuition_extra_gain(tuition, rise)
+        note = (f'{hook} 换算：{tuition:.0f}万学费、月薪涨{rise:.0f}元→{int(round(months))}个月回本，'
+                f'回本后5年累计多赚{gain:.0f}万。'
+                f'回本≤12个月闭眼投、12-24个月划算、24-36个月一般、>36个月不值得。测算不构成教育投资建议。')
     else:
         mid = cfg['y_values'][len(cfg['y_values']) // 2]
         daily = round(mid * 10000 / 365)
