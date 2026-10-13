@@ -20,7 +20,9 @@ from .core import (ScenarioConfig, MatrixResult, build_matrix, single_result,
                    tuition_display, tuition_judgment, TUITION_COLORS,
                    build_emergency_matrix, single_emergency_result,
                    emergency_fund_need, emergency_judgment,
-                   emergency_level, EMERGENCY_COLORS)
+                   emergency_level, EMERGENCY_COLORS,
+                   build_dca_matrix, single_dca_result,
+                   dca_fv, dca_judgment, dca_level, dca_late_gap, DCA_COLORS)
 
 PAGE_CSS = """
   * { margin:0; padding:0; box-sizing:border-box; font-family:"Microsoft YaHei","PingFang SC",sans-serif; }
@@ -1075,6 +1077,165 @@ def render_tuition_result_card(cfg: ScenarioConfig, tuition_wan: float, salary_r
     html = f"""<!DOCTYPE html>
 <html lang="zh-CN"><head><meta charset="utf-8"><title>{cfg.title} · 结果卡</title>
 <style>{TUITION_CARD_CSS}</style></head><body>
+<div class="rcard">
+  <div class="rhead">{cfg.hook_title or cfg.title}</div>
+  <div class="rlabel">你的决策</div>
+  <div class="rbig" style="color:{r.color}">{big_text}</div>
+  <div class="rsub">{rsub}</div>
+  {verdict_html}
+  {convert_html}
+  {compare_html}
+  <div class="rquote">{quote}</div>
+  {share_html}
+  <div class="rdisclaimer">{cfg.disclaimer}</div>
+  <div class="rwatermark">{cfg.watermark}</div>
+</div>
+</body></html>"""
+    with open(out_path, 'w', encoding='utf-8') as f:
+        f.write(html)
+    return out_path
+
+
+# ==================== 场景 1.1：定投复利（开始定投晚一年，到底差多少？） ====================
+
+DCA_PAGE_CSS = """
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Microsoft YaHei','PingFang SC',sans-serif; background:#f6f7fb; color:#1f2937; padding:24px; }
+.card { max-width:880px; margin:0 auto; background:#fff; border-radius:16px; padding:28px 32px; box-shadow:0 4px 20px rgba(0,0,0,.06); }
+h1 { font-size:26px; color:#0f172a; margin-bottom:6px; }
+.subtitle { color:#64748b; font-size:14px; margin-bottom:14px; }
+.emotion { display:inline-block; margin-left:8px; background:#ecfdf5; color:#059669; border-radius:20px; padding:2px 12px; font-size:12px; }
+.assume { background:#f0fdf4; border-left:4px solid #22c55e; padding:10px 14px; border-radius:8px; color:#374151; font-size:13px; line-height:1.7; margin-bottom:14px; }
+.legend { margin:10px 0 14px; font-size:12px; color:#475569; display:flex; flex-wrap:wrap; gap:10px 16px; }
+.legend .dot { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:4px; vertical-align:middle; }
+table { width:100%; border-collapse:collapse; }
+th { background:#f1f5f9; color:#475569; font-size:14px; padding:10px 8px; border:1px solid #e2e8f0; }
+td { color:#fff; text-align:center; font-weight:700; font-size:17px; padding:12px 8px; border:1px solid #e2e8f0; }
+td small { display:block; font-weight:400; font-size:11px; opacity:.95; margin-top:2px; }
+th.rowhead { background:#e2e8f0; color:#1e293b; font-size:13px; }
+.foot { color:#94a3b8; font-size:11px; margin-top:14px; line-height:1.6; }
+.watermark { color:#cbd5e1; font-size:10px; text-align:right; margin-top:6px; }
+"""
+
+DCA_CARD_CSS = """
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Microsoft YaHei','PingFang SC',sans-serif; background:linear-gradient(160deg,#064e3b,#065f46); min-height:100vh; padding:24px; display:flex; align-items:center; justify-content:center; }
+.rcard { max-width:560px; background:#fff; border-radius:20px; padding:32px 30px; box-shadow:0 12px 40px rgba(0,0,0,.35); }
+.rhead { font-size:20px; color:#0f172a; font-weight:700; margin-bottom:4px; }
+.rlabel { color:#94a3b8; font-size:12px; margin:18px 0 4px; }
+.rbig { font-size:46px; font-weight:800; line-height:1.15; }
+.rsub { color:#64748b; font-size:13px; margin:6px 0 14px; }
+.rverdict { background:#f8fafc; border-radius:10px; padding:12px 14px; font-size:13px; color:#334155; line-height:1.7; margin-bottom:10px; }
+.rverdict b { color:#065f46; }
+.rcompare { background:#fffbeb; border-radius:10px; padding:12px 14px; font-size:13px; color:#57534e; line-height:1.8; margin-bottom:10px; }
+.rcmp-lo { color:#dc2626; font-weight:700; }
+.rcmp-hi { color:#059669; font-weight:700; }
+.rconvert { background:#ecfdf5; border-radius:10px; padding:12px 14px; font-size:13px; color:#065f46; line-height:1.7; margin-bottom:10px; }
+.rconvert b { color:#047857; }
+.rquote { font-size:14px; color:#475569; padding:8px 0 4px; font-style:italic; }
+.rshare { background:#f0fdf4; border:1px dashed #86efac; border-radius:10px; padding:10px 14px; font-size:13px; color:#166534; margin:10px 0; }
+.rshare .tag { background:#22c55e; color:#fff; border-radius:4px; padding:1px 8px; font-size:11px; margin-right:6px; }
+.rdisclaimer { color:#94a3b8; font-size:10px; margin-top:12px; line-height:1.6; }
+.rwatermark { color:#cbd5e1; font-size:10px; text-align:right; margin-top:4px; }
+"""
+
+
+def _dca_convert_note(cfg: ScenarioConfig) -> str:
+    """定投换算句：每月定投金额 ≈ 每天多少 ≈ 奶茶"""
+    monthly = min(cfg.y_values, key=lambda v: abs(v - 1000))
+    age = min(cfg.x_values, key=lambda a: abs(a - 25))
+    asset = dca_fv(monthly, age)
+    daily = monthly / 30
+    return (f'换算：每月定投 {monthly:.0f} 元 ≈ 每天 {daily:.0f} 元 ≈ {monthly/20:.0f} 杯奶茶/月——'
+            f'从 {age:.0f} 岁开始，60 岁约 <b>{asset:.0f} 万</b>。')
+
+
+def render_dca_matrix_html(cfg: ScenarioConfig, out_path: str) -> str:
+    """生成定投决策矩阵 HTML：行=每月定投金额，列=开始年龄"""
+    rows = build_dca_matrix(cfg)
+    head_cells = ''.join(
+        f'<th>{cfg.x_values[i]:.0f}岁</th>' for i in range(len(cfg.x_values)))
+    body_rows = []
+    for row in rows:
+        tds = ''.join(
+            f'<td style="background:{cell.color}">{cell.display}<small>60岁资产</small></td>'
+            for cell in row)
+        body_rows.append(f'<tr><th class="rowhead">{row[0].row_label}</th>{tds}</tr>')
+    legend = (
+        '<div class="legend">'
+        f'<span><i class="dot" style="background:{DCA_COLORS["small"]}"></i>&lt;50万</span>'
+        f'<span><i class="dot" style="background:{DCA_COLORS["mid"]}"></i>50-150万</span>'
+        f'<span><i class="dot" style="background:{DCA_COLORS["good"]}"></i>150-300万</span>'
+        f'<span><i class="dot" style="background:{DCA_COLORS["big"]}"></i>300-600万</span>'
+        f'<span><i class="dot" style="background:{DCA_COLORS["huge"]}"></i>600万+</span>'
+        '</div>'
+    )
+    emotion = f'<span class="emotion">{cfg.emotion}</span>' if cfg.emotion else ''
+    convert_note = _dca_convert_note(cfg)
+    html = f"""<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>{cfg.title}</title>
+<style>{DCA_PAGE_CSS}</style></head><body>
+<div class="card">
+  <h1>{cfg.hook_title or cfg.title}</h1>
+  <div class="subtitle">{cfg.hook_line or cfg.subtitle}{emotion}</div>
+  <div class="assume">假设：每月定投金额固定不变，长期年化 8%（A股/美股宽基指数长期平均口径，不代表每年收益）。单元格 = 定投到 60 岁的总资产。<br>{convert_note}</div>
+  {legend}
+  <table>
+    <tr><th class="rowhead">{cfg.y_name}</th>{head_cells}</tr>
+    {''.join(body_rows)}
+  </table>
+  <div class="foot">{cfg.disclaimer}</div>
+  <div class="watermark">{cfg.watermark}</div>
+</div>
+</body></html>"""
+    with open(out_path, 'w', encoding='utf-8') as f:
+        f.write(html)
+    return out_path
+
+
+def render_dca_result_card(cfg: ScenarioConfig, monthly: float, start_age: float,
+                           out_path: str) -> str:
+    """生成定投单点决策结果卡 HTML
+
+    monthly: 每月定投金额（元）
+    start_age: 开始定投年龄（20-40）
+    """
+    r = single_dca_result(cfg, monthly, start_age)
+    asset = dca_fv(monthly, start_age)
+    judgment = dca_judgment(r.level)
+    big_text = f'{asset:.0f} 万'
+    rsub = (f'每月定投 {monthly:.0f} 元 × 从 {start_age:.0f} 岁开始 → 60 岁总资产 {asset:.0f} 万'
+            f'（年化 8%）。')
+    quote = f'晚开始 5 年，少赚一辆车——最好的定投时机，就是现在。'
+    gap5 = dca_late_gap(monthly, start_age, start_age + 5)
+    gap10 = dca_late_gap(monthly, start_age, start_age + 10)
+    verdict_html = (
+        '<div class="rverdict">'
+        f'<b>决策判词：{judgment}</b><br>'
+        '档位参考：60 岁资产 &lt;50 万 储蓄率不足；50-150 万 有积累；150-300 万 复利发力；300-600 万 时间玫瑰；600 万以上 复利放大器。'
+        '</div>'
+    )
+    compare_html = (
+        '<div class="rcompare">'
+        f'&nbsp;&nbsp;晚 5 年开始：&nbsp;&nbsp;约少 <span class="rcmp-lo">{gap5:.0f} 万</span><br>'
+        f'&nbsp;&nbsp;晚 10 年开始：约少 <span class="rcmp-lo">{gap10:.0f} 万</span><br>'
+        f'&nbsp;&nbsp;差值：<b>{gap10-gap5:.0f} 万</b>——拖得越久，越追不回时间。'
+        '</div>'
+    )
+    convert_html = (
+        '<div class="rconvert">'
+        f'换算：每月 {monthly:.0f} 元 ≈ 每天 {monthly/30:.0f} 元 ≈ {monthly/20:.0f} 杯奶茶/月——'
+        f'少喝 {monthly/20:.0f} 杯奶茶，60 岁多 <b>{asset:.0f} 万</b>。'
+        '</div>'
+    )
+    share_html = ''
+    if cfg.share_copy:
+        share_text = cfg.share_copy.format(
+            monthly=f'{monthly:.0f}', start_age=f'{start_age:.0f}', asset=f'{asset:.0f}')
+        share_html = f'<div class="rshare"><span class="tag">可晒</span>{share_text}</div>'
+    html = f"""<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>{cfg.title} · 结果卡</title>
+<style>{DCA_CARD_CSS}</style></head><body>
 <div class="rcard">
   <div class="rhead">{cfg.hook_title or cfg.title}</div>
   <div class="rlabel">你的决策</div>

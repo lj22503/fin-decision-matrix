@@ -101,6 +101,22 @@ def emergency_level(months):
     if months <= 12: return 'solid'
     return 'plenty'
 
+def dca_fv(monthly, start_age, target_age=60.0, annual_rate=0.08):
+    """月度定投年金终值（万元）"""
+    if monthly <= 0 or target_age <= start_age:
+        return 0.0
+    r = annual_rate / 12
+    n = (target_age - start_age) * 12
+    return monthly * (((1 + r) ** n - 1) / r) / 10000
+
+def dca_level(asset_wan):
+    """定投 60 岁资产档位"""
+    if asset_wan < 50: return 'small'
+    if asset_wan < 150: return 'mid'
+    if asset_wan < 300: return 'good'
+    if asset_wan < 600: return 'big'
+    return 'huge'
+
 def build_matrix(cfg):
     xs, ys = cfg['x_values'], cfg['y_values']
     stype = cfg.get('scenario_type', 'retire')
@@ -165,6 +181,15 @@ def build_matrix(cfg):
             data.append(row)
         vmax = max(max(row) for row in data)
         return data, xs, ys, stype, vmax
+    if stype == 'dca':
+        data = []
+        for y in ys:
+            row = []
+            for x in xs:
+                row.append(dca_fv(y, x))
+            data.append(row)
+        vmax = max(max(row) for row in data)
+        return data, xs, ys, stype, vmax
     r, thr = cfg['annual_return'], cfg['perpetual_threshold']
     data = []
     for y in ys:
@@ -186,7 +211,7 @@ def render_png(cfg, out_path):
     norm = matplotlib.colors.Normalize(vmin=0, vmax=thr)
     if stype == 'debt':
         cmap = matplotlib.colors.LinearSegmentedColormap.from_list('dec', ['#15803d', '#f59e0b', '#dc2626', '#7f1d1d'])
-    elif stype in ('savings', 'savings_cut', 'prepay', 'tuition', 'emergency'):
+    elif stype in ('savings', 'savings_cut', 'prepay', 'tuition', 'emergency', 'dca'):
         cmap = matplotlib.colors.LinearSegmentedColormap.from_list('dec', ['#f59e0b', '#22c55e', '#15803d', '#065f46'])
     else:
         cmap = matplotlib.colors.LinearSegmentedColormap.from_list('dec', ['#dc2626', '#f59e0b', '#22c55e', '#15803d'])
@@ -284,6 +309,19 @@ def render_png(cfg, out_path):
                 need = emergency_fund_need(ys[i], xs[j])
                 txt = f'{need:.1f}万'
                 ax.text(j, i, txt, ha='center', va='center', fontsize=12, fontweight='bold', color='#ffffff', fontproperties=zh)
+    elif stype == 'dca':
+        ax.set_xticks(range(len(xs)))
+        ax.set_xticklabels([f'{x:.0f}岁' for x in xs], fontproperties=zh, fontsize=11)
+        ax.set_yticks(range(len(ys)))
+        ax.set_yticklabels([f'{y:.0f}元/月' for y in ys], fontproperties=zh, fontsize=11)
+        ax.set_xlabel('开始定投年龄', fontproperties=zh, fontsize=13)
+        ax.set_ylabel('每月定投金额（元）', fontproperties=zh, fontsize=13)
+        ax.set_title(cfg['title'] + '：月定投 × 开始年龄 → 60 岁总资产', fontproperties=zh, fontsize=18, pad=14)
+        for i in range(len(ys)):
+            for j in range(len(xs)):
+                asset = dca_fv(ys[i], xs[j])
+                txt = f'{asset:.0f}万'
+                ax.text(j, i, txt, ha='center', va='center', fontsize=12, fontweight='bold', color='#ffffff', fontproperties=zh)
     else:
         ax.set_xticks(range(len(xs)))
         ax.set_xticklabels([f'{x}万' for x in xs], fontproperties=zh, fontsize=11)
@@ -348,6 +386,14 @@ def render_png(cfg, out_path):
         need = emergency_fund_need(expense, months)
         note = (f'{hook} 换算：月固定支出{expense:.1f}万、留{months:.0f}个月→应急金{need:.1f}万。'
                 f'档位：不足3个月赤贫级、3-6个月底线、6-9个月标准、9-12个月稳健、12个月以上充裕（可转低波理财）。'
+                f'测算不构成投资建议。')
+    elif stype == 'dca':
+        monthly = min(cfg['y_values'], key=lambda v: abs(v - 1000))
+        age = min(cfg['x_values'], key=lambda a: abs(a - 25))
+        asset = dca_fv(monthly, age)
+        note = (f'{hook} 换算：每月定投{monthly:.0f}元≈每天{monthly/30:.0f}元≈{monthly/20:.0f}杯奶茶/月，'
+                f'从{age:.0f}岁开始60岁约{asset:.0f}万。'
+                f'档位：<50万储蓄率不足、50-150万有积累、150-300万复利发力、300-600万时间玫瑰、600万以上复利放大器。'
                 f'测算不构成投资建议。')
     else:
         mid = cfg['y_values'][len(cfg['y_values']) // 2]

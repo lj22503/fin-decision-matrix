@@ -662,3 +662,94 @@ def single_emergency_result(cfg: ScenarioConfig, monthly_expense_wan: float, saf
         level=level,
         color=EMERGENCY_COLORS[level],
     )
+
+
+# ==================== 场景 1.1：定投复利（开始定投晚一年，到底差多少？） ====================
+
+DCA_COLORS = {
+    'small': '#dc2626',     # 60岁资产 < 50 万
+    'mid': '#f59e0b',       # 50-150 万
+    'good': '#22c55e',      # 150-300 万
+    'big': '#15803d',       # 300-600 万
+    'huge': '#065f46',      # > 600 万
+}
+
+DCA_ANNUAL_RATE = 0.08   # 定投长期年化 8%（口径见 disclaimer）
+
+
+def dca_fv(monthly: float, start_age: float, target_age: float = 60.0,
+           annual_rate: float = DCA_ANNUAL_RATE) -> float:
+    """月度定投年金终值（万元）= PMT × ((1+r)^n - 1)/r，r=月利率，n=月数"""
+    if monthly <= 0 or target_age <= start_age:
+        return 0.0
+    r = annual_rate / 12
+    n = (target_age - start_age) * 12
+    return monthly * (((1 + r) ** n - 1) / r) / 10000
+
+
+def dca_level(asset_wan: float) -> str:
+    """定投 60 岁资产档位"""
+    if asset_wan < 50:
+        return 'small'
+    if asset_wan < 150:
+        return 'mid'
+    if asset_wan < 300:
+        return 'good'
+    if asset_wan < 600:
+        return 'big'
+    return 'huge'
+
+
+def dca_judgment(level: str) -> str:
+    """定投决策判词"""
+    return {
+        'small': '60 岁不到 50 万——每月投得太少，时间也救不了；先提储蓄率。',
+        'mid': '50-150 万——有积累但不够从容，建议提高月投额或拉长期限。',
+        'good': '150-300 万——复利开始发力，坚持到 60 岁稳稳的。',
+        'big': '300-600 万——这就是"时间的玫瑰"，每月坚持的效果被复利放大。',
+        'huge': '600 万以上——复利放大器，越早开始越离谱。',
+    }[level]
+
+
+def dca_late_gap(monthly: float, age_early: float, age_late: float,
+                 target_age: float = 60.0, annual_rate: float = DCA_ANNUAL_RATE) -> float:
+    """晚开始 N 年少赚的钱（万元）"""
+    return dca_fv(monthly, age_early, target_age, annual_rate) - dca_fv(monthly, age_late, target_age, annual_rate)
+
+
+def build_dca_matrix(cfg: ScenarioConfig) -> list:
+    """构建定投决策矩阵：行=每月定投金额，列=开始年龄
+
+    单元格 = 60 岁总资产，颜色按资产规模分级。
+    """
+    rows = []
+    for monthly in cfg.y_values:
+        row = []
+        for age in cfg.x_values:
+            asset = dca_fv(monthly, age)
+            level = dca_level(asset)
+            display = f'{asset:.0f}万'
+            row.append(MatrixResult(
+                row_label=f'{monthly:.0f}元/月',
+                col_label=f'{age:.0f}岁开始',
+                years=age,
+                display=display,
+                level=level,
+                color=DCA_COLORS[level],
+            ))
+        rows.append(row)
+    return rows
+
+
+def single_dca_result(cfg: ScenarioConfig, monthly: float, start_age: float) -> MatrixResult:
+    """定投单点决策：输入月定投金额与开始年龄，直接出 60 岁总资产"""
+    asset = dca_fv(monthly, start_age)
+    level = dca_level(asset)
+    return MatrixResult(
+        row_label=f'{monthly:.0f}元/月',
+        col_label=f'{start_age:.0f}岁开始',
+        years=start_age,
+        display=f'{asset:.0f}万',
+        level=level,
+        color=DCA_COLORS[level],
+    )
