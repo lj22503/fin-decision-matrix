@@ -16,7 +16,8 @@ import sys
 from engine.core import ScenarioConfig
 from engine.render import (render_matrix_html, render_result_card,
                            render_debt_matrix_html, render_debt_result_card,
-                           render_cut_matrix_html, render_cut_result_card)
+                           render_cut_matrix_html, render_cut_result_card,
+                           render_prepay_matrix_html, render_prepay_result_card)
 
 
 def load_config(path: str) -> ScenarioConfig:
@@ -42,6 +43,8 @@ def load_config(path: str) -> ScenarioConfig:
         share_copy=d.get('share_copy', ''),
         min_payment_ratio=d.get('min_payment_ratio', 0.02),
         min_payment_floor=d.get('min_payment_floor', 50.0),
+        loan_rate_pct=d.get('loan_rate_pct', 3.9),
+        loan_years=d.get('loan_years', 30.0),
         scenario_type=d.get('scenario_type', 'retire'),
     )
 
@@ -62,6 +65,8 @@ def main():
             path = render_debt_matrix_html(cfg, args.out)
         elif cfg.scenario_type == 'savings_cut':
             path = render_cut_matrix_html(cfg, args.out)
+        elif cfg.scenario_type == 'prepay':
+            path = render_prepay_matrix_html(cfg, args.out)
         else:
             path = render_matrix_html(cfg, args.out)
         print(f'[matrix] 已生成: {path}')
@@ -74,6 +79,8 @@ def main():
             path = render_debt_result_card(cfg, args.arg1, args.arg2, extra, args.out)
         elif cfg.scenario_type == 'savings_cut':
             path = render_cut_result_card(cfg, args.arg1, args.arg2, args.out)
+        elif cfg.scenario_type == 'prepay':
+            path = render_prepay_result_card(cfg, args.arg1, args.arg2, args.out)
         else:
             compare = args.extra if args.extra else cfg.x_values[0]
             path = render_result_card(cfg, args.arg1, args.arg2, compare, args.out)

@@ -43,8 +43,11 @@ class ScenarioConfig:
     # —— 场景 2.1 信用卡最低还款专用（可选）——
     min_payment_ratio: float = 0.02   # 最低还款 = 余额 × 比例
     min_payment_floor: float = 50.0   # 最低还款下限（元）
-    scenario_type: str = 'retire'     # 'retire'=躺平 / 'debt'=最低还款陷阱 / 'savings_cut'=消费降级
+    scenario_type: str = 'retire'     # 'retire'=躺平 / 'debt'=最低还款陷阱 / 'savings_cut'=消费降级 / 'prepay'=房贷提前还款
     savings_years: float = 20.0       # 消费降级场景：复利时间跨度（年）
+    # —— 场景 2.2 房贷提前还款专用（可选）——
+    loan_rate_pct: float = 3.9        # 房贷年利率（LPR 假设，%）
+    loan_years: float = 30.0          # 原始贷款年限（年）
 
 
 CELL_COLORS = {
@@ -322,4 +325,157 @@ def single_cut_result(cfg: ScenarioConfig, monthly_spend: float, cut_ratio: floa
         display=f'省{save:.0f}元 → {savings_display(amount)}',
         level=level,
         color=SAV_CUT_COLORS[level],
+    )
+
+
+# ==================== 场景 2.2：房贷提前还款（每月多还一点，省多少利息） ====================
+
+PREPAY_COLORS = {
+    'big_save':   '#065f46',   # 节省利息 >=50%（深绿）强烈建议
+    'save':       '#15803d',   # 节省利息 30-50%（绿）划算
+    'moderate':   '#f59e0b',   # 节省利息 10-30%（琥珀）一般
+    'minor':      '#dc2626',   # 节省利息 <10%（红）不值得
+}
+
+
+def annuity_monthly_payment(principal_wan: float, rate_pct: float, years: float) -> float:
+    """等额本息月供（元）：
+    M = P × r × (1+r)^n / ((1+r)^n - 1)，P=本金（元），r=月利率，n=还款月数。
+    """
+    if years <= 0:
+        return 0.0
+    P = principal_wan * 10000
+    r = rate_pct / 100 / 12
+    n = int(round(years * 12))
+    if r == 0:
+        return P / n
+    return P * r * (1 + r) ** n / ((1 + r) ** n - 1)
+
+
+def prepay_sim(principal_wan: float, rate_pct: float, years: float, extra_monthly: float):
+    """提前还款模拟：每月按等额本息月供 + 额外还款，计算还清年限与总利息（万元）。
+
+    返回 (months, total_interest_wan, monthly_payment)：
+      months: 还清所需月数（0 表示参数非法）
+      total_interest_wan: 累计支付利息（万元）
+      monthly_payment: 原始月供（元，不含额外还款）
+    """
+    P = principal_wan * 10000
+    r = rate_pct / 100 / 12
+    n = int(round(years * 12))
+    if P <= 0 or n <= 0:
+        return 0, 0.0, 0.0
+    if r == 0:
+        monthly_payment = P / n
+        # 无利息，额外还款只是缩短期限
+        months = n
+        while months > 1 and P - monthly_payment * months - extra_monthly * (n - months) > 0:
+            months -= 1
+        total_interest = 0.0
+        return months, total_interest, monthly_payment
+    monthly_payment = annuity_monthly_payment(principal_wan, rate_pct, years)
+    balance = P
+    months = 0
+    total_interest = 0.0
+    while balance > 0.01 and months < n:
+        interest = balance * r
+        principal_part = monthly_payment - interest
+        if principal_part <= 0:
+            # 极端情况：月供不足以覆盖利息（不会发生在等额本息正常贷款中）
+            break
+        balance -= (principal_part + extra_monthly)
+        total_interest += interest
+        months += 1
+        if balance < 0:
+            balance = 0
+    return months, total_interest / 10000, monthly_payment
+
+
+def prepay_base_interest(principal_wan: float, rate_pct: float, years: float) -> float:
+    """不提前还款时的总利息（万元）"""
+    months, interest, _ = prepay_sim(principal_wan, rate_pct, years, 0.0)
+    return interest
+
+
+def prepay_save_ratio(principal_wan: float, rate_pct: float, years: float, extra_monthly: float) -> float:
+    """提前还款节省利息比例：0-1，0 表示不省"""
+    base = prepay_base_interest(principal_wan, rate_pct, years)
+    if base <= 0:
+        return 0.0
+    _, interest, _ = prepay_sim(principal_wan, rate_pct, years, extra_monthly)
+    return max(0.0, min(1.0, (base - interest) / base))
+
+
+def prepay_level(save_ratio: float) -> str:
+    """提前还款决策档位"""
+    if save_ratio >= 0.5:
+        return 'big_save'
+    if save_ratio >= 0.3:
+        return 'save'
+    if save_ratio >= 0.1:
+        return 'moderate'
+    return 'minor'
+
+
+def prepay_judgment(level: str) -> str:
+    """提前还款决策判词"""
+    return {
+        'big_save': '强烈建议：利息砍半以上，越早还越赚',
+        'save':     '划算：明显省钱，可优先安排',
+        'moderate': '一般：省钱有限，可结合现金流决定',
+        'minor':    '不值得：省不了多少，不如拿去理财',
+    }[level]
+
+
+def build_prepay_matrix(cfg: ScenarioConfig) -> list:
+    """构建提前还款决策矩阵：行=贷款余额，列=每月额外还款
+
+    单元格 = 还清年限（年）+ 节省利息（万元），颜色按节省利息比例分级。
+    """
+    rows = []
+    for principal in cfg.y_values:
+        row = []
+        base_interest = prepay_base_interest(principal, cfg.loan_rate_pct, cfg.loan_years)
+        for extra in cfg.x_values:
+            months, interest, _ = prepay_sim(principal, cfg.loan_rate_pct, cfg.loan_years, extra)
+            years = months / 12
+            saved = max(0.0, base_interest - interest)
+            ratio = prepay_save_ratio(principal, cfg.loan_rate_pct, cfg.loan_years, extra)
+            level = prepay_level(ratio)
+            if extra == 0:
+                display = f'{int(round(years))}年 · 利息{base_interest:.0f}万'
+            else:
+                display = f'{years:.0f}年 · 省{saved:.0f}万'
+            row.append(MatrixResult(
+                row_label=f'{principal}{cfg.y_unit}',
+                col_label=f'{extra:.0f}元/月',
+                years=years,
+                display=display,
+                level=level,
+                color=PREPAY_COLORS[level],
+            ))
+        rows.append(row)
+    return rows
+
+
+def single_prepay_result(cfg: ScenarioConfig, principal_wan: float, extra_monthly: float) -> MatrixResult:
+    """提前还款单点决策：输入贷款余额与每月额外还款，直接出结论"""
+    base_interest = prepay_base_interest(principal_wan, cfg.loan_rate_pct, cfg.loan_years)
+    months, interest, monthly_payment = prepay_sim(
+        principal_wan, cfg.loan_rate_pct, cfg.loan_years, extra_monthly)
+    years = months / 12
+    saved = max(0.0, base_interest - interest)
+    ratio = prepay_save_ratio(principal_wan, cfg.loan_rate_pct, cfg.loan_years, extra_monthly)
+    level = prepay_level(ratio)
+    if extra_monthly == 0:
+        display = f'{int(round(years))}年 · 利息{base_interest:.0f}万'
+    else:
+        display = f'{years:.0f}年 · 省{saved:.0f}万'
+    return MatrixResult(
+        row_label=f'{principal_wan}{cfg.y_unit}',
+        col_label=f'{extra_monthly:.0f}元/月',
+        years=years,
+        display=display,
+        level=level,
+        color=PREPAY_COLORS[level],
     )
