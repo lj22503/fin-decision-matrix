@@ -89,6 +89,18 @@ def tuition_extra_gain(tuition, rise, horizon_years=5.0):
         return 0.0
     return rise * 12 * horizon_years / 10000
 
+def emergency_fund_need(monthly_expense_wan, months):
+    """建议应急金（万元）= 月固定支出 × 安全月数"""
+    return monthly_expense_wan * months
+
+def emergency_level(months):
+    """应急金安全月数档位"""
+    if months < 3: return 'bare'
+    if months < 6: return 'minimal'
+    if months < 9: return 'standard'
+    if months <= 12: return 'solid'
+    return 'plenty'
+
 def build_matrix(cfg):
     xs, ys = cfg['x_values'], cfg['y_values']
     stype = cfg.get('scenario_type', 'retire')
@@ -144,6 +156,15 @@ def build_matrix(cfg):
             data.append(row)
         vmax = max(max(row) for row in data)
         return data, xs, ys, stype, vmax
+    if stype == 'emergency':
+        data = []
+        for y in ys:
+            row = []
+            for x in xs:
+                row.append(emergency_fund_need(y, x))
+            data.append(row)
+        vmax = max(max(row) for row in data)
+        return data, xs, ys, stype, vmax
     r, thr = cfg['annual_return'], cfg['perpetual_threshold']
     data = []
     for y in ys:
@@ -165,7 +186,7 @@ def render_png(cfg, out_path):
     norm = matplotlib.colors.Normalize(vmin=0, vmax=thr)
     if stype == 'debt':
         cmap = matplotlib.colors.LinearSegmentedColormap.from_list('dec', ['#15803d', '#f59e0b', '#dc2626', '#7f1d1d'])
-    elif stype in ('savings', 'savings_cut', 'prepay', 'tuition'):
+    elif stype in ('savings', 'savings_cut', 'prepay', 'tuition', 'emergency'):
         cmap = matplotlib.colors.LinearSegmentedColormap.from_list('dec', ['#f59e0b', '#22c55e', '#15803d', '#065f46'])
     else:
         cmap = matplotlib.colors.LinearSegmentedColormap.from_list('dec', ['#dc2626', '#f59e0b', '#22c55e', '#15803d'])
@@ -250,6 +271,19 @@ def render_png(cfg, out_path):
                 else:
                     txt = f'{months/12:.1f}年'
                 ax.text(j, i, txt, ha='center', va='center', fontsize=12, fontweight='bold', color='#ffffff', fontproperties=zh)
+    elif stype == 'emergency':
+        ax.set_xticks(range(len(xs)))
+        ax.set_xticklabels([f'{x:.0f}个月' for x in xs], fontproperties=zh, fontsize=11)
+        ax.set_yticks(range(len(ys)))
+        ax.set_yticklabels([f'{y:.1f}万/月' for y in ys], fontproperties=zh, fontsize=11)
+        ax.set_xlabel('目标安全月数', fontproperties=zh, fontsize=13)
+        ax.set_ylabel('月固定支出（万元）', fontproperties=zh, fontsize=13)
+        ax.set_title(cfg['title'] + '：月支出 × 安全月数 → 建议应急金', fontproperties=zh, fontsize=18, pad=14)
+        for i in range(len(ys)):
+            for j in range(len(xs)):
+                need = emergency_fund_need(ys[i], xs[j])
+                txt = f'{need:.1f}万'
+                ax.text(j, i, txt, ha='center', va='center', fontsize=12, fontweight='bold', color='#ffffff', fontproperties=zh)
     else:
         ax.set_xticks(range(len(xs)))
         ax.set_xticklabels([f'{x}万' for x in xs], fontproperties=zh, fontsize=11)
@@ -308,6 +342,13 @@ def render_png(cfg, out_path):
         note = (f'{hook} 换算：{tuition:.0f}万学费、月薪涨{rise:.0f}元→{int(round(months))}个月回本，'
                 f'回本后5年累计多赚{gain:.0f}万。'
                 f'回本≤12个月闭眼投、12-24个月划算、24-36个月一般、>36个月不值得。测算不构成教育投资建议。')
+    elif stype == 'emergency':
+        expense = min(cfg['y_values'], key=lambda v: abs(v - 1))
+        months = min(cfg['x_values'], key=lambda m: abs(m - 6))
+        need = emergency_fund_need(expense, months)
+        note = (f'{hook} 换算：月固定支出{expense:.1f}万、留{months:.0f}个月→应急金{need:.1f}万。'
+                f'档位：不足3个月赤贫级、3-6个月底线、6-9个月标准、9-12个月稳健、12个月以上充裕（可转低波理财）。'
+                f'测算不构成投资建议。')
     else:
         mid = cfg['y_values'][len(cfg['y_values']) // 2]
         daily = round(mid * 10000 / 365)

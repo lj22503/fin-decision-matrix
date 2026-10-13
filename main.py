@@ -18,7 +18,8 @@ from engine.render import (render_matrix_html, render_result_card,
                            render_debt_matrix_html, render_debt_result_card,
                            render_cut_matrix_html, render_cut_result_card,
                            render_prepay_matrix_html, render_prepay_result_card,
-                           render_tuition_matrix_html, render_tuition_result_card)
+                           render_tuition_matrix_html, render_tuition_result_card,
+                           render_emergency_matrix_html, render_emergency_result_card)
 
 
 def load_config(path: str) -> ScenarioConfig:
@@ -70,6 +71,8 @@ def main():
             path = render_prepay_matrix_html(cfg, args.out)
         elif cfg.scenario_type == 'tuition':
             path = render_tuition_matrix_html(cfg, args.out)
+        elif cfg.scenario_type == 'emergency':
+            path = render_emergency_matrix_html(cfg, args.out)
         else:
             path = render_matrix_html(cfg, args.out)
         print(f'[matrix] 已生成: {path}')
@@ -86,6 +89,8 @@ def main():
             path = render_prepay_result_card(cfg, args.arg1, args.arg2, args.out)
         elif cfg.scenario_type == 'tuition':
             path = render_tuition_result_card(cfg, args.arg1, args.arg2, args.out)
+        elif cfg.scenario_type == 'emergency':
+            path = render_emergency_result_card(cfg, args.arg1, args.arg2, args.out)
         else:
             compare = args.extra if args.extra else cfg.x_values[0]
             path = render_result_card(cfg, args.arg1, args.arg2, compare, args.out)

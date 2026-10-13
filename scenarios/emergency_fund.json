@@ -1,0 +1,31 @@
+{
+  "id": "7.2",
+  "title": "我该留多少救命钱？",
+  "subtitle": "月固定支出 × 目标安全月数 → 建议应急金",
+  "x_name": "目标安全月数",
+  "x_unit": "个月",
+  "x_values": [
+    3,
+    6,
+    9,
+    12
+  ],
+  "y_name": "月固定支出",
+  "y_unit": "万",
+  "y_values": [
+    0.5,
+    1,
+    2,
+    3
+  ],
+  "annual_return": 0.0,
+  "perpetual_threshold": 80,
+  "disclaimer": "应急金 = 月固定支出 × 目标安全月数。档位参考：单收入家庭 6-9 个月、双收入 3-6 个月、有老人需赡养 9-12 个月；超过 12 个月的现金会跑输通胀，建议转低波理财。测算不构成投资建议。",
+  "watermark": "投资平权 · fin-decision-matrix",
+  "hook_title": "你的安全感，值几个月工资",
+  "hook_line": "月固定支出 1 万、留 6 个月 → 应急金 6 万——安全感不是玄学，是几个月工资。",
+  "emotion": "安全感具象化",
+  "convert": "6 万应急金 ≈ 6 个月工资 ≈ 2000 杯奶茶",
+  "share_copy": "我算了一下：月支出 {expense} 万、留 {months} 个月 → 应急金 {need} 万。安全感不是玄学，是几个月工资。",
+  "scenario_type": "emergency"
+}

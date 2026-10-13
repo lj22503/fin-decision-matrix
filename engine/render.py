@@ -17,7 +17,10 @@ from .core import (ScenarioConfig, MatrixResult, build_matrix, single_result,
                    prepay_judgment, PREPAY_COLORS, annuity_monthly_payment,
                    build_tuition_matrix, single_tuition_result,
                    tuition_payback_months, tuition_extra_gain,
-                   tuition_display, tuition_judgment, TUITION_COLORS)
+                   tuition_display, tuition_judgment, TUITION_COLORS,
+                   build_emergency_matrix, single_emergency_result,
+                   emergency_fund_need, emergency_judgment,
+                   emergency_level, EMERGENCY_COLORS)
 
 PAGE_CSS = """
   * { margin:0; padding:0; box-sizing:border-box; font-family:"Microsoft YaHei","PingFang SC",sans-serif; }
@@ -744,6 +747,173 @@ def render_prepay_result_card(cfg: ScenarioConfig, principal_wan: float, extra_m
         f.write(html)
     return out_path
 
+
+# ==================== 场景 7.2：应急金（我该留多少救命钱？） ====================
+
+EMERGENCY_PAGE_CSS = """
+  * { margin:0; padding:0; box-sizing:border-box; font-family:"Microsoft YaHei","PingFang SC",sans-serif; }
+  body { background:#f6f7fb; padding:24px; }
+  .card { background:#fff; border-radius:16px; box-shadow:0 4px 20px rgba(0,0,0,.08);
+          max-width:980px; margin:0 auto; padding:28px 32px; }
+  h1 { font-size:30px; color:#111827; text-align:center; }
+  .subtitle { text-align:center; color:#6b7280; font-size:14px; margin:6px 0 18px; }
+  .emotion { display:inline-block; background:#dbeafe; color:#1d4ed8; font-size:11px; padding:2px 8px;
+             border-radius:999px; margin-left:8px; vertical-align:middle; font-weight:700; }
+  .assume { background:#f3f4f6; border-radius:10px; padding:10px 14px; font-size:13px;
+            color:#374151; margin-bottom:16px; line-height:1.7; }
+  .assume b { color:#1d4ed8; }
+  table { width:100%; border-collapse:separate; border-spacing:4px; }
+  th { padding:10px 8px; font-size:14px; color:#111827; background:#e0f2fe; border-radius:8px; }
+  th.rowhead { text-align:left; width:120px; }
+  td { padding:10px 6px; text-align:center; font-size:15px; font-weight:700;
+       color:#fff; border-radius:8px; min-width:96px; line-height:1.5; }
+  td small { display:block; font-size:11px; font-weight:400; opacity:.9; }
+  .foot { margin-top:16px; font-size:12px; color:#9ca3af; line-height:1.6; }
+  .watermark { margin-top:14px; text-align:center; font-size:12px; color:#9ca3af; letter-spacing:1px; }
+  .legend { display:flex; justify-content:center; gap:16px; margin:12px 0 16px; font-size:12px; color:#374151; flex-wrap:wrap; }
+  .legend span { display:inline-flex; align-items:center; gap:6px; }
+  .dot { width:14px; height:14px; border-radius:4px; display:inline-block; }
+"""
+
+EMERGENCY_CARD_CSS = """
+  * { margin:0; padding:0; box-sizing:border-box; font-family:"Microsoft YaHei","PingFang SC",sans-serif; }
+  body { background:#0c1226; padding:24px; display:flex; justify-content:center; }
+  .rcard { background:linear-gradient(160deg,#1e2a4a,#0c1226); color:#fff; border-radius:20px;
+           max-width:640px; padding:32px; box-shadow:0 12px 40px rgba(0,0,0,.4); }
+  .rhead { font-size:20px; font-weight:700; color:#60a5fa; line-height:1.5; }
+  .rlabel { font-size:13px; color:#94a3b8; margin-top:22px; }
+  .rbig { font-size:46px; font-weight:800; margin:4px 0 10px; letter-spacing:1px; line-height:1.25; }
+  .rsub { font-size:14px; color:#cbd5e1; line-height:1.7; }
+  .rverdict { margin-top:16px; background:#0f172a; border-left:4px solid #60a5fa; border-radius:10px;
+              padding:12px 16px; font-size:14px; line-height:1.8; }
+  .rverdict b { color:#60a5fa; }
+  .rcompare { background:#0f172a; border-radius:12px; padding:14px 18px; margin-top:14px; font-size:14px; line-height:2; }
+  .rcmp-hi { color:#60a5fa; font-weight:700; }
+  .rcmp-lo { color:#94a3b8; font-weight:700; }
+  .rquote { margin-top:14px; font-size:15px; color:#60a5fa; font-weight:700; text-align:center; }
+  .rconvert { margin-top:14px; background:#0a2540; border:1px solid #1e3a8a; border-radius:10px;
+              padding:10px 14px; font-size:13px; color:#93c5fd; line-height:1.7; }
+  .rconvert b { color:#60a5fa; font-size:15px; }
+  .rshare { margin-top:12px; background:#0f172a; border-left:3px solid #60a5fa; border-radius:8px;
+            padding:10px 14px; font-size:13px; color:#e2e8f0; line-height:1.8; }
+  .rshare .tag { display:inline-block; background:#60a5fa; color:#0c1226; font-size:11px; font-weight:700;
+                 padding:1px 8px; border-radius:6px; margin-right:8px; }
+  .rdisclaimer { margin-top:14px; font-size:11px; color:#64748b; line-height:1.6; }
+  .rwatermark { margin-top:10px; text-align:center; font-size:11px; color:#64748b; letter-spacing:1px; }
+"""
+
+
+def _emergency_convert_note(cfg: ScenarioConfig) -> str:
+    """应急金换算句：锚点 = 月支出 1 万 × 6 个月"""
+    expense = min(cfg.y_values, key=lambda v: abs(v - 1))
+    months = min(cfg.x_values, key=lambda m: abs(m - 6))
+    need = emergency_fund_need(expense, months)
+    return (f"换算：月固定支出 {expense:.1f} 万、留 <b>{months:.0f} 个月</b> → 应急金 <b>{need:.0f} 万</b>。"
+            "安全感不是玄学，是几个月工资。")
+
+
+def render_emergency_matrix_html(cfg: ScenarioConfig, out_path: str) -> str:
+    """生成应急金决策矩阵 HTML：行=月固定支出，列=目标安全月数"""
+    rows = build_emergency_matrix(cfg)
+    head_cells = ''.join(
+        f'<th>{cfg.x_values[i]:.0f}个月</th>' for i in range(len(cfg.x_values)))
+    body_rows = []
+    for row in rows:
+        tds = ''.join(
+            f'<td style="background:{cell.color}">{cell.display.split(" · ")[0]}<small>安全月数 {cell.display.split(" · ")[1]}</small></td>'
+            for cell in row)
+        body_rows.append(f'<tr><th class="rowhead">{row[0].row_label}</th>{tds}</tr>')
+    legend = (
+        '<div class="legend">'
+        f'<span><i class="dot" style="background:{EMERGENCY_COLORS["bare"]}"></i>不足3个月 赤贫级</span>'
+        f'<span><i class="dot" style="background:{EMERGENCY_COLORS["minimal"]}"></i>3-6个月 底线</span>'
+        f'<span><i class="dot" style="background:{EMERGENCY_COLORS["standard"]}"></i>6-9个月 标准</span>'
+        f'<span><i class="dot" style="background:{EMERGENCY_COLORS["solid"]}"></i>9-12个月 稳健</span>'
+        f'<span><i class="dot" style="background:{EMERGENCY_COLORS["plenty"]}"></i>12个月+ 充裕</span>'
+        '</div>'
+    )
+    emotion = f'<span class="emotion">{cfg.emotion}</span>' if cfg.emotion else ''
+    convert_note = _emergency_convert_note(cfg)
+    html = f"""<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>{cfg.title}</title>
+<style>{EMERGENCY_PAGE_CSS}</style></head><body>
+<div class="card">
+  <h1>{cfg.hook_title or cfg.title}</h1>
+  <div class="subtitle">{cfg.hook_line or cfg.subtitle}{emotion}</div>
+  <div class="assume">假设：应急金 = 月固定支出 × 目标安全月数。档位参考：单收入家庭建议 6-9 个月、双收入 3-6 个月、有老人需赡养 9-12 个月。超过 12 个月的现金会跑输通胀，建议转低波理财。<br>{convert_note}</div>
+  {legend}
+  <table>
+    <tr><th class="rowhead">{cfg.y_name}</th>{head_cells}</tr>
+    {''.join(body_rows)}
+  </table>
+  <div class="foot">{cfg.disclaimer}</div>
+  <div class="watermark">{cfg.watermark}</div>
+</div>
+</body></html>"""
+    with open(out_path, 'w', encoding='utf-8') as f:
+        f.write(html)
+    return out_path
+
+
+def render_emergency_result_card(cfg: ScenarioConfig, monthly_expense_wan: float, safety_months: float,
+                                 out_path: str) -> str:
+    """生成应急金单点决策结果卡 HTML
+
+    monthly_expense_wan: 月固定支出（万元）
+    safety_months: 目标安全月数（3-12）
+    """
+    r = single_emergency_result(cfg, monthly_expense_wan, safety_months)
+    need = emergency_fund_need(monthly_expense_wan, safety_months)
+    judgment = emergency_judgment(r.level)
+    big_text = f'{need:.1f} 万'
+    rsub = (f'月固定支出 {monthly_expense_wan:.1f} 万 × 目标安全月数 {safety_months:.0f} 个月 → '
+            f'建议应急金 {need:.1f} 万。')
+    quote = f'你的安全感，值 {safety_months:.0f} 个月工资——先留够救命钱，再谈投资。'
+    verdict_html = (
+        '<div class="rverdict">'
+        f'<b>决策判词：{judgment}</b><br>'
+        '档位参考：不足 3 个月赤贫级；3-6 个月底线；6-9 个月标准；9-12 个月稳健；12 个月以上充裕（可转低波理财）。'
+        '</div>'
+    )
+    compare_html = (
+        '<div class="rcompare">'
+        f'&nbsp;&nbsp;只留 3 个月：&nbsp;&nbsp;约 <span class="rcmp-lo">{monthly_expense_wan*3:.1f} 万</span>——突发开支一来就崩<br>'
+        f'&nbsp;&nbsp;留到 {safety_months:.0f} 个月：<b>{need:.1f} 万</b>——<span class="rcmp-hi">多备 {monthly_expense_wan*(safety_months-3):.1f} 万</span>，换一份从容<br>'
+        f'&nbsp;&nbsp;差值：<b>{monthly_expense_wan*(safety_months-3):.1f} 万</b>——这就是你给自己买的"失业保险"。'
+        '</div>'
+    )
+    convert_html = (
+        '<div class="rconvert">'
+        f'换算：{need:.1f} 万应急金 ≈ {safety_months:.0f} 个月工资 ≈ '
+        f'<b>{need*10000/30:.0f} 杯奶茶</b>——关键时刻，它是你的底气和话语权。'
+        '</div>'
+    )
+    share_html = ''
+    if cfg.share_copy:
+        share_text = cfg.share_copy.format(
+            expense=f'{monthly_expense_wan:.1f}', months=f'{safety_months:.0f}',
+            need=f'{need:.1f}')
+        share_html = f'<div class="rshare"><span class="tag">可晒</span>{share_text}</div>'
+    html = f"""<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>{cfg.title} · 结果卡</title>
+<style>{EMERGENCY_CARD_CSS}</style></head><body>
+<div class="rcard">
+  <div class="rhead">{cfg.hook_title or cfg.title}</div>
+  <div class="rlabel">你的决策</div>
+  <div class="rbig" style="color:{r.color}">{big_text}</div>
+  <div class="rsub">{rsub}</div>
+  {verdict_html}
+  {convert_html}
+  {compare_html}
+  <div class="rquote">{quote}</div>
+  {share_html}
+  <div class="rdisclaimer">{cfg.disclaimer}</div>
+  <div class="rwatermark">{cfg.watermark}</div>
+</div>
+</body></html>"""
+    with open(out_path, 'w', encoding='utf-8') as f:
+        f.write(html)
+    return out_path
 
 # ==================== 场景 6.2：技能投资回收期（这笔学费，值不值？） ====================
 

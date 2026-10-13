@@ -577,3 +577,88 @@ def single_tuition_result(cfg: ScenarioConfig, tuition_wan: float, salary_rise: 
         level=level,
         color=TUITION_COLORS[level],
     )
+
+
+# ==================== 场景 7.2：应急金（我该留多少救命钱？） ====================
+
+EMERGENCY_COLORS = {
+    'bare': '#dc2626',      # 不足 3 个月：赤贫级
+    'minimal': '#f59e0b',   # 3-6 个月：底线
+    'standard': '#22c55e',  # 6-9 个月：标准
+    'solid': '#15803d',     # 9-12 个月：稳健
+    'plenty': '#065f46',    # 12 个月以上：充裕
+}
+
+
+def emergency_fund_need(monthly_expense_wan: float, months: float) -> float:
+    """建议应急金（万元）= 月固定支出 × 安全月数"""
+    return monthly_expense_wan * months
+
+
+def emergency_level(months: float) -> str:
+    """应急金安全月数档位"""
+    if months < 3:
+        return 'bare'
+    if months < 6:
+        return 'minimal'
+    if months < 9:
+        return 'standard'
+    if months <= 12:
+        return 'solid'
+    return 'plenty'
+
+
+def emergency_judgment(level: str) -> str:
+    """应急金决策判词"""
+    return {
+        'bare': '不够 3 个月——突发开支一来就崩，先停掉非必要消费补坑。',
+        'minimal': '3-6 个月——勉强够底，但失业 3 个月就要吃土，建议提到 6 个月。',
+        'standard': '6-9 个月——安全感及格线，单收入家庭可以稳。',
+        'solid': '9-12 个月——很稳，双收入或想从容跳槽都够用。',
+        'plenty': '12 个月以上——现金过多会跑输通胀，超出部分可转低波理财。',
+    }[level]
+
+
+def emergency_display(need_wan: float, months: float) -> str:
+    """应急金展示文本"""
+    if months < 3:
+        return f'留{need_wan:.0f}万（不足3个月）'
+    return f'留{need_wan:.0f}万（{months:.0f}个月支出）'
+
+
+def build_emergency_matrix(cfg: ScenarioConfig) -> list:
+    """构建应急金决策矩阵：行=月固定支出，列=目标安全月数
+
+    单元格 = 建议应急金 + 安全月数，颜色按安全月数档位分级。
+    """
+    rows = []
+    for expense in cfg.y_values:
+        row = []
+        for months in cfg.x_values:
+            need = emergency_fund_need(expense, months)
+            level = emergency_level(months)
+            display = f'{need:.0f}万 · {months:.0f}个月'
+            row.append(MatrixResult(
+                row_label=f'{expense}{cfg.y_unit}/月',
+                col_label=f'{months:.0f}个月',
+                years=months,
+                display=display,
+                level=level,
+                color=EMERGENCY_COLORS[level],
+            ))
+        rows.append(row)
+    return rows
+
+
+def single_emergency_result(cfg: ScenarioConfig, monthly_expense_wan: float, safety_months: float) -> MatrixResult:
+    """应急金单点决策：输入月固定支出与目标安全月数，直接出结论"""
+    need = emergency_fund_need(monthly_expense_wan, safety_months)
+    level = emergency_level(safety_months)
+    return MatrixResult(
+        row_label=f'{monthly_expense_wan}{cfg.y_unit}/月',
+        col_label=f'{safety_months:.0f}个月',
+        years=safety_months,
+        display=f'{need:.0f}万 · {safety_months:.0f}个月',
+        level=level,
+        color=EMERGENCY_COLORS[level],
+    )
