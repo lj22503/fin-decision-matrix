@@ -35,12 +35,12 @@
     --page-accent: var(--mf-colors-text-link);          /* #F97316 芒果橙电压色 */
     --page-accent-deep: var(--mf-colors-text-accent-mango); /* #E05E0A 深橙 */
     --page-hairline: var(--mf-colors-border-weak);      /* 1px 细线 */
-    /* 表格档位：mangofolio 亮橙系列实色（告别半透明灰蒙），深底白字 / 浅底深字 */
-    --lvl1-bg: #11693D;   /* ≥30万 深绿 */
-    --lvl2-bg: #1F8A4C;   /* 15-30万 中绿实色 */
+    /* 表格档位：中国习惯红涨绿跌——金额越高越红、越低越绿；mangofolio 亮橙系列实色，深底白字 / 浅底深字 */
+    --lvl1-bg: #B8221E;   /* ≥30万 涨红（好） */
+    --lvl2-bg: #D4543E;   /* 15-30万 橙红 */
     --lvl3-bg: #F59E0B;   /* 5-15万 琥珀 */
-    --lvl4-bg: #F97316;   /* 1-5万 亮橙 */
-    --lvl5-bg: #B8221E;   /* <1万 深红 */
+    --lvl4-bg: #1F8A4C;   /* 1-5万 中绿 */
+    --lvl5-bg: #11693D;   /* <1万 跌绿（差） */
   }
 
   * { margin:0; padding:0; box-sizing:border-box; }
@@ -118,7 +118,6 @@
   <p>先记住结论：<strong>"小钱没用"是最大的理财错觉。</strong>每天 30 元看起来不起眼，但一年就是 <span class="dyn" id="leadYear">1.1 万</span>，10 年加复利接近 <span class="dyn" id="leadFV">14 万</span>。<b>决定你财富的不是偶尔的大动作，而是每天的小习惯。</b>省下的每一块钱，都是你未来的隐形存款。</p>
 </div>
 
-  <div class="section-title">每月节省 × 坚持年限 → 终值（本金 + 利息）</div>
   <div class="legend">
     <span><i class="dot lvl1"></i>≥30万</span>
     <span><i class="dot lvl2"></i>15-30万</span>
@@ -140,7 +139,7 @@
     <p>更反直觉的是：<b>时间越往后，利息占比越大</b>。第 10 年利息只占 23%，第 20 年利息占 42%——复利是"先慢后快"的曲线，越早开始，后面的加速度越猛。</p>
   </details>
 
-  <div class="chart-sub">灰线是你攒下的本金，绿线是本金 + 利息——差距就是复利替你赚的</div>
+  <div class="chart-sub">灰线是你攒下的本金，橙线是本金 + 利息——差距就是复利替你赚的</div>
   <div class="chart-wrap">
     <svg id="saveCurve" viewBox="0 0 900 440" preserveAspectRatio="xMidYMid meet"></svg>
   </div>
@@ -332,31 +331,31 @@
   const areaClose = principalPts.slice().reverse().map(p =>
     'L' + xScale(p.y).toFixed(1) + ',' + yScale(p.v).toFixed(1)
   ).join(' ');
-  svgParts.push(`<path d="${areaPts} ${areaClose} Z" style="fill:var(--mf-colors-dataviz-down-1)" fill-opacity="0.28" />`);
+  svgParts.push(`<path d="${areaPts} ${areaClose} Z" style="fill:var(--mf-colors-dataviz-mango-2)" fill-opacity="0.28" />`);
 
   // 本金线（灰）
   svgParts.push(`<path d="${buildPath(principalPts)}" fill="none"
     style="stroke:var(--mf-colors-text-weak)" stroke-width="2.5" stroke-dasharray="2,5" stroke-linecap="round" />`);
 
-  // 终值线（绿）
+  // 终值线（mangofolio 主色芒果橙）
   svgParts.push(`<path d="${buildPath(fvPts)}" fill="none"
-    style="stroke:var(--mf-colors-dataviz-down-1)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />`);
+    style="stroke:var(--mf-colors-dataviz-mango-2)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />`);
 
   // 10年 / 20年标注
   const p10 = fvPts[10], p20 = fvPts[20];
-  svgParts.push(`<circle cx="${xScale(10)}" cy="${yScale(p10.v)}" r="5" style="fill:var(--mf-colors-dataviz-down-1)" />`);
+  svgParts.push(`<circle cx="${xScale(10)}" cy="${yScale(p10.v)}" r="5" style="fill:var(--mf-colors-dataviz-mango-2)" />`);
   svgParts.push(`<text x="${xScale(10) + 8}" y="${yScale(p10.v) - 8}"
-    font-size="13" font-weight="700" style="fill:var(--mf-colors-dataviz-down-1)">10年：${(p10.v / 10000).toFixed(1)}万</text>`);
-  svgParts.push(`<circle cx="${xScale(20)}" cy="${yScale(p20.v)}" r="5" style="fill:var(--mf-colors-dataviz-down-1)" />`);
+    font-size="13" font-weight="700" style="fill:var(--mf-colors-dataviz-mango-2)">10年：${(p10.v / 10000).toFixed(1)}万</text>`);
+  svgParts.push(`<circle cx="${xScale(20)}" cy="${yScale(p20.v)}" r="5" style="fill:var(--mf-colors-dataviz-mango-2)" />`);
   svgParts.push(`<text x="${xScale(20) - 8}" y="${yScale(p20.v) - 12}" text-anchor="end"
-    font-size="13" font-weight="700" style="fill:var(--mf-colors-dataviz-down-1)">20年：${(p20.v / 10000).toFixed(1)}万</text>`);
+    font-size="13" font-weight="700" style="fill:var(--mf-colors-dataviz-mango-2)">20年：${(p20.v / 10000).toFixed(1)}万</text>`);
 
   const legendY = SVG_H - 14;
   svgParts.push(`<line x1="${M.left}" y1="${legendY}" x2="${M.left + 24}" y2="${legendY}"
     style="stroke:var(--mf-colors-text-weak)" stroke-width="3" stroke-dasharray="2,4" stroke-linecap="round" />`);
   svgParts.push(`<text x="${M.left + 30}" y="${legendY + 5}" font-size="13" style="fill:var(--mf-colors-text)">本金</text>`);
   svgParts.push(`<line x1="${M.left + 110}" y1="${legendY}" x2="${M.left + 134}" y2="${legendY}"
-    style="stroke:var(--mf-colors-dataviz-down-1)" stroke-width="3" stroke-linecap="round" />`);
+    style="stroke:var(--mf-colors-dataviz-mango-2)" stroke-width="3" stroke-linecap="round" />`);
   svgParts.push(`<text x="${M.left + 140}" y="${legendY + 5}" font-size="13" style="fill:var(--mf-colors-text)">本金 + 利息（复利）</text>`);
 
   svgParts.push(`<text x="18" y="${M.top + PLOT_H / 2}" font-size="12" style="fill:var(--mf-colors-text-weak)"
