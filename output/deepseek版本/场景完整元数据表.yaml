@@ -1,0 +1,989 @@
+# ============================================================
+# 场景 1：信用卡最低还款陷阱
+# ============================================================
+- id: "debt-credit-card-min-payment"
+  name:
+    cn: "信用卡最低还款陷阱"
+    en: "Credit Card Minimum Payment Trap"
+  audience:
+    cn: ["信用卡持有者", "月光族", "负债人群"]
+    en: ["Credit card holders", "Paycheck-to-paycheck", "Debtors"]
+  age_range: "22-45岁"
+  scenario_domain: "负债与债务"
+  scenario_type: "危机应对"
+  pain_point:
+    cn: "以为每月还一点总能还清，实际在给银行打工"
+    en: "Think paying a little monthly will clear it, but you're working for the bank"
+  trigger_moment:
+    cn: "收到信用卡账单，发现还不上全款"
+    en: "Receive credit card statement, can't pay in full"
+  life_stage: "就业期"
+  life_event: "刷卡消费后无法全额还款"
+  time_window: "每月账单日"
+  dimensions:
+    count: 2
+    dim1: { name: { cn: "欠款金额", en: "Debt Balance" }, role: "输入" }
+    dim2: { name: { cn: "年利率", en: "Annual Rate" }, role: "输入" }
+  output:
+    type: "年限+金额"
+    format: { cn: "还清所需年限 + 总利息", en: "Years to payoff + Total interest" }
+    decision_rule: "年限>30年 或 还不清 → 危险"
+  model:
+    type: "复利迭代"
+    formula: "minimum_payment_payoff"
+    assumptions:
+      cn: "最低还款=余额×5%（最低50元）；利息按月复利；无新增消费"
+      en: "Min payment = 5% of balance (floor 50); Monthly compounding; No new spending"
+  emotion: ["焦虑", "惊醒"]
+  hook:
+    cn: "5万债务18%利率只还最低 → 30年 + 利息超过本金"
+    en: "50K at 18% paying minimum → 30 years + interest exceeds principal"
+  priority: "P0"
+  bilingual: true
+  color_scheme: "traffic_light"
+
+# ============================================================
+# 场景 2：应急金
+# ============================================================
+- id: "cash-emergency-fund"
+  name:
+    cn: "应急金该留多少"
+    en: "How Much Emergency Fund Do You Need"
+  audience:
+    cn: ["工薪族", "单收入家庭", "自由职业者"]
+    en: ["Employees", "Single-income families", "Freelancers"]
+  age_range: "22-50岁"
+  scenario_domain: "日常现金流"
+  scenario_type: "规划决策"
+  pain_point:
+    cn: "不知道工资卡该留多少救命钱"
+    en: "Don't know how much cash to keep as a safety net"
+  trigger_moment:
+    cn: "换工作、行业动荡、或听说朋友失业"
+    en: "Job change, industry turmoil, or hearing a friend got laid off"
+  life_stage: "就业期/家庭期"
+  life_event: "收入不稳定或家庭责任增加"
+  time_window: "换工作前/家庭结构变化时"
+  dimensions:
+    count: 2
+    dim1: { name: { cn: "月固定支出", en: "Monthly Fixed Expenses" }, role: "输入" }
+    dim2: { name: { cn: "家庭稳定性", en: "Income Stability" }, role: "输入" }
+  output:
+    type: "金额+月数"
+    format: { cn: "建议应急金 + 覆盖月数", en: "Recommended fund + Months covered" }
+    decision_rule: "覆盖3-12个月支出"
+  model:
+    type: "乘法"
+    formula: "emergency_fund"
+    assumptions:
+      cn: "应急金=月固定支出×覆盖月数；覆盖月数按收入稳定性分档（双职工3月、单职工6月、不稳定9月、自由职业12月）"
+      en: "Fund = Monthly expense × Months; Months by stability (dual-income 3, single 6, unstable 9, freelance 12)"
+  emotion: ["掌控", "安心"]
+  hook:
+    cn: "你的安全感，值几个月工资"
+    en: "Your sense of security is worth how many months of salary"
+  priority: "P1"
+  bilingual: true
+
+# ============================================================
+# 场景 3：定投复利
+# ============================================================
+- id: "invest-dca-compound"
+  name:
+    cn: "定投复利：晚一年差多少"
+    en: "DCA Compounding: Cost of Starting Late"
+  audience:
+    cn: ["年轻人", "上班族", "家长"]
+    en: ["Young adults", "Employees", "Parents"]
+  age_range: "20-45岁"
+  scenario_domain: "资产与投资"
+  scenario_type: "认知颠覆"
+  pain_point:
+    cn: "纠结现在开始定投还是再等等"
+    en: "Wondering whether to start DCA now or wait"
+  trigger_moment:
+    cn: "发年终奖、涨薪、或看到别人晒收益"
+    en: "Year-end bonus, raise, or seeing others' returns"
+  life_stage: "就业期"
+  life_event: "开始有稳定收入"
+  time_window: "22-35岁（越早越好）"
+  dimensions:
+    count: 2
+    dim1: { name: { cn: "每月定投金额", en: "Monthly Investment" }, role: "输入" }
+    dim2: { name: { cn: "开始年龄", en: "Starting Age" }, role: "输入" }
+  output:
+    type: "金额"
+    format: { cn: "60岁时总资产", en: "Total assets at 60" }
+    decision_rule: "晚开始5年 ≈ 少赚X万"
+  model:
+    type: "年金终值"
+    formula: "future_value_annuity"
+    assumptions:
+      cn: "年化8%；按月定投；复利计算；不考虑通胀和税收"
+      en: "8% annual return; Monthly DCA; Compounded; No inflation or tax"
+  emotion: ["爽感", "紧迫"]
+  hook:
+    cn: "25岁开始定投和35岁开始，差距一辆车"
+    en: "Starting DCA at 25 vs 35: a car's difference"
+  priority: "P0"
+  bilingual: true
+
+# ============================================================
+# 场景 4：消费降级
+# ============================================================
+- id: "cash-consumption-downgrade"
+  name:
+    cn: "消费降级隐形存款"
+    en: "Small Savings, Big Future"
+  audience:
+    cn: ["月光族", "普通工薪", "想存钱的人"]
+    en: ["Paycheck-to-paycheck", "Workers", "Want to save"]
+  age_range: "22-45岁"
+  scenario_domain: "日常现金流"
+  scenario_type: "认知颠覆"
+  pain_point:
+    cn: "觉得小钱没用，存了也白存"
+    en: "Think small savings don't matter"
+  trigger_moment:
+    cn: "月底发现又没存下钱"
+    en: "End of month, no savings again"
+  life_stage: "就业期/家庭期"
+  life_event: "想开始存钱但觉得无从下手"
+  time_window: "任何时候"
+  dimensions:
+    count: 2
+    dim1: { name: { cn: "每月节省", en: "Monthly Savings" }, role: "输入" }
+    dim2: { name: { cn: "坚持年限", en: "Years" }, role: "输入" }
+  output:
+    type: "金额"
+    format: { cn: "累计金额 + 利息占比", en: "Total + Interest share" }
+    decision_rule: "时间越长，复利占比越高"
+  model:
+    type: "年金终值"
+    formula: "future_value_annuity"
+    assumptions:
+      cn: "年化5%；按月复利；月末投入；不考虑通胀"
+      en: "5% annual; Monthly compounding; End-of-month; No inflation"
+  emotion: ["掌控", "爽感"]
+  hook:
+    cn: "每天省30块，10年后是13.9万"
+    en: "Save 30/day, 10 years = 139K"
+  priority: "P0"
+  bilingual: true
+
+# ============================================================
+# 场景 5：保额测算
+# ============================================================
+- id: "insurance-coverage"
+  name:
+    cn: "保额测算：你的命值多少"
+    en: "Life Insurance: How Much Coverage"
+  audience:
+    cn: ["家庭支柱", "有房贷者", "有孩子的人"]
+    en: ["Breadwinners", "Mortgage holders", "Parents"]
+  age_range: "28-50岁"
+  scenario_domain: "保险配置"
+  scenario_type: "规划决策"
+  pain_point:
+    cn: "上有老下有小，怕出事拖垮家庭"
+    en: "Fear that an accident will ruin the family"
+  trigger_moment:
+    cn: "买房、生孩子、或听说同龄人出事"
+    en: "Buying a house, having a baby, or hearing about a peer's accident"
+  life_stage: "家庭期"
+  life_event: "组建家庭/买房/生子"
+  time_window: "30-45岁"
+  dimensions:
+    count: 2
+    dim1: { name: { cn: "家庭年支出", en: "Annual Family Expenses" }, role: "输入" }
+    dim2: { name: { cn: "保障年限", en: "Years of Coverage" }, role: "输入" }
+  output:
+    type: "金额"
+    format: { cn: "建议保额 + 年保费", en: "Recommended coverage + Annual premium" }
+    decision_rule: "保额 = 年支出×年限 + 负债 − 资产"
+  model:
+    type: "加法+乘法"
+    formula: "insurance_coverage"
+    assumptions:
+      cn: "保额=年支出×年限+负债(80万)−资产(50万)；年保费率约1‰"
+      en: "Coverage = Annual expense × Years + Debt(800K) − Assets(500K); Premium ~1‰"
+  emotion: ["责任", "惊醒"]
+  hook:
+    cn: "年支出20万+80万房贷 → 你需要430万保额"
+    en: "200K/year + 800K mortgage → You need 4.3M coverage"
+  priority: "P0"
+  bilingual: true
+
+# ============================================================
+# 场景 6：产品匹配
+# ============================================================
+- id: "insurance-product-match"
+  name:
+    cn: "同样的钱能买多少保额"
+    en: "Same Budget, How Much Coverage"
+  audience:
+    cn: ["想买保险的人", "有健康异常的人"]
+    en: ["Insurance shoppers", "People with health issues"]
+  age_range: "25-55岁"
+  scenario_domain: "保险配置"
+  scenario_type: "对比选择"
+  pain_point:
+    cn: "想买保险但不知道买哪种，也不知道能买多少"
+    en: "Want insurance but don't know what or how much"
+  trigger_moment:
+    cn: "体检报告出现异常、或年龄增长"
+    en: "Abnormal checkup or aging"
+  life_stage: "就业期/家庭期"
+  life_event: "健康变化/年龄增长"
+  time_window: "越早越好"
+  dimensions:
+    count: 2
+    dim1: { name: { cn: "年龄", en: "Age" }, role: "输入" }
+    dim2: { name: { cn: "健康状况", en: "Health Status" }, role: "输入" }
+  output:
+    type: "金额+结论"
+    format: { cn: "可买保额 + 核保结论", en: "Affordable coverage + Underwriting result" }
+    decision_rule: "年龄越大/健康越差 → 保额越低或拒保"
+  model:
+    type: "指数+系数"
+    formula: "insurance_coverage_by_age"
+    assumptions:
+      cn: "基准保费3000元/50万/25岁；保费年增7%；健康系数1.0/1.3/1.6/拒保"
+      en: "Base 3000/500K/age25; +7%/year; Health factor 1.0/1.3/1.6/reject"
+  emotion: ["紧迫", "惊醒"]
+  hook:
+    cn: "25岁能买83万，45岁只能买13万"
+    en: "At 25: 830K coverage. At 45: only 130K"
+  priority: "P1"
+  bilingual: true
+
+# ============================================================
+# 场景 7：教育金
+# ============================================================
+- id: "education-fund"
+  name:
+    cn: "孩子教育金每月存多少"
+    en: "How Much to Save for Education"
+  audience:
+    cn: ["家长", "准父母"]
+    en: ["Parents", "Expecting parents"]
+  age_range: "25-45岁"
+  scenario_domain: "教育与自我投资"
+  scenario_type: "规划决策"
+  pain_point:
+    cn: "孩子刚出生，想规划教育金但不知从何下手"
+    en: "New baby, want to plan education fund but don't know where to start"
+  trigger_moment:
+    cn: "孩子出生、或看到教育费用新闻"
+    en: "Baby born or seeing education cost news"
+  life_stage: "家庭期"
+  life_event: "孩子出生"
+  time_window: "0-15岁"
+  dimensions:
+    count: 2
+    dim1: { name: { cn: "教育目标", en: "Education Goal" }, role: "输入" }
+    dim2: { name: { cn: "孩子当前年龄", en: "Child's Age" }, role: "输入" }
+  output:
+    type: "金额"
+    format: { cn: "每月需储蓄额", en: "Monthly savings needed" }
+    decision_rule: "越早开始，每月压力越小"
+  model:
+    type: "年金终值"
+    formula: "monthly_saving_for_target"
+    assumptions:
+      cn: "年化5%；按月复利；目标金额为18岁时所需总额"
+      en: "5% annual; Monthly compounding; Target at age 18"
+  emotion: ["紧迫", "焦虑"]
+  hook:
+    cn: "0岁开始每月429，10岁开始每月1278"
+    en: "Start at 0: 429/month. Start at 10: 1,278/month"
+  priority: "P1"
+  bilingual: true
+
+# ============================================================
+# 场景 8：租房vs买房
+# ============================================================
+- id: "housing-rent-vs-buy"
+  name:
+    cn: "租房还是买房"
+    en: "Rent vs Buy"
+  audience:
+    cn: ["刚需族", "首付够与不够之间纠结的人"]
+    en: ["First-time buyers", "Those on the fence"]
+  age_range: "25-40岁"
+  scenario_domain: "买房置业"
+  scenario_type: "对比选择"
+  pain_point:
+    cn: "首付够与不够之间纠结，不知道住多久买房才不亏"
+    en: "Not sure how long you need to stay for buying to pay off"
+  trigger_moment:
+    cn: "房租到期、房价波动、或家庭结构变化"
+    en: "Lease ending, price swings, or family changes"
+  life_stage: "家庭期"
+  life_event: "结婚/生子/换城市"
+  time_window: "25-40岁"
+  dimensions:
+    count: 2
+    dim1: { name: { cn: "居住年限", en: "Years of Residence" }, role: "输入" }
+    dim2: { name: { cn: "房价年涨幅", en: "Annual Appreciation" }, role: "输入" }
+  output:
+    type: "结论+金额"
+    format: { cn: "买房/租房划算 + 差额", en: "Buy/Rent wins + Difference" }
+    decision_rule: "差额>0 → 租房划算；<0 → 买房划算"
+  model:
+    type: "盈亏平衡"
+    formula: "rent_vs_buy"
+    assumptions:
+      cn: "房价200万；首付30%；贷款4.9%；税费1.5%；持有成本1%/年；租金2%/年涨3%；首付机会成本3%"
+      en: "Price 2M; 30% down; 4.9% loan; 1.5% tax; 1% holding; rent 2% +3%/year; 3% opportunity cost"
+  emotion: ["如果当初", "理性"]
+  hook:
+    cn: "住5年、房价涨2% → 买房比租房多花14万"
+    en: "5 years, 2% appreciation → Buying costs 140K more"
+  priority: "P0"
+  bilingual: true
+
+# ============================================================
+# 场景 9：首付与月供
+# ============================================================
+- id: "housing-down-payment"
+  name:
+    cn: "首付交多少月供才不压垮"
+    en: "How Much Down Payment"
+  audience:
+    cn: ["选房阶段的购房者"]
+    en: ["House hunters"]
+  age_range: "25-40岁"
+  scenario_domain: "买房置业"
+  scenario_type: "规划决策"
+  pain_point:
+    cn: "选房阶段计算能不能供得起"
+    en: "Calculating affordability during house hunting"
+  trigger_moment:
+    cn: "看中一套房，需要算月供"
+    en: "Found a house, need to calculate mortgage"
+  life_stage: "家庭期"
+  life_event: "购房"
+  time_window: "购房前3-6个月"
+  dimensions:
+    count: 2
+    dim1: { name: { cn: "首付比例", en: "Down Payment %" }, role: "输入" }
+    dim2: { name: { cn: "贷款年限", en: "Loan Term" }, role: "输入" }
+  output:
+    type: "金额+比例"
+    format: { cn: "月供 + 收入比 + 总利息", en: "Monthly + Income ratio + Interest" }
+    decision_rule: "月供/收入>50% → 危险"
+  model:
+    type: "等额本息"
+    formula: "mortgage_payment"
+    assumptions:
+      cn: "房价200万；年利率4.9%；等额本息；参考收入2万/月"
+      en: "Price 2M; 4.9%; Equal payment; Reference income 20K/month"
+  emotion: ["理性", "压力"]
+  hook:
+    cn: "月供占收入50%以上，你的人生就被锁死了"
+    en: "Mortgage >50% of income locks your life"
+  priority: "P1"
+  bilingual: true
+
+# ============================================================
+# 场景 10：双人财务合并
+# ============================================================
+- id: "life-couple-finance"
+  name:
+    cn: "双人财务怎么合并"
+    en: "Couple Finance: How to Merge"
+  audience:
+    cn: ["情侣", "夫妻"]
+    en: ["Couples", "Spouses"]
+  age_range: "25-45岁"
+  scenario_domain: "生命周期衔接"
+  scenario_type: "对比选择"
+  pain_point:
+    cn: "情侣/夫妻纠结钱怎么管"
+    en: "Couples arguing about how to manage money"
+  trigger_moment:
+    cn: "同居、结婚、或收入差距拉大"
+    en: "Moving in, marriage, or income gap widening"
+  life_stage: "家庭期"
+  life_event: "同居/结婚"
+  time_window: "25-45岁"
+  dimensions:
+    count: 2
+    dim1: { name: { cn: "收入比", en: "Income Ratio" }, role: "输入" }
+    dim2: { name: { cn: "管理方式", en: "Management Style" }, role: "输入" }
+  output:
+    type: "金额+公平度"
+    format: { cn: "双方剩余 + 公平度标签", en: "Both remainders + Fairness label" }
+    decision_rule: "低收入方剩余/收入 <20% → 不公平"
+  model:
+    type: "分配"
+    formula: "couple_finance_split"
+    assumptions:
+      cn: "家庭总收入6万；共同支出2万；三种方式：AA/按比例/共享"
+      en: "Total income 60K; Shared expense 20K; Three methods: AA/Proportional/Shared"
+  emotion: ["公平", "理性"]
+  hook:
+    cn: "收入比1:4时，AA制下低收入方只剩2000"
+    en: "At 1:4 ratio, lower earner has only 2K left under AA"
+  priority: "P2"
+  bilingual: true
+
+# ============================================================
+# 场景 11：房贷提前还款
+# ============================================================
+- id: "debt-mortgage-prepay"
+  name:
+    cn: "房贷提前还款省多少"
+    en: "Mortgage Prepayment Savings"
+  audience:
+    cn: ["有房贷的人"]
+    en: ["Mortgage holders"]
+  age_range: "30-55岁"
+  scenario_domain: "负债与债务"
+  scenario_type: "规划决策"
+  pain_point:
+    cn: "有房贷的人纠结要不要提前还、每月多还多少"
+    en: "Mortgage holders wondering whether to prepay"
+  trigger_moment:
+    cn: "发年终奖、理财到期、或利率下调"
+    en: "Year-end bonus, investment maturing, or rate cut"
+  life_stage: "积累期"
+  life_event: "有闲钱/收入增加"
+  time_window: "30-55岁"
+  dimensions:
+    count: 2
+    dim1: { name: { cn: "贷款余额", en: "Loan Balance" }, role: "输入" }
+    dim2: { name: { cn: "每月额外还款", en: "Extra Monthly Payment" }, role: "输入" }
+  output:
+    type: "年限+金额"
+    format: { cn: "还清年限 + 省利息", en: "Years to payoff + Interest saved" }
+    decision_rule: "省利息>0 → 提前还划算"
+  model:
+    type: "等额本息迭代"
+    formula: "mortgage_prepay"
+    assumptions:
+      cn: "30年；年利率4.9%；等额本息；提前还款额计入月供"
+      en: "30 years; 4.9%; Equal payment; Extra added to monthly"
+  emotion: ["杠杆", "爽感"]
+  hook:
+    cn: "每月多还1000，30年房贷缩到21年"
+    en: "Pay 1K more/month: 30-year loan shrinks to 21"
+  priority: "P0"
+  bilingual: true
+
+# ============================================================
+# 场景 12：提前还贷vs投资
+# ============================================================
+- id: "debt-prepay-vs-invest"
+  name:
+    cn: "提前还贷 vs 拿去投资"
+    en: "Prepay Mortgage vs Invest"
+  audience:
+    cn: ["有房贷且有闲钱的人"]
+    en: ["Mortgage holders with spare cash"]
+  age_range: "30-55岁"
+  scenario_domain: "负债与债务"
+  scenario_type: "对比选择"
+  pain_point:
+    cn: "手里有闲钱，不知道还贷还是投资"
+    en: "Have spare cash, don't know whether to prepay or invest"
+  trigger_moment:
+    cn: "理财到期、发年终奖、或股市波动"
+    en: "Investment maturing, bonus, or market swings"
+  life_stage: "积累期"
+  life_event: "有闲钱"
+  time_window: "30-55岁"
+  dimensions:
+    count: 2
+    dim1: { name: { cn: "房贷利率", en: "Mortgage Rate" }, role: "输入" }
+    dim2: { name: { cn: "投资收益率", en: "Investment Return" }, role: "输入" }
+  output:
+    type: "结论+金额"
+    format: { cn: "投资/还贷划算 + 差额", en: "Invest/Prepay wins + Difference" }
+    decision_rule: "投资收益 > 房贷利率 → 投资划算"
+  model:
+    type: "复利对比"
+    formula: "prepay_vs_invest"
+    assumptions:
+      cn: "闲钱50万；房贷剩余20年；投资按年复利；不考虑税收和波动"
+      en: "500K spare; 20 years remaining; Annual compounding; No tax or volatility"
+  emotion: ["理性", "算账"]
+  hook:
+    cn: "投资能跑赢房贷利率吗？"
+    en: "Can your investments beat your mortgage rate?"
+  priority: "P0"
+  bilingual: true
+
+# ============================================================
+# 场景 13：债务雪崩vs雪球
+# ============================================================
+- id: "debt-snowball-vs-avalanche"
+  name:
+    cn: "多笔债务先还哪笔"
+    en: "Debt Snowball vs Avalanche"
+  audience:
+    cn: ["同时背多笔债务的人"]
+    en: ["People with multiple debts"]
+  age_range: "25-45岁"
+  scenario_domain: "负债与债务"
+  scenario_type: "对比选择"
+  pain_point:
+    cn: "同时背信用卡+消费贷+花呗，不知道先还哪笔"
+    en: "Multiple debts, don't know which to pay first"
+  trigger_moment:
+    cn: "发现每月还款压力大，或债务越滚越多"
+    en: "Feeling repayment pressure or debt snowballing"
+  life_stage: "就业期/积累期"
+  life_event: "多笔债务缠身"
+  time_window: "任何时候"
+  dimensions:
+    count: 2
+    dim1: { name: { cn: "每月额外还款", en: "Extra Monthly Payment" }, role: "输入" }
+    dim2: { name: { cn: "策略类型", en: "Strategy" }, role: "输入" }
+  output:
+    type: "月数+金额"
+    format: { cn: "还清月数 + 总利息", en: "Months to payoff + Total interest" }
+    decision_rule: "雪崩法省钱，雪球法爽感"
+  model:
+    type: "多债务迭代"
+    formula: "debt_snowball"
+    assumptions:
+      cn: "三笔债务：信用卡3万18%、消费贷5万10%、花呗2万15%；最低还款5-10%"
+      en: "Three debts: Card 30K/18%, Loan 50K/10%, Huabei 20K/15%; Min 5-10%"
+  emotion: ["理性", "掌控"]
+  hook:
+    cn: "同样多还1000，换个顺序少还几个月"
+    en: "Same extra 1K, different order saves months"
+  priority: "P1"
+  bilingual: true
+
+# ============================================================
+# 场景 14：等额本息vs本金
+# ============================================================
+- id: "housing-equal-payment"
+  name:
+    cn: "等额本息 vs 等额本金"
+    en: "Equal Payment vs Equal Principal"
+  audience:
+    cn: ["办理房贷的人"]
+    en: ["Mortgage applicants"]
+  age_range: "25-45岁"
+  scenario_domain: "买房置业"
+  scenario_type: "对比选择"
+  pain_point:
+    cn: "办理房贷时银行让二选一"
+    en: "Bank asks you to choose one"
+  trigger_moment:
+    cn: "签贷款合同前"
+    en: "Before signing loan contract"
+  life_stage: "家庭期/积累期"
+  life_event: "办理房贷"
+  time_window: "购房时"
+  dimensions:
+    count: 2
+    dim1: { name: { cn: "贷款金额", en: "Loan Amount" }, role: "输入" }
+    dim2: { name: { cn: "贷款年限", en: "Loan Term" }, role: "输入" }
+  output:
+    type: "金额"
+    format: { cn: "省利息 + 首月差额", en: "Interest saved + First month difference" }
+    decision_rule: "省利息>0 → 等额本金更省"
+  model:
+    type: "等额本息/本金"
+    formula: "equal_payment_vs_principal"
+    assumptions:
+      cn: "年利率4.9%；固定利率；不考虑提前还款"
+      en: "4.9%; Fixed rate; No prepayment"
+  emotion: ["理性", "权衡"]
+  hook:
+    cn: "选对还款方式，省出一辆车"
+    en: "Choose right, save a car's worth"
+  priority: "P1"
+  bilingual: true
+
+# ============================================================
+# 场景 15：公积金能用多少
+# ============================================================
+- id: "housing-fund-quota"
+  name:
+    cn: "公积金能用多少"
+    en: "How Much Housing Fund Loan"
+  audience:
+    cn: ["有公积金的人", "准备买房的人"]
+    en: ["Housing fund holders", "Home buyers"]
+  age_range: "25-45岁"
+  scenario_domain: "买房置业"
+  scenario_type: "规划决策"
+  pain_point:
+    cn: "有公积金但不知道能贷多少"
+    en: "Have housing fund but don't know loan limit"
+  trigger_moment:
+    cn: "准备买房、或换工作"
+    en: "Planning to buy or changing jobs"
+  life_stage: "家庭期/积累期"
+  life_event: "购房规划"
+  time_window: "购房前3-5年"
+  dimensions:
+    count: 2
+    dim1: { name: { cn: "月缴存额", en: "Monthly Contribution" }, role: "输入" }
+    dim2: { name: { cn: "缴存年限", en: "Years of Contribution" }, role: "输入" }
+  output:
+    type: "金额"
+    format: { cn: "可贷额度 + 省息", en: "Loan quota + Interest saved" }
+    decision_rule: "可贷额度越高，省息越多"
+  model:
+    type: "余额×倍数"
+    formula: "housing_fund_quota"
+    assumptions:
+      cn: "可贷=余额×15倍，上限120万；公积金3.1% vs 商贷4.9%"
+      en: "Quota = Balance × 15, cap 1.2M; Fund 3.1% vs Loan 4.9%"
+  emotion: ["规划", "省钱"]
+  hook:
+    cn: "月缴3000等3年，就能贷120万"
+    en: "Contribute 3K/month for 3 years → 1.2M loan"
+  priority: "P1"
+  bilingual: true
+
+# ============================================================
+# 场景 16：养老金替代率
+# ============================================================
+- id: "pension-replacement-rate"
+  name:
+    cn: "养老金替代率"
+    en: "Pension Replacement Rate"
+  audience:
+    cn: ["30-50岁", "有社保的人"]
+    en: ["30-50", "Social security contributors"]
+  age_range: "30-50岁"
+  scenario_domain: "养老规划"
+  scenario_type: "认知颠覆"
+  pain_point:
+    cn: "评估社保够不够退休后花"
+    en: "Assessing if social security is enough"
+  trigger_moment:
+    cn: "看到养老金新闻、或同事退休"
+    en: "Pension news or colleague retiring"
+  life_stage: "积累期"
+  life_event: "开始思考养老"
+  time_window: "30-50岁"
+  dimensions:
+    count: 2
+    dim1: { name: { cn: "月薪", en: "Monthly Salary" }, role: "输入" }
+    dim2: { name: { cn: "缴费年限", en: "Contribution Years" }, role: "输入" }
+  output:
+    type: "金额+比例"
+    format: { cn: "退休金 + 替代率 + 缺口", en: "Pension + Replacement rate + Gap" }
+    decision_rule: "替代率<70% → 需要补充"
+  model:
+    type: "社保公式"
+    formula: "pension_replacement"
+    assumptions:
+      cn: "社平8000；缴费上限3倍；个人账户8%；计发139月"
+      en: "Social avg 8K; Cap 3x; Account 8%; Divisor 139"
+  emotion: ["焦虑", "惊醒"]
+  hook:
+    cn: "月薪5千交40年替代率80%，月薪5万只有26%"
+    en: "5K salary 40y → 80%; 50K salary → only 26%"
+  priority: "P0"
+  bilingual: true
+
+# ============================================================
+# 场景 17：技能投资回收期
+# ============================================================
+- id: "education-skill-roi"
+  name:
+    cn: "技能投资回收期"
+    en: "Skill Investment Payback"
+  audience:
+    cn: ["想报培训班的人", "想考研的人"]
+    en: ["Course takers", "Grad school applicants"]
+  age_range: "22-40岁"
+  scenario_domain: "教育与自我投资"
+  scenario_type: "对比选择"
+  pain_point:
+    cn: "想报培训班/考研，纠结投入值不值"
+    en: "Wondering if the tuition is worth it"
+  trigger_moment:
+    cn: "看到招生广告、或职业瓶颈"
+    en: "Seeing ads or hitting career ceiling"
+  life_stage: "就业期/积累期"
+  life_event: "职业转型/技能提升"
+  time_window: "22-40岁"
+  dimensions:
+    count: 2
+    dim1: { name: { cn: "学费投入", en: "Tuition" }, role: "输入" }
+    dim2: { name: { cn: "月薪涨幅", en: "Monthly Raise" }, role: "输入" }
+  output:
+    type: "月数+金额"
+    format: { cn: "回收期 + 3年净收益", en: "Payback + 3-year net" }
+    decision_rule: "回收期<12个月 → 优秀"
+  model:
+    type: "除法"
+    formula: "skill_payback"
+    assumptions:
+      cn: "学费一次性；涨薪立即生效；不考虑机会成本"
+      en: "One-time tuition; Immediate raise; No opportunity cost"
+  emotion: ["理性", "爽感"]
+  hook:
+    cn: "3万学费，月薪涨5000，6个月回本"
+    en: "30K tuition, 5K raise, 6-month payback"
+  priority: "P2"
+  bilingual: true
+
+# ============================================================
+# 场景 18：躺平需要多少钱
+# ============================================================
+- id: "invest-lie-flat"
+  name:
+    cn: "躺平需要多少钱"
+    en: "How Much to Lie Flat"
+  audience:
+    cn: ["想提前退休的人", "想辞职休息的人"]
+    en: ["Early retirees", "Want a break"]
+  age_range: "25-50岁"
+  scenario_domain: "资产与投资"
+  scenario_type: "认知颠覆"
+  pain_point:
+    cn: "想提前退休/辞职休息，不知道存款够不够"
+    en: "Want early retirement, don't know if savings suffice"
+  trigger_moment:
+    cn: "职场倦怠、裁员、或FIRE运动"
+    en: "Burnout, layoff, or FIRE movement"
+  life_stage: "积累期/退休期"
+  life_event: "想辞职/提前退休"
+  time_window: "任何时候"
+  dimensions:
+    count: 2
+    dim1: { name: { cn: "年度花费", en: "Annual Expenses" }, role: "输入" }
+    dim2: { name: { cn: "初始本金", en: "Initial Capital" }, role: "输入" }
+  output:
+    type: "年限"
+    format: { cn: "可持续年限 / 花不完", en: "Sustainable years / Forever" }
+    decision_rule: "年限>60年 → 花不完"
+  model:
+    type: "提取率"
+    formula: "sustainable_years"
+    assumptions:
+      cn: "年化实际收益2%；年花费恒定；超过80年视为花不完"
+      en: "2% real return; Constant spending; >80 years = forever"
+  emotion: ["向往", "爽感"]
+  hook:
+    cn: "存到这个数，你的钱会自己养自己"
+    en: "Save this much, your money feeds you"
+  priority: "P0"
+  bilingual: true
+
+# ============================================================
+# 场景 19：养老储蓄
+# ============================================================
+- id: "pension-save"
+  name:
+    cn: "现在每月存多少退休够花"
+    en: "How Much to Save Monthly for Retirement"
+  audience:
+    cn: ["30-45岁", "开始思考养老的人"]
+    en: ["30-45", "Starting to think about retirement"]
+  age_range: "25-50岁"
+  scenario_domain: "养老规划"
+  scenario_type: "规划决策"
+  pain_point:
+    cn: "30-40岁开始思考养老但不知道目标"
+    en: "Thinking about retirement but don't know the target"
+  trigger_moment:
+    cn: "涨薪、生日、或看到养老新闻"
+    en: "Raise, birthday, or pension news"
+  life_stage: "积累期"
+  life_event: "开始养老规划"
+  time_window: "25-45岁"
+  dimensions:
+    count: 2
+    dim1: { name: { cn: "年花费", en: "Annual Expenses" }, role: "输入" }
+    dim2: { name: { cn: "当前年龄", en: "Current Age" }, role: "输入" }
+  output:
+    type: "金额"
+    format: { cn: "每月需储蓄额", en: "Monthly savings needed" }
+    decision_rule: "越早开始，每月压力越小"
+  model:
+    type: "年金终值"
+    formula: "monthly_saving_for_retirement"
+    assumptions:
+      cn: "退休60岁；年化5%；4%提取规则；从零开始"
+      en: "Retire at 60; 5%; 4% withdrawal; Start from zero"
+  emotion: ["焦虑", "紧迫"]
+  hook:
+    cn: "30岁开始每月存3000，45岁开始要存9300"
+    en: "Start at 30: 3K/month. Start at 45: 9.3K/month"
+  priority: "P0"
+  bilingual: true
+
+# ============================================================
+# 场景 20：退休提取率
+# ============================================================
+- id: "pension-withdraw-rate"
+  name:
+    cn: "退休后每年取多少才花不完"
+    en: "Safe Withdrawal Rate in Retirement"
+  audience:
+    cn: ["准退休者", "退休者", "FIRE人群"]
+    en: ["Near-retirees", "Retirees", "FIRE community"]
+  age_range: "45-70岁"
+  scenario_domain: "养老规划"
+  scenario_type: "规划决策"
+  pain_point:
+    cn: "怕花太快或太省，需确定提取率"
+    en: "Afraid of spending too fast or too slow"
+  trigger_moment:
+    cn: "退休前1-3年、或退休后第一年"
+    en: "1-3 years before retirement or first year"
+  life_stage: "退休期"
+  life_event: "退休"
+  time_window: "退休前后"
+  dimensions:
+    count: 2
+    dim1: { name: { cn: "退休年龄", en: "Retirement Age" }, role: "输入" }
+    dim2: { name: { cn: "退休资产", en: "Retirement Assets" }, role: "输入" }
+  output:
+    type: "金额+比例"
+    format: { cn: "每月可花金额 + 提取率", en: "Monthly amount + Withdrawal rate" }
+    decision_rule: "提取率≤4% → 安全"
+  model:
+    type: "年金"
+    formula: "safe_withdrawal"
+    assumptions:
+      cn: "目标寿命85岁；年化实际收益3%；固定金额提取"
+      en: "Target 85; 3% real return; Fixed withdrawal"
+  emotion: ["理性", "掌控"]
+  hook:
+    cn: "100万每年取4万只够31年，取3万就花不完"
+    en: "1M, withdraw 40K/year: 31 years. 30K: forever"
+  priority: "P0"
+  bilingual: true
+
+# ============================================================
+# 场景 21：延迟退休
+# ============================================================
+- id: "pension-delay-retire"
+  name:
+    cn: "多干5年多领多少"
+    en: "Working 5 More Years"
+  audience:
+    cn: ["纠结退休年龄的人"]
+    en: ["Those on the fence about retirement age"]
+  age_range: "50-65岁"
+  scenario_domain: "养老规划"
+  scenario_type: "对比选择"
+  pain_point:
+    cn: "纠结60还是65岁退休"
+    en: "Wondering whether to retire at 60 or 65"
+  trigger_moment:
+    cn: "接近退休年龄、或健康变化"
+    en: "Approaching retirement or health changes"
+  life_stage: "退休期"
+  life_event: "退休决策"
+  time_window: "55-65岁"
+  dimensions:
+    count: 2
+    dim1: { name: { cn: "退休年龄", en: "Retirement Age" }, role: "输入" }
+    dim2: { name: { cn: "55岁资产", en: "Assets at 55" }, role: "输入" }
+  output:
+    type: "金额"
+    format: { cn: "累计总额 + 月提取 + 多领", en: "Total + Monthly + Extra" }
+    decision_rule: "晚退5年 → 多领X万"
+  model:
+    type: "复利+年金"
+    formula: "delay_retirement"
+    assumptions:
+      cn: "55岁基准；年化3%；目标寿命85岁"
+      en: "Base age 55; 3%; Target 85"
+  emotion: ["理性", "惊喜"]
+  hook:
+    cn: "200万资产，70岁退比55岁退多领85万"
+    en: "2M assets, retire at 70 vs 55: 850K more"
+  priority: "P1"
+  bilingual: true
+
+# ============================================================
+# 场景 22：返还型vs消费型
+# ============================================================
+- id: "insurance-return-vs-consumption"
+  name:
+    cn: "返还型 vs 消费型"
+    en: "Return Premium vs Consumption Insurance"
+  audience:
+    cn: ["想买保险的人", "被返还型吸引的人"]
+    en: ["Insurance shoppers", "Attracted by return premium"]
+  age_range: "25-50岁"
+  scenario_domain: "保险配置"
+  scenario_type: "认知颠覆"
+  pain_point:
+    cn: "被\"不生病钱退回来\"吸引，纠结返还型"
+    en: "Attracted by 'money back if no claim'"
+  trigger_moment:
+    cn: "保险代理人推荐、或看到广告"
+    en: "Agent recommendation or ads"
+  life_stage: "家庭期/积累期"
+  life_event: "购买保险"
+  time_window: "25-50岁"
+  dimensions:
+    count: 2
+    dim1: { name: { cn: "缴费年限", en: "Payment Years" }, role: "输入" }
+    dim2: { name: { cn: "投资收益率", en: "Investment Return" }, role: "输入" }
+  output:
+    type: "金额"
+    format: { cn: "自投多赚 / 返还多", en: "Self-invest wins / Return wins" }
+    decision_rule: "自投多赚>0 → 消费型+自投更划算"
+  model:
+    type: "复利对比"
+    formula: "return_vs_consumption_insurance"
+    assumptions:
+      cn: "消费型3000/年；返还型10000/年；差额7000自投；复利"
+      en: "Consumption 3K/year; Return 10K/year; 7K difference invested"
+  emotion: ["理性", "反直觉"]
+  hook:
+    cn: "保险公司用你的钱赚两遍"
+    en: "Insurers earn twice with your money"
+  priority: "P1"
+  bilingual: true
+
+# ============================================================
+# 场景 23：学历vs技能
+# ============================================================
+- id: "education-degree-vs-skill"
+  name:
+    cn: "学历 vs 技能"
+    en: "Degree vs Skill"
+  audience:
+    cn: ["纠结读研的人", "职场新人"]
+    en: ["Grad school applicants", "Career starters"]
+  age_range: "22-30岁"
+  scenario_domain: "教育与自我投资"
+  scenario_type: "对比选择"
+  pain_point:
+    cn: "纠结读研还是直接工作"
+    en: "Wondering whether to pursue a master's or work"
+  trigger_moment:
+    cn: "毕业季、或职业瓶颈"
+    en: "Graduation or career plateau"
+  life_stage: "就业期"
+  life_event: "毕业/职业选择"
+  time_window: "22-28岁"
+  dimensions:
+    count: 2
+    dim1: { name: { cn: "起薪", en: "Starting Salary" }, role: "输入" }
+    dim2: { name: { cn: "读研溢价", en: "Master's Premium" }, role: "输入" }
+  output:
+    type: "金额"
+    format: { cn: "30岁前多赚/少赚", en: "Extra/Lost by age 30" }
+    decision_rule: "30岁前读研大概率少赚；回本点在28-32岁"
+  model:
+    type: "复利对比"
+    formula: "degree_vs_skill"
+    assumptions:
+      cn: "直接工作22岁；读研25岁；起薪年增8%；学费6万"
+      en: "Work at 22; Master's at 25; +8%/year; Tuition 60K"
+  emotion: ["理性", "如果当初"]
+  hook:
+    cn: "读研3年vs工作3年，30岁前谁赚得多"
+    en: "3 years master's vs 3 years work: who earns more by 30"
+  priority: "P2"
+  bilingual: true

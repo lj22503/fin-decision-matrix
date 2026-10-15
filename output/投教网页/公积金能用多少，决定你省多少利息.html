@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>公积金能用多少，决定你省多少利息</title>
+<meta name="description" content="贷 200 万、30 年：公积金能贷 50 万，月供 10096 元；贷不了公积金，月供 10615 元。多还 519 元/月，30 年多还 18.7 万利息。">
+<meta name="keywords" content="公积金,公积金贷款,组合贷,房贷利率,省利息,fin-decision-matrix">
+<meta property="og:type" content="article" />
+<meta property="og:title" content="公积金能用多少，决定你省多少利息" />
+<meta property="og:description" content="贷 200 万、30 年：公积金能贷 50 万，月供 10096 元；贷不了公积金，月供 10615 元。多还 519 元/月，30 年多还 18.7 万利息。" />
+<meta property="og:url" content="https://fintools.mangofolio.com/guide/%E5%85%AC%E7%A7%AF%E9%87%91%E8%83%BD%E7%94%A8%E5%A4%9A%E5%B0%91%EF%BC%8C%E5%86%B3%E5%AE%9A%E4%BD%A0%E7%9C%81%E5%A4%9A%E5%B0%91%E5%88%A9%E6%81%AF.html" />
+<meta property="og:image" content="https://fintools.mangofolio.com/images/og-cover.png?v=2" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:site_name" content="财务工具箱 FinTools" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="公积金能用多少，决定你省多少利息" />
+<meta name="twitter:description" content="贷 200 万、30 年：公积金能贷 50 万，月供 10096 元；贷不了公积金，月供 10615 元。" />
+<meta name="twitter:image" content="https://fintools.mangofolio.com/images/og-cover.png?v=2" />
+<link rel="canonical" href="https://fintools.mangofolio.com/guide/%E5%85%AC%E7%A7%AF%E9%87%91%E8%83%BD%E7%94%A8%E5%A4%9A%E5%B0%91%EF%BC%8C%E5%86%B3%E5%AE%9A%E4%BD%A0%E7%9C%81%E5%A4%9A%E5%B0%91%E5%88%A9%E6%81%AF.html" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"公积金能用多少，决定你省多少利息","description":"贷 200 万、30 年：公积金能贷 50 万，月供 10096 元；贷不了公积金，月供 10615 元。","image":"https://fintools.mangofolio.com/images/og-cover.png?v=2","datePublished":"2026-10-14","dateModified":"2026-10-14","author":{"@type":"Organization","name":"财务工具箱 FinTools","url":"https://fintools.mangofolio.com/"},"publisher":{"@type":"Organization","name":"mangofolio","logo":{"@type":"ImageObject","url":"https://fintools.mangofolio.com/images/og-cover.png?v=2"}},"mainEntityOfPage":"https://fintools.mangofolio.com/guide/%E5%85%AC%E7%A7%AF%E9%87%91%E8%83%BD%E7%94%A8%E5%A4%9A%E5%B0%91%EF%BC%8C%E5%86%B3%E5%AE%9A%E4%BD%A0%E7%9C%81%E5%A4%9A%E5%B0%91%E5%88%A9%E6%81%AF.html","about":"公积金,组合贷,房贷利率,省利息"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"公积金贷款到底能省多少？","acceptedAnswer":{"@type":"Answer","text":"贷 200 万 30 年：公积金利率 3.1%、商贷 4.9%。公积金贷 50 万，总利息 163.5 万；贷不了公积金，总利息 182.1 万，多还 18.7 万。每多用 10 万公积金，30 年约省 3.7 万。"}},{"@type":"Question","name":"为什么公积金能省这么多？","acceptedAnswer":{"@type":"Answer","text":"公积金利率 3.1% 远低于商贷 4.9%，差额在 30 年复利下被放大。100 万商贷换成公积金，月供从 5307 元降到约 4894 元。"}},{"@type":"Question","name":"组合贷怎么算？","acceptedAnswer":{"@type":"Answer","text":"公积金额度以内的部分按公积金利率计息，剩余部分按商贷利率计息，两段等额本息月供相加。"}}]}</script>
+
+<link rel="stylesheet" href="assets/mangofolio-tokens-v09.css">
+<style>
+  :root {
+    --page-bg: var(--mf-colors-background);
+    --page-card: var(--mf-colors-background-surface);
+    --page-panel: var(--mf-colors-background-neutral);
+    --page-ink: var(--mf-colors-text);
+    --page-ink-strong: var(--mf-colors-text-strong);
+    --page-ink-weak: var(--mf-colors-text-weak);
+    --page-accent: var(--mf-colors-text-link);
+    --page-accent-deep: var(--mf-colors-text-accent-mango);
+    --page-hairline: var(--mf-colors-border-weak);
+    --lvl1-bg: #B8221E;   /* 省<1万（红） */
+    --lvl2-bg: #D4543E;   /* 省1-5万 */
+    --lvl3-bg: #F59E0B;   /* 省5-15万 */
+    --lvl4-bg: #1F8A4C;   /* 省15-30万 */
+    --lvl5-bg: #11693D;   /* 省≥30万（绿） */
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--page-bg); padding:12px; font-family:var(--mf-fonts-sans); color:var(--page-ink); }
+  .card { background:var(--page-card); border:1px solid var(--page-hairline); border-radius:var(--mf-radii-card); box-shadow:var(--mf-shadows-card); max-width:1100px; margin:8px auto; padding:20px 26px; }
+  .eyebrow { font-size:var(--mf-font-sizes-eyebrow); font-weight:500; color:var(--page-accent); letter-spacing:.3em; text-transform:uppercase; text-align:center; margin-bottom:4px; }
+  h1 { font-family:var(--mf-fonts-display); font-size:clamp(1.6rem,3.6vw,2.3rem); font-weight:800; color:var(--page-ink-strong); text-align:center; line-height:1.3; }
+  .conclusion { margin:8px auto 6px; max-width:900px; text-align:center; font-size:var(--mf-font-sizes-100); line-height:1.6; color:var(--page-ink-strong); font-weight:600; }
+  .hero { background:var(--page-panel); border-left:3px solid var(--page-accent); border-radius:var(--mf-radii-large); padding:12px 16px; margin:4px 0 12px; }
+  .hero p { color:var(--page-ink); font-size:var(--mf-font-sizes-100); line-height:1.8; margin:0; }
+  .hero b, .hero strong { color:var(--page-ink-strong); }
+  .section-title { font-size:var(--mf-font-sizes-200); font-weight:700; color:var(--page-ink-strong); margin:14px 0 6px; }
+  .assume { background:var(--page-panel); border-radius:var(--mf-radii-large); padding:12px 16px; font-size:var(--mf-font-sizes-30); color:var(--page-ink); margin:14px 0; line-height:1.8; }
+  .assume b, .assume strong { color:var(--page-ink-strong); }
+  details.l2 { border:1px solid var(--page-hairline); border-radius:var(--mf-radii-large); padding:10px 14px; margin:14px 0; font-size:var(--mf-font-sizes-30); line-height:1.8; color:var(--page-ink); }
+  details.l2 summary { cursor:pointer; font-weight:700; color:var(--page-accent); }
+  table { width:100%; border-collapse:separate; border-spacing:3px; }
+  th { padding:8px 6px; font-size:var(--mf-font-sizes-30); color:var(--page-ink-strong); background:var(--mf-colors-primitives-mango-050); border-radius:var(--mf-radii-small); line-height:1.4; }
+  th small { font-weight:400; color:var(--page-ink-weak); font-size:var(--mf-font-sizes-25); }
+  th.rowhead { text-align:left; width:130px; background:var(--page-panel); }
+  td { padding:7px 4px; text-align:center; font-size:var(--mf-font-sizes-50); font-weight:700; color:var(--mf-colors-primitives-white-100); border-radius:var(--mf-radii-small); min-width:120px; line-height:1.35; }
+  .cell-save { font-size:var(--mf-font-sizes-100); }
+  .cell-detail { font-size:var(--mf-font-sizes-25); opacity:.9; font-weight:500; }
+  .cell-note { font-size:var(--mf-font-sizes-25); opacity:.9; font-weight:500; }
+  .lvl1 { background:var(--lvl1-bg); } .lvl2 { background:var(--lvl2-bg); } .lvl3 { background:var(--lvl3-bg); color:var(--page-ink-strong); }
+  .lvl4 { background:var(--lvl4-bg); } .lvl5 { background:var(--lvl5-bg); }
+  .legend { display:flex; justify-content:center; gap:14px; margin:8px 0 10px; font-size:var(--mf-font-sizes-25); color:var(--page-ink); flex-wrap:wrap; }
+  .legend span { display:inline-flex; align-items:center; gap:6px; }
+  .dot { width:13px; height:13px; border-radius:var(--mf-radii-small); display:inline-block; }
+  .dot.lvl1 { background:var(--lvl1-bg); } .dot.lvl2 { background:var(--lvl2-bg); } .dot.lvl3 { background:var(--lvl3-bg); } .dot.lvl4 { background:var(--lvl4-bg); } .dot.lvl5 { background:var(--lvl5-bg); }
+  .foot { margin-top:14px; font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.7; }
+  footer { max-width:1100px; margin:0 auto 20px; padding:16px 24px; text-align:center; font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.8; border-top:1px solid var(--page-hairline); }
+  .faq-title { font-size:var(--mf-font-sizes-300); font-weight:700; color:var(--page-ink-strong); margin:24px 0 10px; }
+  .cta { margin:18px 0 6px; padding:14px 18px; background:var(--page-panel); border-left:4px solid var(--page-accent); border-radius:var(--mf-radii-large); font-size:var(--mf-font-sizes-30); line-height:1.8; color:var(--page-ink); }
+  .cta b { color:var(--page-ink-strong); }
+  details.faq { border:1px solid var(--page-hairline); border-radius:var(--mf-radii-large); padding:10px 14px; margin:10px 0; font-size:var(--mf-font-sizes-30); line-height:1.8; color:var(--page-ink); }
+  details.faq summary { cursor:pointer; font-weight:700; color:var(--page-accent); }
+  .calc-btn { display:inline-block; margin-top:10px; padding:10px 26px; font-size:var(--mf-font-sizes-100); font-weight:700; color:var(--mf-colors-primitives-white-100); background:var(--page-accent); border:none; border-radius:var(--mf-radii-large); cursor:pointer; }
+  .calc-btn:hover { opacity:.88; }
+  .calc-modal[hidden] { display:none; }
+  .calc-modal { position:fixed; inset:0; z-index:1000; display:flex; align-items:center; justify-content:center; padding:16px; }
+  .calc-overlay { position:absolute; inset:0; background:rgba(0,0,0,.45); }
+  .calc-dialog { position:relative; background:var(--page-card); border:1px solid var(--mf-colors-border-strong); border-radius:var(--mf-radii-card); box-shadow:var(--mf-shadows-card); max-width:460px; width:100%; padding:24px 26px; }
+  .calc-close { position:absolute; top:10px; right:12px; font-size:var(--mf-font-sizes-300); font-weight:700; color:var(--page-ink-weak); background:none; border:none; cursor:pointer; line-height:1; }
+  .calc-title { font-size:var(--mf-font-sizes-200); font-weight:700; color:var(--page-ink-strong); margin-bottom:16px; }
+  .calc-field { margin-bottom:14px; }
+  .calc-field label { display:block; font-size:var(--mf-font-sizes-30); color:var(--page-ink); margin-bottom:4px; font-weight:600; }
+  .calc-field input { width:100%; padding:8px 10px; font-size:var(--mf-font-sizes-100); font-weight:700; color:var(--page-ink-strong); border:1px solid var(--mf-colors-border-weak); border-radius:var(--mf-radii-small); background:var(--page-card); box-sizing:border-box; }
+  .calc-field .hint { display:block; font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); margin-top:2px; }
+  .calc-result { margin-top:16px; padding:14px 16px; background:var(--page-panel); border-left:4px solid var(--page-accent); border-radius:var(--mf-radii-large); font-size:var(--mf-font-sizes-100); font-weight:700; color:var(--page-ink-strong); line-height:1.7; }
+  .calc-result b { color:var(--page-accent-deep); }
+  .calc-ratio { margin-top:6px; font-size:var(--mf-font-sizes-30); font-weight:400; color:var(--page-ink); line-height:1.7; }
+</style>
+</head>
+<body>
+<div class="card">
+<div class="eyebrow">Housing Loan</div>
+  <h1>公积金能用多少，决定你省多少利息</h1>
+  <div class="conclusion">贷 <span class="dyn" id="subLoan">200</span> 万、<span class="dyn" id="subYears">30</span> 年：公积金能贷 <span class="dyn" id="subQuota">50</span> 万，月供 <span class="dyn" id="subMonthly">10096</span> 元；贷不了公积金，月供 <span class="dyn" id="subMonthly0">10615</span> 元——<b>每月多还 <span class="dyn" id="subDiff">519</span> 元，30 年多还 <span class="dyn" id="subSave">18.7</span> 万利息</b>。</div>
+  <div class="hero">
+  <p>先记住结论：<strong>公积金利率 3.1%，远低于商贷 4.9%</strong>。同样的 200 万房贷，能用上 50 万公积金，30 年总利息 163.5 万；贷不了公积金，总利息 182.1 万。<b>每多用 10 万公积金，30 年约省 3.7 万利息</b>——额度能贷满就贷满。</p>
+</div>
+
+  <div class="section-title">表格：公积金额度 × 贷款总额 → 省下的利息</div>
+  <div class="legend">
+    <span><i class="dot lvl5"></i>省≥30万</span>
+    <span><i class="dot lvl4"></i>省15-30万</span>
+    <span><i class="dot lvl3"></i>省5-15万</span>
+    <span><i class="dot lvl2"></i>省1-5万</span>
+    <span><i class="dot lvl1"></i>省&lt;1万</span>
+  </div>
+  <table id="fundTable">
+    <tr>
+      <th class="rowhead">公积金额度</th>
+      <th>贷100万</th><th>贷200万</th><th>贷300万</th><th>贷500万</th>
+    </tr>
+  </table>
+
+  <div class="section-title">为什么？</div>
+  <details class="l2">
+    <summary>讲给我听：3.1% 和 4.9% 差多少？</summary>
+    <p>等额本息 30 年：100 万商贷（4.9%）月供 5307 元；换成公积金（3.1%）月供约 4270 元——每月少 1000 多元，30 年少 37 万利息。<b>利率差在长期复利下会被放大</b>，所以公积金额度是买房时最值钱的资产之一。</p>
+    <p>组合贷：额度内的部分按公积金利率，剩余按商贷利率，两段月供相加。能贷满额度优先贷满，省下来的利息相当于几年工资。</p>
+  </details>
+
+  <div class="section-title">底层假设（L3）</div>
+  <div class="assume">
+    假设：贷款年限 <b>30 年</b>，等额本息；公积金利率 <b>3.1%</b>、商贷利率 <b>4.9%</b>；公积金额度上限按实际可贷额（表格 0-120 万）。<br>
+    换算：贷 <b>200 万</b>、公积金 <b>50 万</b> → 月供 <b>10096 元</b>（公积金部分 2136 + 商贷部分 7960）；贷不了公积金 → 月供 <b>10615 元</b>；30 年多还利息 <b>18.7 万</b>。
+  </div>
+  <div class="foot">
+    测算基于固定利率、等额本息、30 年期的简化假设；实际公积金利率、贷款年限、额度上限因城市政策而异，商贷利率亦随 LPR 浮动。本图不构成任何购房或贷款建议。
+  </div>
+<div class="faq-title">常见问题（FAQ）</div>
+  <details class="faq"><summary>公积金贷款到底能省多少？</summary><p>贷 200 万 30 年：公积金利率 3.1%、商贷 4.9%。公积金贷 50 万，总利息 163.5 万；贷不了公积金，总利息 182.1 万，多还 18.7 万。每多用 10 万公积金，30 年约省 3.7 万。</p></details>
+  <details class="faq"><summary>为什么公积金能省这么多？</summary><p>公积金利率 3.1% 远低于商贷 4.9%，差额在 30 年复利下被放大。100 万商贷换成公积金，月供从 5307 元降到约 4270 元。</p></details>
+  <details class="faq"><summary>组合贷怎么算？</summary><p>公积金额度以内的部分按公积金利率计息，剩余部分按商贷利率计息，两段等额本息月供相加。</p></details>
+  <div class="cta"><b>用你自己的数字算一遍：</b>上面的结果基于分档假设；把贷款总额、公积金额度、利率换成真实情况，答案可能完全不同——本页提供算法框架，你的数字才是决策依据。<br><button class="calc-btn" id="openCalc">算一算</button></div>
+</div>
+<div class="calc-modal" id="calcModal" hidden>
+  <div class="calc-overlay" id="calcOverlay"></div>
+  <div class="calc-dialog" role="dialog" aria-modal="true" aria-label="用你自己的数字算一算">
+    <button class="calc-close" id="closeCalc" aria-label="关闭">×</button>
+    <div class="calc-title">用你自己的数字算一算</div>
+    <div class="calc-field">
+      <label for="calcLoan">贷款总额（元）</label>
+      <input type="number" id="calcLoan" value="2000000" min="100000" step="100000">
+      <span class="hint">例如：200 万</span>
+    </div>
+    <div class="calc-field">
+      <label for="calcQuota">公积金可贷额度（元）</label>
+      <input type="number" id="calcQuota" value="500000" min="0" step="10000">
+      <span class="hint">按当地政策上限，不能超过贷款总额</span>
+    </div>
+    <div class="calc-field">
+      <label for="calcYears">贷款年限（年）</label>
+      <input type="number" id="calcYears" value="30" min="1" max="30" step="1">
+    </div>
+    <div class="calc-result">
+      组合贷月供 <b id="calcOutMonthly">—</b>
+      <div class="calc-ratio" id="calcOutInterest">总利息约 —；对比全商贷可省 —。</div>
+    </div>
+  </div>
+</div>
+<footer>
+  mangofolio · fin-decision-matrix<br>
+  免责声明：<br>
+  ① 本页仅为财务教育与计算演示，不构成任何投资、保险、税务或法律建议。<br>
+  ② 测算基于简化模型与假设参数，实际收益受市场波动、通胀及个人情况影响，结果可能与现实存在显著差异。<br>
+  ③ 重大财务决策请结合自身情况，必要时咨询持牌专业人士。© 2026 mangofolio
+</footer>
+<script>
+  // ============================================================
+  // 参数
+  // ============================================================
+  const YEARS = 30;
+  const FUND_RATE = 0.031;   // 公积金利率
+  const LOAN_RATE = 0.049;   // 商贷利率
+
+  // ============================================================
+  // 核心计算
+  // ============================================================
+  function calcMonthly(loan, annualRate, years = YEARS) {
+    const r = annualRate / 12;
+    const n = years * 12;
+    const pow = Math.pow(1 + r, n);
+    return loan * r * pow / (pow - 1);
+  }
+
+  function calcTotalInterest(loan, annualRate, years = YEARS) {
+    const monthly = calcMonthly(loan, annualRate, years);
+    return monthly * years * 12 - loan;
+  }
+
+  // 组合贷款：公积金部分用公积金利率，剩余用商贷
+  function calcCombo(totalLoan, fundQuota, years = YEARS) {
+    const fundPart = Math.min(fundQuota, totalLoan);
+    const loanPart = totalLoan - fundPart;
+    const fundMonthly = fundPart > 0 ? calcMonthly(fundPart, FUND_RATE, years) : 0;
+    const loanMonthly = loanPart > 0 ? calcMonthly(loanPart, LOAN_RATE, years) : 0;
+    const monthly = fundMonthly + loanMonthly;
+    const fundInterest = fundPart > 0 ? calcTotalInterest(fundPart, FUND_RATE, years) : 0;
+    const loanInterest = loanPart > 0 ? calcTotalInterest(loanPart, LOAN_RATE, years) : 0;
+    return { monthly, totalInterest: fundInterest + loanInterest, fundPart, loanPart };
+  }
+
+  // 档位：按节省利息（1=省得少 … 5=省得多）
+  function getLevel(save) {
+    if (save >= 300000) return 5;
+    if (save >= 150000) return 4;
+    if (save >= 50000) return 3;
+    if (save >= 10000) return 2;
+    return 1;
+  }
+
+  function formatMonthly(v) {
+    return Math.round(v).toLocaleString();
+  }
+
+  function formatWan(v) {
+    if (v >= 10000) return (v / 10000).toFixed(1) + '万';
+    return Math.round(v).toLocaleString();
+  }
+
+  // ============================================================
+  // 生成表格
+  // ============================================================
+  const fundQuotas = [0, 300000, 500000, 800000, 1200000];
+  const totalLoans = [1000000, 2000000, 3000000, 5000000];
+
+  const table = document.getElementById('fundTable');
+
+  fundQuotas.forEach(quota => {
+    const tr = document.createElement('tr');
+    const th = document.createElement('th');
+    th.className = 'rowhead';
+    th.textContent = quota === 0 ? '贷不了公积金' : (quota / 10000) + '万';
+    tr.appendChild(th);
+
+    totalLoans.forEach(total => {
+      const combo = calcCombo(total, quota);
+      const allLoan = calcTotalInterest(total, LOAN_RATE); // 全商贷
+      const save = allLoan - combo.totalInterest;
+
+      const td = document.createElement('td');
+      td.className = 'lvl' + getLevel(save);
+
+      const actualFund = Math.min(quota, total);
+      const actualLoan = total - actualFund;
+
+      td.innerHTML = `<div class="cell-save">省 ${formatWan(save)}</div>
+                      <div class="cell-detail">月供 ${formatMonthly(combo.monthly)}</div>
+                      <div class="cell-note">公积金${formatWan(actualFund)} + 商贷${formatWan(actualLoan)}</div>`;
+      tr.appendChild(td);
+    });
+
+    table.appendChild(tr);
+  });
+
+  // ============================================================
+  // 动态插值：静态文案数字由同一计算函数生成
+  // ============================================================
+  (function renderStatic() {
+    const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+    const combo = calcCombo(2000000, 500000);
+    const allLoan = calcTotalInterest(2000000, LOAN_RATE);
+    const save = allLoan - combo.totalInterest;
+    set('subLoan', '200');
+    set('subYears', '30');
+    set('subQuota', '50');
+    set('subMonthly', formatMonthly(combo.monthly));
+    set('subMonthly0', formatMonthly(calcMonthly(2000000, LOAN_RATE)));
+    set('subDiff', Math.round(calcMonthly(2000000, LOAN_RATE) - combo.monthly));
+    set('subSave', (save / 10000).toFixed(1));
+  })();
+
+  // ============================================================
+  // 算一算弹窗
+  // ============================================================
+  function renderCalc() {
+    const loan = Math.max(100000, Math.round(Number(document.getElementById('calcLoan').value) || 2000000));
+    const quota = Math.max(0, Math.round(Number(document.getElementById('calcQuota').value) || 500000));
+    const years = Math.max(1, Math.min(30, Math.round(Number(document.getElementById('calcYears').value) || 30)));
+    const combo = calcCombo(loan, quota, years);
+    const allLoan = calcTotalInterest(loan, LOAN_RATE, years);
+    const save = allLoan - combo.totalInterest;
+    document.getElementById('calcOutMonthly').textContent = formatMonthly(combo.monthly);
+    document.getElementById('calcOutInterest').textContent = `总利息约 ${formatWan(combo.totalInterest)}；对比全商贷可省 ${formatWan(save)}。`;
+  }
+  function openCalc() { document.getElementById('calcModal').hidden = false; renderCalc(); }
+  function closeCalc() { document.getElementById('calcModal').hidden = true; }
+  document.getElementById('openCalc').addEventListener('click', openCalc);
+  document.getElementById('closeCalc').addEventListener('click', closeCalc);
+  document.getElementById('calcOverlay').addEventListener('click', closeCalc);
+  ['calcLoan', 'calcQuota', 'calcYears'].forEach(id => document.getElementById(id).addEventListener('input', renderCalc));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCalc(); });
+</script>
+</body></html>

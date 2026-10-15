@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>首付交多少，月供才不压垮你？（2026 测算）</title>
+<meta name="description" content="200 万房子，首付 20% 贷 30 年，月供 8491 元；首付 50% 贷 10 年，月供 10553 元但利息少 119 万。理性 + 压力">
+<meta name="keywords" content="首付交多少，月供才不压垮你？,财务决策,投教,理财计算,复利,替代率">
+<link rel="canonical" href="https://fintools.mangofolio.com/首付交多少，月供才不压垮你？.html">
+<meta property="og:title" content="首付交多少，月供才不压垮你？（2026 测算）">
+<meta property="og:description" content="200 万房子，首付 20% 贷 30 年，月供 8491 元；首付 50% 贷 10 年，月供 10553 元但利息少 119 万。理性 + 压力">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"question": "首付交多少，月供才不压垮你？", "answer": "200 万房子，首付 20% 贷 30 年，月供 8491 元；首付 50% 贷 10 年，月供 10553 元但利息少 119 万。理性 + 压力"}, {"question": "测算基于什么假设？", "answer": "假设：房价 200 万，年利率 4.9%（固定），等额本息还款；月供占比按家庭月收入 2 万 计算（仅供参考，实际应按家庭收入调整）。 换算：月供 8491 元 ≈ 每天 283 元；月供占收入 42% ≈ 每月近一半工资交给银行。"}, {"question": "结果有多可靠？", "answer": "测算基于固定利率 4.9%、等额本息的简化假设；未考虑公积金贷款（利率更低）、LPR 浮动、提前还款、税费、装修等。月供占比按家庭月收入 2 万计算，实际应按家庭真实收入评估。本图不构成任何投资建议。"}]}</script>
+<link rel="stylesheet" href="assets/mangofolio-tokens-v09.css">
+<style>
+
+  /* ---- 页面局部配色（对齐 fintools 线上版 guide 页视觉基准：纯白底 / 白卡 / 暖墨正文 / 芒果橙点缀） ---- */
+  :root {
+    --page-bg: var(--mf-colors-background);            /* #FFFFFF 纯白主底 */
+    --page-card: var(--mf-colors-background-surface);   /* #FFFFFF 卡片面 */
+    --page-panel: var(--mf-colors-background-neutral);  /* #F7F5F2 暖灰分区底（结论框/表头） */
+    --page-ink: var(--mf-colors-text);                  /* #3A332C 正文墨 */
+    --page-ink-strong: var(--mf-colors-text-strong);    /* #241610 深墨强调 */
+    --page-ink-weak: var(--mf-colors-text-weak);        /* #8A7D70 次级文字 */
+    --page-accent: var(--mf-colors-text-link);          /* #F97316 芒果橙电压色 */
+    --page-accent-deep: var(--mf-colors-text-accent-mango); /* #E05E0A 深橙 */
+    --page-hairline: var(--mf-colors-border-weak);      /* 1px 细线 */
+    /* 表格档位：中国习惯红涨绿跌——金额越高越红、越低越绿；mangofolio 亮橙系列实色，深底白字 / 浅底深字 */
+    --lvl1-bg: #B8221E;   /* ≥30万 涨红（好） */
+    --lvl2-bg: #D4543E;   /* 15-30万 橙红 */
+    --lvl3-bg: #F59E0B;   /* 5-15万 琥珀 */
+    --lvl4-bg: #1F8A4C;   /* 1-5万 中绿 */
+    --lvl5-bg: #11693D;   /* <1万 跌绿（差） */
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--page-bg); padding:12px; font-family:var(--mf-fonts-sans); color:var(--page-ink); }
+  .card { background:var(--page-card); border:1px solid var(--page-hairline); border-radius:var(--mf-radii-card); box-shadow:var(--mf-shadows-card); max-width:1100px; margin:8px auto; padding:20px 26px; }
+  .eyebrow { font-size:var(--mf-font-sizes-eyebrow); font-weight:500; color:var(--page-accent); letter-spacing:.3em; text-transform:uppercase; text-align:center; margin-bottom:4px; }
+  h1 { font-family:var(--mf-fonts-display); font-size:clamp(1.6rem,3.6vw,2.3rem); font-weight:800; color:var(--page-ink-strong); text-align:center; line-height:1.3; }
+  .conclusion { margin:8px auto 6px; max-width:900px; text-align:center; font-size:var(--mf-font-sizes-100); line-height:1.6; color:var(--page-ink-strong); font-weight:600; }
+  .hero { background:var(--page-panel); border-left:3px solid var(--page-accent); border-radius:var(--mf-radii-large); padding:12px 16px; margin:4px 0 12px; }
+  .hero .lead, .hero p { color:var(--page-ink); font-size:var(--mf-font-sizes-100); line-height:1.8; margin:0; }
+  .hero b, .hero strong { color:var(--page-ink-strong); }
+  .section-title { font-size:var(--mf-font-sizes-200); font-weight:700; color:var(--page-ink-strong); margin:14px 0 6px; }
+  .assume { background:var(--page-panel); border-radius:var(--mf-radii-large); padding:12px 16px; font-size:var(--mf-font-sizes-30); color:var(--page-ink); margin:14px 0; line-height:1.8; }
+  .assume b, .assume strong { color:var(--page-ink-strong); }
+  .highlight { background:var(--mf-colors-background-warning); color:var(--page-accent-deep); padding:2px 6px; border-radius:var(--mf-radii-small); font-weight:700; }
+  details.l2 { border:1px solid var(--page-hairline); border-radius:var(--mf-radii-large); padding:10px 14px; margin:14px 0; font-size:var(--mf-font-sizes-30); line-height:1.8; color:var(--page-ink); }
+  details.l2 summary { cursor:pointer; font-weight:700; color:var(--page-accent); }
+  table { width:100%; border-collapse:separate; border-spacing:3px; }
+  th { padding:8px 6px; font-size:var(--mf-font-sizes-30); color:var(--page-ink-strong); background:var(--mf-colors-primitives-mango-050); border-radius:var(--mf-radii-small); line-height:1.4; }
+  th small { font-weight:400; color:var(--page-ink-weak); font-size:var(--mf-font-sizes-25); }
+  th.rowhead { text-align:left; width:96px; background:var(--page-panel); }
+  td { padding:7px 4px; text-align:center; font-size:var(--mf-font-sizes-50); font-weight:700; color:var(--mf-colors-primitives-white-100); border-radius:var(--mf-radii-small); min-width:60px; line-height:1.35; }
+  .cell-amount { font-size:var(--mf-font-sizes-100); }
+  .cell-note { font-size:var(--mf-font-sizes-25); opacity:.92; margin-top:1px; font-weight:500; }
+  .lvl1 { background:var(--lvl1-bg); }
+  .lvl2 { background:var(--lvl2-bg); }
+  .lvl3 { background:var(--lvl3-bg); color:var(--page-ink-strong); }
+  .lvl4 { background:var(--lvl4-bg); }
+  .lvl5 { background:var(--lvl5-bg); }
+  .legend { display:flex; justify-content:center; gap:14px; margin:8px 0 10px; font-size:var(--mf-font-sizes-25); color:var(--page-ink); flex-wrap:wrap; }
+  .legend span { display:inline-flex; align-items:center; gap:6px; }
+  .dot { width:13px; height:13px; border-radius:var(--mf-radii-small); display:inline-block; }
+  .dot.lvl1 { background:var(--lvl1-bg); }
+  .dot.lvl2 { background:var(--lvl2-bg); }
+  .dot.lvl3 { background:var(--lvl3-bg); }
+  .dot.lvl4 { background:var(--lvl4-bg); }
+  .dot.lvl5 { background:var(--lvl5-bg); }
+  .extra-note { margin-top:10px; padding:10px 14px; background:var(--page-panel); border-radius:var(--mf-radii-large); font-size:var(--mf-font-sizes-30); color:var(--page-ink); line-height:1.8; }
+  .extra-note b { color:var(--page-accent-deep); }
+  .chart-title { text-align:center; font-size:var(--mf-font-sizes-200); font-weight:700; color:var(--page-ink-strong); margin:24px 0 4px; }
+  .chart-sub { text-align:center; font-size:var(--mf-font-sizes-30); color:var(--page-ink-weak); margin-bottom:8px; }
+  .chart-wrap { width:100%; overflow:hidden; }
+  .chart-wrap svg { width:100%; height:auto; display:block; }
+  .foot { margin-top:14px; font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.7; }
+  footer { max-width:1100px; margin:0 auto 20px; padding:16px 24px; text-align:center; font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.8; border-top:1px solid var(--page-hairline); }
+
+  .faq-title { font-size:var(--mf-font-sizes-300); font-weight:700; color:var(--page-ink-strong); margin:24px 0 10px; }
+  .cta { margin:18px 0 6px; padding:14px 18px; background:var(--page-panel); border-left:4px solid var(--page-accent); border-radius:var(--mf-radii-large); font-size:var(--mf-font-sizes-30); line-height:1.8; color:var(--page-ink); }
+  .cta b { color:var(--page-ink-strong); }
+  details.faq { border:1px solid var(--page-hairline); border-radius:var(--mf-radii-large); padding:10px 14px; margin:10px 0; font-size:var(--mf-font-sizes-30); line-height:1.8; color:var(--page-ink); }
+  details.faq summary { cursor:pointer; font-weight:700; color:var(--page-accent); }
+  .calc-btn { display:inline-block; margin-top:10px; padding:10px 26px; font-size:var(--mf-font-sizes-100); font-weight:700; color:var(--mf-colors-primitives-white-100); background:var(--page-accent); border:none; border-radius:var(--mf-radii-large); cursor:pointer; }
+  .calc-btn:hover { opacity:.88; }
+  .calc-modal[hidden] { display:none; }
+  .calc-modal { position:fixed; inset:0; z-index:1000; display:flex; align-items:center; justify-content:center; padding:16px; }
+  .calc-overlay { position:absolute; inset:0; background:rgba(0,0,0,.45); }
+  .calc-dialog { position:relative; background:var(--page-card); border:1px solid var(--mf-colors-border-strong); border-radius:var(--mf-radii-card); box-shadow:var(--mf-shadows-card); max-width:460px; width:100%; padding:24px 26px; }
+  .calc-close { position:absolute; top:10px; right:12px; font-size:var(--mf-font-sizes-300); font-weight:700; color:var(--page-ink-weak); background:none; border:none; cursor:pointer; line-height:1; }
+  .calc-title { font-size:var(--mf-font-sizes-200); font-weight:700; color:var(--page-ink-strong); margin-bottom:16px; }
+  .calc-field { margin-bottom:14px; }
+  .calc-field label { display:block; font-size:var(--mf-font-sizes-30); color:var(--page-ink); margin-bottom:4px; font-weight:600; }
+  .calc-field input { width:100%; padding:8px 10px; font-size:var(--mf-font-sizes-100); font-weight:700; color:var(--page-ink-strong); border:1px solid var(--mf-colors-border-weak); border-radius:var(--mf-radii-small); background:var(--page-card); box-sizing:border-box; }
+  .calc-field .hint { display:block; font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); margin-top:2px; }
+  .calc-result { margin-top:16px; padding:14px 16px; background:var(--page-panel); border-left:4px solid var(--page-accent); border-radius:var(--mf-radii-large); font-size:var(--mf-font-sizes-100); font-weight:700; color:var(--page-ink-strong); line-height:1.7; }
+  .calc-result b { color:var(--page-accent-deep); }
+  .calc-ratio { margin-top:6px; font-size:var(--mf-font-sizes-30); font-weight:400; color:var(--page-ink); line-height:1.7; }
+
+</style>
+</head>
+<body>
+<div class="card">
+<div class="eyebrow">Mortgage Planning</div>
+  <h1>首付交多少，月供才不压垮你？</h1>
+  <div class="conclusion">200 万房子，首付 20% 贷 30 年，月供 8491 元；首付 50% 贷 10 年，月供 10553 元但利息少 119 万。<span class="emotion">理性 + 压力</span></div>
+  <div class="hero">
+  <p>先记住结论：<strong>首付比例决定贷款规模，贷款年限决定月供分摊。首付越低、年限越长，月供越轻松但总利息越高；首付越高、年限越短，月供压力大但省利息。月供占收入 50% 以上是危险线——一旦失业或降薪，房子可能变成负担。</strong></p>
+</div>
+
+  <div class="section-title">表格：首付交多少，月供才不压垮你？</div>
+  <div class="legend">
+    <span><i class="dot lvl1"></i>月供/收入 ≤30%（很安全）</span>
+    <span><i class="dot lvl2"></i>30-40%（安全）</span>
+    <span><i class="dot lvl3"></i>40-50%（中等）</span>
+    <span><i class="dot lvl4"></i>50-60%（偏高）</span>
+    <span><i class="dot lvl5"></i>&gt;60%（危险）</span>
+  </div>
+  <table id="mortgageTable">
+    <tr>
+      <th class="rowhead">首付比例</th>
+      <th>10年</th><th>15年</th><th>20年</th><th>25年</th><th>30年</th>
+    </tr>
+  </table>
+
+
+  <div class="section-title">为什么？</div>
+  <details class="l2">
+    <summary>讲给我听：首付交多少，月供才不压垮你？</summary>
+    <p>首付比例决定贷款规模，贷款年限决定月供分摊。首付越低、年限越长，月供越轻松但总利息越高；首付越高、年限越短，月供压力大但省利息。月供占收入 50% 以上是危险线——一旦失业或降薪，房子可能变成负担。</p>
+    <p>假设：房价 200 万，年利率 4.9%（固定），等额本息还款；月供占比按家庭月收入 2 万 计算（仅供参考，实际应按家庭收入调整）。 换算：月供 8491 元 ≈ 每天 283 元；月供占收入 42% ≈ 每月近一半工资交给银行。</p>
+  </details>
+
+  <div class="section-title">底层假设（L3）</div>
+  <div class="assume">
+    假设：房价 <b>200 万</b>，年利率 <b>4.9%</b>（固定），等额本息还款；月供占比按家庭月收入 <b>2 万</b> 计算（仅供参考，实际应按家庭收入调整）。<br>
+    换算：月供 <b>8491 元</b> ≈ 每天 <span class="highlight">283 元</span>；月供占收入 42% ≈ 每月近一半工资交给银行。
+  </div>
+  <div class="foot">
+    测算基于固定利率 4.9%、等额本息的简化假设；未考虑公积金贷款（利率更低）、LPR 浮动、提前还款、税费、装修等。月供占比按家庭月收入 2 万计算，实际应按家庭真实收入评估。本图不构成任何投资建议。
+  </div>
+<div class="faq-title">常见问题（FAQ）</div>
+  <details class="faq"><summary>首付交多少，月供才不压垮你？</summary><p>200 万房子，首付 20% 贷 30 年，月供 8491 元；首付 50% 贷 10 年，月供 10553 元但利息少 119 万。理性 + 压力</p></details>
+  <details class="faq"><summary>测算基于什么假设？</summary><p>假设：房价 200 万，年利率 4.9%（固定），等额本息还款；月供占比按家庭月收入 2 万 计算（仅供参考，实际应按家庭收入调整）。 换算：月供 8491 元 ≈ 每天 283 元；月供占收入 42% ≈ 每月近一半工资交给银行。</p></details>
+  <details class="faq"><summary>结果有多可靠？</summary><p>测算基于固定利率 4.9%、等额本息的简化假设；未考虑公积金贷款（利率更低）、LPR 浮动、提前还款、税费、装修等。月供占比按家庭月收入 2 万计算，实际应按家庭真实收入评估。本图不构成任何投资建议。</p></details>
+<footer>
+  mangofolio · fin-decision-matrix<br>
+  免责声明：<br>
+  ① 本页仅为财务教育与计算演示，不构成任何投资、保险、税务或法律建议。<br>
+  ② 测算基于简化模型与假设参数，实际收益受市场波动、通胀及个人情况影响，结果可能与现实存在显著差异。<br>
+  ③ 重大财务决策请结合自身情况，必要时咨询持牌专业人士。© 2026 mangofolio
+</footer>
+<script>
+// ============================================================
+  // 参数
+  // ============================================================
+  const PRICE = 2000000;       // 房价 200 万
+  const ANNUAL_RATE = 0.049;   // 年利率 4.9%
+  const REFERENCE_INCOME = 20000; // 参考家庭月收入 2 万
+
+  // ============================================================
+  // 核心计算
+  // ============================================================
+  function calcMortgage(loanAmount, years) {
+    const r = ANNUAL_RATE / 12;
+    const n = years * 12;
+    const pow = Math.pow(1 + r, n);
+    const monthly = loanAmount * r * pow / (pow - 1);
+    const totalPayment = monthly * n;
+    const totalInterest = totalPayment - loanAmount;
+    return { monthly, totalInterest, totalPayment };
+  }
+
+  // ============================================================
+  // 颜色编码：按月供/收入比
+  // ============================================================
+  function getColor(ratio) {
+    if (ratio <= 0.30) return '#B8221E';
+    if (ratio <= 0.40) return '#D4543E';
+    if (ratio <= 0.50) return '#F59E0B';
+    if (ratio <= 0.60) return '#1F8A4C';
+    return '#11693D';
+  }
+
+  // ============================================================
+  // 格式化
+  // ============================================================
+  function formatMonthly(v) {
+    return Math.round(v).toLocaleString();
+  }
+
+  function formatWan(v) {
+    if (v >= 10000) return (v / 10000).toFixed(0) + '万';
+    return Math.round(v).toLocaleString();
+  }
+
+  function formatRatio(r) {
+    return '占收入 ' + (r * 100).toFixed(0) + '%';
+  }
+
+  // ============================================================
+  // 生成表格
+  // ============================================================
+  const downPcts = [0.20, 0.30, 0.40, 0.50, 0.70];
+  const yearList = [10, 15, 20, 25, 30];
+
+  const table = document.getElementById('mortgageTable');
+
+  downPcts.forEach(down => {
+    const tr = document.createElement('tr');
+    const th = document.createElement('th');
+    th.className = 'rowhead';
+    th.textContent = (down * 100) + '%';
+    tr.appendChild(th);
+
+    const loanAmount = PRICE * (1 - down);
+
+    yearList.forEach(years => {
+      const { monthly, totalInterest } = calcMortgage(loanAmount, years);
+      const ratio = monthly / REFERENCE_INCOME;
+      const td = document.createElement('td');
+      td.style.background = getColor(ratio);
+
+      td.innerHTML = `<div class="cell-monthly">${formatMonthly(monthly)}</div>
+                      <div class="cell-ratio">${formatRatio(ratio)}</div>
+                      <div class="cell-interest">利息${formatWan(totalInterest)}</div>`;
+      tr.appendChild(td);
+    });
+
+    table.appendChild(tr);
+  });
+
+  // ============================================================
+  // 收入提示
+  // ============================================================
+  const note = document.getElementById('incomeNote');
+  note.innerHTML = `<b>参考收入说明：</b>月供占比按家庭月收入 <b>2 万</b> 计算。
+    如果你的家庭月收入不同，可以这样换算：<br>
+    · 月收入 <b>1.5 万</b>：表中占比 × 1.33（如 42% → 56%，进入危险区）<br>
+    · 月收入 <b>3 万</b>：表中占比 × 0.67（如 42% → 28%，很安全）<br>
+    · 月收入 <b>5 万</b>：表中占比 × 0.4（如 42% → 17%，毫无压力）`;
+</script>
+</div>
+</body>
+</html>

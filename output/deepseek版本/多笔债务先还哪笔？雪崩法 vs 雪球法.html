@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>多笔债务先还哪笔？雪崩法 vs 雪球法</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:"Microsoft YaHei","PingFang SC",sans-serif; }
+  body { background:#f6f7fb; padding:24px; }
+  .card { background:#fff; border-radius:16px; box-shadow:0 4px 20px rgba(0,0,0,.08);
+          max-width:1060px; margin:0 auto; padding:28px 32px; }
+  h1 { font-size:28px; color:#111827; text-align:center; }
+  .subtitle { text-align:center; color:#6b7280; font-size:14px; margin:8px 0 18px; }
+  .emotion { display:inline-block; background:#ede9fe; color:#6d28d9; font-size:11px; padding:2px 8px;
+             border-radius:999px; margin-left:8px; vertical-align:middle; font-weight:700; }
+  .assume { background:#f3f4f6; border-radius:10px; padding:10px 14px; font-size:13px;
+            color:#374151; margin-bottom:16px; line-height:1.7; }
+  .debt-info { display:flex; gap:12px; flex-wrap:wrap; margin-bottom:16px; }
+  .debt-tag { background:#eef2ff; border-radius:8px; padding:6px 12px; font-size:12px; color:#374151; }
+  .debt-tag b { color:#111827; }
+  table { width:100%; border-collapse:separate; border-spacing:4px; }
+  th { padding:10px 8px; font-size:13px; color:#111827; background:#eef2ff; border-radius:8px; line-height:1.4; }
+  th small { font-weight:400; color:#6b7280; font-size:11px; }
+  th.rowhead { text-align:left; width:110px; }
+  td { padding:10px 6px; text-align:center; font-size:15px; font-weight:700;
+       color:#fff; border-radius:8px; min-width:64px; }
+  .cell-months { font-size:17px; }
+  .cell-interest { font-size:11px; opacity:0.9; margin-top:2px; font-weight:500; }
+  .diff-cell { background:#f3f4f6; color:#374151; font-size:13px; line-height:1.5; }
+  .diff-cell b { color:#b45309; font-size:15px; }
+  .foot { margin-top:16px; font-size:12px; color:#9ca3af; line-height:1.6; }
+  .watermark { margin-top:14px; text-align:center; font-size:12px; color:#9ca3af; letter-spacing:1px; }
+  .legend { display:flex; justify-content:center; gap:18px; margin:12px 0 16px; font-size:12px; color:#374151; flex-wrap:wrap; }
+  .legend span { display:inline-flex; align-items:center; gap:6px; }
+  .dot { width:14px; height:14px; border-radius:4px; display:inline-block; }
+</style></head><body>
+<div class="card">
+  <h1>多笔债务先还哪笔？雪崩法 vs 雪球法</h1>
+  <div class="subtitle">同样多还1000元，换个还款顺序，可能少还几个月、省几千利息。<span class="emotion">理性 + 掌控</span></div>
+
+  <div class="assume">
+    假设：三笔债务同时存在，每月先各自还最低还款，剩余的钱按策略集中砸向一笔；无新增消费、利率不变；超过60年视为「还不清」。<br>
+    <b>雪崩法</b> = 先还利率最高的（省钱优先）；<b>雪球法</b> = 先还余额最小的（爽感优先，快速消灭一笔）。
+  </div>
+
+  <div class="debt-info">
+    <div class="debt-tag">💳 信用卡：<b>3万</b> · 18% · 最低5%</div>
+    <div class="debt-tag">🏦 消费贷：<b>5万</b> · 10% · 最低5%</div>
+    <div class="debt-tag">📱 花呗：<b>2万</b> · 15% · 最低10%</div>
+    <div class="debt-tag">合计：<b>10万</b></div>
+  </div>
+
+  <div class="legend">
+    <span><i class="dot" style="background:#15803d"></i>≤18个月</span>
+    <span><i class="dot" style="background:#22c55e"></i>19-30个月</span>
+    <span><i class="dot" style="background:#f59e0b"></i>31-48个月</span>
+    <span><i class="dot" style="background:#f97316"></i>49-72个月</span>
+    <span><i class="dot" style="background:#dc2626"></i>&gt;72个月</span>
+  </div>
+
+  <table id="debtTable">
+    <tr>
+      <th class="rowhead">每月额外还款</th>
+      <th>雪崩法<br><small>先还高利率</small></th>
+      <th>雪球法<br><small>先还小余额</small></th>
+      <th>差额<br><small>雪崩 vs 雪球</small></th>
+    </tr>
+  </table>
+
+  <div class="foot">
+    测算基于固定利率、无新增消费、每月固定拿出一笔钱还债的简化假设；实际债务可能有违约金、还款日差异、征信影响等。本图不构成任何金融建议。
+  </div>
+  <div class="watermark">投资平权 · fin-decision-matrix</div>
+</div>
+
+<script>
+  // ===== 固定债务组合 =====
+  const DEBTS = [
+    { name: '信用卡', balance: 30000, rate: 0.18, minPct: 0.05, minFloor: 50 },
+    { name: '消费贷', balance: 50000, rate: 0.10, minPct: 0.05, minFloor: 50 },
+    { name: '花呗',   balance: 20000, rate: 0.15, minPct: 0.10, minFloor: 10 }
+  ];
+
+  const MAX_MONTHS = 720; // 60年上限
+
+  // ===== 核心模拟函数 =====
+  function simulate(extraMonthly, strategy) {
+    const ds = DEBTS.map(d => ({ ...d }));
+
+    // 初始总月供 = 所有债务的最低还款额 + 额外月供
+    let totalMonthly = 0;
+    ds.forEach(d => {
+      totalMonthly += Math.max(d.balance * d.minPct, d.minFloor);
+    });
+    totalMonthly += extraMonthly;
+
+    let months = 0;
+    let totalInterest = 0;
+
+    while (ds.some(d => d.balance > 0.01) && months < MAX_MONTHS) {
+      // 1. 计算利息
+      ds.forEach(d => {
+        if (d.balance > 0.01) {
+          const interest = d.balance * d.rate / 12;
+          d.balance += interest;
+          totalInterest += interest;
+        }
+      });
+
+      // 2. 每笔债务支付最低还款
+      let remaining = totalMonthly;
+      ds.forEach(d => {
+        if (d.balance > 0.01) {
+          const minPay = Math.max(d.balance * d.minPct, d.minFloor);
+          const pay = Math.min(minPay, d.balance, remaining);
+          d.balance -= pay;
+          remaining -= pay;
+        }
+      });
+
+      // 3. 剩余的额外还款按策略集中分配
+      const active = ds.filter(d => d.balance > 0.01);
+      if (strategy === 'avalanche') {
+        active.sort((a, b) => b.rate - a.rate);       // 雪崩：先高利率
+      } else {
+        active.sort((a, b) => a.balance - b.balance); // 雪球：先小余额
+      }
+
+      for (const d of active) {
+        if (remaining <= 0) break;
+        const pay = Math.min(remaining, d.balance);
+        d.balance -= pay;
+        remaining -= pay;
+      }
+
+      months++;
+    }
+
+    return { months, totalInterest };
+  }
+
+  // ===== 颜色编码 =====
+  function getColor(months) {
+    if (months <= 18) return '#15803d';
+    if (months <= 30) return '#22c55e';
+    if (months <= 48) return '#f59e0b';
+    if (months <= 72) return '#f97316';
+    return '#dc2626';
+  }
+
+  // ===== 格式化 =====
+  function formatMonths(m) {
+    if (m >= MAX_MONTHS) return '还不清';
+    if (m < 12) return m + '个月';
+    const y = Math.floor(m / 12);
+    const mo = m % 12;
+    return mo === 0 ? y + '年' : y + '年' + mo + '个月';
+  }
+
+  function formatInterest(i) {
+    if (i >= 10000) return '利息 ' + (i / 10000).toFixed(1) + '万';
+    return '利息 ' + Math.round(i / 1000) + '千';
+  }
+
+  // ===== 生成表格 =====
+  const extras = [0, 500, 1000, 2000, 5000];
+  const table = document.getElementById('debtTable');
+
+  extras.forEach(e => {
+    const tr = document.createElement('tr');
+
+    // 行标题
+    const th = document.createElement('th');
+    th.className = 'rowhead';
+    th.textContent = e === 0 ? '不额外还' : '+' + e + '元/月';
+    tr.appendChild(th);
+
+    // 雪崩法
+    const avalanche = simulate(e, 'avalanche');
+    const tdA = document.createElement('td');
+    tdA.style.background = getColor(avalanche.months);
+    tdA.innerHTML = `<div class="cell-months">${formatMonths(avalanche.months)}</div>
+                     <div class="cell-interest">${formatInterest(avalanche.totalInterest)}</div>`;
+    tr.appendChild(tdA);
+
+    // 雪球法
+    const snowball = simulate(e, 'snowball');
+    const tdB = document.createElement('td');
+    tdB.style.background = getColor(snowball.months);
+    tdB.innerHTML = `<div class="cell-months">${formatMonths(snowball.months)}</div>
+                     <div class="cell-interest">${formatInterest(snowball.totalInterest)}</div>`;
+    tr.appendChild(tdB);
+
+    // 差额
+    const diffMonths = snowball.months - avalanche.months;
+    const diffInterest = snowball.totalInterest - avalanche.totalInterest;
+    const tdC = document.createElement('td');
+    tdC.className = 'diff-cell';
+
+    if (diffMonths <= 0 && diffInterest <= 0) {
+      tdC.innerHTML = '两种策略<br>几乎打平';
+    } else {
+      const monthText = diffMonths > 0 ? `快 <b>${diffMonths}</b> 个月` : '月数持平';
+      const interestText = diffInterest > 0 ? `省 <b>${Math.round(diffInterest)}</b> 元` : '利息持平';
+      tdC.innerHTML = `${monthText}<br>${interestText}`;
+    }
+    tr.appendChild(tdC);
+
+    table.appendChild(tr);
+  });
+</script>
+</body></html>

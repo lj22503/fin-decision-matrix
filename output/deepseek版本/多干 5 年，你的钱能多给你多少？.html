@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>多干5年，你的钱能多给你多少？</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:"Microsoft YaHei","PingFang SC",sans-serif; }
+  body { background:#f6f7fb; padding:24px; }
+  .card { background:#fff; border-radius:16px; box-shadow:0 4px 20px rgba(0,0,0,.08);
+          max-width:1060px; margin:0 auto; padding:28px 32px; }
+  h1 { font-size:28px; color:#111827; text-align:center; }
+  .subtitle { text-align:center; color:#6b7280; font-size:14px; margin:8px 0 18px; }
+  .emotion { display:inline-block; background:#ede9fe; color:#6d28d9; font-size:11px; padding:2px 8px;
+             border-radius:999px; margin-left:8px; vertical-align:middle; font-weight:700; }
+  .assume { background:#f3f4f6; border-radius:10px; padding:10px 14px; font-size:13px;
+            color:#374151; margin-bottom:16px; line-height:1.7; }
+  .highlight { background:#fef3c7; padding:2px 6px; border-radius:4px; font-weight:700; color:#b45309; }
+  .insight { background:#eef2ff; border-left:4px solid #4f46e5; border-radius:8px;
+             padding:10px 14px; font-size:13px; color:#374151; margin-bottom:16px; line-height:1.7; }
+  .insight b { color:#4f46e5; }
+  table { width:100%; border-collapse:separate; border-spacing:4px; }
+  th { padding:10px 8px; font-size:14px; color:#111827; background:#eef2ff; border-radius:8px; }
+  th.rowhead { text-align:left; width:120px; }
+  td { padding:10px 6px; text-align:center; font-size:15px; font-weight:700;
+       color:#fff; border-radius:8px; min-width:64px; }
+  .cell-total { font-size:17px; }
+  .cell-monthly { font-size:11px; opacity:0.92; margin-top:2px; font-weight:500; }
+  .cell-extra { font-size:10px; opacity:0.8; margin-top:1px; font-weight:400; }
+  .foot { margin-top:16px; font-size:12px; color:#9ca3af; line-height:1.6; }
+  .watermark { margin-top:14px; text-align:center; font-size:12px; color:#9ca3af; letter-spacing:1px; }
+  .legend { display:flex; justify-content:center; gap:18px; margin:12px 0 16px; font-size:12px; color:#374151; flex-wrap:wrap; }
+  .legend span { display:inline-flex; align-items:center; gap:6px; }
+  .dot { width:14px; height:14px; border-radius:4px; display:inline-block; }
+</style></head><body>
+<div class="card">
+  <h1>多干 5 年，你的钱能多给你多少？</h1>
+  <div class="subtitle">200 万资产，70 岁退休比 55 岁退休累计多领 85 万——多干的 5 年，钱在替你加班。<span class="emotion">理性 + 惊喜</span></div>
+
+  <div class="assume">
+    假设：以 <b>55 岁</b>时拥有的资产为基准；不退休期间资产继续以年化 <b>3%</b>（已扣除通胀）增值、不提取；退休后按固定金额每月提取，目标寿命 <b>85 岁</b>。<br>
+    换算：200 万资产，55 岁退休每月能花 <span class="highlight">8400 元</span>；工作到 70 岁再退，每月能花 <span class="highlight">2.16 万</span>——多干 15 年，月花销翻 2.5 倍。
+  </div>
+
+  <div class="insight">
+    <b>核心洞察：</b>延迟退休的收益来自两个方向——<b>资产多增值几年</b> + <b>需要覆盖的年份更少</b>。两者叠加，产生非线性放大效应。55 岁退休到 85 岁要覆盖 30 年，70 岁退休只需覆盖 15 年，所需年数减半，每月可花金额翻倍不止。
+  </div>
+
+  <div class="legend">
+    <span><i class="dot" style="background:#86efac"></i>&lt;1万/月</span>
+    <span><i class="dot" style="background:#4ade80"></i>1-1.5万/月</span>
+    <span><i class="dot" style="background:#22c55e"></i>1.5-2.5万/月</span>
+    <span><i class="dot" style="background:#16a34a"></i>2.5-4万/月</span>
+    <span><i class="dot" style="background:#15803d"></i>&gt;4万/月</span>
+  </div>
+
+  <table id="retireTable">
+    <tr>
+      <th class="rowhead">退休年龄</th>
+      <th>200万</th><th>500万</th><th>1000万</th>
+    </tr>
+  </table>
+
+  <div class="foot">
+    测算基于固定实际收益率 3%、固定金额每月提取、目标寿命 85 岁的简化假设；未考虑社保养老金、企业年金、房产等其他资产，也未考虑长寿风险（活过 85 岁）和大额医疗支出。延迟退休还涉及工作意愿、健康状况、就业市场等非财务因素。本图不构成任何金融建议。
+  </div>
+  <div class="watermark">投资平权 · fin-decision-matrix</div>
+</div>
+
+<script>
+  // ===== 参数 =====
+  const BASE_AGE = 55;        // 基准年龄（此时拥有列所示的资产）
+  const TARGET_AGE = 85;      // 目标寿命
+  const REAL_RETURN = 0.03;   // 年化实际收益率
+
+  // ===== 核心计算 =====
+  // 给定55岁时资产、退休年龄，返回累计提取总额 + 月提取额
+  function calcRetire(assetAt55, retireAge) {
+    const growMonths = (retireAge - BASE_AGE) * 12;
+    const r = REAL_RETURN / 12;
+
+    // 退休时的资产（晚退休期间继续增值）
+    const assetAtRetire = assetAt55 * Math.pow(1 + r, growMonths);
+
+    // 需要覆盖的月数
+    const withdrawMonths = (TARGET_AGE - retireAge) * 12;
+    if (withdrawMonths <= 0) return { total: 0, monthly: 0, asset: assetAtRetire };
+
+    // 月提取额（让资产在85岁刚好耗尽）
+    const monthly = assetAtRetire * r * Math.pow(1 + r, withdrawMonths) /
+                    (Math.pow(1 + r, withdrawMonths) - 1);
+
+    const total = monthly * withdrawMonths;
+    return { total, monthly, asset: assetAtRetire };
+  }
+
+  // ===== 颜色编码：按月提取额 =====
+  function getColor(monthly) {
+    if (monthly < 10000) return '#86efac';
+    if (monthly < 15000) return '#4ade80';
+    if (monthly < 25000) return '#22c55e';
+    if (monthly < 40000) return '#16a34a';
+    return '#15803d';
+  }
+
+  // ===== 格式化 =====
+  function formatTotal(v) {
+    if (v >= 10000) return (v / 10000).toFixed(1) + '万';
+    return Math.round(v).toLocaleString() + '元';
+  }
+
+  function formatMonthly(v) {
+    if (v >= 10000) return '月花 ' + (v / 10000).toFixed(2) + '万';
+    return '月花 ' + Math.round(v).toLocaleString() + '元';
+  }
+
+  // ===== 数据 =====
+  const retireAges = [55, 60, 65, 70];
+  const assets = [2000000, 5000000, 10000000];
+
+  // 基准：55岁退休的数据，用于计算“多领多少”
+  const baseline = {};
+  assets.forEach(a => {
+    baseline[a] = calcRetire(a, 55).total;
+  });
+
+  const table = document.getElementById('retireTable');
+
+  retireAges.forEach(age => {
+    const tr = document.createElement('tr');
+    const th = document.createElement('th');
+    th.className = 'rowhead';
+    th.textContent = age + '岁退休';
+    tr.appendChild(th);
+
+    assets.forEach(a => {
+      const { total, monthly } = calcRetire(a, age);
+      const td = document.createElement('td');
+      td.style.background = getColor(monthly);
+
+      // 与55岁退休相比多领多少
+      const diff = total - baseline[a];
+      let extraText = '';
+      if (age === 55) {
+        extraText = '基准';
+      } else if (diff > 0) {
+        extraText = '多领 ' + (diff / 10000).toFixed(0) + '万';
+      }
+
+      td.innerHTML = `<div class="cell-total">${formatTotal(total)}</div>
+                      <div class="cell-monthly">${formatMonthly(monthly)}</div>
+                      <div class="cell-extra">${extraText}</div>`;
+      tr.appendChild(td);
+    });
+
+    table.appendChild(tr);
+  });
+</script>
+</body></html>

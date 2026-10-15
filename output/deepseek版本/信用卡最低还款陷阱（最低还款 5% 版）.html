@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>只还最低还款，你的信用卡要还多久？</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:"Microsoft YaHei","PingFang SC",sans-serif; }
+  body { background:#f6f7fb; padding:24px; }
+  .card { background:#fff; border-radius:16px; box-shadow:0 4px 20px rgba(0,0,0,.08);
+          max-width:1040px; margin:0 auto; padding:28px 32px; }
+  h1 { font-size:28px; color:#111827; text-align:center; }
+  .subtitle { text-align:center; color:#6b7280; font-size:14px; margin:8px 0 18px; }
+  .emotion { display:inline-block; background:#fee2e2; color:#b91c1c; font-size:11px; padding:2px 8px;
+             border-radius:999px; margin-left:8px; vertical-align:middle; font-weight:700; }
+  .assume { background:#f3f4f6; border-radius:10px; padding:10px 14px; font-size:13px;
+            color:#374151; margin-bottom:16px; line-height:1.7; }
+  table { width:100%; border-collapse:separate; border-spacing:4px; }
+  th { padding:10px 8px; font-size:14px; color:#111827; background:#eef2ff; border-radius:8px; }
+  th.rowhead { text-align:left; width:110px; }
+  td { padding:10px 6px; text-align:center; font-size:15px; font-weight:700;
+       color:#fff; border-radius:8px; min-width:64px; }
+  .cell-years { font-size:17px; }
+  .cell-interest { font-size:11px; opacity:0.88; margin-top:2px; font-weight:500; }
+  .foot { margin-top:16px; font-size:12px; color:#9ca3af; line-height:1.6; }
+  .watermark { margin-top:14px; text-align:center; font-size:12px; color:#9ca3af; letter-spacing:1px; }
+  .legend { display:flex; justify-content:center; gap:18px; margin:12px 0 16px; font-size:12px; color:#374151; flex-wrap:wrap; }
+  .legend span { display:inline-flex; align-items:center; gap:6px; }
+  .dot { width:14px; height:14px; border-radius:4px; display:inline-block; }
+</style></head><body>
+<div class="card">
+  <h1>只还最低还款，你的信用卡要还多久？</h1>
+  <div class="subtitle">每月还一点看起来轻松——但这些钱大半都在填利息的坑。<span class="emotion">焦虑 + 惊醒</span></div>
+  <div class="assume">
+    假设：最低还款 = 余额的 <b>5%</b>（最低 50 元），利息按月复利；无新增消费、利率不变；超过 60 年视为「永不还清」。<br>
+    换算：年利率 18% ≈ 借 1 万，每天利息约 <b>5 元</b>，一年 1825 元；年利率 36% ≈ 每天利息约 <b>10 元</b>。
+  </div>
+  <div class="legend">
+    <span><i class="dot" style="background:#15803d"></i>5 年以内</span>
+    <span><i class="dot" style="background:#22c55e"></i>5-10 年</span>
+    <span><i class="dot" style="background:#f59e0b"></i>10-20 年</span>
+    <span><i class="dot" style="background:#dc2626"></i>20 年以上</span>
+  </div>
+  <table id="debtTable">
+    <tr><th class="rowhead">欠款金额</th><th>12%</th><th>15%</th><th>18%</th><th>24%</th><th>36%</th></tr>
+  </table>
+  <div class="foot">
+    测算基于固定利率、无新增消费、只还最低还款额的简化假设；实际信用卡利息按日计息，且可能因账单日、还款日、消费入账时间不同而有差异。本图不构成任何金融建议。
+  </div>
+  <div class="watermark">投资平权 · fin-decision-matrix</div>
+</div>
+<script>
+  // 核心计算：给定本金、年利率、最低还款比例，返回{年限, 总利息}
+  function calcPayoff(principal, annualRate, minPct = 0.05, minFloor = 50) {
+    const m = annualRate / 12;
+    let balance = principal;
+    let months = 0;
+    let totalInterest = 0;
+    const maxMonths = 720; // 60年上限
+
+    while (balance > 0.01 && months < maxMonths) {
+      const interest = balance * m;
+      let payment = Math.max(balance * minPct, minFloor);
+      // 还款不能超过“余额+利息”
+      if (payment > balance + interest) payment = balance + interest;
+      // 如果还款 ≤ 利息，说明永远还不清
+      if (payment <= interest) {
+        return { years: Infinity, interest: Infinity };
+      }
+      balance = balance + interest - payment;
+      totalInterest += interest;
+      months++;
+    }
+    return { years: months / 12, interest: totalInterest };
+  }
+
+  // 颜色：年限越长越红
+  function getColor(years) {
+    if (!isFinite(years)) return '#7f1d1d';   // 永不还清：深红
+    if (years <= 5) return '#15803d';        // 绿
+    if (years <= 10) return '#22c55e';       // 浅绿
+    if (years <= 20) return '#f59e0b';       // 黄
+    return '#dc2626';                        // 红
+  }
+
+  // 年限格式化
+  function formatYears(y) {
+    if (!isFinite(y)) return '还不清';
+    if (y < 1) return Math.round(y * 12) + '个月';
+    return y.toFixed(1) + '年';
+  }
+
+  // 利息格式化
+  function formatInterest(i) {
+    if (!isFinite(i)) return '';
+    if (i < 10000) return '利息 ' + Math.round(i / 1000) + '千';
+    return '利息 ' + (i / 10000).toFixed(1) + '万';
+  }
+
+  // 数据：行=欠款金额，列=年利率
+  const balances = [10000, 30000, 50000, 100000, 200000];
+  const rates = [0.12, 0.15, 0.18, 0.24, 0.36];
+
+  const table = document.getElementById('debtTable');
+
+  balances.forEach(b => {
+    const tr = document.createElement('tr');
+    const th = document.createElement('th');
+    th.className = 'rowhead';
+    th.textContent = (b / 10000) + '万';
+    tr.appendChild(th);
+
+    rates.forEach(r => {
+      const result = calcPayoff(b, r);
+      const td = document.createElement('td');
+      td.style.background = getColor(result.years);
+
+      const yearsDiv = document.createElement('div');
+      yearsDiv.className = 'cell-years';
+      yearsDiv.textContent = formatYears(result.years);
+
+      const interestDiv = document.createElement('div');
+      interestDiv.className = 'cell-interest';
+      interestDiv.textContent = formatInterest(result.interest);
+
+      td.appendChild(yearsDiv);
+      td.appendChild(interestDiv);
+      tr.appendChild(td);
+    });
+
+    table.appendChild(tr);
+  });
+</script>
+</body></html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>提前还房贷 vs 拿去投资，哪个划算？</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:"Microsoft YaHei","PingFang SC",sans-serif; }
+  body { background:#f6f7fb; padding:24px; }
+  .card { background:#fff; border-radius:16px; box-shadow:0 4px 20px rgba(0,0,0,.08);
+          max-width:1100px; margin:0 auto; padding:28px 32px; }
+  h1 { font-size:28px; color:#111827; text-align:center; }
+  .subtitle { text-align:center; color:#6b7280; font-size:14px; margin:8px 0 18px; }
+  .emotion { display:inline-block; background:#fef3c7; color:#b45309; font-size:11px; padding:2px 8px;
+             border-radius:999px; margin-left:8px; vertical-align:middle; font-weight:700; }
+  .assume { background:#f3f4f6; border-radius:10px; padding:10px 14px; font-size:13px;
+            color:#374151; margin-bottom:16px; line-height:1.7; }
+  .highlight { background:#fef3c7; padding:2px 6px; border-radius:4px; font-weight:700; color:#b45309; }
+  .insight { background:#eef2ff; border-left:4px solid #4f46e5; border-radius:8px;
+             padding:10px 14px; font-size:13px; color:#374151; margin-bottom:16px; line-height:1.7; }
+  .insight b { color:#4f46e5; }
+  table { width:100%; border-collapse:separate; border-spacing:4px; }
+  th { padding:10px 8px; font-size:13px; color:#111827; background:#eef2ff; border-radius:8px; line-height:1.4; }
+  th small { font-weight:400; color:#6b7280; font-size:11px; }
+  th.rowhead { text-align:left; width:100px; }
+  td { padding:9px 5px; text-align:center; font-size:14px; font-weight:700;
+       color:#fff; border-radius:8px; min-width:65px; }
+  .cell-conclusion { font-size:15px; }
+  .cell-diff { font-size:11px; opacity:0.92; margin-top:2px; font-weight:500; }
+  .cell-note { font-size:10px; opacity:0.82; margin-top:1px; font-weight:400; }
+  .foot { margin-top:16px; font-size:12px; color:#9ca3af; line-height:1.6; }
+  .watermark { margin-top:14px; text-align:center; font-size:12px; color:#9ca3af; letter-spacing:1px; }
+  .legend { display:flex; justify-content:center; gap:18px; margin:12px 0 16px; font-size:12px; color:#374151; flex-wrap:wrap; }
+  .legend span { display:inline-flex; align-items:center; gap:6px; }
+  .dot { width:14px; height:14px; border-radius:4px; display:inline-block; }
+  .extra-note { margin-top:12px; padding:10px 14px; background:#fafafa;
+                border-radius:10px; font-size:12px; color:#374151; line-height:1.8; }
+  .extra-note b { color:#4f46e5; }
+</style></head><body>
+<div class="card">
+  <h1>提前还房贷 vs 拿去投资，哪个划算？</h1>
+  <div class="subtitle">房贷利率 4.9%，投资能做到 6%——投资多赚 1.1 个点；投资只有 3%——提前还贷多赚 1.9 个点。<span class="emotion">理性 + 算账</span></div>
+
+  <div class="assume">
+    假设：闲钱 <b>50 万</b>，房贷剩余 <b>20 年</b>、等额本息、年利率如行所示；提前还贷 = 一次性还 50 万本金，剩余贷款重新计算；投资 = 50 万按年化收益率复利 20 年。<br>
+    换算：房贷利率 <span class="highlight">4.9%</span>，投资年化 <b>6%</b> → 投资多赚 <b>约 9 万</b>；投资年化 <b>3%</b> → 提前还贷多赚 <b>约 22 万</b>。
+  </div>
+
+  <div class="insight">
+    <b>核心洞察：</b>提前还贷的本质是<b>买了一个年化收益率 = 房贷利率的无风险理财</b>。所以决策规则很简单：<b>如果你的投资收益率 > 房贷利率，就投资；反之，就提前还贷。</b>但要注意：投资收益不确定、有波动；提前还贷的“收益”是确定的、无风险的。所以即使投资收益率略高于房贷利率，风险厌恶者仍可能选择提前还贷。
+  </div>
+
+  <div class="legend">
+    <span><i class="dot" style="background:#15803d"></i>投资明显划算（多赚 &gt;20万）</span>
+    <span><i class="dot" style="background:#22c55e"></i>投资略划算（多赚 5-20万）</span>
+    <span><i class="dot" style="background:#f59e0b"></i>基本打平（±5万）</span>
+    <span><i class="dot" style="background:#f97316"></i>还贷略划算（多赚 5-20万）</span>
+    <span><i class="dot" style="background:#dc2626"></i>还贷明显划算（多赚 &gt;20万）</span>
+  </div>
+
+  <table id="compareTable">
+    <tr>
+      <th class="rowhead">房贷利率</th>
+      <th>投资2%</th><th>投资3%</th><th>投资4%</th><th>投资5%</th><th>投资6%</th><th>投资8%</th>
+    </tr>
+  </table>
+
+  <div class="extra-note" id="extraNote"></div>
+
+  <div class="foot">
+    测算基于简化假设：闲钱 50 万、房贷剩余 20 年、等额本息、投资按年复利；未考虑税收、通胀、提前还贷违约金、投资波动风险、流动性需求等。投资收益不确定，历史表现不代表未来。本图不构成任何投资建议。
+  </div>
+  <div class="watermark">投资平权 · fin-decision-matrix</div>
+</div>
+
+<script>
+  // ============================================================
+  // 参数
+  // ============================================================
+  const LUMP_SUM = 500000;     // 闲钱 50 万
+  const REMAIN_YEARS = 20;     // 剩余年限 20 年
+
+  // ============================================================
+  // 核心计算
+  // ============================================================
+
+  // 提前还贷节省的利息：50万本金在剩余年限内、按房贷利率产生的利息
+  function calcPrepaySaving(mortgageRate) {
+    // 50万本金，按房贷利率、20年等额本息，总利息
+    const r = mortgageRate / 12;
+    const n = REMAIN_YEARS * 12;
+    const monthly = LUMP_SUM * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1);
+    const totalPayment = monthly * n;
+    return totalPayment - LUMP_SUM; // 节省的利息
+  }
+
+  // 投资收益：50万按投资收益率复利20年
+  function calcInvestGain(investRate) {
+    return LUMP_SUM * Math.pow(1 + investRate, REMAIN_YEARS) - LUMP_SUM;
+  }
+
+  // 比较：投资收益 − 提前还贷节省利息
+  function calcDiff(mortgageRate, investRate) {
+    const investGain = calcInvestGain(investRate);
+    const prepaySaving = calcPrepaySaving(mortgageRate);
+    return { diff: investGain - prepaySaving, investGain, prepaySaving };
+  }
+
+  // ============================================================
+  // 颜色编码：按差额（正=投资划算，负=还贷划算）
+  // ============================================================
+  function getColor(diff) {
+    if (diff >= 200000) return '#15803d';
+    if (diff >= 50000) return '#22c55e';
+    if (diff >= -50000) return '#f59e0b';
+    if (diff >= -200000) return '#f97316';
+    return '#dc2626';
+  }
+
+  // ============================================================
+  // 格式化
+  // ============================================================
+  function formatWan(v) {
+    const abs = Math.abs(v);
+    if (abs >= 10000) return (abs / 10000).toFixed(1) + '万';
+    return Math.round(abs).toLocaleString();
+  }
+
+  function getConclusion(diff) {
+    if (diff > 50000) return '投资划算';
+    if (diff < -50000) return '还贷划算';
+    return '基本打平';
+  }
+
+  // ============================================================
+  // 生成表格
+  // ============================================================
+  const mortgageRates = [0.039, 0.049, 0.055, 0.065];
+  const investRates = [0.02, 0.03, 0.04, 0.05, 0.06, 0.08];
+
+  const table = document.getElementById('compareTable');
+
+  mortgageRates.forEach(mRate => {
+    const tr = document.createElement('tr');
+    const th = document.createElement('th');
+    th.className = 'rowhead';
+    th.textContent = (mRate * 100).toFixed(1) + '%';
+    tr.appendChild(th);
+
+    investRates.forEach(iRate => {
+      const { diff, investGain, prepaySaving } = calcDiff(mRate, iRate);
+      const td = document.createElement('td');
+      td.style.background = getColor(diff);
+
+      const conclusion = getConclusion(diff);
+      const diffText = conclusion === '基本打平' ? '打平' :
+                       (diff > 0 ? '投资多 ' : '还贷多 ') + formatWan(diff);
+
+      td.innerHTML = `<div class="cell-conclusion">${diffText}</div>
+                      <div class="cell-diff">投${formatWan(investGain)} / 贷${formatWan(prepaySaving)}</div>
+                      <div class="cell-note">${conclusion}</div>`;
+      tr.appendChild(td);
+    });
+
+    table.appendChild(tr);
+  });
+
+  // ============================================================
+  // 补充说明
+  // ============================================================
+  const note = document.getElementById('extraNote');
+  note.innerHTML = `<b>决策速查：</b><br>
+    · 投资收益率 <b>&lt; 房贷利率</b> → 提前还贷更划算（确定的无风险收益）<br>
+    · 投资收益率 <b>≈ 房贷利率</b> → 基本打平，看个人风险偏好<br>
+    · 投资收益率 <b>&gt; 房贷利率</b> → 投资更划算（但要承受波动风险）<br>
+    <b>关键提醒：</b>提前还贷的“收益”是确定的，投资收益是不确定的。即使投资收益率略高，风险厌恶者仍可能选还贷。此外，还要考虑流动性——提前还贷后，这笔钱就锁死了；投资则保留变现能力。`;
+</script>
+</body></html>

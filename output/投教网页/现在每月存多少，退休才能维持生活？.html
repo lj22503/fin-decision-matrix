@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>现在每月存多少，退休才能维持生活？（2026 测算）</title>
+<meta name="description" content="30 岁开始每月存 3000，45 岁开始要存 9300——差的不是钱，是时间。焦虑 + 紧迫">
+<meta name="keywords" content="现在每月存多少，退休才能维持生活？,财务决策,投教,理财计算,复利,替代率">
+<link rel="canonical" href="https://fintools.mangofolio.com/现在每月存多少，退休才能维持生活？.html">
+<meta property="og:title" content="现在每月存多少，退休才能维持生活？（2026 测算）">
+<meta property="og:description" content="30 岁开始每月存 3000，45 岁开始要存 9300——差的不是钱，是时间。焦虑 + 紧迫">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"question": "现在每月存多少，退休才能维持生活？", "answer": "30 岁开始每月存 3000，45 岁开始要存 9300——差的不是钱，是时间。焦虑 + 紧迫"}, {"question": "测算基于什么假设？", "answer": "假设：退休年龄 60 岁；年化实际收益率 5%（已扣除通胀）；退休后按 4% 提取规则支取（所需本金 = 年花费 × 25）；当前无存款，从零开始。 换算：退休后每年花 12 万 ≈ 退休时需攒够 300 万；从 30 岁开始每月存 3600 元 ≈ 每天 120 元 ≈ 一顿简餐。"}, {"question": "结果有多可靠？", "answer": "测算基于固定实际收益率 5%、4% 提取规则的简化假设；未考虑社保养老金、企业年金、房产等其他资产，也未考虑长寿风险（活过 85 岁）和大额医疗支出。实际所需储蓄可能更高。本图不构成任何金融建议。"}]}</script>
+<link rel="stylesheet" href="assets/mangofolio-tokens-v09.css">
+<style>
+
+  /* ---- 页面局部配色（对齐 fintools 线上版 guide 页视觉基准：纯白底 / 白卡 / 暖墨正文 / 芒果橙点缀） ---- */
+  :root {
+    --page-bg: var(--mf-colors-background);            /* #FFFFFF 纯白主底 */
+    --page-card: var(--mf-colors-background-surface);   /* #FFFFFF 卡片面 */
+    --page-panel: var(--mf-colors-background-neutral);  /* #F7F5F2 暖灰分区底（结论框/表头） */
+    --page-ink: var(--mf-colors-text);                  /* #3A332C 正文墨 */
+    --page-ink-strong: var(--mf-colors-text-strong);    /* #241610 深墨强调 */
+    --page-ink-weak: var(--mf-colors-text-weak);        /* #8A7D70 次级文字 */
+    --page-accent: var(--mf-colors-text-link);          /* #F97316 芒果橙电压色 */
+    --page-accent-deep: var(--mf-colors-text-accent-mango); /* #E05E0A 深橙 */
+    --page-hairline: var(--mf-colors-border-weak);      /* 1px 细线 */
+    /* 表格档位：中国习惯红涨绿跌——金额越高越红、越低越绿；mangofolio 亮橙系列实色，深底白字 / 浅底深字 */
+    --lvl1-bg: #B8221E;   /* ≥30万 涨红（好） */
+    --lvl2-bg: #D4543E;   /* 15-30万 橙红 */
+    --lvl3-bg: #F59E0B;   /* 5-15万 琥珀 */
+    --lvl4-bg: #1F8A4C;   /* 1-5万 中绿 */
+    --lvl5-bg: #11693D;   /* <1万 跌绿（差） */
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--page-bg); padding:12px; font-family:var(--mf-fonts-sans); color:var(--page-ink); }
+  .card { background:var(--page-card); border:1px solid var(--page-hairline); border-radius:var(--mf-radii-card); box-shadow:var(--mf-shadows-card); max-width:1100px; margin:8px auto; padding:20px 26px; }
+  .eyebrow { font-size:var(--mf-font-sizes-eyebrow); font-weight:500; color:var(--page-accent); letter-spacing:.3em; text-transform:uppercase; text-align:center; margin-bottom:4px; }
+  h1 { font-family:var(--mf-fonts-display); font-size:clamp(1.6rem,3.6vw,2.3rem); font-weight:800; color:var(--page-ink-strong); text-align:center; line-height:1.3; }
+  .conclusion { margin:8px auto 6px; max-width:900px; text-align:center; font-size:var(--mf-font-sizes-100); line-height:1.6; color:var(--page-ink-strong); font-weight:600; }
+  .hero { background:var(--page-panel); border-left:3px solid var(--page-accent); border-radius:var(--mf-radii-large); padding:12px 16px; margin:4px 0 12px; }
+  .hero .lead, .hero p { color:var(--page-ink); font-size:var(--mf-font-sizes-100); line-height:1.8; margin:0; }
+  .hero b, .hero strong { color:var(--page-ink-strong); }
+  .section-title { font-size:var(--mf-font-sizes-200); font-weight:700; color:var(--page-ink-strong); margin:14px 0 6px; }
+  .assume { background:var(--page-panel); border-radius:var(--mf-radii-large); padding:12px 16px; font-size:var(--mf-font-sizes-30); color:var(--page-ink); margin:14px 0; line-height:1.8; }
+  .assume b, .assume strong { color:var(--page-ink-strong); }
+  .highlight { background:var(--mf-colors-background-warning); color:var(--page-accent-deep); padding:2px 6px; border-radius:var(--mf-radii-small); font-weight:700; }
+  details.l2 { border:1px solid var(--page-hairline); border-radius:var(--mf-radii-large); padding:10px 14px; margin:14px 0; font-size:var(--mf-font-sizes-30); line-height:1.8; color:var(--page-ink); }
+  details.l2 summary { cursor:pointer; font-weight:700; color:var(--page-accent); }
+  table { width:100%; border-collapse:separate; border-spacing:3px; }
+  th { padding:8px 6px; font-size:var(--mf-font-sizes-30); color:var(--page-ink-strong); background:var(--mf-colors-primitives-mango-050); border-radius:var(--mf-radii-small); line-height:1.4; }
+  th small { font-weight:400; color:var(--page-ink-weak); font-size:var(--mf-font-sizes-25); }
+  th.rowhead { text-align:left; width:96px; background:var(--page-panel); }
+  td { padding:7px 4px; text-align:center; font-size:var(--mf-font-sizes-50); font-weight:700; color:var(--mf-colors-primitives-white-100); border-radius:var(--mf-radii-small); min-width:60px; line-height:1.35; }
+  .cell-amount { font-size:var(--mf-font-sizes-100); }
+  .cell-note { font-size:var(--mf-font-sizes-25); opacity:.92; margin-top:1px; font-weight:500; }
+  .lvl1 { background:var(--lvl1-bg); }
+  .lvl2 { background:var(--lvl2-bg); }
+  .lvl3 { background:var(--lvl3-bg); color:var(--page-ink-strong); }
+  .lvl4 { background:var(--lvl4-bg); }
+  .lvl5 { background:var(--lvl5-bg); }
+  .legend { display:flex; justify-content:center; gap:14px; margin:8px 0 10px; font-size:var(--mf-font-sizes-25); color:var(--page-ink); flex-wrap:wrap; }
+  .legend span { display:inline-flex; align-items:center; gap:6px; }
+  .dot { width:13px; height:13px; border-radius:var(--mf-radii-small); display:inline-block; }
+  .dot.lvl1 { background:var(--lvl1-bg); }
+  .dot.lvl2 { background:var(--lvl2-bg); }
+  .dot.lvl3 { background:var(--lvl3-bg); }
+  .dot.lvl4 { background:var(--lvl4-bg); }
+  .dot.lvl5 { background:var(--lvl5-bg); }
+  .extra-note { margin-top:10px; padding:10px 14px; background:var(--page-panel); border-radius:var(--mf-radii-large); font-size:var(--mf-font-sizes-30); color:var(--page-ink); line-height:1.8; }
+  .extra-note b { color:var(--page-accent-deep); }
+  .chart-title { text-align:center; font-size:var(--mf-font-sizes-200); font-weight:700; color:var(--page-ink-strong); margin:24px 0 4px; }
+  .chart-sub { text-align:center; font-size:var(--mf-font-sizes-30); color:var(--page-ink-weak); margin-bottom:8px; }
+  .chart-wrap { width:100%; overflow:hidden; }
+  .chart-wrap svg { width:100%; height:auto; display:block; }
+  .foot { margin-top:14px; font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.7; }
+  footer { max-width:1100px; margin:0 auto 20px; padding:16px 24px; text-align:center; font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.8; border-top:1px solid var(--page-hairline); }
+
+  .faq-title { font-size:var(--mf-font-sizes-300); font-weight:700; color:var(--page-ink-strong); margin:24px 0 10px; }
+  .cta { margin:18px 0 6px; padding:14px 18px; background:var(--page-panel); border-left:4px solid var(--page-accent); border-radius:var(--mf-radii-large); font-size:var(--mf-font-sizes-30); line-height:1.8; color:var(--page-ink); }
+  .cta b { color:var(--page-ink-strong); }
+  details.faq { border:1px solid var(--page-hairline); border-radius:var(--mf-radii-large); padding:10px 14px; margin:10px 0; font-size:var(--mf-font-sizes-30); line-height:1.8; color:var(--page-ink); }
+  details.faq summary { cursor:pointer; font-weight:700; color:var(--page-accent); }
+  .calc-btn { display:inline-block; margin-top:10px; padding:10px 26px; font-size:var(--mf-font-sizes-100); font-weight:700; color:var(--mf-colors-primitives-white-100); background:var(--page-accent); border:none; border-radius:var(--mf-radii-large); cursor:pointer; }
+  .calc-btn:hover { opacity:.88; }
+  .calc-modal[hidden] { display:none; }
+  .calc-modal { position:fixed; inset:0; z-index:1000; display:flex; align-items:center; justify-content:center; padding:16px; }
+  .calc-overlay { position:absolute; inset:0; background:rgba(0,0,0,.45); }
+  .calc-dialog { position:relative; background:var(--page-card); border:1px solid var(--mf-colors-border-strong); border-radius:var(--mf-radii-card); box-shadow:var(--mf-shadows-card); max-width:460px; width:100%; padding:24px 26px; }
+  .calc-close { position:absolute; top:10px; right:12px; font-size:var(--mf-font-sizes-300); font-weight:700; color:var(--page-ink-weak); background:none; border:none; cursor:pointer; line-height:1; }
+  .calc-title { font-size:var(--mf-font-sizes-200); font-weight:700; color:var(--page-ink-strong); margin-bottom:16px; }
+  .calc-field { margin-bottom:14px; }
+  .calc-field label { display:block; font-size:var(--mf-font-sizes-30); color:var(--page-ink); margin-bottom:4px; font-weight:600; }
+  .calc-field input { width:100%; padding:8px 10px; font-size:var(--mf-font-sizes-100); font-weight:700; color:var(--page-ink-strong); border:1px solid var(--mf-colors-border-weak); border-radius:var(--mf-radii-small); background:var(--page-card); box-sizing:border-box; }
+  .calc-field .hint { display:block; font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); margin-top:2px; }
+  .calc-result { margin-top:16px; padding:14px 16px; background:var(--page-panel); border-left:4px solid var(--page-accent); border-radius:var(--mf-radii-large); font-size:var(--mf-font-sizes-100); font-weight:700; color:var(--page-ink-strong); line-height:1.7; }
+  .calc-result b { color:var(--page-accent-deep); }
+  .calc-ratio { margin-top:6px; font-size:var(--mf-font-sizes-30); font-weight:400; color:var(--page-ink); line-height:1.7; }
+
+</style>
+</head>
+<body>
+<div class="card">
+<div class="eyebrow">Retirement Planning</div>
+  <h1>现在每月存多少，退休才能维持生活？</h1>
+  <div class="conclusion"><span class="dyn" id="subAge1">30</span> 岁开始每月存 <span class="dyn" id="subMonthly1">3000</span>，<span class="dyn" id="subAge2">45</span> 岁开始要存 <span class="dyn" id="subNeed">9300</span>——差的不是钱，是时间。<span class="emotion">焦虑 + 紧迫</span></div>
+  <div class="hero">
+  <p>先记住结论：<strong></strong></p>
+</div>
+
+  <div class="section-title">表格：现在每月存多少，退休才能维持生活？</div>
+  <div class="legend">
+    <span><i class="dot lvl1"></i>≤2000元/月（轻松）</span>
+    <span><i class="dot lvl2"></i>2000-4000元/月</span>
+    <span><i class="dot lvl3"></i>4000-7000元/月</span>
+    <span><i class="dot lvl4"></i>7000-12000元/月</span>
+    <span><i class="dot lvl5"></i>&gt;12000元/月（压力大）</span>
+  </div>
+  <table id="pensionTable">
+    <tr>
+      <th class="rowhead">期望退休年花费</th>
+      <th>25岁</th><th>30岁</th><th>35岁</th><th>40岁</th><th>45岁</th><th>50岁</th>
+    </tr>
+  </table>
+
+  <div class="chart-sub">曲线：动态测算</div>
+  <div class="chart-wrap">
+    <svg id="curveChart" viewBox="0 0 900 440" preserveAspectRatio="xMidYMid meet"></svg>
+  </div>
+
+  <div class="section-title">为什么？</div>
+  <details class="l2">
+    <summary>讲给我听：现在每月存多少，退休才能维持生活？</summary>
+    <p></p>
+    <p>假设：退休年龄 60 岁；年化实际收益率 5%（已扣除通胀）；退休后按 4% 提取规则支取（所需本金 = 年花费 × 25）；当前无存款，从零开始。 换算：退休后每年花 12 万 ≈ 退休时需攒够 300 万；从 30 岁开始每月存 3600 元 ≈ 每天 120 元 ≈ 一顿简餐。</p>
+  </details>
+
+  <div class="section-title">底层假设（L3）</div>
+  <div class="assume">
+    假设：退休年龄 <b>60 岁</b>；年化实际收益率 <b>5%</b>（已扣除通胀）；退休后按 <b>4% 提取规则</b>支取（所需本金 = 年花费 × 25）；当前无存款，从零开始。<br>
+    换算：退休后每年花 <b><span class="dyn" id="convSpend">12 万</span></b> ≈ 退休时需攒够 <b><span class="dyn" id="convTarget">300 万</span></b>；从 <span class="dyn" id="convAge">30</span> 岁开始每月存 <b><span class="dyn" id="convMonthly">3600 元</span></b> ≈ 每天 <span class="highlight"><span class="dyn" id="convDaily">120 元</span> ≈ 一顿简餐</span>。
+  </div>
+  <div class="foot">
+    测算基于固定实际收益率 5%、4% 提取规则的简化假设；未考虑社保养老金、企业年金、房产等其他资产，也未考虑长寿风险（活过 85 岁）和大额医疗支出。实际所需储蓄可能更高。本图不构成任何金融建议。
+  </div>
+<div class="faq-title">常见问题（FAQ）</div>
+  <details class="faq"><summary>现在每月存多少，退休才能维持生活？</summary><p>30 岁开始每月存 3000，45 岁开始要存 9300——差的不是钱，是时间。焦虑 + 紧迫</p></details>
+  <details class="faq"><summary>测算基于什么假设？</summary><p>假设：退休年龄 60 岁；年化实际收益率 5%（已扣除通胀）；退休后按 4% 提取规则支取（所需本金 = 年花费 × 25）；当前无存款，从零开始。 换算：退休后每年花 12 万 ≈ 退休时需攒够 300 万；从 30 岁开始每月存 3600 元 ≈ 每天 120 元 ≈ 一顿简餐。</p></details>
+  <details class="faq"><summary>结果有多可靠？</summary><p>测算基于固定实际收益率 5%、4% 提取规则的简化假设；未考虑社保养老金、企业年金、房产等其他资产，也未考虑长寿风险（活过 85 岁）和大额医疗支出。实际所需储蓄可能更高。本图不构成任何金融建议。</p></details>
+<footer>
+  mangofolio · fin-decision-matrix<br>
+  免责声明：<br>
+  ① 本页仅为财务教育与计算演示，不构成任何投资、保险、税务或法律建议。<br>
+  ② 测算基于简化模型与假设参数，实际收益受市场波动、通胀及个人情况影响，结果可能与现实存在显著差异。<br>
+  ③ 重大财务决策请结合自身情况，必要时咨询持牌专业人士。© 2026 mangofolio
+</footer>
+<script>
+// ============================================================
+  // 第一部分：表格（沿用原逻辑）
+  // ============================================================
+  const RETIRE_AGE = 60;
+  const REAL_RATE = 0.05;
+  const WITHDRAW_RATE = 0.04;
+
+  function calcMonthlySaving(annualSpend, currentAge) {
+    const targetWealth = annualSpend * (1 / WITHDRAW_RATE);
+    const months = (RETIRE_AGE - currentAge) * 12;
+    if (months <= 0) return Infinity;
+    const r = REAL_RATE / 12;
+    const pow = Math.pow(1 + r, months);
+    return targetWealth * r / (pow - 1);
+  }
+
+  function getColor(monthly) {
+    if (monthly <= 2000) return '#B8221E';
+    if (monthly <= 4000) return '#D4543E';
+    if (monthly <= 7000) return '#F59E0B';
+    if (monthly <= 12000) return '#1F8A4C';
+    return '#11693D';
+  }
+
+  function formatAmount(v) {
+    if (!isFinite(v)) return '无法达成';
+    if (v >= 10000) return (v / 10000).toFixed(1) + '万';
+    return Math.round(v).toLocaleString() + '元';
+  }
+
+  function formatNote(v, currentAge) {
+    const years = RETIRE_AGE - currentAge;
+    if (!isFinite(v)) return '';
+    return '需存' + years + '年';
+  }
+
+  const annualSpends = [60000, 80000, 120000, 200000, 300000];
+  const ages = [25, 30, 35, 40, 45, 50];
+  const table = document.getElementById('pensionTable');
+
+  annualSpends.forEach(spend => {
+    const tr = document.createElement('tr');
+    const th = document.createElement('th');
+    th.className = 'rowhead';
+    th.textContent = (spend / 10000) + '万/年';
+    tr.appendChild(th);
+    ages.forEach(age => {
+      const monthly = calcMonthlySaving(spend, age);
+      const td = document.createElement('td');
+      td.style.background = getColor(monthly);
+      td.innerHTML = `<div class="cell-amount">${formatAmount(monthly)}</div>
+                      <div class="cell-note">${formatNote(monthly, age)}</div>`;
+      tr.appendChild(td);
+    });
+    table.appendChild(tr);
+  });
+
+  // ============================================================
+  // 第二部分：曲线图（两条曲线）
+  // ============================================================
+
+  // 生成某年龄开始、每月存固定金额，到60岁的逐年财富数据
+  function generateCurveData(startAge, monthlySaving, endAge = 60, annualRate = 0.05) {
+    const monthlyRate = annualRate / 12;
+    const points = [{ age: startAge, value: 0 }];
+    let balance = 0;
+    for (let age = startAge; age < endAge; age++) {
+      for (let m = 0; m < 12; m++) {
+        balance = balance * (1 + monthlyRate) + monthlySaving;
+      }
+      points.push({ age: age + 1, value: balance });
+    }
+    return points;
+  }
+
+  const MONTHLY = 3000;
+  const curveEarly = generateCurveData(25, MONTHLY); // 25岁开始
+  const curveLate  = generateCurveData(35, MONTHLY); // 35岁开始
+
+  // SVG 尺寸与坐标映射
+  const SVG_W = 900, SVG_H = 440;
+  const M = { top: 30, right: 110, bottom: 55, left: 90 };
+  const PLOT_W = SVG_W - M.left - M.right;   // 700
+  const PLOT_H = SVG_H - M.top - M.bottom;   // 355
+
+  const X_MIN = 25, X_MAX = 60;
+  const Y_MIN = 0,   Y_MAX = 3600000; // 360万
+
+  const xScale = age => M.left + (age - X_MIN) / (X_MAX - X_MIN) * PLOT_W;
+  const yScale = v   => M.top + PLOT_H - (v - Y_MIN) / (Y_MAX - Y_MIN) * PLOT_H;
+
+  // 生成 path 字符串
+  function buildPath(points) {
+    return points.map((p, i) =>
+      (i === 0 ? 'M' : 'L') + xScale(p.age).toFixed(1) + ',' + yScale(p.value).toFixed(1)
+    ).join(' ');
+  }
+
+  // 生成带面积填充的 path（基线 + 曲线）
+  function buildAreaPath(points) {
+    const baseline = yScale(0);
+    let d = 'M' + xScale(points[0].age).toFixed(1) + ',' + baseline;
+    points.forEach(p => {
+      d += ' L' + xScale(p.age).toFixed(1) + ',' + yScale(p.value).toFixed(1);
+    });
+    d += ' L' + xScale(points[points.length - 1].age).toFixed(1) + ',' + baseline + ' Z';
+    return d;
+  }
+
+  // 格式化 Y 轴标签（万元）
+  function fmtY(v) {
+    if (v === 0) return '0';
+    return (v / 10000) + '万';
+  }
+
+  // 构建 SVG
+  const svg = document.getElementById('curveChart');
+  let svgParts = [];
+
+  // --- 1. 网格线 ---
+  // 水平网格线（Y轴刻度）
+  const yTicks = [0, 600000, 1200000, 1800000, 2400000, 3000000, 3600000];
+  yTicks.forEach(v => {
+    const y = yScale(v);
+    svgParts.push(`<line x1="${M.left}" y1="${y}" x2="${M.left + PLOT_W}" y2="${y}"
+      stroke="#e5e7eb" stroke-width="1" ${v === 0 ? 'stroke-opacity="1"' : 'stroke-dasharray="3,3"'} />`);
+    svgParts.push(`<text x="${M.left - 10}" y="${y + 4}" text-anchor="end"
+      font-size="12" fill="#6b7280">${fmtY(v)}</text>`);
+  });
+
+  // 垂直网格线（X轴刻度）
+  const xTicks = [25, 30, 35, 40, 45, 50, 55, 60];
+  xTicks.forEach(age => {
+    const x = xScale(age);
+    svgParts.push(`<line x1="${x}" y1="${M.top}" x2="${x}" y2="${M.top + PLOT_H}"
+      stroke="#e5e7eb" stroke-width="1" stroke-dasharray="3,3" />`);
+    svgParts.push(`<text x="${x}" y="${M.top + PLOT_H + 22}" text-anchor="middle"
+      font-size="12" fill="#6b7280">${age}岁</text>`);
+  });
+
+  // --- 2. 坐标轴 ---
+  svgParts.push(`<line x1="${M.left}" y1="${M.top + PLOT_H}" x2="${M.left + PLOT_W}" y2="${M.top + PLOT_H}"
+    stroke="#9ca3af" stroke-width="1.5" />`);
+  svgParts.push(`<line x1="${M.left}" y1="${M.top}" x2="${M.left}" y2="${M.top + PLOT_H}"
+    stroke="#9ca3af" stroke-width="1.5" />`);
+
+  // --- 3. 面积填充（两条曲线各自的浅色底） ---
+  svgParts.push(`<path d="${buildAreaPath(curveEarly)}" fill="#B8221E" fill-opacity="0.08" />`);
+  svgParts.push(`<path d="${buildAreaPath(curveLate)}"  fill="#1d4ed8" fill-opacity="0.08" />`);
+
+  // --- 4. 曲线 ---
+  svgParts.push(`<path d="${buildPath(curveEarly)}" fill="none" stroke="#B8221E" stroke-width="3"
+    stroke-linecap="round" stroke-linejoin="round" />`);
+  svgParts.push(`<path d="${buildPath(curveLate)}"  fill="none" stroke="#1d4ed8" stroke-width="3"
+    stroke-linecap="round" stroke-linejoin="round" />`);
+
+  // --- 5. 终点标记与数值标注 ---
+  const endEarly = curveEarly[curveEarly.length - 1];
+  const endLate  = curveLate[curveLate.length - 1];
+
+  // 25岁曲线终点
+  svgParts.push(`<circle cx="${xScale(endEarly.age)}" cy="${yScale(endEarly.value)}" r="5" fill="#B8221E" />`);
+  svgParts.push(`<text x="${xScale(endEarly.age) + 8}" y="${yScale(endEarly.value) - 8}"
+    font-size="14" font-weight="700" fill="#B8221E">25岁开始：${(endEarly.value / 10000).toFixed(0)}万</text>`);
+
+  // 35岁曲线终点
+  svgParts.push(`<circle cx="${xScale(endLate.age)}" cy="${yScale(endLate.value)}" r="5" fill="#1d4ed8" />`);
+  svgParts.push(`<text x="${xScale(endLate.age) + 8}" y="${yScale(endLate.value) + 20}"
+    font-size="14" font-weight="700" fill="#1d4ed8">35岁开始：${(endLate.value / 10000).toFixed(0)}万</text>`);
+
+  // --- 6. 差距标注（在55岁处画竖线 + 差值） ---
+  const gapAge = 57;
+  const gapEarlyVal = curveEarly.find(p => p.age === gapAge)?.value || 0;
+  const gapLateVal  = curveLate.find(p => p.age === gapAge)?.value || 0;
+  const gapX = xScale(gapAge);
+  const gapY1 = yScale(gapEarlyVal);
+  const gapY2 = yScale(gapLateVal);
+
+  svgParts.push(`<line x1="${gapX}" y1="${gapY1}" x2="${gapX}" y2="${gapY2}"
+    stroke="#11693D" stroke-width="1.5" stroke-dasharray="4,3" />`);
+  svgParts.push(`<circle cx="${gapX}" cy="${gapY1}" r="3" fill="#B8221E" />`);
+  svgParts.push(`<circle cx="${gapX}" cy="${gapY2}" r="3" fill="#1d4ed8" />`);
+
+  const midY = (gapY1 + gapY2) / 2;
+  const gapValue = gapEarlyVal - gapLateVal;
+  svgParts.push(`<rect x="${gapX - 52}" y="${midY - 14}" width="104" height="28" rx="6" fill="#fee2e2" />`);
+  svgParts.push(`<text x="${gapX}" y="${midY + 6}" text-anchor="middle"
+    font-size="13" font-weight="700" fill="#b91c1c">差 ${(gapValue / 10000).toFixed(0)} 万</text>`);
+
+  // --- 7. 图例 ---
+  const legendY = SVG_H - 14;
+  svgParts.push(`<line x1="${M.left}" y1="${legendY}" x2="${M.left + 24}" y2="${legendY}"
+    stroke="#B8221E" stroke-width="3" stroke-linecap="round" />`);
+  svgParts.push(`<text x="${M.left + 30}" y="${legendY + 5}" font-size="13" fill="#374151">25岁开始，每月存3000</text>`);
+
+  svgParts.push(`<line x1="${M.left + 260}" y1="${legendY}" x2="${M.left + 284}" y2="${legendY}"
+    stroke="#1d4ed8" stroke-width="3" stroke-linecap="round" />`);
+  svgParts.push(`<text x="${M.left + 290}" y="${legendY + 5}" font-size="13" fill="#374151">35岁开始，每月存3000</text>`);
+
+  // --- 8. 左侧 Y 轴标题 ---
+  svgParts.push(`<text x="18" y="${M.top + PLOT_H / 2}" font-size="12" fill="#6b7280"
+    transform="rotate(-90, 18, ${M.top + PLOT_H / 2})" text-anchor="middle">累计财富（万元）</text>`);
+
+  svg.innerHTML = svgParts.join('');
+
+  // ============================================================
+  // 动态插值：静态文案数字由同一计算函数生成（避免硬编码漂移）
+  // ============================================================
+  (function renderStatic() {
+    const fmtHundred = v => Math.round(v / 100) * 100;
+    const spend = 120000;
+    const target = spend * (1 / WITHDRAW_RATE);
+    const monthly = calcMonthlySaving(spend, 30);   // 30岁起存够300万
+    const need45 = calcMonthlySaving(fvOfMonthly(3000, 30), 45); // 30岁存3000等效45岁月存
+    const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+
+    function fvOfMonthly(monthly, years) {
+      const r = REAL_RATE / 12;
+      return monthly * (Math.pow(1 + r, years * 12) - 1) / r;
+    }
+
+    set('subAge1', 30); set('subMonthly1', fmtHundred(3000));
+    set('subAge2', 45); set('subNeed', fmtHundred(need45));
+    set('convSpend', (spend / 10000) + ' 万');
+    set('convTarget', Math.round(target / 10000) + ' 万');
+    set('convAge', 30);
+    set('convMonthly', fmtHundred(monthly) + ' 元');
+    set('convDaily', Math.round(fmtHundred(monthly) / 30) + ' 元');
+  })();
+</script>
+</div>
+</body>
+</html>

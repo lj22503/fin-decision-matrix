@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>每月缴多少公积金，决定你买房能省多少</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:"Microsoft YaHei","PingFang SC",sans-serif; }
+  body { background:#f6f7fb; padding:24px; }
+  .card { background:#fff; border-radius:16px; box-shadow:0 4px 20px rgba(0,0,0,.08);
+          max-width:1100px; margin:0 auto; padding:28px 32px; }
+  h1 { font-size:28px; color:#111827; text-align:center; }
+  .subtitle { text-align:center; color:#6b7280; font-size:14px; margin:8px 0 18px; }
+  .emotion { display:inline-block; background:#dcfce7; color:#15803d; font-size:11px; padding:2px 8px;
+             border-radius:999px; margin-left:8px; vertical-align:middle; font-weight:700; }
+  .assume { background:#f3f4f6; border-radius:10px; padding:10px 14px; font-size:13px;
+            color:#374151; margin-bottom:16px; line-height:1.7; }
+  .highlight { background:#fef3c7; padding:2px 6px; border-radius:4px; font-weight:700; color:#b45309; }
+  .insight { background:#eef2ff; border-left:4px solid #4f46e5; border-radius:8px;
+             padding:10px 14px; font-size:13px; color:#374151; margin-bottom:16px; line-height:1.7; }
+  .insight b { color:#4f46e5; }
+  table { width:100%; border-collapse:separate; border-spacing:4px; }
+  th { padding:10px 8px; font-size:13px; color:#111827; background:#eef2ff; border-radius:8px; line-height:1.4; }
+  th small { font-weight:400; color:#6b7280; font-size:11px; }
+  th.rowhead { text-align:left; width:120px; }
+  td { padding:9px 5px; text-align:center; font-size:14px; font-weight:700;
+       color:#fff; border-radius:8px; min-width:60px; }
+  .cell-quota { font-size:16px; }
+  .cell-save { font-size:11px; opacity:0.92; margin-top:2px; font-weight:500; }
+  .cell-note { font-size:10px; opacity:0.82; margin-top:1px; font-weight:400; }
+  .foot { margin-top:16px; font-size:12px; color:#9ca3af; line-height:1.6; }
+  .watermark { margin-top:14px; text-align:center; font-size:12px; color:#9ca3af; letter-spacing:1px; }
+  .legend { display:flex; justify-content:center; gap:18px; margin:12px 0 16px; font-size:12px; color:#374151; flex-wrap:wrap; }
+  .legend span { display:inline-flex; align-items:center; gap:6px; }
+  .dot { width:14px; height:14px; border-radius:4px; display:inline-block; }
+</style></head><body>
+<div class="card">
+  <h1>每月缴多少公积金，决定你买房能省多少</h1>
+  <div class="subtitle">月缴 <span class="dyn" id="subContrib1"></span> 等 <span class="dyn" id="subYears1"></span> 年，可贷 <span class="dyn" id="subQuota1"></span>；月缴 <span class="dyn" id="subContrib2"></span> 等 <span class="dyn" id="subYears2"></span> 年，可贷 <span class="dyn" id="subQuota2"></span>——多省 <span class="dyn" id="subSaveDiff"></span> 利息。<span class="emotion">规划 + 省钱</span></div>
+
+  <div class="assume">
+    假设：贷款 <b>30 年</b>、等额本息；公积金年利率 <b>3.1%</b>，商贷年利率 <b>4.9%</b>；公积金可贷额度 = min（账户余额 × 15倍，当地上限 120 万）；账户余额 = 月缴存额（个人+单位）× 12 × 缴存年限。假设购房总贷款需求为 <b>200 万</b>，公积金可贷部分用公积金利率，剩余用商贷。<br>
+    换算：月缴 <span class="dyn" id="contrib1"></span> 元，<span class="dyn" id="years1"></span> 年后账户余额 <span class="dyn" id="bal1"></span>，可贷 <span class="highlight" id="quota1"></span>（余额的 <span class="dyn" id="mult"></span> 倍）；月缴 <span class="dyn" id="contrib2"></span> 元，<span class="dyn" id="years2"></span> 年后余额 <span class="dyn" id="bal2"></span>，可贷 <b id="quota2"></b>——多贷 <span class="dyn" id="diffQuota"></span> 公积金，<span class="dyn" id="loanYears"></span> 年省 <b id="save2"></b> 利息。
+  </div>
+
+  <div class="insight">
+    <b>核心洞察：</b>公积金的价值 = <b>可贷额度 × 每万元省的利息（约 <span class="dyn" id="per10k"></span> 元/30年）</b>。可贷额度取决于你的<b>月缴存额</b>和<b>缴存年限</b>——两者都是你可以提前规划的。很多人等到买房前才发现公积金只能贷几万，白白多付几十万利息。
+  </div>
+
+  <div class="legend">
+    <span><i class="dot" style="background:#15803d"></i>可贷 &gt;<span class="dyn" id="lgQ1"></span>万（省 &gt;<span class="dyn" id="lgS1"></span>万）</span>
+    <span><i class="dot" style="background:#22c55e"></i>可贷 <span class="dyn" id="lgQ2a"></span>-<span class="dyn" id="lgQ2b"></span>万（省 <span class="dyn" id="lgS2a"></span>-<span class="dyn" id="lgS2b"></span>万）</span>
+    <span><i class="dot" style="background:#f59e0b"></i>可贷 <span class="dyn" id="lgQ3a"></span>-<span class="dyn" id="lgQ3b"></span>万（省 <span class="dyn" id="lgS3a"></span>-<span class="dyn" id="lgS3b"></span>万）</span>
+    <span><i class="dot" style="background:#f97316"></i>可贷 <span class="dyn" id="lgQ4a"></span>-<span class="dyn" id="lgQ4b"></span>万（省 <span class="dyn" id="lgS4a"></span>-<span class="dyn" id="lgS4b"></span>万）</span>
+    <span><i class="dot" style="background:#dc2626"></i>可贷 &lt;<span class="dyn" id="lgQ5"></span>万（省 &lt;<span class="dyn" id="lgS5"></span>万）</span>
+  </div>
+
+  <table id="fundTable">
+    <tr>
+      <th class="rowhead">月缴存额</th>
+      <th>等1年</th><th>等3年</th><th>等5年</th><th>等8年</th><th>等10年</th><th>等15年</th>
+    </tr>
+  </table>
+
+  <div class="foot">
+    测算基于简化假设：公积金可贷额度 = 账户余额 × 15倍，上限 120 万；账户余额 = 月缴存额 × 12 × 缴存年限；购房总贷款需求 200 万；公积金/商贷利率固定不变。实际政策因城市而异（倍数通常 8-20 倍，上限通常 60-120 万），且受缴存基数、房屋总价、征信等影响。本图不构成任何投资建议。
+  </div>
+  <div class="watermark">投资平权 · fin-decision-matrix</div>
+</div>
+
+<script>
+  // ============================================================
+  // 参数
+  // ============================================================
+  const LOAN_YEARS = 30;
+  const FUND_RATE = 0.031;
+  const LOAN_RATE = 0.049;
+  const TOTAL_LOAN_NEED = 2000000;   // 总贷款需求 200 万
+  const BALANCE_MULTIPLIER = 15;      // 余额倍数
+  const FUND_CAP = 1200000;           // 公积金上限 120 万
+
+  // ============================================================
+  // 核心计算
+  // ============================================================
+  function calcMonthly(loan, annualRate) {
+    const r = annualRate / 12;
+    const n = LOAN_YEARS * 12;
+    const pow = Math.pow(1 + r, n);
+    return loan * r * pow / (pow - 1);
+  }
+
+  function calcTotalInterest(loan, annualRate) {
+    return calcMonthly(loan, annualRate) * LOAN_YEARS * 12 - loan;
+  }
+
+  // 给定月缴存额和缴存年限，返回可贷公积金 + 相比全商贷省多少
+  function calcFundBenefit(monthlyContrib, years) {
+    const balance = monthlyContrib * 12 * years;
+    const fundQuota = Math.min(balance * BALANCE_MULTIPLIER, FUND_CAP);
+
+    // 实际使用公积金（不能超过总贷款需求）
+    const actualFund = Math.min(fundQuota, TOTAL_LOAN_NEED);
+    const actualLoan = TOTAL_LOAN_NEED - actualFund;
+
+    // 组合贷月供
+    const fundMonthly = actualFund > 0 ? calcMonthly(actualFund, FUND_RATE) : 0;
+    const loanMonthly = actualLoan > 0 ? calcMonthly(actualLoan, LOAN_RATE) : 0;
+    const monthly = fundMonthly + loanMonthly;
+
+    // 总利息
+    const fundInterest = actualFund > 0 ? calcTotalInterest(actualFund, FUND_RATE) : 0;
+    const loanInterest = actualLoan > 0 ? calcTotalInterest(actualLoan, LOAN_RATE) : 0;
+    const totalInterest = fundInterest + loanInterest;
+
+    // 相比全商贷省多少
+    const allLoanInterest = calcTotalInterest(TOTAL_LOAN_NEED, LOAN_RATE);
+    const save = allLoanInterest - totalInterest;
+
+    return { fundQuota: actualFund, save, monthly, totalInterest, balance };
+  }
+
+  // ============================================================
+  // 颜色编码：按可贷额度
+  // ============================================================
+  function getColor(quota) {
+    if (quota >= 800000) return '#15803d';
+    if (quota >= 500000) return '#22c55e';
+    if (quota >= 300000) return '#f59e0b';
+    if (quota >= 150000) return '#f97316';
+    return '#dc2626';
+  }
+
+  // ============================================================
+  // 格式化
+  // ============================================================
+  function formatWan(v) {
+    if (v >= 10000) return (v / 10000).toFixed(1) + '万';
+    return Math.round(v).toLocaleString();
+  }
+
+
+  // 给定可贷额(万)，返回相比全商贷省的万元数（供 legend/文案复用）
+  function saveWan(qWan) {
+    const actual = Math.min(qWan * 10000, TOTAL_LOAN_NEED);
+    const rest = TOTAL_LOAN_NEED - actual;
+    const fi = actual > 0 ? calcTotalInterest(actual, FUND_RATE) : 0;
+    const li = rest > 0 ? calcTotalInterest(rest, LOAN_RATE) : 0;
+    return (calcTotalInterest(TOTAL_LOAN_NEED, LOAN_RATE) - (fi + li)) / 10000;
+  }
+  function formatMonthly(v) {
+    return Math.round(v).toLocaleString();
+  }
+
+  // ============================================================
+  // 生成表格
+  // ============================================================
+  const monthlyContribs = [500, 1000, 2000, 3000, 5000];
+  const yearsList = [1, 3, 5, 8, 10, 15];
+
+  const table = document.getElementById('fundTable');
+
+  monthlyContribs.forEach(contrib => {
+    const tr = document.createElement('tr');
+    const th = document.createElement('th');
+    th.className = 'rowhead';
+    th.textContent = contrib + '元/月';
+    tr.appendChild(th);
+
+    yearsList.forEach(years => {
+      const { fundQuota, save, monthly } = calcFundBenefit(contrib, years);
+      const td = document.createElement('td');
+      td.style.background = getColor(fundQuota);
+
+      td.innerHTML = `<div class="cell-quota">贷${formatWan(fundQuota)}</div>
+                      <div class="cell-save">省${formatWan(save)}</div>
+                      <div class="cell-note">月供${formatMonthly(monthly)}</div>`;
+      tr.appendChild(td);
+    });
+
+    table.appendChild(tr);
+  });
+
+  // ============================================================
+  // 动态插值：静态文案数字由同一计算函数生成（避免硬编码漂移）
+  // ============================================================
+    (function renderStatic() {
+    const c1 = 500, c2 = 3000, years = 10;
+    const r1 = calcFundBenefit(c1, years);
+    const r2 = calcFundBenefit(c2, years);
+    const fmt = v => (v / 10000).toFixed(1) + '万';
+    const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+    set('subContrib1', c1);
+    set('subYears1', years);
+    set('subQuota1', fmt(r1.fundQuota));
+    set('subContrib2', c2);
+    set('subYears2', years);
+    set('subQuota2', fmt(r2.fundQuota));
+    set('subSaveDiff', fmt(r2.save - r1.save));
+    set('contrib1', c1);
+    set('years1', years);
+    set('bal1', fmt(r1.balance));
+    set('quota1', fmt(r1.fundQuota));
+    set('mult', BALANCE_MULTIPLIER);
+    set('contrib2', c2);
+    set('years2', years);
+    set('bal2', fmt(r2.balance));
+    set('quota2', fmt(r2.fundQuota));
+    set('diffQuota', fmt(r2.fundQuota - r1.fundQuota));
+    set('loanYears', LOAN_YEARS);
+    set('save2', fmt(r2.save));
+    set('per10k', Math.round(calcTotalInterest(10000, LOAN_RATE) - calcTotalInterest(10000, FUND_RATE)));
+    // legend 区间（阈值来自 getColor，省额由同公式复算）
+    const saveAt = q => Math.round(saveWan(q) * 10) / 10;
+    const fmtInt = v => Math.round(v / 10000);
+    set('lgQ1', fmtInt(800000)); set('lgS1', saveAt(80));
+    set('lgQ2a', fmtInt(500000)); set('lgQ2b', fmtInt(800000));
+    set('lgS2a', saveAt(50)); set('lgS2b', saveAt(80));
+    set('lgQ3a', fmtInt(300000)); set('lgQ3b', fmtInt(500000));
+    set('lgS3a', saveAt(30)); set('lgS3b', saveAt(50));
+    set('lgQ4a', fmtInt(150000)); set('lgQ4b', fmtInt(300000));
+    set('lgS4a', saveAt(15)); set('lgS4b', saveAt(30));
+    set('lgQ5', fmtInt(150000)); set('lgS5', saveAt(15));
+  })();
+
+</script>
+</body></html>

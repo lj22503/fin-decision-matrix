@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>同样的预算，你能买到多少保额？</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:"Microsoft YaHei","PingFang SC",sans-serif; }
+  body { background:#f6f7fb; padding:24px; }
+  .card { background:#fff; border-radius:16px; box-shadow:0 4px 20px rgba(0,0,0,.08);
+          max-width:1100px; margin:0 auto; padding:28px 32px; }
+  h1 { font-size:28px; color:#111827; text-align:center; }
+  .subtitle { text-align:center; color:#6b7280; font-size:14px; margin:8px 0 18px; }
+  .emotion { display:inline-block; background:#fef3c7; color:#b45309; font-size:11px; padding:2px 8px;
+             border-radius:999px; margin-left:8px; vertical-align:middle; font-weight:700; }
+  .assume { background:#f3f4f6; border-radius:10px; padding:10px 14px; font-size:13px;
+            color:#374151; margin-bottom:16px; line-height:1.7; }
+  .highlight { background:#fef3c7; padding:2px 6px; border-radius:4px; font-weight:700; color:#b45309; }
+  .insight { background:#eef2ff; border-left:4px solid #4f46e5; border-radius:8px;
+             padding:10px 14px; font-size:13px; color:#374151; margin-bottom:16px; line-height:1.7; }
+  .insight b { color:#4f46e5; }
+  table { width:100%; border-collapse:separate; border-spacing:4px; }
+  th { padding:10px 8px; font-size:13px; color:#111827; background:#eef2ff; border-radius:8px; line-height:1.4; }
+  th small { font-weight:400; color:#6b7280; font-size:11px; }
+  th.rowhead { text-align:left; width:100px; }
+  td { padding:9px 5px; text-align:center; font-size:14px; font-weight:700;
+       color:#fff; border-radius:8px; min-width:60px; }
+  .cell-coverage { font-size:16px; }
+  .cell-note { font-size:10px; opacity:0.92; margin-top:2px; font-weight:500; }
+  .cell-premium { font-size:10px; opacity:0.82; margin-top:1px; font-weight:400; }
+  .foot { margin-top:16px; font-size:12px; color:#9ca3af; line-height:1.6; }
+  .watermark { margin-top:14px; text-align:center; font-size:12px; color:#9ca3af; letter-spacing:1px; }
+  .legend { display:flex; justify-content:center; gap:18px; margin:12px 0 16px; font-size:12px; color:#374151; flex-wrap:wrap; }
+  .legend span { display:inline-flex; align-items:center; gap:6px; }
+  .dot { width:14px; height:14px; border-radius:4px; display:inline-block; }
+</style></head><body>
+<div class="card">
+  <h1>同样的预算，你能买到多少保额？</h1>
+  <div class="subtitle">每年 5000 元，25 岁健康能买 83 万保额，45 岁有糖尿病只能买 13 万——同样的钱，保额差 6 倍。<span class="emotion">紧迫 + 惊醒</span></div>
+
+  <div class="assume">
+    假设：以 50 万保额、20 年缴费的定期重疾险为基准；25 岁健康男性年保费约 <b>3000 元</b>；保费随年龄年增约 <b>7%</b>；健康状况影响核保系数（轻度异常 ×1.3，中度异常 ×1.6，重大病史通常拒保）。<br>
+    换算：每年预算 <span class="highlight">5000 元</span>（约 417 元/月），25 岁健康可买 <b>83 万</b>保额；45 岁有糖尿病只能买 <b>13.5 万</b>——晚 20 年，保额缩水 84%。
+  </div>
+
+  <div class="insight">
+    <b>核心洞察：</b>保险是<b>唯一越早买越便宜、越晚买越可能买不到</b>的金融产品。年龄每长 5 岁，同样预算能买到的保额下降约 <b>25-30%</b>；一旦有慢性病或重大病史，可能直接拒保。<b>不是你想买就能买，而是保险公司挑你。</b>
+  </div>
+
+  <div class="legend">
+    <span><i class="dot" style="background:#15803d"></i>可买 &gt;60万</span>
+    <span><i class="dot" style="background:#22c55e"></i>可买 40-60万</span>
+    <span><i class="dot" style="background:#f59e0b"></i>可买 25-40万</span>
+    <span><i class="dot" style="background:#f97316"></i>可买 15-25万</span>
+    <span><i class="dot" style="background:#dc2626"></i>&lt;15万 或 拒保</span>
+  </div>
+
+  <table id="productTable">
+    <tr>
+      <th class="rowhead">年龄</th>
+      <th>健康<br><small>标准体</small></th>
+      <th>轻度异常<br><small>高血压/脂肪肝</small></th>
+      <th>中度异常<br><small>糖尿病/结节4级</small></th>
+      <th>重大病史<br><small>癌症/心脏病</small></th>
+    </tr>
+  </table>
+
+  <div class="foot">
+    测算基于简化模型：年保费 = 3000 元 × 1.07^(年龄−25) × 健康系数；保额 = 预算 ÷ 年保费 × 50 万。实际保费受性别、吸烟、具体疾病、产品条款、保险公司核保政策等影响，差异较大。表中“拒保”为常见结果，部分产品可能加费承保或除外承保。本图不构成任何保险购买建议。
+  </div>
+  <div class="watermark">投资平权 · fin-decision-matrix</div>
+</div>
+
+<script>
+  // ============================================================
+  // 参数
+  // ============================================================
+  const BUDGET = 5000;           // 每年预算 5000 元
+  const BASE_PREMIUM = 3000;     // 25岁健康男性，50万保额年保费
+  const AGE_GROWTH = 1.07;       // 保费年增长 7%
+  const BASE_AGE = 25;
+  const BASE_COVERAGE = 500000;  // 基准保额 50 万
+
+  // ============================================================
+  // 健康状况配置
+  // ============================================================
+  const healthConditions = [
+    { name: '健康', multiplier: 1.0, note: '标准体承保' },
+    { name: '轻度异常', multiplier: 1.3, note: '加费承保' },
+    { name: '中度异常', multiplier: 1.6, note: '加费或除外' },
+    { name: '重大病史', multiplier: null, note: '通常拒保' }
+  ];
+
+  // ============================================================
+  // 核心计算
+  // ============================================================
+  function calcCoverage(age, conditionIndex) {
+    const condition = healthConditions[conditionIndex];
+
+    // 重大病史 → 拒保
+    if (condition.multiplier === null) {
+      return { coverage: 0, premium: 0, note: '拒保', rate: 0 };
+    }
+
+    // 基础保费（50万保额）
+    const basePremium = BASE_PREMIUM * Math.pow(AGE_GROWTH, age - BASE_AGE);
+
+    // 实际保费（含健康系数）
+    const actualPremium = basePremium * condition.multiplier;
+
+    // 在预算内能买到的保额
+    const coverage = (BUDGET / actualPremium) * BASE_COVERAGE;
+
+    // 对应费率（每万保额年保费）
+    const ratePerWan = actualPremium / (BASE_COVERAGE / 10000);
+
+    return {
+      coverage,
+      premium: actualPremium,
+      note: condition.note,
+      rate: ratePerWan
+    };
+  }
+
+  // ============================================================
+  // 颜色编码：按可买保额
+  // ============================================================
+  function getColor(coverage, isRejected) {
+    if (isRejected || coverage < 150000) return '#dc2626';
+    if (coverage < 250000) return '#f97316';
+    if (coverage < 400000) return '#f59e0b';
+    if (coverage < 600000) return '#22c55e';
+    return '#15803d';
+  }
+
+  // ============================================================
+  // 格式化
+  // ============================================================
+  function formatWan(v) {
+    if (v >= 10000) return (v / 10000).toFixed(1) + '万';
+    return Math.round(v).toLocaleString();
+  }
+
+  // ============================================================
+  // 生成表格
+  // ============================================================
+  const ages = [25, 30, 35, 40, 45, 50];
+
+  const table = document.getElementById('productTable');
+
+  ages.forEach(age => {
+    const tr = document.createElement('tr');
+    const th = document.createElement('th');
+    th.className = 'rowhead';
+    th.textContent = age + '岁';
+    tr.appendChild(th);
+
+    healthConditions.forEach((condition, idx) => {
+      const { coverage, note, rate } = calcCoverage(age, idx);
+      const isRejected = condition.multiplier === null;
+      const td = document.createElement('td');
+      td.style.background = getColor(coverage, isRejected);
+
+      if (isRejected) {
+        td.innerHTML = `<div class="cell-coverage">拒保</div>
+                        <div class="cell-note">无法投保</div>
+                        <div class="cell-premium">—</div>`;
+      } else {
+        td.innerHTML = `<div class="cell-coverage">${formatWan(coverage)}</div>
+                        <div class="cell-note">${note}</div>
+                        <div class="cell-premium">${rate.toFixed(0)}元/万/年</div>`;
+      }
+      tr.appendChild(td);
+    });
+
+    table.appendChild(tr);
+  });
+</script>
+</body></html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>夫妻/情侣怎么管钱，才既公平又不伤感情？</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:"Microsoft YaHei","PingFang SC",sans-serif; }
+  body { background:#f6f7fb; padding:24px; }
+  .card { background:#fff; border-radius:16px; box-shadow:0 4px 20px rgba(0,0,0,.08);
+          max-width:1100px; margin:0 auto; padding:28px 32px; }
+  h1 { font-size:28px; color:#111827; text-align:center; }
+  .subtitle { text-align:center; color:#6b7280; font-size:14px; margin:8px 0 18px; }
+  .emotion { display:inline-block; background:#fef3c7; color:#b45309; font-size:11px; padding:2px 8px;
+             border-radius:999px; margin-left:8px; vertical-align:middle; font-weight:700; }
+  .assume { background:#f3f4f6; border-radius:10px; padding:10px 14px; font-size:13px;
+            color:#374151; margin-bottom:16px; line-height:1.7; }
+  .highlight { background:#fef3c7; padding:2px 6px; border-radius:4px; font-weight:700; color:#b45309; }
+  .insight { background:#eef2ff; border-left:4px solid #4f46e5; border-radius:8px;
+             padding:10px 14px; font-size:13px; color:#374151; margin-bottom:16px; line-height:1.7; }
+  .insight b { color:#4f46e5; }
+  table { width:100%; border-collapse:separate; border-spacing:4px; }
+  th { padding:10px 8px; font-size:13px; color:#111827; background:#eef2ff; border-radius:8px; line-height:1.4; }
+  th small { font-weight:400; color:#6b7280; font-size:11px; }
+  th.rowhead { text-align:left; width:100px; }
+  td { padding:9px 6px; text-align:center; font-size:14px; font-weight:700;
+       color:#fff; border-radius:8px; min-width:70px; }
+  .cell-low { font-size:16px; }
+  .cell-high { font-size:10px; opacity:0.92; margin-top:2px; font-weight:500; }
+  .cell-note { font-size:10px; opacity:0.82; margin-top:2px; font-weight:400; }
+  .foot { margin-top:16px; font-size:12px; color:#9ca3af; line-height:1.6; }
+  .watermark { margin-top:14px; text-align:center; font-size:12px; color:#9ca3af; letter-spacing:1px; }
+  .legend { display:flex; justify-content:center; gap:18px; margin:12px 0 16px; font-size:12px; color:#374151; flex-wrap:wrap; }
+  .legend span { display:inline-flex; align-items:center; gap:6px; }
+  .dot { width:14px; height:14px; border-radius:4px; display:inline-block; }
+  .extra-note { margin-top:12px; padding:10px 14px; background:#fafafa;
+                border-radius:10px; font-size:12px; color:#374151; line-height:1.8; }
+  .extra-note b { color:#4f46e5; }
+</style></head><body>
+<div class="card">
+  <h1>夫妻/情侣怎么管钱，才既公平又不伤感情？</h1>
+  <div class="subtitle">月入 6 万的家庭，共同支出 2 万——AA 制下低收入方只剩 2000，共享制下双方各剩 2 万。<span class="emotion">公平 + 理性</span></div>
+
+  <div class="assume">
+    假设：家庭总收入 <b>6 万/月</b>，共同支出（房贷/房租、水电、餐饮、育儿）<b>2 万/月</b>；收入比 = 低收入方 : 高收入方；三种管理方式：<br>
+    <b>AA 制</b> = 共同支出两人平摊，各付 1 万；<b>按比例</b> = 按收入占比分摊共同支出；<b>全部共享</b> = 收入合并，共同支出后剩余平分。<br>
+    换算：收入比 1:4 时，AA 制下低收入方月入 1.2 万，付完 1 万只剩 <span class="highlight">2000 元</span>；共享制下双方各剩 <b>2 万</b>——差距 10 倍。
+  </div>
+
+  <div class="insight">
+    <b>核心洞察：</b>三种方式的<b>合计储蓄完全一样</b>（总收入 − 共同支出 = 4 万），区别只在<b>怎么分</b>。收入差距越大，AA 制对低收入方越残酷——月入 1.2 万付 1 万，只剩 2000，几乎月光。<b>按比例出资是最容易被双方接受的折中方案：剩余比 = 收入比，谁也不占谁便宜。</b>
+  </div>
+
+  <div class="legend">
+    <span><i class="dot" style="background:#15803d"></i>低收入方剩余 ≥1.5万（充裕）</span>
+    <span><i class="dot" style="background:#22c55e"></i>1-1.5万</span>
+    <span><i class="dot" style="background:#f59e0b"></i>0.5-1万</span>
+    <span><i class="dot" style="background:#f97316"></i>0.2-0.5万</span>
+    <span><i class="dot" style="background:#dc2626"></i>&lt;0.2万（几乎月光）</span>
+  </div>
+
+  <table id="coupleTable">
+    <tr>
+      <th class="rowhead">收入比</th>
+      <th>AA 制<br><small>各付1万</small></th>
+      <th>按比例<br><small>按收入分摊</small></th>
+      <th>全部共享<br><small>合并后平分</small></th>
+    </tr>
+  </table>
+
+  <div class="extra-note" id="extraNote"></div>
+
+  <div class="foot">
+    测算基于简化假设：家庭总收入 6 万/月、共同支出 2 万/月、无其他收入或支出；未考虑税收、个人消费差异、家庭贡献（如育儿、家务）等非财务因素。实际财务管理方式需结合双方价值观、消费习惯、信任程度综合决定。本图不构成任何财务建议。
+  </div>
+  <div class="watermark">投资平权 · fin-decision-matrix</div>
+</div>
+
+<script>
+  // ============================================================
+  // 参数
+  // ============================================================
+  const TOTAL_INCOME = 60000;    // 家庭总收入 6 万
+  const TOTAL_EXPENSE = 20000;   // 共同支出 2 万
+  const TOTAL_SAVING = TOTAL_INCOME - TOTAL_EXPENSE; // 合计剩余 4 万
+
+  // ============================================================
+  // 收入比配置：低收入 : 高收入
+  // ============================================================
+  const ratios = [
+    { label: '1 : 1',   low: 1, high: 1 },
+    { label: '1 : 1.5', low: 1, high: 1.5 },
+    { label: '1 : 2',   low: 1, high: 2 },
+    { label: '1 : 3',   low: 1, high: 3 },
+    { label: '1 : 4',   low: 1, high: 4 }
+  ];
+
+  // ============================================================
+  // 核心计算
+  // ============================================================
+  function calcSplit(lowRatio, highRatio) {
+    const total = lowRatio + highRatio;
+    const lowIncome = TOTAL_INCOME * lowRatio / total;
+    const highIncome = TOTAL_INCOME * highRatio / total;
+
+    // 1. AA 制：各付一半共同支出
+    const aaShare = TOTAL_EXPENSE / 2;
+    const lowAA = lowIncome - aaShare;
+    const highAA = highIncome - aaShare;
+
+    // 2. 按比例：按收入占比分摊
+    const lowProportion = lowIncome - TOTAL_EXPENSE * (lowIncome / TOTAL_INCOME);
+    const highProportion = highIncome - TOTAL_EXPENSE * (highIncome / TOTAL_INCOME);
+
+    // 3. 全部共享：合并后平分
+    const sharedEach = TOTAL_SAVING / 2;
+
+    return {
+      lowIncome, highIncome,
+      lowAA, highAA,
+      lowProportion, highProportion,
+      sharedEach
+    };
+  }
+
+  // ============================================================
+  // 颜色编码：按低收入方剩余
+  // ============================================================
+  function getColor(lowRemaining) {
+    if (lowRemaining >= 15000) return '#15803d';
+    if (lowRemaining >= 10000) return '#22c55e';
+    if (lowRemaining >= 5000) return '#f59e0b';
+    if (lowRemaining >= 2000) return '#f97316';
+    return '#dc2626';
+  }
+
+  // ============================================================
+  // 格式化
+  // ============================================================
+  function formatWan(v) {
+    if (Math.abs(v) >= 10000) return (v / 10000).toFixed(1) + '万';
+    return Math.round(v).toLocaleString();
+  }
+
+  function getFairnessLabel(lowRemaining, lowIncome) {
+    const ratio = lowRemaining / lowIncome;
+    if (ratio >= 0.6) return '低收入方充裕';
+    if (ratio >= 0.4) return '较公平';
+    if (ratio >= 0.2) return '低收入方紧张';
+    return '低收入方几乎月光';
+  }
+
+  // ============================================================
+  // 生成表格
+  // ============================================================
+  const table = document.getElementById('coupleTable');
+
+  ratios.forEach(r => {
+    const tr = document.createElement('tr');
+    const th = document.createElement('th');
+    th.className = 'rowhead';
+    th.textContent = r.label;
+    tr.appendChild(th);
+
+    const result = calcSplit(r.low, r.high);
+
+    // AA 制
+    const tdAA = document.createElement('td');
+    tdAA.style.background = getColor(result.lowAA);
+    tdAA.innerHTML = `<div class="cell-low">低 ${formatWan(result.lowAA)}</div>
+                      <div class="cell-high">高 ${formatWan(result.highAA)}</div>
+                      <div class="cell-note">${getFairnessLabel(result.lowAA, result.lowIncome)}</div>`;
+    tr.appendChild(tdAA);
+
+    // 按比例
+    const tdProp = document.createElement('td');
+    tdProp.style.background = getColor(result.lowProportion);
+    tdProp.innerHTML = `<div class="cell-low">低 ${formatWan(result.lowProportion)}</div>
+                        <div class="cell-high">高 ${formatWan(result.highProportion)}</div>
+                        <div class="cell-note">${getFairnessLabel(result.lowProportion, result.lowIncome)}</div>`;
+    tr.appendChild(tdProp);
+
+    // 全部共享
+    const tdShared = document.createElement('td');
+    tdShared.style.background = getColor(result.sharedEach);
+    tdShared.innerHTML = `<div class="cell-low">各 ${formatWan(result.sharedEach)}</div>
+                          <div class="cell-high">双方均等</div>
+                          <div class="cell-note">需高收入方接受</div>`;
+    tr.appendChild(tdShared);
+
+    table.appendChild(tr);
+  });
+
+  // ============================================================
+  // 补充说明
+  // ============================================================
+  const note = document.getElementById('extraNote');
+  note.innerHTML = `<b>三种方式的核心差异：</b><br>
+    · <b>AA 制</b>：简单直接，但收入差距越大，低收入方越吃亏。适合收入接近、消费观一致的伴侣。<br>
+    · <b>按比例</b>：剩余比 = 收入比，谁也不占谁便宜。适合收入差距较大、但双方都希望保持财务独立的伴侣。<br>
+    · <b>全部共享</b>：合并收入、共同决策、剩余平分。适合高度信任、价值观一致的夫妻，但需要高收入方接受“转移支付”。<br>
+    <b>关键提醒：</b>无论选哪种方式，合计储蓄都是 4 万——差异只在分配。选哪种，取决于你们对“公平”的定义。`;
+</script>
+</body></html>

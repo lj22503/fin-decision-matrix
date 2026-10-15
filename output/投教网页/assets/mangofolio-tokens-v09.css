@@ -1,0 +1,674 @@
+/**
+ * Mangofolio Design Tokens v0.6
+ * 基于 v0.5 定向修订：按三品牌对比诊断结论收敛配色（橙电压色 ≤5% / 正文换深墨 / 补冷色互补 / 补齐灰阶）
+ * 结构对标：primitives -> semantic(background/text/border/dataviz) -> 组件态 -> 排版/间距/尺寸/圆角/阴影/z-index/动效/渐变
+ * 双值结构：[light, dark]，dark 模式通过 [data-color-mode="dark"] 覆盖
+ * v0.6 决策：
+ *   - 主色芒果橙 #F97316 从"铺底"收敛为"电压色"：仅 CTA / 链接 / 图标 / 焦点 / Logo，页面占比 ≤5%
+ *   - 卡片底 / Hero 大底 = 暖灰底 #F7F5F2 / 卡面 #FFFFFF + 橙浅档（如 #FFF3EA）
+ *   - 需要橙铺底的场景用 600-700 深档（#F97316 / #E05E0A）压饱和
+ *   - 正文 = warm-grey-90 #3A332C（标题可用 caramel-100 #241610），对比度 ≥7:1
+ *   - 涨跌语义：涨红 up-red-70 #B8221E / 跌绿 down-green-80 #11693D
+ *     涨跌语义：涨红 up-red-70 #B8221E / 跌绿 down-green-80 #11693D
+ *   - 暖中性灰：#F7F5F2 → #241610，覆盖边框 / 占位 / 禁用 / 辅助 / 正文
+ *   - 橙阶应用：浅档 050-300 浅橙底 / 标签 / 分区；中档 400-600 CTA；深档 700-950 按压 / hover / 强调文字
+ * 保留优势：红涨绿跌 / 暗色模式完整 / Noto Serif SC / 胶囊按钮 / 纸感卡 16px / 毛玻璃导航
+ * 用法：:root 全局引入；<html data-color-mode="dark"> 切换暗色
+ */
+:root {
+  /* ================================================================
+   * LAYER 1: COLOR PRIMITIVES
+   * 橙阶采用 Etsy 式 050-950 档位命名（浅档大量用于底/标签/分区），
+   * 并保留 v0.5 的 10-100 兼容别名，避免旧引用失效
+   * ================================================================ */
+
+  /* ---- Mango Orange（品牌主色系 · v0.6 电压色阶）---- */
+  --mf-colors-primitives-mango-050: #FFF3EA; /* 最浅橙底 */
+  --mf-colors-primitives-mango-100: #241610; /* 浅橙分区底 */
+  --mf-colors-primitives-mango-200: rgba(249,115,22,.12); /* 浅橙标签底 */
+  --mf-colors-primitives-mango-300: rgba(249,115,22,.20); /* 浅橙强调底 */
+  --mf-colors-primitives-mango-400: rgba(249,115,22,.30); /* 悬停浅橙 */
+  --mf-colors-primitives-mango-500: rgba(249,115,22,.65); /* 次级 CTA */
+  --mf-colors-primitives-mango-600: #F97316; /* PRIMARY 电压色（CTA/链接/图标/焦点/Logo） */
+  --mf-colors-primitives-mango-700: #E05E0A; /* 按压 / 深铺底 */
+  --mf-colors-primitives-mango-800: #E05E0A; /* hover 深档 / 强调文字 */
+  --mf-colors-primitives-mango-900: rgba(224,94,10,.80); /* 强调文字 */
+  --mf-colors-primitives-mango-950: rgba(224,94,10,.85); /* 极深橙文字 */
+  /* v0.5 兼容别名 */
+  --mf-colors-primitives-mango-10: #FFF3EA;
+  --mf-colors-primitives-mango-20: rgba(249,115,22,.12);
+  --mf-colors-primitives-mango-30: rgba(249,115,22,.20);
+  --mf-colors-primitives-mango-40: rgba(249,115,22,.30);
+  --mf-colors-primitives-mango-50: rgba(249,115,22,.65);
+  --mf-colors-primitives-mango-60: #F97316; /* PRIMARY */
+  --mf-colors-primitives-mango-60alpha30: rgba(249,115,22,.30);
+  --mf-colors-primitives-mango-60alpha40: rgba(249,115,22,.40);
+  --mf-colors-primitives-mango-70: #E05E0A; /* HOVER（v0.6 深档压饱和） */
+  --mf-colors-primitives-mango-80: #E05E0A;
+  --mf-colors-primitives-mango-90: rgba(224,94,10,.80);
+  --mf-colors-primitives-mango-100: #241610;
+
+  /* ---- Indigo（v0.6 新增冷色互补 · 靛蓝）----
+   * 职责：链接 / 图表 / 信息分区 / 次级强调；低饱和、偏冷静，与暖橙形成色温互补
+   * 占页面 ≤5%，不与涨红/跌绿语义色混淆 */
+  --mf-colors-primitives-indigo-10: #EDE9E4;
+  --mf-colors-primitives-indigo-20: rgba(36,22,16,.06);
+  --mf-colors-primitives-indigo-30: rgba(36,22,16,.10);
+  --mf-colors-primitives-indigo-40: rgba(36,22,16,.18);
+  --mf-colors-primitives-indigo-50: rgba(36,22,16,.30);
+  --mf-colors-primitives-indigo-60: #8A7D70; /* INDIGO PRIMARY 冷锚点 */
+  --mf-colors-primitives-indigo-60alpha30: rgba(138,125,112,.30);
+  --mf-colors-primitives-indigo-70: #8A7D70;
+  --mf-colors-primitives-indigo-80: #3A332C;
+  --mf-colors-primitives-indigo-90: #3A332C;
+  --mf-colors-primitives-indigo-100: #241610;
+
+  /* ---- Caramel Brown（焦糖棕 · v0.6 降级为眉题/标签/辅助色，不再作正文）---- */
+  --mf-colors-primitives-caramel-10: #F7F5F2;
+  --mf-colors-primitives-caramel-20: #EDE9E4;
+  --mf-colors-primitives-caramel-30: rgba(36,22,16,.10);
+  --mf-colors-primitives-caramel-40: rgba(36,22,16,.25);
+  --mf-colors-primitives-caramel-50: rgba(36,22,16,.45);
+  --mf-colors-primitives-caramel-60: #8A7D70;
+  --mf-colors-primitives-caramel-70: #3A332C;
+  --mf-colors-primitives-caramel-80: #241610;
+  --mf-colors-primitives-caramel-90: #241610; /* EYEBROW/LABEL */
+  --mf-colors-primitives-caramel-90alpha40: rgba(36,22,16,.40);
+  --mf-colors-primitives-caramel-100: #241610;
+  --mf-colors-primitives-caramel-40alpha30: #D4AC854D;
+
+  /* ---- Warm Grey（v09 暖灰体系：#F7F5F2 → #241610）----
+   * 覆盖：近白底 / 禁用底 / 弱描边 / 默认描边 / 占位·弱文字 / 次级辅助 / 正文墨 */
+  --mf-colors-primitives-grey-100: #241610;
+  --mf-colors-primitives-grey-200: #EDE9E4;
+  --mf-colors-primitives-grey-300: rgba(36,22,16,.06);
+  --mf-colors-primitives-grey-400: rgba(36,22,16,.12);
+  --mf-colors-primitives-grey-500: rgba(36,22,16,.22);
+  --mf-colors-primitives-grey-600: #8A7D70;
+  --mf-colors-primitives-grey-700: #241610; /* ESPRESSO 正文墨 */
+  /* v0.5 兼容别名（映射到新刻度） */
+  --mf-colors-primitives-grey-10: #F7F5F2;
+  --mf-colors-primitives-grey-20: #EDE9E4;
+  --mf-colors-primitives-grey-30: rgba(36,22,16,.06);
+  --mf-colors-primitives-grey-40: rgba(36,22,16,.12);
+  --mf-colors-primitives-grey-50: rgba(36,22,16,.22);
+  --mf-colors-primitives-grey-60: #8A7D70;
+  --mf-colors-primitives-grey-70: rgba(138,125,112,.75);
+  --mf-colors-primitives-grey-80: #3A332C;
+  --mf-colors-primitives-grey-90: #3A332C;
+  --mf-colors-primitives-grey-90alpha05: rgba(36,22,16,.05);
+  --mf-colors-primitives-grey-90alpha10: rgba(36,22,16,.10);
+  --mf-colors-primitives-grey-90alpha15: rgba(36,22,16,.15);
+  --mf-colors-primitives-grey-90alpha40: rgba(36,22,16,.40);
+  --mf-colors-primitives-grey-90alpha80: rgba(36,22,16,.80);
+  --mf-colors-primitives-grey-100: #241610;
+
+  /* ---- Up Red（涨红刻度，与品牌主色严格区分）---- */
+  --mf-colors-primitives-up-10: rgba(184,34,30,.08);
+  --mf-colors-primitives-up-20: rgba(184,34,30,.15);
+  --mf-colors-primitives-up-30: rgba(184,34,30,.28);
+  --mf-colors-primitives-up-40: rgba(184,34,30,.40);
+  --mf-colors-primitives-up-50: rgba(184,34,30,.58);
+  --mf-colors-primitives-up-60: rgba(184,34,30,.75); /* UP TEXT */
+  --mf-colors-primitives-up-70: #B8221E;
+  --mf-colors-primitives-up-70alpha40: rgba(184,34,30,.40);
+  --mf-colors-primitives-up-80: #B8221E;
+  --mf-colors-primitives-up-90: #B8221E;
+  --mf-colors-primitives-up-100: rgba(184,34,30,.92);
+
+  /* ---- Down Green（跌，低饱和绿刻度；仅图表/数字）---- */
+  --mf-colors-primitives-down-10: rgba(17,105,61,.10);
+  --mf-colors-primitives-down-20: rgba(17,105,61,.18);
+  --mf-colors-primitives-down-30: rgba(17,105,61,.28);
+  --mf-colors-primitives-down-40: rgba(17,105,61,.40);
+  --mf-colors-primitives-down-50: rgba(17,105,61,.58);
+  --mf-colors-primitives-down-60: rgba(17,105,61,.75); /* CHART ONLY */
+  --mf-colors-primitives-down-60alpha20: rgba(17,105,61,.20);
+  --mf-colors-primitives-down-70: #11693D; /* DOWN TEXT */
+  --mf-colors-primitives-down-80: #11693D;
+  --mf-colors-primitives-down-90: #11693D;
+  --mf-colors-primitives-down-100: rgba(17,105,61,.92);
+
+  /* ---- Orange（辅助暖橙，与 mango 主橙区分，v0.6 收敛为次级强调）---- */
+  --mf-colors-primitives-orange-10: #FFF3EA;
+  --mf-colors-primitives-orange-20: rgba(249,115,22,.12);
+  --mf-colors-primitives-orange-30: rgba(249,115,22,.20);
+  --mf-colors-primitives-orange-40: rgba(249,115,22,.30);
+  --mf-colors-primitives-orange-50: rgba(249,115,22,.55);
+  --mf-colors-primitives-orange-60: #F97316; /* ACCENT ORANGE */
+  --mf-colors-primitives-orange-60alpha30: rgba(249,115,22,.30);
+  --mf-colors-primitives-orange-70: #E05E0A;
+  --mf-colors-primitives-orange-80: #E05E0A;
+  --mf-colors-primitives-orange-90: rgba(224,94,10,.80);
+  --mf-colors-primitives-orange-100: #241610;
+
+  /* ---- Purple（智慧紫，图表辅助，对标 bmt-colors-primitives-purple-*）---- */
+  --mf-colors-primitives-purple-10: #EDE9E4;
+  --mf-colors-primitives-purple-20: rgba(36,22,16,.06);
+  --mf-colors-primitives-purple-30: rgba(36,22,16,.10);
+  --mf-colors-primitives-purple-40: rgba(36,22,16,.18);
+  --mf-colors-primitives-purple-50: rgba(36,22,16,.30);
+  --mf-colors-primitives-purple-50alpha30: rgba(36,22,16,.30);
+  --mf-colors-primitives-purple-60: #8A7D70;
+  --mf-colors-primitives-purple-70: #8A7D70;
+  --mf-colors-primitives-purple-80: #3A332C;
+  --mf-colors-primitives-purple-90: #3A332C;
+  --mf-colors-primitives-purple-100: #241610;
+
+  /* ---- White / Black / Transparent ---- */
+  --mf-colors-primitives-white-100: #FFFFFF;
+  --mf-colors-primitives-white-100alpha05: rgba(255,255,255,.05);
+  --mf-colors-primitives-white-100alpha10: rgba(255,255,255,.10);
+  --mf-colors-primitives-white-100alpha15: rgba(255,255,255,.15);
+  --mf-colors-primitives-white-100alpha30: rgba(255,255,255,.30);
+  --mf-colors-primitives-white-100alpha40: rgba(255,255,255,.40);
+  --mf-colors-primitives-black: #241610;
+  --mf-colors-primitives-transparent: rgba(255,255,255,0);
+
+  /* ================================================================
+   * LAYER 2: SEMANTIC COLORS
+   * 每个 token 标注双值 [light, dark]
+   * v0.6 原则：底 = 奶油/宣纸 + 浅橙档；文字 = 深墨；橙 = 电压色；靛蓝 = 冷互补
+   * ================================================================ */
+
+  /* ---- Background 背景组 ---- */
+  --mf-colors-background: #FFFFFF; /* [white, espresso] 主底色：v1.0 改为纯白（v0.6/0.8 曾用 #F7F5F2 宣纸底） */
+  --mf-colors-background-abyss: #241610; /* [n/a, abyss] 极深底 */
+  --mf-colors-background-surface: #FFFFFF; /* [paper-white, espresso-2] 卡片面（v0.8 纯白） */
+  --mf-colors-background-surface-hover: #FFF3EA; /* [mango-050, surface-hover-dark] 卡片 hover 浅橙 */
+  --mf-colors-background-surface-active: #FFF3EA;
+  --mf-colors-background-surface-disabled: #EDE9E4;
+  --mf-colors-background-neutral: #F7F5F2; /* 中性弱底（仅作局部分区底，非页面默认底） */
+  --mf-colors-background-neutral-hover: #EDE9E4;
+  --mf-colors-background-neutral-active: #EDE9E4;
+  --mf-colors-background-neutral-strong: #8A7D70;
+  --mf-colors-background-neutral-strong-hover: rgba(138,125,112,.94);
+  --mf-colors-background-neutral-strong-active: rgba(138,125,112,.88);
+  --mf-colors-background-neutral-strongest: #3A332C;
+  --mf-colors-background-neutral-strongest-hover: #241610;
+  --mf-colors-background-neutral-strongest-active: #241610;
+  --mf-colors-background-primary: #F97316; /* [mango-600, mango-400] 主 CTA（电压色，不再铺底） */
+  --mf-colors-background-primary-hover: #E05E0A;
+  --mf-colors-background-primary-active: #E05E0A;
+  --mf-colors-background-primary-disabled: rgba(249,115,22,.40);
+  --mf-colors-background-input: #FFFFFF; /* 输入框底 */
+  --mf-colors-background-input-disabled: #EDE9E4;
+  --mf-colors-background-overlay: rgba(36,22,16,.72); /* 遮罩 */
+  --mf-colors-background-overlay-weak: rgba(36,22,16,.40);
+  --mf-colors-background-shimmer-base: #EDE9E4;
+  --mf-colors-background-shimmer-highlight: #F7F5F2;
+  --mf-colors-background-transparent: rgba(255,255,255,0);
+  --mf-colors-background-transparent-hover: rgba(249,115,22,.05);
+  --mf-colors-background-transparent-active: rgba(249,115,22,.10);
+  --mf-colors-background-critical: rgba(184,34,30,.08); /* 危险浅底 [up-10, up-100] */
+  --mf-colors-background-critical-strong: #B8221E;
+  --mf-colors-background-critical-strong-hover: rgba(184,34,30,.85);
+  --mf-colors-background-critical-strong-active: rgba(184,34,30,.92);
+  --mf-colors-background-critical-strong-disabled: rgba(184,34,30,.38);
+  --mf-colors-background-info: #EDE9E4; /* 信息靛蓝浅底（v0.6 冷锚点） */
+  --mf-colors-background-info-strong: #8A7D70;
+  --mf-colors-background-success: rgba(17,105,61,.10); /* 成功绿浅底 */
+  --mf-colors-background-success-strong: #11693D;
+  --mf-colors-background-warning: rgba(249,115,22,.10); /* 警示橙浅底 */
+  --mf-colors-background-warning-strong: #E05E0A;
+
+  /* ---- Text 文字组（v0.6 正文换深墨）---- */
+  --mf-colors-text: #3A332C; /* [espresso, cream] 正文（对比度 ≥7:1） */
+  --mf-colors-text-strong: #241610; /* 强强调（更深墨） */
+  --mf-colors-text-weak: #8A7D70; /* 次级文字（灰 600） */
+  --mf-colors-text-disabled: #8A7D70;
+  --mf-colors-text-inverse: #FFFFFF; /* 深底上的浅字 */
+  --mf-colors-text-on-primary: #FFFFFF; /* 主色上的文字 */
+  --mf-colors-text-on-primary-disabled: rgba(255,255,255,.40);
+  --mf-colors-text-link: #F97316; /* 链接（橙电压色深档，对比度 ≥7:1） */
+  --mf-colors-text-link-hover: #E05E0A;
+  --mf-colors-text-link-active: #E05E0A;
+  --mf-colors-text-link-secondary: #8A7D70; /* 次级链接（靛蓝冷锚点） */
+  --mf-colors-text-placeholder: #8A7D70;
+  --mf-colors-text-selected: #F97316;
+  --mf-colors-text-critical: #B8221E; /* 涨/错误文字 */
+  --mf-colors-text-critical-hover: rgba(184,34,30,.90);
+  --mf-colors-text-critical-active: rgba(184,34,30,.85);
+  --mf-colors-text-info: #8A7D70;
+  --mf-colors-text-success: #11693D; /* 跌/成功文字 */
+  --mf-colors-text-warning: #E05E0A;
+  --mf-colors-text-accent-mango: #E05E0A; /* 电压橙（深档保对比） */
+  --mf-colors-text-accent-caramel: #241610; /* 眉题/标签 */
+  --mf-colors-text-accent-indigo: #8A7D70; /* 冷锚点 */
+  --mf-colors-text-accent-blue: #8A7D70;
+  --mf-colors-text-accent-teal: #11693D;
+  --mf-colors-text-accent-red: #B8221E;
+  --mf-colors-text-accent-grey: #8A7D70;
+
+  /* ---- Border 描边组（v0.6 灰阶 7 档）---- */
+  --mf-colors-border: rgba(36,22,16,.10); /* [grey-400, border-dark] 默认描边（v0.8 加深） */
+  --mf-colors-border-weak: rgba(36,22,16,.10); /* [grey-300, border-weak-dark] 弱描边（v0.8 加深） */
+  --mf-colors-border-strong: #8A7D70;
+  --mf-colors-border-strongest: #241610;
+  --mf-colors-border-input: #8A7D70;
+  --mf-colors-border-focused: #F97316; /* 聚焦态（橙 500 亮档） */
+  --mf-colors-border-selected: #F97316;
+  --mf-colors-border-critical: #B8221E;
+  --mf-colors-border-on-primary: #FFFFFF;
+
+  /* ---- DataViz 图表组（v0.6 加入靛蓝冷色序列，橙收敛为 3 档电压色）---- */
+  --mf-colors-dataviz-mango-1: #E05E0A;
+  --mf-colors-dataviz-mango-2: #F97316;
+  --mf-colors-dataviz-mango-3: #FFF3EA;
+  --mf-colors-dataviz-mango-overlay: rgba(249,115,22,.30);
+  --mf-colors-dataviz-indigo-1: #3A332C; /* 靛蓝（新增冷锚点序列） */
+  --mf-colors-dataviz-indigo-2: #8A7D70;
+  --mf-colors-dataviz-indigo-3: #EDE9E4;
+  --mf-colors-dataviz-indigo-overlay: rgba(138,125,112,.30);
+  --mf-colors-dataviz-caramel-1: #241610;
+  --mf-colors-dataviz-caramel-2: #8A7D70;
+  --mf-colors-dataviz-caramel-3: #EDE9E4;
+  --mf-colors-dataviz-caramel-overlay: rgba(138,125,112,.30);
+  --mf-colors-dataviz-up-1: #B8221E;
+  --mf-colors-dataviz-up-2: rgba(184,34,30,.75);
+  --mf-colors-dataviz-up-3: rgba(184,34,30,.15);
+  --mf-colors-dataviz-up-overlay: rgba(184,34,30,.30);
+  --mf-colors-dataviz-down-1: #11693D;
+  --mf-colors-dataviz-down-2: rgba(17,105,61,.70);
+  --mf-colors-dataviz-down-3: rgba(17,105,61,.15);
+  --mf-colors-dataviz-down-overlay: rgba(17,105,61,.20);
+  --mf-colors-dataviz-dict-1: #3A332C;
+  --mf-colors-dataviz-dict-2: #F97316;
+  --mf-colors-dataviz-dict-3: #FFF3EA;
+  --mf-colors-dataviz-dict-overlay: rgba(249,115,22,.30);
+  --mf-colors-dataviz-buddy-1: #B8221E;
+  --mf-colors-dataviz-buddy-2: #E05E0A;
+  --mf-colors-dataviz-buddy-3: #F7F5F2;
+  --mf-colors-dataviz-buddy-overlay: rgba(224,94,10,.30);
+  --mf-colors-dataviz-grid: rgba(36,22,16,.08); /* 网格线 */
+
+  /* ================================================================
+   * LAYER 3: TYPOGRAPHY（与 v0.5 一致，保留 Noto Serif SC 衬线标题优势）
+   * ================================================================ */
+  --mf-fonts-body: "Inter";                                    /* 正文/数字字体 */
+  --mf-fonts-display-name: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "SimSun", serif;
+  --mf-fonts-sans: "Inter", "Source Han Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --mf-fonts-display: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "SimSun", serif;
+  --mf-fonts-display-extended: "Fraunces", "Noto Serif SC", serif;
+  --mf-fonts-mono: "Inter", "SF Mono", "Cascadia Mono", Consolas, monospace;
+
+  --mf-font-sizes-25: 12px;     /* 辅助/角标 */
+  --mf-font-sizes-30: 13px;     /* eyebrow/眉题 */
+  --mf-font-sizes-50: 14px;     /* 正文小 */
+  --mf-font-sizes-100: 16px;    /* 正文 */
+  --mf-font-sizes-200: 18px;    /* 正文大 */
+  --mf-font-sizes-300: 24px;    /* 小标题 */
+  --mf-font-sizes-compat-5: 28px;
+  --mf-font-sizes-400: 32px;    /* 中标题 */
+  --mf-font-sizes-compat-7: 40px;
+  --mf-font-sizes-500: 48px;    /* 大标题 */
+  --mf-font-sizes-compat-9: 64px;
+  --mf-font-sizes-title1: 72px; /* 首页 hero */
+  --mf-font-sizes-eyebrow: 0.78rem;
+  --mf-font-sizes-h1: clamp(2.5rem, 6vw, 4.5rem);
+  --mf-font-sizes-lead: clamp(1rem, 2vw, 1.15rem);
+  --mf-font-sizes-body: 1rem;
+  --mf-line-heights-lead: 1.9;
+
+  --mf-font-weights-light: 300;
+  --mf-font-weights-regular: 400;
+  --mf-font-weights-medium: 500;
+  --mf-font-weights-semibold: 600;
+  --mf-font-weights-bold: 700;
+  --mf-font-weights-black: 900;
+  --mf-font-weights-compat-light: 300;
+  --mf-font-weights-compat-bold: 700;
+
+  --mf-line-heights-25: 18px;
+  --mf-line-heights-30: 20px;
+  --mf-line-heights-50: 21px;
+  --mf-line-heights-100: 24px;
+  --mf-line-heights-200: 26px;
+  --mf-line-heights-300: 34px;
+  --mf-line-heights-400: 42px;
+  --mf-line-heights-500: 52px;
+  --mf-line-heights-title: 1.3;
+  --mf-line-heights-body: 1.6;
+
+  --mf-letter-spacings-normal: 0em;
+  --mf-letter-spacings-loose: 0.28em;
+  --mf-letter-spacings-eyebrow: 0.3em;
+  --mf-letter-spacings-wide: 0.08em;
+
+  /* ================================================================
+   * LAYER 4: SPACING（4px base，与 v0.5 一致）
+   * ================================================================ */
+  --mf-spacing-space-0: 0px;
+  --mf-spacing-space-25: 2px;
+  --mf-spacing-space-50: 4px;
+  --mf-spacing-space-compat-2: 6px;
+  --mf-spacing-space-100: 8px;
+  --mf-spacing-space-150: 12px;
+  --mf-spacing-space-compat-5: 14px;
+  --mf-spacing-space-200: 16px;
+  --mf-spacing-space-compat-7: 20px;
+  --mf-spacing-space-300: 24px;
+  --mf-spacing-space-400: 32px;
+  --mf-spacing-space-500: 40px;
+  --mf-spacing-space-600: 48px;
+  --mf-spacing-space-800: 64px;
+  --mf-spacing-space-compat-12: 96px;
+  --mf-spacing-container-padding: 28.8px;
+  --mf-spacing-container-padding-mobile: 16px;
+
+  /* ================================================================
+   * LAYER 5: SIZING（与 v0.5 一致）
+   * ================================================================ */
+  --mf-border-widths-none: 0px;
+  --mf-border-widths-thin: 1px;
+  --mf-border-widths-thick: 2px;
+
+  --mf-sizes-size-0: 0px;
+  --mf-sizes-size-1: 1px;
+  --mf-sizes-size-50: 4px;
+  --mf-sizes-size-100: 8px;
+  --mf-sizes-size-200: 16px;
+  --mf-sizes-size-250: 20px;
+  --mf-sizes-size-300: 24px;
+  --mf-sizes-size-400: 32px;
+  --mf-sizes-size-450: 36px;
+  --mf-sizes-size-500: 40px;
+  --mf-sizes-size-600: 48px;
+  --mf-sizes-size-800: 64px;
+  --mf-sizes-size-900: 72px;
+  --mf-sizes-size-full: 100%;
+
+  --mf-sizes-icon-xxsmall: 16px;
+  --mf-sizes-icon-xsmall: 20px;
+  --mf-sizes-icon-small: 24px;
+  --mf-sizes-icon-medium: 48px;
+  --mf-sizes-icon-large: 72px;
+
+  --mf-sizes-breakpoint-sm: 500px;
+  --mf-sizes-breakpoint-md: 700px;
+  --mf-sizes-breakpoint-lg: 964px;
+  --mf-sizes-breakpoint-xl: 1224px;
+
+  --mf-sizes-container-small: 320px;
+  --mf-sizes-container-medium: 400px;
+  --mf-sizes-container-large: 640px;
+  --mf-sizes-container-xlarge: 800px;
+  --mf-sizes-container-max: 1200px;
+  --mf-sizes-container-max-width: 1440px;
+  --mf-sizes-layout-slot-min-width: 380px;
+
+  /* ================================================================
+   * LAYER 6: RADII（纸感卡 16px + 胶囊，与 v0.5 一致）
+   * ================================================================ */
+  --mf-radii-none: 0px;
+  --mf-radii-small: 4px;
+  --mf-radii-medium: 6px;
+  --mf-radii-large: 8px;
+  --mf-radii-card: 16px;                 /* 纸感卡 16px */
+  --mf-radii-card-flat: 16px;
+  --mf-radii-round: 9999px;              /* 胶囊 */
+
+  /* ================================================================
+   * LAYER 7: SHADOWS（墨色系投影，v0.6 统一到 espresso 阴影色）
+   * ================================================================ */
+  --mf-shadows-xs: 0 1px rgba(36, 22, 16, 0.05);
+  --mf-shadows-sm: 1px 2px 4px rgba(36, 22, 16, 0.08);
+  --mf-shadows-default: 0 1px 3px rgba(36, 22, 16, 0.08), 0 4px 12px rgba(36, 22, 16, 0.06);
+  --mf-shadows-card: 0 4px 8px rgba(36, 22, 16, 0.08), 0 12px 32px rgba(36, 22, 16, 0.10);
+  --mf-shadows-button-primary: 0 8px 20px rgba(249, 115, 22, 0.22); /* 主按钮芒果橙投影（电压色） */
+  --mf-shadows-float: 0 4px 8px rgba(36, 22, 16, 0.08), 0 12px 32px rgba(36, 22, 16, 0.12);
+  --mf-shadows-card-drop: 0 1px 3px rgba(36, 22, 16, 0.08), 0 4px 12px rgba(36, 22, 16, 0.06);
+
+  /* ================================================================
+   * LAYER 8: Z-INDEX（与 v0.5 一致）
+   * ================================================================ */
+  --mf-z-index-below: -1;
+  --mf-z-index-default: 1;
+  --mf-z-index-card: 2;
+  --mf-z-index-dropdown: 3;
+  --mf-z-index-tooltip: 4;
+  --mf-z-index-loader: 5;
+  --mf-z-index-nav: 99;
+  --mf-z-index-persistent-cta: 97;
+  --mf-z-index-overlay: 100;
+  --mf-z-index-modal: 200;
+  --mf-z-index-select: 500;
+  --mf-z-index-compat-dropdown: 3;
+  --mf-z-index-compat-tooltip: 4;
+  --mf-z-index-compat-loader: 5;
+  --mf-z-index-compat-visualization: 6;
+  --mf-z-index-compat-overlay: 100;
+  --mf-z-index-compat-modal: 200;
+
+  /* ================================================================
+   * LAYER 9: MOTION（与 v0.5 一致）
+   * ================================================================ */
+  --mf-transition-duration: 0.2s;
+  --mf-motion-fast: 150ms ease-out;
+  --mf-motion-normal: 250ms ease-out;
+
+  /* ================================================================
+   * LAYER 10: GRADIENTS（v0.6 收敛为浅橙光晕 + 墨色渐变）
+   * ================================================================ */
+  --mf-gradients-mango: linear-gradient(180deg, #F97316, #E05E0A 50%);
+  --mf-gradients-hero-glow: radial-gradient(ellipse at center, rgba(249, 115, 22, 0.07), transparent 70%); /* v0.6 hero 背景极浅橙光晕 */
+  --mf-gradients-sunset: linear-gradient(180deg, #F97316, #F2716D 50%);
+  --mf-gradients-caramel: linear-gradient(180deg, #6B4A2F, #A9743F 50%);
+  --mf-gradients-espresso: linear-gradient(180deg, #241610, #3A332C 50%);
+  --mf-gradients-mango-100: linear-gradient(180deg, #FFF3EA, #E05E0A 50%);
+  --mf-gradients-indigo: linear-gradient(180deg, #F97316, #E05E0A 50%);   /* v0.6 新增冷锚点渐变 */
+  --mf-gradients-warning: linear-gradient(180deg, #F97316, #FFF3EA 50%);
+  --mf-gradients-warning-70: linear-gradient(180deg, #E05E0A, #F97316 50%);
+  --mf-gradients-info: linear-gradient(180deg, #EDE9E4, #8A7D70 50%);
+  --mf-gradients-espresso-100: linear-gradient(180deg, #E05E0A, #241610 50%);
+
+  /* ================================================================
+   * LAYER 11: COMPONENT TOKENS（组件态引用语义层）
+   * v0.6 关键：卡片/导航底回奶油宣纸；主按钮保持橙电压色；毛玻璃保留
+   * ================================================================ */
+  --mf-component-button-primary-bg: var(--mf-colors-background-primary);
+  --mf-component-button-primary-bg-hover: var(--mf-colors-background-primary-hover);
+  --mf-component-button-primary-bg-active: var(--mf-colors-background-primary-active);
+  --mf-component-button-primary-bg-disabled: var(--mf-colors-background-primary-disabled);
+  --mf-component-button-primary-text: var(--mf-colors-text-on-primary);
+  --mf-component-button-primary-radius: var(--mf-radii-round);
+  --mf-component-button-primary-shadow: var(--mf-shadows-button-primary);
+  --mf-component-button-secondary-bg: var(--mf-colors-background-surface);
+  --mf-component-button-secondary-text: var(--mf-colors-text);
+  --mf-component-button-secondary-border: var(--mf-colors-border-strong);
+  --mf-component-button-secondary-radius: var(--mf-radii-round);
+  --mf-component-button-danger-bg: var(--mf-colors-background-critical-strong);
+  --mf-component-input-bg: var(--mf-colors-background-input);
+  --mf-component-input-border: var(--mf-colors-border-input);
+  --mf-component-input-border-focused: var(--mf-colors-border-focused);
+  --mf-component-input-radius: var(--mf-radii-round);
+  --mf-component-card-bg: var(--mf-colors-background-surface);
+  --mf-component-card-border: var(--mf-colors-border);
+  --mf-component-card-radius: var(--mf-radii-card);
+  --mf-component-card-shadow: var(--mf-shadows-card);
+  --mf-component-badge-up-bg: var(--mf-colors-background-critical);
+  --mf-component-badge-up-text: var(--mf-colors-text-critical);
+  --mf-component-badge-down-bg: var(--mf-colors-background-success);
+  --mf-component-badge-down-text: var(--mf-colors-text-success);
+  --mf-component-nav-bg: var(--mf-colors-background);
+  --mf-component-nav-bg-glass: rgba(255, 255, 255, 0.9);   /* v1.0 毛玻璃跟纯白底 */
+  --mf-component-nav-blur: 12px;
+  --mf-component-nav-border: 1px solid rgba(36, 22, 16, 0.10);
+  --mf-component-nav-text: var(--mf-colors-text);
+  --mf-component-nav-text-active: var(--mf-colors-text-strong);
+  --mf-component-nav-indicator: var(--mf-colors-background-primary);
+  --mf-component-modal-overlay: var(--mf-colors-background-overlay);
+  --mf-component-tooltip-bg: var(--mf-colors-background-neutral-strongest);
+  --mf-component-tooltip-text: var(--mf-colors-text-inverse);
+
+  /* ================================================================
+   * HERO 区块令牌（四段式：eyebrow → h1(+en-title) → lead → CTA）
+   * v0.6：hero 大底 = 奶油白，eyebrow 用电压橙，en-title 用靛蓝冷锚点
+   * ================================================================ */
+  --mf-hero-glow: var(--mf-gradients-hero-glow);
+  --mf-hero-glow-soft: rgba(255, 239, 221, 0.5);
+  --mf-hero-eyebrow-color: var(--mf-colors-text-accent-mango);
+  --mf-hero-eyebrow-size: var(--mf-font-sizes-eyebrow);
+  --mf-hero-eyebrow-tracking: var(--mf-letter-spacings-eyebrow);
+  --mf-hero-h1-font: var(--mf-fonts-display);
+  --mf-hero-h1-weight: var(--mf-font-weights-black);
+  --mf-hero-h1-size: var(--mf-font-sizes-h1);
+  --mf-hero-en-title-color: var(--mf-colors-text-accent-indigo);  /* v0.6 冷锚点 */
+  --mf-hero-lead-size: var(--mf-font-sizes-lead);
+  --mf-hero-lead-line-height: var(--mf-line-heights-lead);
+  --mf-hero-lead-color: var(--mf-colors-text-weak);
+  --mf-hero-cta-gap: 16px;
+  --mf-hero-en-title-font: var(--mf-fonts-display-extended);
+  --mf-hero-en-title-tracking: 0.15em;
+  --mf-hero-padding-block: clamp(72px, 14vh, 120px);
+}
+
+/* ================================================================
+ * DARK MODE（[data-color-mode="dark"] 双值覆盖）
+ * v0.6 暗色原则：深墨底 + 橙提亮档做电压色 + 靛蓝保持冷互补
+ * ================================================================ */
+[data-color-mode="dark"] {
+  /* Background */
+  --mf-colors-background: #171310; /* espresso */
+  --mf-colors-background-abyss: #0F0C0A; /* abyss 极深底 */
+  --mf-colors-background-surface: #1C1814; /* espresso-2 */
+  --mf-colors-background-surface-hover: #241F1A;
+  --mf-colors-background-surface-active: #241F1A;
+  --mf-colors-background-surface-disabled: #171310;
+  --mf-colors-background-neutral: #241F1A;
+  --mf-colors-background-neutral-hover: rgba(243,237,231,.05);
+  --mf-colors-background-neutral-active: rgba(243,237,231,.08);
+  --mf-colors-background-neutral-strong: #B3A596;
+  --mf-colors-background-neutral-strong-hover: rgba(243,237,231,.85);
+  --mf-colors-background-neutral-strong-active: rgba(243,237,231,.75);
+  --mf-colors-background-neutral-strongest: #F2EDE7;
+  --mf-colors-background-neutral-strongest-hover: #FFFFFF;
+  --mf-colors-background-neutral-strongest-active: #FFFFFF;
+  --mf-colors-background-primary: #F97316; /* 暗色下主色提亮（橙 500） */
+  --mf-colors-background-primary-hover: #E05E0A;
+  --mf-colors-background-primary-active: #E05E0A;
+  --mf-colors-background-primary-disabled: rgba(249,115,22,.40);
+  --mf-colors-background-input: #1C1814;
+  --mf-colors-background-input-disabled: #241F1A;
+  --mf-colors-background-overlay: rgba(0,0,0,.70);
+  --mf-colors-background-overlay-weak: rgba(0,0,0,.40);
+  --mf-colors-background-shimmer-base: #1C1814;
+  --mf-colors-background-shimmer-highlight: #241F1A;
+  --mf-colors-background-critical: rgba(184,34,30,.18);
+  --mf-colors-background-critical-strong: #B8221E;
+  --mf-colors-background-critical-strong-hover: rgba(184,34,30,.85);
+  --mf-colors-background-critical-strong-active: rgba(184,34,30,.92);
+  --mf-colors-background-critical-strong-disabled: rgba(184,34,30,.40);
+  --mf-colors-background-info: #241F1A;
+  --mf-colors-background-info-strong: #B3A596;
+  --mf-colors-background-success: rgba(17,105,61,.20);
+  --mf-colors-background-success-strong: #11693D;
+  --mf-colors-background-warning: rgba(249,115,22,.14);
+  --mf-colors-background-warning-strong: #F97316;
+
+  /* Text */
+  --mf-colors-text: #F2EDE7;
+  --mf-colors-text-strong: #F2EDE7;
+  --mf-colors-text-weak: #B3A596;
+  --mf-colors-text-disabled: #8A7D70;
+  --mf-colors-text-inverse: #171310;
+  --mf-colors-text-on-primary: #241610; /* 暗色主色提亮后配深字 */
+  --mf-colors-text-on-primary-disabled: rgba(36,22,16,.40);
+  --mf-colors-text-link: #F97316;
+  --mf-colors-text-link-hover: rgba(249,115,22,.85);
+  --mf-colors-text-link-active: #E05E0A;
+  --mf-colors-text-link-secondary: #B3A596; /* 靛蓝提亮档 */
+  --mf-colors-text-placeholder: #8A7D70;
+  --mf-colors-text-selected: #F97316;
+  --mf-colors-text-critical: #B8221E;
+  --mf-colors-text-critical-hover: rgba(184,34,30,.90);
+  --mf-colors-text-critical-active: rgba(184,34,30,.85);
+  --mf-colors-text-info: #B3A596;
+  --mf-colors-text-success: #11693D;
+  --mf-colors-text-warning: #F97316;
+  --mf-colors-text-accent-mango: #F97316;
+  --mf-colors-text-accent-caramel: #F2EDE7;
+  --mf-colors-text-accent-indigo: #B3A596;
+  --mf-colors-text-accent-blue: #B3A596;
+  --mf-colors-text-accent-teal: #11693D;
+  --mf-colors-text-accent-red: #B8221E;
+  --mf-colors-text-accent-grey: #B3A596;
+
+  /* Border */
+  --mf-colors-border: rgba(255,255,255,.10);
+  --mf-colors-border-weak: rgba(255,255,255,.06);
+  --mf-colors-border-strong: rgba(255,255,255,.24);
+  --mf-colors-border-strongest: rgba(255,255,255,.40);
+  --mf-colors-border-input: rgba(255,255,255,.24);
+  --mf-colors-border-focused: #F97316;
+  --mf-colors-border-selected: #F97316;
+  --mf-colors-border-critical: rgba(184,34,30,.60);
+  --mf-colors-border-on-primary: #241610;
+
+  /* DataViz（暗色下整体提亮 1-2 档） */
+  --mf-colors-dataviz-mango-1: #F97316;
+  --mf-colors-dataviz-mango-2: #F97316;
+  --mf-colors-dataviz-mango-3: #241F1A;
+  --mf-colors-dataviz-mango-overlay: rgba(249,115,22,.30);
+  --mf-colors-dataviz-indigo-1: #F2EDE7;
+  --mf-colors-dataviz-indigo-2: #B3A596;
+  --mf-colors-dataviz-indigo-3: #241F1A;
+  --mf-colors-dataviz-indigo-overlay: rgba(243,237,231,.30);
+  --mf-colors-dataviz-caramel-1: #F2EDE7;
+  --mf-colors-dataviz-caramel-2: #B3A596;
+  --mf-colors-dataviz-caramel-3: #241F1A;
+  --mf-colors-dataviz-caramel-overlay: rgba(243,237,231,.30);
+  --mf-colors-dataviz-up-1: #B8221E;
+  --mf-colors-dataviz-up-2: rgba(184,34,30,.75);
+  --mf-colors-dataviz-up-3: rgba(184,34,30,.25);
+  --mf-colors-dataviz-up-overlay: rgba(184,34,30,.30);
+  --mf-colors-dataviz-down-1: #11693D;
+  --mf-colors-dataviz-down-2: rgba(17,105,61,.75);
+  --mf-colors-dataviz-down-3: rgba(17,105,61,.25);
+  --mf-colors-dataviz-down-overlay: rgba(17,105,61,.20);
+  --mf-colors-dataviz-dict-1: #F2EDE7;
+  --mf-colors-dataviz-dict-2: #F97316;
+  --mf-colors-dataviz-dict-3: #241F1A;
+  --mf-colors-dataviz-dict-overlay: rgba(249,115,22,.30);
+  --mf-colors-dataviz-buddy-1: #B8221E;
+  --mf-colors-dataviz-buddy-2: rgba(184,34,30,.75);
+  --mf-colors-dataviz-buddy-3: rgba(184,34,30,.25);
+  --mf-colors-dataviz-buddy-overlay: rgba(184,34,30,.30);
+  --mf-colors-dataviz-grid: rgba(255,255,255,.08);
+
+  /* Shadows（暗色下加深阴影） */
+  --mf-shadows-xs: 0 1px rgba(0, 0, 0, 0.4);
+  --mf-shadows-sm: 1px 2px 4px rgba(0, 0, 0, 0.45);
+  --mf-shadows-default: 0 1px 3px rgba(0, 0, 0, 0.4), 0 4px 12px rgba(0, 0, 0, 0.3);
+  --mf-shadows-card: 0 1px 2px rgba(0, 0, 0, 0.35), 0 4px 12px rgba(0, 0, 0, 0.45);
+  --mf-shadows-float: 0 4px 8px rgba(0, 0, 0, 0.5), 0 12px 32px rgba(0, 0, 0, 0.6);
+  --mf-shadows-card-drop: 0 1px 3px rgba(0, 0, 0, 0.4), 0 4px 12px rgba(0, 0, 0, 0.3);
+  --mf-shadows-button-primary: 0 8px 20px rgba(255, 155, 71, 0.22);
+
+  /* v0.6 暗色毛玻璃与 hero 光晕 */
+  --mf-component-nav-bg-glass: rgba(23, 19, 16, 0.85);
+  --mf-component-nav-border: 1px solid rgba(255, 255, 255, 0.08);
+  --mf-gradients-hero-glow: radial-gradient(ellipse at center, rgba(255, 155, 71, 0.10), transparent 70%);
+
+  /* 组件自动继承语义层，无需重复声明 */
+}
+
+/* ================================================================
+ * KEYFRAMES（与 v0.5 一致）
+ * ================================================================ */
+@keyframes mf-fade-in { 0% { opacity: 0; } to { opacity: 1; } }
+@keyframes mf-fade-out { 0% { opacity: 1; } to { opacity: 0; } }
+@keyframes mf-scale-in { 0% { transform: scale(.96); } to { transform: scale(1); } }
+@keyframes mf-scale-out { 0% { transform: scale(1); } to { transform: scale(.96); } }
+@keyframes mf-dialog-scale-in { 0% { transform: scale(.96); } to { transform: scale(1); } }
+@keyframes mf-dialog-scale-out { 0% { transform: scale(1); } to { transform: scale(.96); } }
+@keyframes mf-slide-left-in { 0% { transform: translate(100%); } to { transform: translate(0); } }
+@keyframes mf-slide-right-in { 0% { transform: translate(-100%); } to { transform: translate(0); } }
+@keyframes mf-slide-left-out { 0% { transform: translate(0); } to { transform: translate(-100%); } }
+@keyframes mf-slide-right-out { 0% { transform: translate(0); } to { transform: translate(100%); } }
+@keyframes mf-slide-up { 0% { transform: translateY(4px); } to { transform: translateY(0); } }
+@keyframes mf-slide-down { 0% { transform: translateY(-4px); } to { transform: translateY(0); } }
+@keyframes mf-accordion-down { 0% { height: 0; } to { height: var(--radix-accordion-content-height); } }
+@keyframes mf-accordion-up { 0% { height: var(--radix-accordion-content-height); } to { height: 0; } }
+@keyframes mf-shimmer-pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } to { opacity: 1; } }
+@keyframes mf-placeholder-chart-pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } to { opacity: 1; } }

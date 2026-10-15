@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>你的家庭，需要多少保额才够？</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:"Microsoft YaHei","PingFang SC",sans-serif; }
+  body { background:#f6f7fb; padding:24px; }
+  .card { background:#fff; border-radius:16px; box-shadow:0 4px 20px rgba(0,0,0,.08);
+          max-width:1100px; margin:0 auto; padding:28px 32px; }
+  h1 { font-size:28px; color:#111827; text-align:center; }
+  .subtitle { text-align:center; color:#6b7280; font-size:14px; margin:8px 0 18px; }
+  .emotion { display:inline-block; background:#fee2e2; color:#b91c1c; font-size:11px; padding:2px 8px;
+             border-radius:999px; margin-left:8px; vertical-align:middle; font-weight:700; }
+  .assume { background:#f3f4f6; border-radius:10px; padding:10px 14px; font-size:13px;
+            color:#374151; margin-bottom:16px; line-height:1.7; }
+  .highlight { background:#fef3c7; padding:2px 6px; border-radius:4px; font-weight:700; color:#b45309; }
+  .insight { background:#eef2ff; border-left:4px solid #4f46e5; border-radius:8px;
+             padding:10px 14px; font-size:13px; color:#374151; margin-bottom:16px; line-height:1.7; }
+  .insight b { color:#4f46e5; }
+  table { width:100%; border-collapse:separate; border-spacing:4px; }
+  th { padding:10px 8px; font-size:13px; color:#111827; background:#eef2ff; border-radius:8px; line-height:1.4; }
+  th small { font-weight:400; color:#6b7280; font-size:11px; }
+  th.rowhead { text-align:left; width:110px; }
+  td { padding:9px 5px; text-align:center; font-size:14px; font-weight:700;
+       color:#fff; border-radius:8px; min-width:60px; }
+  .cell-amount { font-size:17px; }
+  .cell-detail { font-size:10px; opacity:0.92; margin-top:2px; font-weight:500; }
+  .cell-premium { font-size:10px; opacity:0.82; margin-top:1px; font-weight:400; }
+  .foot { margin-top:16px; font-size:12px; color:#9ca3af; line-height:1.6; }
+  .watermark { margin-top:14px; text-align:center; font-size:12px; color:#9ca3af; letter-spacing:1px; }
+  .legend { display:flex; justify-content:center; gap:18px; margin:12px 0 16px; font-size:12px; color:#374151; flex-wrap:wrap; }
+  .legend span { display:inline-flex; align-items:center; gap:6px; }
+  .dot { width:14px; height:14px; border-radius:4px; display:inline-block; }
+</style></head><body>
+<div class="card">
+  <h1>你的家庭，需要多少保额才够？</h1>
+  <div class="subtitle">年支出 20 万、要保 20 年、还有 80 万房贷——你的保额需求是 430 万，不是 100 万。<span class="emotion">责任 + 惊醒</span></div>
+
+  <div class="assume">
+    假设：家庭支柱不幸身故，需要覆盖 <b>家庭年支出 × 保障年限</b>，再加上 <b>未还负债（房贷 80 万）</b>，减去 <b>现有可变现资产（50 万）</b>。<br>
+    换算：年支出 20 万、保障 20 年、房贷 80 万、现有资产 50 万 → 建议保额 <span class="highlight">430 万</span>；按 30 岁男性投保定期寿险 30 年交，年保费约 <b>4300 元</b>（约 1‰）。
+  </div>
+
+  <div class="insight">
+    <b>核心洞察：</b>保额不是随便定个数——它 = <b>年支出 × 保障年限 + 负债 − 现有资产</b>。家庭支出越大、孩子越小、房贷越多，需要的保额越高。<b>很多人买了 50 万保额就以为够了，其实连房贷缺口都填不上。</b>
+  </div>
+
+  <div class="legend">
+    <span><i class="dot" style="background:#15803d"></i>≤200万（基本覆盖）</span>
+    <span><i class="dot" style="background:#22c55e"></i>200-350万</span>
+    <span><i class="dot" style="background:#f59e0b"></i>350-500万</span>
+    <span><i class="dot" style="background:#f97316"></i>500-700万</span>
+    <span><i class="dot" style="background:#dc2626"></i>&gt;700万（高责任）</span>
+  </div>
+
+  <table id="insuranceTable">
+    <tr>
+      <th class="rowhead">家庭年支出</th>
+      <th>保10年</th><th>保15年</th><th>保20年</th><th>保25年</th><th>保30年</th>
+    </tr>
+  </table>
+
+  <div class="foot">
+    测算基于简化假设：保额 = 年支出 × 保障年限 + 负债（80万）− 现有资产（50万）；年保费按 30 岁男性、定期寿险、30 年缴费、费率约 1‰ 估算。实际保费受年龄、性别、健康状况、产品类型、保障期限等影响，差异较大。本图不构成任何保险购买建议。
+  </div>
+  <div class="watermark">投资平权 · fin-decision-matrix</div>
+</div>
+
+<script>
+  // ============================================================
+  // 参数
+  // ============================================================
+  const DEBT = 800000;        // 负债（房贷）80 万
+  const ASSETS = 500000;      // 现有可变现资产 50 万
+  const PREMIUM_RATE = 0.001; // 年保费率约 1‰（30岁男性定期寿险）
+
+  // ============================================================
+  // 核心计算
+  // ============================================================
+  function calcCoverage(annualSpend, years) {
+    const coverage = annualSpend * years + DEBT - ASSETS;
+    const premium = coverage * PREMIUM_RATE;
+    return { coverage: Math.max(coverage, 0), premium };
+  }
+
+  // ============================================================
+  // 颜色编码：按保额
+  // ============================================================
+  function getColor(coverage) {
+    if (coverage <= 2000000) return '#15803d';
+    if (coverage <= 3500000) return '#22c55e';
+    if (coverage <= 5000000) return '#f59e0b';
+    if (coverage <= 7000000) return '#f97316';
+    return '#dc2626';
+  }
+
+  // ============================================================
+  // 格式化
+  // ============================================================
+  function formatWan(v) {
+    if (v >= 10000) return Math.round(v / 10000) + '万';
+    return Math.round(v).toLocaleString();
+  }
+
+  function formatPremium(v) {
+    if (v >= 10000) return '保费' + (v / 10000).toFixed(1) + '万/年';
+    return '保费' + Math.round(v).toLocaleString() + '/年';
+  }
+
+  // ============================================================
+  // 生成表格
+  // ============================================================
+  const annualSpends = [80000, 120000, 200000, 300000, 500000];
+  const yearsList = [10, 15, 20, 25, 30];
+
+  const table = document.getElementById('insuranceTable');
+
+  annualSpends.forEach(spend => {
+    const tr = document.createElement('tr');
+    const th = document.createElement('th');
+    th.className = 'rowhead';
+    th.textContent = (spend / 10000) + '万/年';
+    tr.appendChild(th);
+
+    yearsList.forEach(years => {
+      const { coverage, premium } = calcCoverage(spend, years);
+      const td = document.createElement('td');
+      td.style.background = getColor(coverage);
+
+      td.innerHTML = `<div class="cell-amount">${formatWan(coverage)}</div>
+                      <div class="cell-detail">支出${formatWan(spend * years)}</div>
+                      <div class="cell-premium">${formatPremium(premium)}</div>`;
+      tr.appendChild(td);
+    });
+
+    table.appendChild(tr);
+  });
+</script>
+</body></html>

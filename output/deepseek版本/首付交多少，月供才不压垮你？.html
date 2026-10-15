@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>首付交多少，月供才不压垮你？</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:"Microsoft YaHei","PingFang SC",sans-serif; }
+  body { background:#f6f7fb; padding:24px; }
+  .card { background:#fff; border-radius:16px; box-shadow:0 4px 20px rgba(0,0,0,.08);
+          max-width:1100px; margin:0 auto; padding:28px 32px; }
+  h1 { font-size:28px; color:#111827; text-align:center; }
+  .subtitle { text-align:center; color:#6b7280; font-size:14px; margin:8px 0 18px; }
+  .emotion { display:inline-block; background:#fef3c7; color:#b45309; font-size:11px; padding:2px 8px;
+             border-radius:999px; margin-left:8px; vertical-align:middle; font-weight:700; }
+  .assume { background:#f3f4f6; border-radius:10px; padding:10px 14px; font-size:13px;
+            color:#374151; margin-bottom:16px; line-height:1.7; }
+  .highlight { background:#fef3c7; padding:2px 6px; border-radius:4px; font-weight:700; color:#b45309; }
+  .insight { background:#eef2ff; border-left:4px solid #4f46e5; border-radius:8px;
+             padding:10px 14px; font-size:13px; color:#374151; margin-bottom:16px; line-height:1.7; }
+  .insight b { color:#4f46e5; }
+  table { width:100%; border-collapse:separate; border-spacing:4px; }
+  th { padding:10px 8px; font-size:13px; color:#111827; background:#eef2ff; border-radius:8px; line-height:1.4; }
+  th small { font-weight:400; color:#6b7280; font-size:11px; }
+  th.rowhead { text-align:left; width:100px; }
+  td { padding:9px 5px; text-align:center; font-size:14px; font-weight:700;
+       color:#fff; border-radius:8px; min-width:60px; }
+  .cell-monthly { font-size:16px; }
+  .cell-ratio { font-size:11px; opacity:0.92; margin-top:2px; font-weight:500; }
+  .cell-interest { font-size:10px; opacity:0.82; margin-top:1px; font-weight:400; }
+  .foot { margin-top:16px; font-size:12px; color:#9ca3af; line-height:1.6; }
+  .watermark { margin-top:14px; text-align:center; font-size:12px; color:#9ca3af; letter-spacing:1px; }
+  .legend { display:flex; justify-content:center; gap:18px; margin:12px 0 16px; font-size:12px; color:#374151; flex-wrap:wrap; }
+  .legend span { display:inline-flex; align-items:center; gap:6px; }
+  .dot { width:14px; height:14px; border-radius:4px; display:inline-block; }
+  .income-note { margin-top:12px; padding:10px 14px; background:#fafafa;
+                 border-radius:10px; font-size:12px; color:#374151; line-height:1.8; }
+  .income-note b { color:#4f46e5; }
+</style></head><body>
+<div class="card">
+  <h1>首付交多少，月供才不压垮你？</h1>
+  <div class="subtitle">200 万房子，首付 20% 贷 30 年，月供 8491 元；首付 50% 贷 10 年，月供 10553 元但利息少 119 万。<span class="emotion">理性 + 压力</span></div>
+
+  <div class="assume">
+    假设：房价 <b>200 万</b>，年利率 <b>4.9%</b>（固定），等额本息还款；月供占比按家庭月收入 <b>2 万</b> 计算（仅供参考，实际应按家庭收入调整）。<br>
+    换算：月供 <b>8491 元</b> ≈ 每天 <span class="highlight">283 元</span>；月供占收入 42% ≈ 每月近一半工资交给银行。
+  </div>
+
+  <div class="insight">
+    <b>核心洞察：</b>首付比例决定贷款规模，贷款年限决定月供分摊。首付越低、年限越长，月供越轻松但总利息越高；首付越高、年限越短，月供压力大但省利息。<b>月供占收入 50% 以上是危险线</b>——一旦失业或降薪，房子可能变成负担。
+  </div>
+
+  <div class="legend">
+    <span><i class="dot" style="background:#15803d"></i>月供/收入 ≤30%（很安全）</span>
+    <span><i class="dot" style="background:#22c55e"></i>30-40%（安全）</span>
+    <span><i class="dot" style="background:#f59e0b"></i>40-50%（中等）</span>
+    <span><i class="dot" style="background:#f97316"></i>50-60%（偏高）</span>
+    <span><i class="dot" style="background:#dc2626"></i>&gt;60%（危险）</span>
+  </div>
+
+  <table id="mortgageTable">
+    <tr>
+      <th class="rowhead">首付比例</th>
+      <th>10年</th><th>15年</th><th>20年</th><th>25年</th><th>30年</th>
+    </tr>
+  </table>
+
+  <div class="income-note" id="incomeNote"></div>
+
+  <div class="foot">
+    测算基于固定利率 4.9%、等额本息的简化假设；未考虑公积金贷款（利率更低）、LPR 浮动、提前还款、税费、装修等。月供占比按家庭月收入 2 万计算，实际应按家庭真实收入评估。本图不构成任何投资建议。
+  </div>
+  <div class="watermark">投资平权 · fin-decision-matrix</div>
+</div>
+
+<script>
+  // ============================================================
+  // 参数
+  // ============================================================
+  const PRICE = 2000000;       // 房价 200 万
+  const ANNUAL_RATE = 0.049;   // 年利率 4.9%
+  const REFERENCE_INCOME = 20000; // 参考家庭月收入 2 万
+
+  // ============================================================
+  // 核心计算
+  // ============================================================
+  function calcMortgage(loanAmount, years) {
+    const r = ANNUAL_RATE / 12;
+    const n = years * 12;
+    const pow = Math.pow(1 + r, n);
+    const monthly = loanAmount * r * pow / (pow - 1);
+    const totalPayment = monthly * n;
+    const totalInterest = totalPayment - loanAmount;
+    return { monthly, totalInterest, totalPayment };
+  }
+
+  // ============================================================
+  // 颜色编码：按月供/收入比
+  // ============================================================
+  function getColor(ratio) {
+    if (ratio <= 0.30) return '#15803d';
+    if (ratio <= 0.40) return '#22c55e';
+    if (ratio <= 0.50) return '#f59e0b';
+    if (ratio <= 0.60) return '#f97316';
+    return '#dc2626';
+  }
+
+  // ============================================================
+  // 格式化
+  // ============================================================
+  function formatMonthly(v) {
+    return Math.round(v).toLocaleString();
+  }
+
+  function formatWan(v) {
+    if (v >= 10000) return (v / 10000).toFixed(0) + '万';
+    return Math.round(v).toLocaleString();
+  }
+
+  function formatRatio(r) {
+    return '占收入 ' + (r * 100).toFixed(0) + '%';
+  }
+
+  // ============================================================
+  // 生成表格
+  // ============================================================
+  const downPcts = [0.20, 0.30, 0.40, 0.50, 0.70];
+  const yearList = [10, 15, 20, 25, 30];
+
+  const table = document.getElementById('mortgageTable');
+
+  downPcts.forEach(down => {
+    const tr = document.createElement('tr');
+    const th = document.createElement('th');
+    th.className = 'rowhead';
+    th.textContent = (down * 100) + '%';
+    tr.appendChild(th);
+
+    const loanAmount = PRICE * (1 - down);
+
+    yearList.forEach(years => {
+      const { monthly, totalInterest } = calcMortgage(loanAmount, years);
+      const ratio = monthly / REFERENCE_INCOME;
+      const td = document.createElement('td');
+      td.style.background = getColor(ratio);
+
+      td.innerHTML = `<div class="cell-monthly">${formatMonthly(monthly)}</div>
+                      <div class="cell-ratio">${formatRatio(ratio)}</div>
+                      <div class="cell-interest">利息${formatWan(totalInterest)}</div>`;
+      tr.appendChild(td);
+    });
+
+    table.appendChild(tr);
+  });
+
+  // ============================================================
+  // 收入提示
+  // ============================================================
+  const note = document.getElementById('incomeNote');
+  note.innerHTML = `<b>参考收入说明：</b>月供占比按家庭月收入 <b>2 万</b> 计算。
+    如果你的家庭月收入不同，可以这样换算：<br>
+    · 月收入 <b>1.5 万</b>：表中占比 × 1.33（如 42% → 56%，进入危险区）<br>
+    · 月收入 <b>3 万</b>：表中占比 × 0.67（如 42% → 28%，很安全）<br>
+    · 月收入 <b>5 万</b>：表中占比 × 0.4（如 42% → 17%，毫无压力）`;
+</script>
+</body></html>

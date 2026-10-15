@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>人生财务决策地图 · 23个场景</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:"Microsoft YaHei","PingFang SC",sans-serif; }
+  body { background:#f6f7fb; padding:24px; }
+  .wrap { max-width:1140px; margin:0 auto; }
+
+  /* Hero */
+  .hero { background:linear-gradient(135deg,#4f46e5,#7c3aed); border-radius:20px;
+          padding:40px 36px; color:#fff; margin-bottom:24px; position:relative; overflow:hidden; }
+  .hero::after { content:''; position:absolute; right:-40px; top:-40px; width:200px; height:200px;
+                 background:rgba(255,255,255,0.08); border-radius:50%; }
+  .hero h1 { font-size:32px; margin-bottom:10px; }
+  .hero p { font-size:15px; opacity:0.92; line-height:1.7; max-width:680px; }
+  .hero .sub { font-size:13px; opacity:0.7; margin-top:14px; }
+  .hero .stats { display:flex; gap:24px; margin-top:20px; }
+  .hero .stat { text-align:left; }
+  .hero .stat .num { font-size:24px; font-weight:800; }
+  .hero .stat .lbl { font-size:11px; opacity:0.75; }
+
+  /* 筛选栏 */
+  .filter-bar { background:#fff; border-radius:14px; padding:16px 20px; margin-bottom:20px;
+                box-shadow:0 2px 12px rgba(0,0,0,.06); display:flex; gap:20px; flex-wrap:wrap; align-items:center; }
+  .filter-group { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+  .filter-label { font-size:12px; color:#9ca3af; font-weight:700; }
+  .filter-btn { padding:6px 14px; border-radius:8px; border:none; cursor:pointer;
+                font-size:12px; font-weight:700; transition:all .15s; background:#f3f4f6; color:#6b7280; }
+  .filter-btn:hover { background:#e5e7eb; }
+  .filter-btn.active { background:#4f46e5; color:#fff; }
+
+  /* 阶段导航 */
+  .stage-nav { display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap; }
+  .stage-btn { padding:12px 22px; border-radius:12px; border:none; cursor:pointer;
+               font-size:14px; font-weight:700; transition:all .2s; display:flex;
+               flex-direction:column; align-items:center; gap:2px; min-width:120px; }
+  .stage-btn .s-name { font-size:14px; }
+  .stage-btn .s-age { font-size:10px; opacity:0.75; font-weight:400; }
+  .stage-btn.active { color:#fff; transform:translateY(-2px); box-shadow:0 4px 12px rgba(0,0,0,.15); }
+  .stage-btn:not(.active) { background:#fff; color:#6b7280; }
+  .stage-btn:not(.active):hover { background:#f9fafb; }
+
+  /* 阶段内容 */
+  .stage-section { display:none; }
+  .stage-section.active { display:block; }
+
+  .stage-intro { background:#fff; border-radius:14px; padding:22px 26px;
+                 margin-bottom:20px; box-shadow:0 2px 12px rgba(0,0,0,.06);
+                 border-left:5px solid #4f46e5; }
+  .stage-intro h2 { font-size:22px; color:#111827; margin-bottom:6px; }
+  .stage-intro .age { color:#4f46e5; font-weight:700; font-size:14px; margin-bottom:10px; }
+  .stage-intro p { font-size:14px; color:#6b7280; line-height:1.8; }
+
+  /* 卡片网格 */
+  .card-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,1fr)); gap:16px; }
+
+  .scene-card { background:#fff; border-radius:14px; padding:20px 22px;
+                box-shadow:0 2px 12px rgba(0,0,0,.06); cursor:pointer;
+                transition:all .2s; border-left:4px solid #4f46e5;
+                display:flex; flex-direction:column; }
+  .scene-card:hover { transform:translateY(-3px); box-shadow:0 8px 24px rgba(0,0,0,.12); }
+
+  .card-tags { display:flex; gap:6px; margin-bottom:10px; flex-wrap:wrap; }
+  .tag { display:inline-block; font-size:10px; padding:3px 9px;
+         border-radius:999px; font-weight:700; }
+  .tag-domain { background:#f3f4f6; color:#6b7280; }
+  .tag-priority-P0 { background:#fee2e2; color:#b91c1c; }
+  .tag-priority-P1 { background:#fef3c7; color:#b45309; }
+  .tag-priority-P2 { background:#f3f4f6; color:#9ca3af; }
+
+  .emotion-焦虑 { background:#fee2e2; color:#b91c1c; }
+  .emotion-惊醒 { background:#fef3c7; color:#b45309; }
+  .emotion-掌控 { background:#dcfce7; color:#15803d; }
+  .emotion-理性 { background:#eef2ff; color:#4f46e5; }
+  .emotion-爽感 { background:#ede9fe; color:#6d28d9; }
+  .emotion-紧迫 { background:#ffedd5; color:#c2410c; }
+  .emotion-向往 { background:#e0f2fe; color:#0369a1; }
+  .emotion-责任 { background:#fce7f3; color:#be185d; }
+  .emotion-公平 { background:#ecfdf5; color:#047857; }
+  .emotion-规划 { background:#f0fdf4; color:#166534; }
+  .emotion-省钱 { background:#fefce8; color:#a16207; }
+  .emotion-算账 { background:#f5f3ff; color:#6d28d9; }
+  .emotion-安心 { background:#f0fdfa; color:#0f766e; }
+
+  .scene-card h3 { font-size:16px; color:#111827; margin-bottom:8px; line-height:1.4; }
+  .scene-card .pain { font-size:12px; color:#6b7280; line-height:1.6; margin-bottom:10px; flex:1; }
+  .scene-card .hook { font-size:12px; color:#4f46e5; font-weight:600;
+                      line-height:1.5; padding-top:10px; border-top:1px dashed #e5e7eb; }
+  .scene-card .card-footer { display:flex; justify-content:space-between; align-items:center;
+                             margin-top:10px; font-size:11px; color:#9ca3af; }
+
+  .empty-hint { text-align:center; padding:40px; color:#9ca3af; font-size:14px; }
+
+  .footer { text-align:center; padding:32px 0 12px; font-size:12px; color:#9ca3af; }
+</style></head><body>
+<div class="wrap">
+
+  <!-- Hero -->
+  <div class="hero">
+    <h1>人生财务决策地图</h1>
+    <p>从 22 岁到 60 岁，你在每个阶段都会遇到不同的财务纠结。<br>
+    这张地图帮你找到——<b>你现在这个阶段，最该算清楚的那件事。</b></p>
+    <div class="stats">
+      <div class="stat"><div class="num">23</div><div class="lbl">决策场景</div></div>
+      <div class="stat"><div class="num">8</div><div class="lbl">财务域</div></div>
+      <div class="stat"><div class="num">4</div><div class="lbl">人生阶段</div></div>
+    </div>
+    <div class="sub">每个场景都有可计算的二维决策矩阵 · 点击卡片查看</div>
+  </div>
+
+  <!-- 筛选栏 -->
+  <div class="filter-bar">
+    <div class="filter-group">
+      <span class="filter-label">优先级</span>
+      <button class="filter-btn active" data-filter="all">全部</button>
+      <button class="filter-btn" data-filter="P0">P0</button>
+      <button class="filter-btn" data-filter="P1">P1</button>
+      <button class="filter-btn" data-filter="P2">P2</button>
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">情绪</span>
+      <button class="filter-btn active" data-emotion="all">全部</button>
+      <button class="filter-btn" data-emotion="焦虑">焦虑</button>
+      <button class="filter-btn" data-emotion="理性">理性</button>
+      <button class="filter-btn" data-emotion="爽感">爽感</button>
+      <button class="filter-btn" data-emotion="掌控">掌控</button>
+      <button class="filter-btn" data-emotion="紧迫">紧迫</button>
+    </div>
+  </div>
+
+  <!-- 阶段导航 -->
+  <div class="stage-nav" id="stageNav"></div>
+
+  <!-- 阶段内容 -->
+  <div id="stageContent"></div>
+
+  <div class="footer">
+    投资平权 · fin-decision-matrix · 23个场景 · 中英双语
+  </div>
+
+</div>
+
+<script>
+// ============================================================
+// 场景库
+// ============================================================
+const SCENES = [
+  // ===== 就业期 =====
+  { id:'debt-credit-card-min-payment', stage:'就业期', domain:'负债', title:'信用卡最低还款陷阱',
+    pain:'以为每月还一点总能还清，实际在给银行打工', emotion:'焦虑', priority:'P0',
+    hook:'5万债务18%利率只还最低 → 30年 + 利息超过本金',
+    url:'./debt-credit-card-min-payment/index.html' },
+
+  { id:'cash-emergency-fund', stage:'就业期', domain:'现金流', title:'应急金该留多少',
+    pain:'不知道工资卡该留多少救命钱', emotion:'掌控', priority:'P1',
+    hook:'你的安全感，值几个月工资',
+    url:'./cash-emergency-fund/index.html' },
+
+  { id:'invest-dca-compound', stage:'就业期', domain:'投资', title:'定投复利：晚一年差多少',
+    pain:'纠结现在开始定投还是再等等', emotion:'爽感', priority:'P0',
+    hook:'25岁开始定投和35岁开始，差距一辆车',
+    url:'./invest-dca-compound/index.html' },
+
+  { id:'cash-consumption-downgrade', stage:'就业期', domain:'现金流', title:'消费降级隐形存款',
+    pain:'觉得小钱没用，存了也白存', emotion:'掌控', priority:'P0',
+    hook:'每天省30块，10年后是13.9万',
+    url:'./cash-consumption-downgrade/index.html' },
+
+  // ===== 家庭期 =====
+  { id:'insurance-coverage', stage:'家庭期', domain:'保险', title:'保额测算：你的命值多少',
+    pain:'上有老下有小，怕出事拖垮家庭', emotion:'责任', priority:'P0',
+    hook:'年支出20万+80万房贷 → 你需要430万保额',
+    url:'./insurance-coverage/index.html' },
+
+  { id:'insurance-product-match', stage:'家庭期', domain:'保险', title:'同样的钱能买多少保额',
+    pain:'想买保险但不知道买哪种，也不知道能买多少', emotion:'紧迫', priority:'P1',
+    hook:'25岁能买83万，45岁只能买13万',
+    url:'./insurance-product-match/index.html' },
+
+  { id:'education-fund', stage:'家庭期', domain:'教育', title:'孩子教育金每月存多少',
+    pain:'孩子刚出生，想规划教育金但不知从何下手', emotion:'紧迫', priority:'P1',
+    hook:'0岁开始每月429，10岁开始每月1278',
+    url:'./education-fund/index.html' },
+
+  { id:'housing-rent-vs-buy', stage:'家庭期', domain:'买房', title:'租房还是买房',
+    pain:'首付够与不够之间纠结，不知道住多久买房才不亏', emotion:'理性', priority:'P0',
+    hook:'住5年、房价涨2% → 买房比租房多花14万',
+    url:'./housing-rent-vs-buy/index.html' },
+
+  { id:'housing-down-payment', stage:'家庭期', domain:'买房', title:'首付交多少月供才不压垮',
+    pain:'选房阶段计算能不能供得起', emotion:'理性', priority:'P1',
+    hook:'月供占收入50%以上，你的人生就被锁死了',
+    url:'./housing-down-payment/index.html' },
+
+  { id:'life-couple-finance', stage:'家庭期', domain:'生命周期', title:'双人财务怎么合并',
+    pain:'情侣/夫妻纠结钱怎么管', emotion:'公平', priority:'P2',
+    hook:'收入比1:4时，AA制下低收入方只剩2000',
+    url:'./life-couple-finance/index.html' },
+
+  // ===== 积累期 =====
+  { id:'debt-mortgage-prepay', stage:'积累期', domain:'负债', title:'房贷提前还款省多少',
+    pain:'有房贷的人纠结要不要提前还、每月多还多少', emotion:'爽感', priority:'P0',
+    hook:'每月多还1000，30年房贷缩到21年',
+    url:'./debt-mortgage-prepay/index.html' },
+
+  { id:'debt-prepay-vs-invest', stage:'积累期', domain:'负债', title:'提前还贷 vs 拿去投资',
+    pain:'手里有闲钱，不知道还贷还是投资', emotion:'算账', priority:'P0',
+    hook:'投资能跑赢房贷利率吗？',
+    url:'./debt-prepay-vs-invest/index.html' },
+
+  { id:'debt-snowball-vs-avalanche', stage:'积累期', domain:'负债', title:'多笔债务先还哪笔',
+    pain:'同时背信用卡+消费贷+花呗，不知道先还哪笔', emotion:'理性', priority:'P1',
+    hook:'同样多还1000，换个顺序少还几个月',
+    url:'./debt-snowball-vs-avalanche/index.html' },
+
+  { id:'housing-equal-payment', stage:'积累期', domain:'买房', title:'等额本息 vs 等额本金',
+    pain:'办理房贷时银行让二选一', emotion:'理性', priority:'P1',
+    hook:'选对还款方式，省出一辆车',
+    url:'./housing-equal-payment/index.html' },
+
+  { id:'housing-fund-quota', stage:'积累期', domain:'买房', title:'公积金能用多少',
+    pain:'有公积金但不知道能贷多少', emotion:'省钱', priority:'P1',
+    hook:'月缴3000等3年，就能贷120万',
+    url:'./housing-fund-quota/index.html' },
+
+  { id:'pension-replacement-rate', stage:'积累期', domain:'养老', title:'养老金替代率',
+    pain:'评估社保够不够退休后花', emotion:'惊醒', priority:'P0',
+    hook:'月薪5千交40年替代率80%，月薪5万只有26%',
+    url:'./pension-replacement-rate/index.html' },
+
+  { id:'education-skill-roi', stage:'积累期', domain:'教育', title:'技能投资回收期',
+    pain:'想报培训班/考研，纠结投入值不值', emotion:'爽感', priority:'P2',
+    hook:'3万学费，月薪涨5000，6个月回本',
+    url:'./education-skill-roi/index.html' },
+
+  { id:'education-degree-vs-skill', stage:'积累期', domain:'教育', title:'学历 vs 技能',
+    pain:'纠结读研还是直接工作', emotion:'理性', priority:'P2',
+    hook:'读研3年vs工作3年，30岁前谁赚得多',
+    url:'./education-degree-vs-skill/index.html' },
+
+  // ===== 退休期 =====
+  { id:'invest-lie-flat', stage:'退休期', domain:'投资', title:'躺平需要多少钱',
+    pain:'想提前退休/辞职休息，不知道存款够不够', emotion:'向往', priority:'P0',
+    hook:'存到这个数，你的钱会自己养自己',
+    url:'./invest-lie-flat/index.html' },
+
+  { id:'pension-save', stage:'退休期', domain:'养老', title:'现在每月存多少退休够花',
+    pain:'30-40岁开始思考养老但不知道目标', emotion:'紧迫', priority:'P0',
+    hook:'30岁开始每月存3000，45岁开始要存9300',
+    url:'./pension-save/index.html' },
+
+  { id:'pension-withdraw-rate', stage:'退休期', domain:'养老', title:'退休后每年取多少才花不完',
+    pain:'怕花太快或太省，需确定提取率', emotion:'理性', priority:'P0',
+    hook:'100万每年取4万只够31年，取3万就花不完',
+    url:'./pension-withdraw-rate/index.html' },
+
+  { id:'pension-delay-retire', stage:'退休期', domain:'养老', title:'多干5年多领多少',
+    pain:'纠结60还是65岁退休', emotion:'理性', priority:'P1',
+    hook:'200万资产，70岁退比55岁退多领85万',
+    url:'./pension-delay-retire/index.html' },
+
+  { id:'insurance-return-vs-consumption', stage:'退休期', domain:'保险', title:'返还型 vs 消费型',
+    pain:'被"不生病钱退回来"吸引，纠结返还型', emotion:'理性', priority:'P1',
+    hook:'保险公司用你的钱赚两遍',
+    url:'./insurance-return-vs-consumption/index.html' },
+];
+
+// ============================================================
+// 阶段配置
+// ============================================================
+const STAGES = [
+  { key:'就业期', age:'22-30岁', color:'#dc2626',
+    intro:'刚工作，收入不高但负担轻。这个阶段的核心任务是——建立安全垫、养成储蓄习惯、避免踩坑。' },
+  { key:'家庭期', age:'30-45岁', color:'#f59e0b',
+    intro:'上有老下有小，责任最重。这个阶段的核心任务是——转移风险、控制负债、为教育和住房做准备。' },
+  { key:'积累期', age:'45-60岁', color:'#22c55e',
+    intro:'收入达到峰值，孩子逐渐独立。这个阶段的核心任务是——加速积累、优化负债、为退休冲刺。' },
+  { key:'退休期', age:'60岁+', color:'#15803d',
+    intro:'收入下降，但积累已成型。这个阶段的核心任务是——控制提取、守住成果、规划传承。' },
+];
+
+// ============================================================
+// 状态
+// ============================================================
+let currentStage = 0;
+let filterPriority = 'all';
+let filterEmotion = 'all';
+
+// ============================================================
+// 渲染函数
+// ============================================================
+const nav = document.getElementById('stageNav');
+const content = document.getElementById('stageContent');
+
+function renderNav() {
+  nav.innerHTML = '';
+  STAGES.forEach((stage, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'stage-btn' + (i === currentStage ? ' active' : '');
+    btn.style.background = i === currentStage ? stage.color : '#fff';
+    btn.innerHTML = `<span class="s-name">${stage.key}</span><span class="s-age">${stage.age}</span>`;
+    btn.onclick = () => { currentStage = i; renderAll(); };
+    nav.appendChild(btn);
+  });
+}
+
+function renderContent() {
+  content.innerHTML = '';
+  const stage = STAGES[currentStage];
+  const section = document.createElement('div');
+  section.className = 'stage-section active';
+
+  // 筛选逻辑
+  let scenes = SCENES.filter(s => s.stage === stage.key);
+  if (filterPriority !== 'all') scenes = scenes.filter(s => s.priority === filterPriority);
+  if (filterEmotion !== 'all') scenes = scenes.filter(s => s.emotion === filterEmotion);
+
+  // 阶段介绍
+  const intro = `
+    <div class="stage-intro" style="border-left-color:${stage.color}">
+      <h2>${stage.key}</h2>
+      <div class="age">${stage.age} · ${scenes.length}个决策场景</div>
+      <p>${stage.intro}</p>
+    </div>
+  `;
+
+  if (scenes.length === 0) {
+    section.innerHTML = intro + `<div class="empty-hint">当前筛选条件下没有场景</div>`;
+    content.appendChild(section);
+    return;
+  }
+
+  // 卡片网格
+  const cards = scenes.map(s => `
+    <a href="${s.url}" class="scene-card" style="border-left-color:${stage.color};text-decoration:none">
+      <div class="card-tags">
+        <span class="tag emotion-${s.emotion}">${s.emotion}</span>
+        <span class="tag tag-domain">${s.domain}</span>
+        <span class="tag tag-priority-${s.priority}">${s.priority}</span>
+      </div>
+      <h3>${s.title}</h3>
+      <div class="pain">${s.pain}</div>
+      <div class="hook">💡 ${s.hook}</div>
+    </a>
+  `).join('');
+
+  section.innerHTML = intro + `<div class="card-grid">${cards}</div>`;
+  content.appendChild(section);
+}
+
+function renderAll() {
+  renderNav();
+  renderContent();
+}
+
+// ============================================================
+// 筛选按钮绑定
+// ============================================================
+document.querySelectorAll('[data-filter]').forEach(btn => {
+  btn.onclick = () => {
+    document.querySelectorAll('[data-filter]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    filterPriority = btn.dataset.filter;
+    renderContent();
+  };
+});
+
+document.querySelectorAll('[data-emotion]').forEach(btn => {
+  btn.onclick = () => {
+    document.querySelectorAll('[data-emotion]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    filterEmotion = btn.dataset.emotion;
+    renderContent();
+  };
+});
+
+// 初始渲染
+renderAll();
+</script>
+</body></html>

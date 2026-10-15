@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>孩子18岁前，每月要存多少教育金？</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:"Microsoft YaHei","PingFang SC",sans-serif; }
+  body { background:#f6f7fb; padding:24px; }
+  .card { background:#fff; border-radius:16px; box-shadow:0 4px 20px rgba(0,0,0,.08);
+          max-width:1100px; margin:0 auto; padding:28px 32px; }
+  h1 { font-size:28px; color:#111827; text-align:center; }
+  .subtitle { text-align:center; color:#6b7280; font-size:14px; margin:8px 0 18px; }
+  .emotion { display:inline-block; background:#dcfce7; color:#15803d; font-size:11px; padding:2px 8px;
+             border-radius:999px; margin-left:8px; vertical-align:middle; font-weight:700; }
+  .assume { background:#f3f4f6; border-radius:10px; padding:10px 14px; font-size:13px;
+            color:#374151; margin-bottom:16px; line-height:1.7; }
+  .highlight { background:#fef3c7; padding:2px 6px; border-radius:4px; font-weight:700; color:#b45309; }
+  .insight { background:#eef2ff; border-left:4px solid #4f46e5; border-radius:8px;
+             padding:10px 14px; font-size:13px; color:#374151; margin-bottom:16px; line-height:1.7; }
+  .insight b { color:#4f46e5; }
+  table { width:100%; border-collapse:separate; border-spacing:4px; }
+  th { padding:10px 8px; font-size:13px; color:#111827; background:#eef2ff; border-radius:8px; line-height:1.4; }
+  th small { font-weight:400; color:#6b7280; font-size:11px; }
+  th.rowhead { text-align:left; width:110px; }
+  td { padding:9px 5px; text-align:center; font-size:14px; font-weight:700;
+       color:#fff; border-radius:8px; min-width:60px; }
+  .cell-monthly { font-size:16px; }
+  .cell-years { font-size:10px; opacity:0.92; margin-top:2px; font-weight:500; }
+  .cell-note { font-size:10px; opacity:0.82; margin-top:1px; font-weight:400; }
+  .foot { margin-top:16px; font-size:12px; color:#9ca3af; line-height:1.6; }
+  .watermark { margin-top:14px; text-align:center; font-size:12px; color:#9ca3af; letter-spacing:1px; }
+  .legend { display:flex; justify-content:center; gap:18px; margin:12px 0 16px; font-size:12px; color:#374151; flex-wrap:wrap; }
+  .legend span { display:inline-flex; align-items:center; gap:6px; }
+  .dot { width:14px; height:14px; border-radius:4px; display:inline-block; }
+</style></head><body>
+<div class="card">
+  <h1>孩子 18 岁前，每月要存多少教育金？</h1>
+  <div class="subtitle">同样准备 15 万本科费用，0 岁开始每月存 429 元，10 岁开始每月存 1278 元——晚了 10 年，每月多存 3 倍。<span class="emotion">焦虑 + 紧迫</span></div>
+
+  <div class="assume">
+    假设：年化收益率 <b>5%</b>（已扣除通胀），按月复利、月末投入；目标金额为 18 岁时所需教育金总额（不含通胀调整，按当前购买力计算）。<br>
+    换算：国内本科 15 万，0 岁开始每月存 <span class="highlight">429 元</span> ≈ 每天 14 元；10 岁开始每月存 <b>1278 元</b> ≈ 每天 43 元——时间差 10 年，月存压力差 3 倍。
+  </div>
+
+  <div class="insight">
+    <b>核心洞察：</b>教育金储备的关键变量不是“存多少”，而是“什么时候开始”。孩子越小，复利时间越长，每月压力越小。<b>0 岁开始存，每月 429 元就够了；10 岁才开始，每月要存 1278 元。</b>如果目标是出国本科 100 万，10 岁开始每月要存 8500 元——很多家庭根本扛不住。
+  </div>
+
+  <div class="legend">
+    <span><i class="dot" style="background:#15803d"></i>≤1000元/月（轻松）</span>
+    <span><i class="dot" style="background:#22c55e"></i>1000-3000元/月</span>
+    <span><i class="dot" style="background:#f59e0b"></i>3000-6000元/月</span>
+    <span><i class="dot" style="background:#f97316"></i>6000-10000元/月</span>
+    <span><i class="dot" style="background:#dc2626"></i>&gt;10000元/月（压力大）</span>
+  </div>
+
+  <table id="educationTable">
+    <tr>
+      <th class="rowhead">教育目标</th>
+      <th>0岁</th><th>3岁</th><th>6岁</th><th>10岁</th><th>15岁</th>
+    </tr>
+  </table>
+
+  <div class="foot">
+    测算基于固定年化收益率 5%、按月复利的简化假设；教育费用因城市、学校类型、专业、国家差异较大，表中为目标金额假设值。未考虑通胀、汇率波动、奖学金、助学贷款等。本图不构成任何投资建议。
+  </div>
+  <div class="watermark">投资平权 · fin-decision-matrix</div>
+</div>
+
+<script>
+  // ============================================================
+  // 参数
+  // ============================================================
+  const REAL_RETURN = 0.05;   // 年化实际收益率 5%
+  const TARGET_AGE = 18;      // 目标年龄
+
+  // ============================================================
+  // 教育目标（18岁时所需总额）
+  // ============================================================
+  const goals = [
+    { name: '国内本科', target: 150000 },
+    { name: '国内+硕士', target: 250000 },
+    { name: '出国硕士', target: 500000 },
+    { name: '出国本科', target: 1000000 }
+  ];
+
+  // ============================================================
+  // 核心计算
+  // ============================================================
+  // 给定目标金额、当前年龄，返回每月需储蓄额
+  function calcMonthlySaving(target, currentAge) {
+    const months = (TARGET_AGE - currentAge) * 12;
+    if (months <= 0) return Infinity;
+    const r = REAL_RETURN / 12;
+    const pow = Math.pow(1 + r, months);
+    // 年金终值公式反推：PMT = FV × r / [(1+r)^n − 1]
+    return target * r / (pow - 1);
+  }
+
+  // ============================================================
+  // 颜色编码：按每月储蓄额
+  // ============================================================
+  function getColor(monthly) {
+    if (!isFinite(monthly)) return '#dc2626';
+    if (monthly <= 1000) return '#15803d';
+    if (monthly <= 3000) return '#22c55e';
+    if (monthly <= 6000) return '#f59e0b';
+    if (monthly <= 10000) return '#f97316';
+    return '#dc2626';
+  }
+
+  // ============================================================
+  // 格式化
+  // ============================================================
+  function formatMonthly(v) {
+    if (!isFinite(v)) return '无法达成';
+    if (v >= 10000) return (v / 10000).toFixed(1) + '万';
+    return Math.round(v).toLocaleString();
+  }
+
+  function formatYears(currentAge) {
+    return '存' + (TARGET_AGE - currentAge) + '年';
+  }
+
+  function formatTarget(v) {
+    if (v >= 10000) return (v / 10000) + '万';
+    return Math.round(v).toLocaleString();
+  }
+
+  // ============================================================
+  // 生成表格
+  // ============================================================
+  const ages = [0, 3, 6, 10, 15];
+
+  const table = document.getElementById('educationTable');
+
+  goals.forEach(goal => {
+    const tr = document.createElement('tr');
+    const th = document.createElement('th');
+    th.className = 'rowhead';
+    th.textContent = goal.name;
+    tr.appendChild(th);
+
+    ages.forEach(age => {
+      const monthly = calcMonthlySaving(goal.target, age);
+      const td = document.createElement('td');
+      td.style.background = getColor(monthly);
+
+      td.innerHTML = `<div class="cell-monthly">${formatMonthly(monthly)}</div>
+                      <div class="cell-years">${formatYears(age)}</div>
+                      <div class="cell-note">目标${formatTarget(goal.target)}</div>`;
+      tr.appendChild(td);
+    });
+
+    table.appendChild(tr);
+  });
+</script>
+</body></html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>返还型 vs 消费型，多交的钱自己投资能赚多少？</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:"Microsoft YaHei","PingFang SC",sans-serif; }
+  body { background:#f6f7fb; padding:24px; }
+  .card { background:#fff; border-radius:16px; box-shadow:0 4px 20px rgba(0,0,0,.08);
+          max-width:1100px; margin:0 auto; padding:28px 32px; }
+  h1 { font-size:28px; color:#111827; text-align:center; }
+  .subtitle { text-align:center; color:#6b7280; font-size:14px; margin:8px 0 18px; }
+  .emotion { display:inline-block; background:#ede9fe; color:#6d28d9; font-size:11px; padding:2px 8px;
+             border-radius:999px; margin-left:8px; vertical-align:middle; font-weight:700; }
+  .assume { background:#f3f4f6; border-radius:10px; padding:10px 14px; font-size:13px;
+            color:#374151; margin-bottom:16px; line-height:1.7; }
+  .highlight { background:#fef3c7; padding:2px 6px; border-radius:4px; font-weight:700; color:#b45309; }
+  .insight { background:#eef2ff; border-left:4px solid #4f46e5; border-radius:8px;
+             padding:10px 14px; font-size:13px; color:#374151; margin-bottom:16px; line-height:1.7; }
+  .insight b { color:#4f46e5; }
+  table { width:100%; border-collapse:separate; border-spacing:4px; }
+  th { padding:10px 8px; font-size:13px; color:#111827; background:#eef2ff; border-radius:8px; line-height:1.4; }
+  th small { font-weight:400; color:#6b7280; font-size:11px; }
+  th.rowhead { text-align:left; width:110px; }
+  td { padding:9px 5px; text-align:center; font-size:14px; font-weight:700;
+       color:#fff; border-radius:8px; min-width:60px; }
+  .cell-diff { font-size:16px; }
+  .cell-detail { font-size:10px; opacity:0.92; margin-top:2px; font-weight:500; }
+  .cell-note { font-size:10px; opacity:0.82; margin-top:1px; font-weight:400; }
+  .foot { margin-top:16px; font-size:12px; color:#9ca3af; line-height:1.6; }
+  .watermark { margin-top:14px; text-align:center; font-size:12px; color:#9ca3af; letter-spacing:1px; }
+  .legend { display:flex; justify-content:center; gap:18px; margin:12px 0 16px; font-size:12px; color:#374151; flex-wrap:wrap; }
+  .legend span { display:inline-flex; align-items:center; gap:6px; }
+  .dot { width:14px; height:14px; border-radius:4px; display:inline-block; }
+</style></head><body>
+<div class="card">
+  <h1>返还型 vs 消费型，多交的钱自己投资能赚多少？</h1>
+  <div class="subtitle">同样 50 万重疾，消费型年缴 3000，返还型年缴 10000——差额 7000 元/年自己投资，30 年、5% 年化下能多赚 16.5 万。<span class="emotion">理性 + 反直觉</span></div>
+
+  <div class="assume">
+    假设：50 万保额重疾险；消费型年缴 <b>3000 元</b>，返还型年缴 <b>10000 元</b>；返还型满期返还所交总保费（<b>10000 × 缴费年限</b>）；消费型省下的差额 <b>7000 元/年</b> 用于自行投资，按年末投入计算复利。<br>
+    换算：交 20 年，返还型总保费 20 万；差额自投按 5% 年化 20 年 → <span class="highlight">23.1 万</span>——比返还的 20 万还多 3.1 万。
+  </div>
+
+  <div class="insight">
+    <b>核心洞察：</b>返还型保险的本质是 <b>“多交保费 + 保险公司拿去做投资 + 满期还你本金”</b>。但保险公司拿你的钱赚收益，只还你本金，中间的复利归它。<b>如果你自己把差额拿去投资，只要年化收益超过 3-4%，长期来看大概率比返还型更划算。</b>
+  </div>
+
+  <div class="legend">
+    <span><i class="dot" style="background:#15803d"></i>自投多赚 &gt;20万</span>
+    <span><i class="dot" style="background:#22c55e"></i>自投多赚 5-20万</span>
+    <span><i class="dot" style="background:#f59e0b"></i>基本打平（±5万）</span>
+    <span><i class="dot" style="background:#f97316"></i>返还多 5-20万</span>
+    <span><i class="dot" style="background:#dc2626"></i>返还多 &gt;20万</span>
+  </div>
+
+  <table id="insuranceTable">
+    <tr>
+      <th class="rowhead">缴费年限</th>
+      <th>投资 2%<br><small>保守</small></th>
+      <th>投资 3%<br><small>稳健</small></th>
+      <th>投资 5%<br><small>平衡</small></th>
+      <th>投资 8%<br><small>进取</small></th>
+    </tr>
+  </table>
+
+  <div class="foot">
+    测算基于简化假设：消费型年缴 3000 元、返还型年缴 10000 元、差额 7000 元/年自行投资；返还型满期返还所交总保费；投资按年末投入、复利计算；未考虑通胀、税收、保险公司分红实现率、产品条款差异等。实际返还型产品可能带分红或万能账户，收益不确定。本图不构成任何保险购买建议。
+  </div>
+  <div class="watermark">投资平权 · fin-decision-matrix</div>
+</div>
+
+<script>
+  // ============================================================
+  // 参数
+  // ============================================================
+  const CONSUMPTION_PREMIUM = 3000;   // 消费型年缴
+  const RETURN_PREMIUM = 10000;       // 返还型年缴
+  const DIFF = RETURN_PREMIUM - CONSUMPTION_PREMIUM; // 差额 7000
+
+  // ============================================================
+  // 核心计算
+  // ============================================================
+  // 自投终值（年末投入）
+  function calcFV(annualInvest, years, rate) {
+    if (rate === 0) return annualInvest * years;
+    return annualInvest * (Math.pow(1 + rate, years) - 1) / rate;
+  }
+
+  // 返还金额 = 返还型总保费
+  function calcReturn(years) {
+    return RETURN_PREMIUM * years;
+  }
+
+  // 差额 = 自投终值 - 返还金额
+  function calcDiff(years, rate) {
+    const fv = calcFV(DIFF, years, rate);
+    const returned = calcReturn(years);
+    return { fv, returned, diff: fv - returned };
+  }
+
+  // ============================================================
+  // 颜色编码：按差额（正=自投划算，负=返还划算）
+  // ============================================================
+  function getColor(diff) {
+    if (diff >= 200000) return '#15803d';
+    if (diff >= 50000) return '#22c55e';
+    if (diff >= -50000) return '#f59e0b';
+    if (diff >= -200000) return '#f97316';
+    return '#dc2626';
+  }
+
+  // ============================================================
+  // 格式化
+  // ============================================================
+  function formatWan(v) {
+    const abs = Math.abs(v);
+    if (abs >= 10000) return (abs / 10000).toFixed(1) + '万';
+    return Math.round(abs).toLocaleString();
+  }
+
+  function getConclusion(diff) {
+    if (diff > 50000) return '自投多赚';
+    if (diff < -50000) return '返还更多';
+    return '基本打平';
+  }
+
+  // ============================================================
+  // 生成表格
+  // ============================================================
+  const yearsList = [10, 15, 20, 25, 30];
+  const rates = [0.02, 0.03, 0.05, 0.08];
+
+  const table = document.getElementById('insuranceTable');
+
+  yearsList.forEach(years => {
+    const tr = document.createElement('tr');
+    const th = document.createElement('th');
+    th.className = 'rowhead';
+    th.textContent = '交' + years + '年';
+    tr.appendChild(th);
+
+    rates.forEach(rate => {
+      const { fv, returned, diff } = calcDiff(years, rate);
+      const td = document.createElement('td');
+      td.style.background = getColor(diff);
+
+      const conclusion = getConclusion(diff);
+      const diffText = conclusion === '基本打平' ? '打平' :
+                       (diff > 0 ? '自投多 ' : '返还多 ') + formatWan(diff);
+
+      td.innerHTML = `<div class="cell-diff">${diffText}</div>
+                      <div class="cell-detail">自投${formatWan(fv)} / 返还${formatWan(returned)}</div>
+                      <div class="cell-note">${conclusion}</div>`;
+      tr.appendChild(td);
+    });
+
+    table.appendChild(tr);
+  });
+</script>
+</body></html>

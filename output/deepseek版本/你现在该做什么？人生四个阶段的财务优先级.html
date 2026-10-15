@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>你现在该做什么？人生四个阶段的财务优先级</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:"Microsoft YaHei","PingFang SC",sans-serif; }
+  body { background:#f6f7fb; padding:24px; }
+  .card { background:#fff; border-radius:16px; box-shadow:0 4px 20px rgba(0,0,0,.08);
+          max-width:1100px; margin:0 auto; padding:28px 32px; }
+  h1 { font-size:28px; color:#111827; text-align:center; }
+  .subtitle { text-align:center; color:#6b7280; font-size:14px; margin:8px 0 18px; }
+  .emotion { display:inline-block; background:#ede9fe; color:#6d28d9; font-size:11px; padding:2px 8px;
+             border-radius:999px; margin-left:8px; vertical-align:middle; font-weight:700; }
+  .assume { background:#f3f4f6; border-radius:10px; padding:10px 14px; font-size:13px;
+            color:#374151; margin-bottom:16px; line-height:1.7; }
+  .highlight { background:#fef3c7; padding:2px 6px; border-radius:4px; font-weight:700; color:#b45309; }
+  .insight { background:#eef2ff; border-left:4px solid #4f46e5; border-radius:8px;
+             padding:10px 14px; font-size:13px; color:#374151; margin-bottom:16px; line-height:1.7; }
+  .insight b { color:#4f46e5; }
+  table { width:100%; border-collapse:separate; border-spacing:4px; }
+  th { padding:10px 8px; font-size:13px; color:#111827; background:#eef2ff; border-radius:8px; line-height:1.4; }
+  th small { font-weight:400; color:#6b7280; font-size:11px; }
+  th.rowhead { text-align:left; width:110px; }
+  td { padding:9px 6px; text-align:left; font-size:13px; font-weight:600;
+       color:#fff; border-radius:8px; min-width:80px; line-height:1.5; }
+  .cell-priority { font-size:15px; font-weight:800; margin-bottom:2px; }
+  .cell-action { font-size:11px; font-weight:400; opacity:0.95; }
+  .cell-num { font-size:11px; font-weight:500; opacity:0.85; margin-top:3px; }
+  .foot { margin-top:16px; font-size:12px; color:#9ca3af; line-height:1.6; }
+  .watermark { margin-top:14px; text-align:center; font-size:12px; color:#9ca3af; letter-spacing:1px; }
+  .legend { display:flex; justify-content:center; gap:18px; margin:12px 0 16px; font-size:12px; color:#374151; flex-wrap:wrap; }
+  .legend span { display:inline-flex; align-items:center; gap:6px; }
+  .dot { width:14px; height:14px; border-radius:4px; display:inline-block; }
+</style></head><body>
+<div class="card">
+  <h1>你现在该做什么？人生四个阶段的财务优先级</h1>
+  <div class="subtitle">22 岁存应急金、30 岁买保险、45 岁加速养老、60 岁控制提取——每个阶段有且只有一个核心任务。<span class="emotion">掌控 + 规划</span></div>
+
+  <div class="assume">
+    假设：以普通工薪族为基准，月收入从 22 岁的 6000 元逐步增长到 45 岁的峰值 25000 元；各阶段的关键财务任务是<b>该阶段应该优先完成的动作</b>，而不是全部要做的事。金额为参考值，实际因收入、城市、家庭结构而异。<br>
+    换算：22 岁开始存 <span class="highlight">每月 500 元</span>应急金 → 30 岁时 <b>4.8 万</b>；30 岁买 <b>300 万保额</b>定期寿险 → 年保费约 <b>3000 元</b>；45 岁加速养老储蓄 → 每月多存 <b>3000 元</b>，60 岁时多 <b>83 万</b>。
+  </div>
+
+  <div class="insight">
+    <b>核心洞察：</b>人生财务不是“同时做好所有事”，而是<b>每个阶段有一个核心任务</b>。22-30 岁的核心是<b>建立安全垫</b>；30-45 岁的核心是<b>转移风险</b>；45-60 岁的核心是<b>加速积累</b>；60 岁后的核心是<b>控制提取</b>。错过顺序，后面每一步都会更吃力。
+  </div>
+
+  <div class="legend">
+    <span><i class="dot" style="background:#dc2626"></i>最高优先级（不做会出事）</span>
+    <span><i class="dot" style="background:#f59e0b"></i>高优先级（越早越好）</span>
+    <span><i class="dot" style="background:#22c55e"></i>中优先级（条件成熟再做）</span>
+    <span><i class="dot" style="background:#15803d"></i>持续优化（长期习惯）</span>
+  </div>
+
+  <table id="lifeTable">
+    <tr>
+      <th class="rowhead">人生阶段</th>
+      <th>储蓄与投资</th>
+      <th>风险与保障</th>
+      <th>负债与大额支出</th>
+      <th>养老与传承</th>
+    </tr>
+  </table>
+
+  <div class="foot">
+    测算基于普通工薪族假设，金额为参考值；实际因收入、城市、家庭结构、行业周期差异较大。各阶段任务有交叉，并非绝对按年龄划分。本图不构成任何财务或投资建议。
+  </div>
+  <div class="watermark">投资平权 · fin-decision-matrix</div>
+</div>
+
+<script>
+  // ============================================================
+  // 数据：人生阶段 × 财务维度
+  // ============================================================
+  const stages = [
+    {
+      name: '就业期',
+      age: '22-30岁',
+      color: '#dc2626',
+      cells: {
+        saving: { priority: '建立应急金', action: '每月存500-2000元，目标3-6个月支出', num: '3-6万' },
+        risk:    { priority: '基础保障', action: '医保+意外险，年保费几百元', num: '300-800元/年' },
+        debt:    { priority: '避免消费贷', action: '不碰信用卡分期、网贷', num: '0负债' },
+        pension: { priority: '了解复利', action: '小额定投，培养储蓄习惯', num: '500-1000元/月' }
+      }
+    },
+    {
+      name: '家庭期',
+      age: '30-45岁',
+      color: '#f59e0b',
+      cells: {
+        saving: { priority: '定投+教育金', action: '月定投2000-5000元，孩子教育金单独账户', num: '3000-8000元/月' },
+        risk:    { priority: '配置寿险+重疾', action: '定期寿险300万+重疾50万，年保费约5000-10000元', num: '300-500万保额' },
+        debt:    { priority: '控制房贷月供', action: '月供不超过家庭收入40%', num: '≤40%收入' },
+        pension: { priority: '养老储蓄启动', action: '个人养老金账户+商业养老险', num: '1000-3000元/月' }
+      }
+    },
+    {
+      name: '积累期',
+      age: '45-60岁',
+      color: '#22c55e',
+      cells: {
+        saving: { priority: '加速积累', action: '收入峰值期，储蓄率提到30-40%', num: '5000-15000元/月' },
+        risk:    { priority: '健康保障升级', action: '补充医疗险，关注父母赡养', num: '2000-5000元/年' },
+        debt:    { priority: '提前还清房贷', action: '有闲钱优先还贷，无债一身轻', num: '50-200万' },
+        pension: { priority: '养老冲刺', action: '每月多存3000元，60岁多83万', num: '3000-10000元/月' }
+      }
+    },
+    {
+      name: '退休期',
+      age: '60岁+',
+      color: '#15803d',
+      cells: {
+        saving: { priority: '稳健配置', action: '股债比2:8，控制回撤', num: '年化3-4%' },
+        risk:    { priority: '医疗+长护', action: '百万医疗+长期护理险', num: '3000-8000元/年' },
+        debt:    { priority: '零负债', action: '不新增负债，不担保', num: '0负债' },
+        pension: { priority: '控制提取率', action: '提取率≤4%，每年取不超过4%资产', num: '≤4%/年' }
+      }
+    }
+  ];
+
+  const columns = ['saving', 'risk', 'debt', 'pension'];
+
+  // ============================================================
+  // 生成表格
+  // ============================================================
+  const table = document.getElementById('lifeTable');
+
+  stages.forEach(stage => {
+    const tr = document.createElement('tr');
+    const th = document.createElement('th');
+    th.className = 'rowhead';
+    th.innerHTML = `<b>${stage.name}</b><br><small style="color:#6b7280">${stage.age}</small>`;
+    tr.appendChild(th);
+
+    columns.forEach(col => {
+      const cell = stage.cells[col];
+      const td = document.createElement('td');
+      td.style.background = stage.color;
+      td.innerHTML = `<div class="cell-priority">${cell.priority}</div>
+                      <div class="cell-action">${cell.action}</div>
+                      <div class="cell-num">${cell.num}</div>`;
+      tr.appendChild(td);
+    });
+
+    table.appendChild(tr);
+  });
+</script>
+</body></html>

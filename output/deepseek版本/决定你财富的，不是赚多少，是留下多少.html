@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>决定你财富的，不是赚多少，是留下多少</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:"Microsoft YaHei","PingFang SC",sans-serif; }
+  body { background:#f6f7fb; padding:24px; }
+  .card { background:#fff; border-radius:16px; box-shadow:0 4px 20px rgba(0,0,0,.08);
+          max-width:1100px; margin:0 auto; padding:28px 32px; }
+  h1 { font-size:28px; color:#111827; text-align:center; }
+  .subtitle { text-align:center; color:#6b7280; font-size:14px; margin:8px 0 18px; }
+  .emotion { display:inline-block; background:#dcfce7; color:#15803d; font-size:11px; padding:2px 8px;
+             border-radius:999px; margin-left:8px; vertical-align:middle; font-weight:700; }
+  .assume { background:#f3f4f6; border-radius:10px; padding:10px 14px; font-size:13px;
+            color:#374151; margin-bottom:16px; line-height:1.7; }
+  .highlight { background:#fef3c7; padding:2px 6px; border-radius:4px; font-weight:700; color:#b45309; }
+  .insight { background:#eef2ff; border-left:4px solid #4f46e5; border-radius:8px;
+             padding:10px 14px; font-size:13px; color:#374151; margin-bottom:16px; line-height:1.7; }
+  .insight b { color:#4f46e5; }
+  table { width:100%; border-collapse:separate; border-spacing:4px; }
+  th { padding:10px 8px; font-size:13px; color:#111827; background:#eef2ff; border-radius:8px; line-height:1.4; }
+  th small { font-weight:400; color:#6b7280; font-size:11px; }
+  th.rowhead { text-align:left; width:100px; }
+  td { padding:9px 5px; text-align:center; font-size:14px; font-weight:700;
+       color:#fff; border-radius:8px; min-width:60px; }
+  .cell-total { font-size:16px; }
+  .cell-year { font-size:10px; opacity:0.92; margin-top:2px; font-weight:500; }
+  .cell-note { font-size:10px; opacity:0.82; margin-top:1px; font-weight:400; }
+  .foot { margin-top:16px; font-size:12px; color:#9ca3af; line-height:1.6; }
+  .watermark { margin-top:14px; text-align:center; font-size:12px; color:#9ca3af; letter-spacing:1px; }
+  .legend { display:flex; justify-content:center; gap:18px; margin:12px 0 16px; font-size:12px; color:#374151; flex-wrap:wrap; }
+  .legend span { display:inline-flex; align-items:center; gap:6px; }
+  .dot { width:14px; height:14px; border-radius:4px; display:inline-block; }
+  .extra-note { margin-top:12px; padding:10px 14px; background:#fafafa;
+                border-radius:10px; font-size:12px; color:#374151; line-height:1.8; }
+  .extra-note b { color:#4f46e5; }
+</style></head><body>
+<div class="card">
+  <h1>决定你财富的，不是赚多少，是留下多少</h1>
+  <div class="subtitle">月薪 <span class="dyn" id="subSalary1">5 万</span>存 <span class="dyn" id="subRate1">10%</span>，10 年后 <span class="dyn" id="subFv1">77.6 万</span>；月薪 <span class="dyn" id="subSalary2">1 万</span>存 <span class="dyn" id="subRate2">40%</span>，10 年后 <span class="dyn" id="subFv2">62.1 万</span>——高薪不一定跑赢高储蓄率。<span class="emotion">反直觉 + 掌控</span></div>
+
+  <div class="assume">
+    假设：年化实际收益率 <b>5%</b>（已扣除通胀）；储蓄按月投入、月末计算复利；年存款 = 月薪 × 12 × 储蓄率；10年累计含复利；不考虑税收、收入增长、大额支出等。<br>
+    换算：月薪 <span class="highlight"><span class="dyn" id="convSalary2">1 万</span></span>，储蓄率 <b><span class="dyn" id="convRate2">40%</span></b> → 月存 <span class="dyn" id="convMonthly2">4000</span> → 10 年 <b><span class="dyn" id="convFv2">62.1 万</span></b>；月薪 <b><span class="dyn" id="convSalary1">5 万</span></b>，储蓄率 <b><span class="dyn" id="convRate1">10%</span></b> → 月存 <span class="dyn" id="convMonthly1">5000</span> → 10 年 <b><span class="dyn" id="convFv1">77.6 万</span></b>——高薪月光族并不比低薪高储蓄者富有多少。
+  </div>
+
+  <div class="insight">
+    <b>核心洞察：</b>财富积累的速度取决于 <b>“留下的钱”</b>，而不是 <b>“赚到的钱”</b>。月薪 <span class="dyn" id="insSalary1">5 万</span>存 <span class="dyn" id="insRate1">10%</span>（月存 <span class="dyn" id="insMonthly1">5000</span>）和月薪 <span class="dyn" id="insSalary2">1.25 万</span>存 <span class="dyn" id="insRate2">40%</span>（月存 <span class="dyn" id="insMonthly2">5000</span>）积累速度完全一样。<b>加薪如果伴随消费升级，等于没加；储蓄率提高即使不加薪，也在变富。</b>
+  </div>
+
+  <div class="legend">
+    <span><i class="dot" style="background:#15803d"></i>≥200万</span>
+    <span><i class="dot" style="background:#22c55e"></i>100-200万</span>
+    <span><i class="dot" style="background:#f59e0b"></i>50-100万</span>
+    <span><i class="dot" style="background:#f97316"></i>20-50万</span>
+    <span><i class="dot" style="background:#dc2626"></i>&lt;20万</span>
+  </div>
+
+  <table id="saveRateTable">
+    <tr>
+      <th class="rowhead">月薪</th>
+      <th>储蓄率10%</th><th>储蓄率20%</th><th>储蓄率30%</th><th>储蓄率40%</th><th>储蓄率50%</th>
+    </tr>
+  </table>
+
+  <div class="extra-note" id="extraNote"></div>
+
+  <div class="foot">
+    测算基于固定年化收益率 5%、按月复利、月末投入的简化假设；未考虑税收、通胀、薪资增长、消费变化等。实际储蓄率受个人收入、家庭负担、消费习惯等影响。本图不构成任何投资建议。
+  </div>
+  <div class="watermark">投资平权 · fin-decision-matrix</div>
+</div>
+
+<script>
+  // ============================================================
+  // 参数
+  // ============================================================
+  const REAL_RETURN = 0.05;
+  const YEARS = 10;
+
+  // ============================================================
+  // 核心计算
+  // ============================================================
+  function calcCumulative(monthlySalary, saveRate) {
+    const monthlySave = monthlySalary * saveRate;
+    const annualSave = monthlySave * 12;
+    const r = REAL_RETURN / 12;
+    const n = YEARS * 12;
+    const fv = monthlySave * (Math.pow(1 + r, n) - 1) / r;
+    const principal = monthlySave * n;
+    const interest = fv - principal;
+    return { fv, annualSave, monthlySave, principal, interest };
+  }
+
+  // ============================================================
+  // 颜色编码：按10年累计
+  // ============================================================
+  function getColor(fv) {
+    if (fv >= 2000000) return '#15803d';
+    if (fv >= 1000000) return '#22c55e';
+    if (fv >= 500000) return '#f59e0b';
+    if (fv >= 200000) return '#f97316';
+    return '#dc2626';
+  }
+
+  // ============================================================
+  // 格式化
+  // ============================================================
+  function formatWan(v) {
+    if (v >= 10000) return (v / 10000).toFixed(1) + '万';
+    return Math.round(v).toLocaleString();
+  }
+
+  function formatMonthly(v) {
+    if (v >= 10000) return (v / 10000).toFixed(1) + '万';
+    return Math.round(v).toLocaleString();
+  }
+
+  // ============================================================
+  // 生成表格
+  // ============================================================
+  const salaries = [5000, 10000, 20000, 30000, 50000];
+  const saveRates = [0.10, 0.20, 0.30, 0.40, 0.50];
+
+  const table = document.getElementById('saveRateTable');
+
+  salaries.forEach(salary => {
+    const tr = document.createElement('tr');
+    const th = document.createElement('th');
+    th.className = 'rowhead';
+    th.textContent = (salary / 10000).toFixed(1).replace('.0', '') + '万';
+    tr.appendChild(th);
+
+    saveRates.forEach(rate => {
+      const { fv, annualSave, monthlySave } = calcCumulative(salary, rate);
+      const td = document.createElement('td');
+      td.style.background = getColor(fv);
+
+      td.innerHTML = `<div class="cell-total">${formatWan(fv)}</div>
+                      <div class="cell-year">年存${formatWan(annualSave)}</div>
+                      <div class="cell-note">月存${formatMonthly(monthlySave)}</div>`;
+      tr.appendChild(td);
+    });
+
+    table.appendChild(tr);
+  });
+
+  // ============================================================
+  // 补充说明：等效储蓄率
+  // ============================================================
+  const note = document.getElementById('extraNote');
+  note.innerHTML = `<b>等效储蓄率对照（10年累计相同）：</b><br>
+    · 月薪 <b>5000 存 50%</b>（月存 2500）≈ 月薪 <b>12500 存 20%</b> ≈ 月薪 <b>25000 存 10%</b><br>
+    · 月薪 <b>1万 存 40%</b>（月存 4000）≈ 月薪 <b>2万 存 20%</b> ≈ 月薪 <b>4万 存 10%</b><br>
+    · 月薪 <b>2万 存 30%</b>（月存 6000）≈ 月薪 <b>6万 存 10%</b><br>
+    <b>结论：</b>提高储蓄率 10 个点，相当于薪资翻倍——但前者你能控制，后者不一定。`;
+
+  // ============================================================
+  // 动态插值：静态文案数字由同一计算函数生成（避免硬编码漂移）
+  // ============================================================
+  (function renderStatic() {
+    const r1 = calcCumulative(50000, 0.10);   // 月薪5万存10%
+    const r2 = calcCumulative(10000, 0.40);   // 月薪1万存40%
+    const ins = calcCumulative(12500, 0.40);  // 月薪1.25万存40%
+    const fmt = v => (v / 10000).toFixed(1) + '万';
+    const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+    set('subSalary1', '5 万'); set('subRate1', '10%'); set('subFv1', fmt(r1.fv));
+    set('subSalary2', '1 万'); set('subRate2', '40%'); set('subFv2', fmt(r2.fv));
+    set('convSalary2', '1 万'); set('convRate2', '40%'); set('convMonthly2', Math.round(r2.monthlySave));
+    set('convFv2', fmt(r2.fv));
+    set('convSalary1', '5 万'); set('convRate1', '10%'); set('convMonthly1', Math.round(r1.monthlySave));
+    set('convFv1', fmt(r1.fv));
+    set('insSalary1', '5 万'); set('insRate1', '10%'); set('insMonthly1', Math.round(r1.monthlySave));
+    set('insSalary2', '1.25 万'); set('insRate2', '40%'); set('insMonthly2', Math.round(ins.monthlySave));
+  })();
+</script>
+</body></html>

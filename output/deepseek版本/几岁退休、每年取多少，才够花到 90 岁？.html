@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>几岁退休、每年取多少，才够花到90岁？</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:"Microsoft YaHei","PingFang SC",sans-serif; }
+  body { background:#f6f7fb; padding:24px; }
+  .card { background:#fff; border-radius:16px; box-shadow:0 4px 20px rgba(0,0,0,.08);
+          max-width:1060px; margin:0 auto; padding:28px 32px; }
+  h1 { font-size:28px; color:#111827; text-align:center; }
+  .subtitle { text-align:center; color:#6b7280; font-size:14px; margin:8px 0 18px; }
+  .emotion { display:inline-block; background:#fce7f3; color:#be185d; font-size:11px; padding:2px 8px;
+             border-radius:999px; margin-left:8px; vertical-align:middle; font-weight:700; }
+  .assume { background:#f3f4f6; border-radius:10px; padding:10px 14px; font-size:13px;
+            color:#374151; margin-bottom:16px; line-height:1.7; }
+  .highlight { background:#fef3c7; padding:2px 6px; border-radius:4px; font-weight:700; color:#b45309; }
+  .insight { background:#eef2ff; border-left:4px solid #4f46e5; border-radius:8px;
+             padding:10px 14px; font-size:13px; color:#374151; margin-bottom:16px; line-height:1.7; }
+  .insight b { color:#4f46e5; }
+  table { width:100%; border-collapse:separate; border-spacing:4px; }
+  th { padding:10px 8px; font-size:14px; color:#111827; background:#eef2ff; border-radius:8px; }
+  th.rowhead { text-align:left; width:110px; }
+  td { padding:10px 6px; text-align:center; font-size:15px; font-weight:700;
+       color:#fff; border-radius:8px; min-width:64px; }
+  .cell-amount { font-size:16px; }
+  .cell-note { font-size:11px; opacity:0.9; margin-top:2px; font-weight:500; }
+  .foot { margin-top:16px; font-size:12px; color:#9ca3af; line-height:1.6; }
+  .watermark { margin-top:14px; text-align:center; font-size:12px; color:#9ca3af; letter-spacing:1px; }
+  .legend { display:flex; justify-content:center; gap:18px; margin:12px 0 16px; font-size:12px; color:#374151; flex-wrap:wrap; }
+  .legend span { display:inline-flex; align-items:center; gap:6px; }
+  .dot { width:14px; height:14px; border-radius:4px; display:inline-block; }
+</style></head><body>
+<div class="card">
+  <h1>几岁退休、每年取多少，才够花到 90 岁？</h1>
+  <div class="subtitle">同样 <span class="dyn" id="subPrincipal">300 万</span>，<span class="dyn" id="subAge1">55</span> 岁退休取 <span class="dyn" id="subRate1">5%</span> 会在 <span class="dyn" id="subBkAge">86</span> 岁破产；<span class="dyn" id="subAge2">70</span> 岁退休取 <span class="dyn" id="subRate2">6%</span> 还能剩 <span class="dyn" id="subRemain">54 万</span>。<span class="emotion">理性 + 紧迫</span></div>
+
+  <div class="assume">
+    假设：退休时资产 <b>300 万</b>；年化实际收益率 <b>3%</b>（已扣除通胀）；每年按固定金额提取；目标寿命 <b>90 岁</b>；无其他收入。<br>
+    换算：<span class="dyn" id="convPrincipal">300 万</span>资产，<span class="dyn" id="convAge1">55</span> 岁退休需覆盖 <b><span class="dyn" id="convYears1">35</span> 年</b>；<span class="dyn" id="convAge2">70</span> 岁退休只需覆盖 <b><span class="dyn" id="convYears2">20</span> 年</b>——多干 <span class="highlight"><span class="dyn" id="convDiff">15</span> 年</span>，少取 <span class="highlight"><span class="dyn" id="convDiff2">15</span> 年</span>，安全边际大不同。
+  </div>
+
+  <div class="insight">
+    <b>核心洞察：</b>退休年龄和提取率，一个决定「要花多少年」，一个决定「每年花多少」。<b>多干 5 年 ≈ 提取率降 1%</b>——两者对安全性的影响可以互相替代。
+  </div>
+
+  <div class="legend">
+    <span><i class="dot" style="background:#15803d"></i>≥200万（很安全）</span>
+    <span><i class="dot" style="background:#22c55e"></i>100-200万（安全）</span>
+    <span><i class="dot" style="background:#f59e0b"></i>0-100万（勉强够）</span>
+    <span><i class="dot" style="background:#dc2626"></i>破产（不够花）</span>
+  </div>
+
+  <table id="retireTable">
+    <tr>
+      <th class="rowhead">退休年龄</th>
+      <th>提取率 3%</th><th>提取率 4%</th><th>提取率 5%</th><th>提取率 6%</th><th>提取率 8%</th>
+    </tr>
+  </table>
+
+  <div class="foot">
+    测算基于固定实际收益率 3%、固定金额提取、活到 90 岁的简化假设；未考虑社保养老金、企业年金、房产、大额医疗支出、市场波动等。实际退休支出随年龄变化（通常先高后低再高），长寿风险可能超出 90 岁。本图不构成任何金融建议。
+  </div>
+  <div class="watermark">投资平权 · fin-decision-matrix</div>
+</div>
+
+<script>
+  // ===== 参数 =====
+  const PRINCIPAL = 3000000;     // 退休时资产 300 万
+  const REAL_RETURN = 0.03;      // 年化实际收益率 3%
+  const TARGET_AGE = 90;         // 目标寿命 90 岁
+  const INITIAL_RATIO = 0.67;    // ≥67% 初始资产 = 很安全
+  const SAFE_RATIO = 0.33;       // ≥33% = 安全
+  const MAX_YEARS = 80;
+
+  // ===== 核心计算 =====
+  // 给定退休年龄、提取率，返回 {终值, 破产年龄, 需要覆盖年数}
+  function calcRetirement(retireAge, withdrawRate) {
+    const yearsNeeded = TARGET_AGE - retireAge;
+    const annualWithdraw = PRINCIPAL * withdrawRate;
+    const monthlyWithdraw = annualWithdraw / 12;
+    const monthlyRate = REAL_RETURN / 12;
+
+    // 永续判断
+    if (monthlyWithdraw <= PRINCIPAL * monthlyRate) {
+      return { finalValue: PRINCIPAL, bankruptcyAge: null, yearsNeeded };
+    }
+
+    // 到 90 岁的终值
+    const n = yearsNeeded * 12;
+    const pow = Math.pow(1 + monthlyRate, n);
+    const finalValue = PRINCIPAL * pow - monthlyWithdraw * (pow - 1) / monthlyRate;
+
+    if (finalValue >= 0) {
+      return { finalValue, bankruptcyAge: null, yearsNeeded };
+    }
+
+    // 破产：计算耗尽月数
+    const monthsToZero = -Math.log(1 - (PRINCIPAL * monthlyRate) / monthlyWithdraw)
+                          / Math.log(1 + monthlyRate);
+    const bankruptcyAge = retireAge + monthsToZero / 12;
+    return { finalValue: 0, bankruptcyAge, yearsNeeded };
+  }
+
+  // ===== 颜色 =====
+  function getColor(result) {
+    if (result.bankruptcyAge !== null) return '#dc2626';
+    const ratio = result.finalValue / PRINCIPAL;
+    if (ratio >= INITIAL_RATIO) return '#15803d';
+    if (ratio >= SAFE_RATIO) return '#22c55e';
+    return '#f59e0b';
+  }
+
+  // ===== 格式化 =====
+  function formatResult(result) {
+    if (result.bankruptcyAge !== null) {
+      return {
+        main: Math.round(result.bankruptcyAge) + '岁破产',
+        note: '需撑到90岁'
+      };
+    }
+    const v = result.finalValue;
+    return {
+      main: v >= 10000 ? '剩 ' + (v / 10000).toFixed(0) + '万' : '剩 ' + Math.round(v) + '元',
+      note: '90岁时'
+    };
+  }
+
+  // ===== 数据 =====
+  const retireAges = [55, 60, 65, 70];
+  const rates = [0.03, 0.04, 0.05, 0.06, 0.08];
+
+  const table = document.getElementById('retireTable');
+
+  retireAges.forEach(age => {
+    const tr = document.createElement('tr');
+    const th = document.createElement('th');
+    th.className = 'rowhead';
+    th.textContent = age + '岁';
+    tr.appendChild(th);
+
+    rates.forEach(rate => {
+      const result = calcRetirement(age, rate);
+      const display = formatResult(result);
+      const td = document.createElement('td');
+      td.style.background = getColor(result);
+
+      td.innerHTML = `<div class="cell-amount">${display.main}</div>
+                      <div class="cell-note">${display.note}</div>`;
+      tr.appendChild(td);
+    });
+
+    table.appendChild(tr);
+  });
+
+  // ============================================================
+  // 动态插值：静态文案数字由同一计算函数生成（避免硬编码漂移）
+  // ============================================================
+  (function renderStatic() {
+    const bk = calcRetirement(55, 0.05);   // 55岁取5% -> 破产
+    const ok = calcRetirement(70, 0.06);   // 70岁取6% -> 剩余
+    const fmtWan = v => (v / 10000).toFixed(0) + ' 万';
+    const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+    set('subPrincipal', fmtWan(PRINCIPAL));
+    set('subAge1', 55); set('subRate1', '5%');
+    set('subBkAge', Math.round(bk.bankruptcyAge));
+    set('subAge2', 70); set('subRate2', '6%');
+    set('subRemain', fmtWan(ok.finalValue));
+    set('convPrincipal', fmtWan(PRINCIPAL));
+    set('convAge1', 55); set('convYears1', TARGET_AGE - 55);
+    set('convAge2', 70); set('convYears2', TARGET_AGE - 70);
+    set('convDiff', 70 - 55);
+    set('convDiff2', (TARGET_AGE - 55) - (TARGET_AGE - 70));
+  })();
+</script>
+</body></html>

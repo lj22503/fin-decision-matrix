@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>住多久买房才不亏？</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:"Microsoft YaHei","PingFang SC",sans-serif; }
+  body { background:#f6f7fb; padding:24px; }
+  .card { background:#fff; border-radius:16px; box-shadow:0 4px 20px rgba(0,0,0,.08);
+          max-width:1100px; margin:0 auto; padding:28px 32px; }
+  h1 { font-size:28px; color:#111827; text-align:center; }
+  .subtitle { text-align:center; color:#6b7280; font-size:14px; margin:8px 0 18px; }
+  .emotion { display:inline-block; background:#fef3c7; color:#b45309; font-size:11px; padding:2px 8px;
+             border-radius:999px; margin-left:8px; vertical-align:middle; font-weight:700; }
+  .assume { background:#f3f4f6; border-radius:10px; padding:10px 14px; font-size:13px;
+            color:#374151; margin-bottom:16px; line-height:1.7; }
+  .highlight { background:#fef3c7; padding:2px 6px; border-radius:4px; font-weight:700; color:#b45309; }
+  .insight { background:#eef2ff; border-left:4px solid #4f46e5; border-radius:8px;
+             padding:10px 14px; font-size:13px; color:#374151; margin-bottom:16px; line-height:1.7; }
+  .insight b { color:#4f46e5; }
+  table { width:100%; border-collapse:separate; border-spacing:4px; }
+  th { padding:10px 8px; font-size:13px; color:#111827; background:#eef2ff; border-radius:8px; line-height:1.4; }
+  th small { font-weight:400; color:#6b7280; font-size:11px; }
+  th.rowhead { text-align:left; width:100px; }
+  td { padding:9px 5px; text-align:center; font-size:14px; font-weight:700;
+       color:#fff; border-radius:8px; min-width:60px; }
+  .cell-conclusion { font-size:14px; }
+  .cell-diff { font-size:11px; opacity:0.92; margin-top:2px; font-weight:500; }
+  .cell-note { font-size:10px; opacity:0.82; margin-top:1px; font-weight:400; }
+  .foot { margin-top:16px; font-size:12px; color:#9ca3af; line-height:1.6; }
+  .watermark { margin-top:14px; text-align:center; font-size:12px; color:#9ca3af; letter-spacing:1px; }
+  .legend { display:flex; justify-content:center; gap:18px; margin:12px 0 16px; font-size:12px; color:#374151; flex-wrap:wrap; }
+  .legend span { display:inline-flex; align-items:center; gap:6px; }
+  .dot { width:14px; height:14px; border-radius:4px; display:inline-block; }
+  .breakeven-row { margin-top:12px; padding:10px 14px; background:#fafafa;
+                   border-radius:10px; font-size:12px; color:#374151; line-height:1.8; }
+  .breakeven-row b { color:#4f46e5; }
+</style></head><body>
+<div class="card">
+  <h1>住多久买房才不亏？</h1>
+  <div class="subtitle"><span class="dyn" id="subPrice">200 万</span>房子住 <span class="dyn" id="subYears5">5 年</span>、房价涨 <span class="dyn" id="subApp2">2%</span>——买房比租房多花 <span class="dyn" id="subDiff5">14 万</span>；住 <span class="dyn" id="subYears15">15 年</span>、涨 <span class="dyn" id="subApp3">3%</span>——买房反而省 <span class="dyn" id="subDiff15">24 万</span>。<span class="emotion">如果当初 + 理性</span></div>
+
+  <div class="assume">
+    假设：房价 <b>200 万</b>，首付 <b>30%</b>，贷款 <b>70%</b>（30 年、年利率 4.9%、等额本息）；购房税费 <b>1.5%</b>；持有成本（物业/维修）为房价的 <b>1%/年</b>；租房年租金为房价的 <b>2%</b>，每年涨 <b>3%</b>；首付机会成本按 <b>3%</b> 年化计算。<br>
+    换算：月供约 <span class="dyn" id="convMonthly">7430 元</span>，同地段月租约 <b><span class="dyn" id="convRent">3333 元</span></b>——月供是租金的 <span class="dyn" id="convRatio">2.2 倍</span>。
+  </div>
+
+  <div class="insight">
+    <b>核心洞察：</b>买房的成本不只是月供。首付被锁定、税费一次性支出、每年还要养房。租房的成本也不只是租金——你放弃了首付的投资收益。<b>房价涨幅越高、住得越久，买房越划算；反之租房越划算。</b>盈亏平衡点通常在 <b>3% 涨幅、<span class="dyn" id="insBe">8 年</span></b>附近。
+  </div>
+
+  <div class="legend">
+    <span><i class="dot" style="background:#15803d"></i>买房明显划算（省&gt;30万）</span>
+    <span><i class="dot" style="background:#22c55e"></i>买房略划算（省5-30万）</span>
+    <span><i class="dot" style="background:#f59e0b"></i>打平（±5万）</span>
+    <span><i class="dot" style="background:#f97316"></i>租房略划算（省5-30万）</span>
+    <span><i class="dot" style="background:#dc2626"></i>租房明显划算（省&gt;30万）</span>
+  </div>
+
+  <table id="rentBuyTable">
+    <tr>
+      <th class="rowhead">居住年限</th>
+      <th>-2%<br><small>下跌</small></th>
+      <th>0%<br><small>房价不涨</small></th>
+      <th>1%<br><small>微涨</small></th>
+      <th>2%<br><small>温和</small></th>
+      <th>3%<br><small>正常</small></th>
+      <th>5%<br><small>较快</small></th>
+      <th>8%<br><small>高速</small></th>
+    </tr>
+  </table>
+
+  <div class="breakeven-row" id="breakevenRow"></div>
+
+  <div class="foot">
+    测算基于固定利率、固定涨幅的简化假设；未考虑交易税费细节、装修折旧、搬家成本、学区/落户等附加价值、房产税试点、租金波动、收入变化等。实际决策还需考虑个人生活方式、职业稳定性、家庭规划等非财务因素。本图不构成任何投资建议。
+  </div>
+  <div class="watermark">投资平权 · fin-decision-matrix</div>
+</div>
+
+<script>
+  // ============================================================
+  // 参数
+  // ============================================================
+  const PRICE = 2000000;          // 房价 200 万
+  const DOWN_PCT = 0.30;          // 首付比例 30%
+  const LOAN_RATE = 0.049;        // 贷款年利率 4.9%
+  const LOAN_YEARS = 30;          // 贷款年限
+  const PURCHASE_TAX = 0.015;     // 购房税费 1.5%
+  const MAINTENANCE_RATE = 0.01;  // 持有成本 1%/年
+  const RENT_YIELD = 0.02;        // 年租金 = 房价的 2%
+  const RENT_GROWTH = 0.03;       // 租金年涨幅 3%
+  const INVEST_RETURN = 0.03;     // 首付机会成本 3%
+
+  // ============================================================
+  // 核心计算
+  // ============================================================
+
+  // 计算月供
+  function getMonthlyPayment() {
+    const loan = PRICE * (1 - DOWN_PCT);
+    const r = LOAN_RATE / 12;
+    const n = LOAN_YEARS * 12;
+    return loan * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1);
+  }
+
+  // 计算剩余贷款（N 年后）
+  function getRemainingLoan(years) {
+    const loan = PRICE * (1 - DOWN_PCT);
+    const r = LOAN_RATE / 12;
+    const n = LOAN_YEARS * 12;
+    const m = Math.min(years * 12, n);
+    const monthly = getMonthlyPayment();
+    // 逐月计算（也可以公式，但逐月更直观）
+    let balance = loan;
+    for (let i = 0; i < m; i++) {
+      const interest = balance * r;
+      balance = balance + interest - monthly;
+      if (balance < 0) { balance = 0; break; }
+    }
+    return Math.max(0, balance);
+  }
+
+  // 买房净成本
+  function calcBuyCost(years, appreciation) {
+    const monthly = getMonthlyPayment();
+    const totalMortgage = monthly * years * 12;
+    const remainingLoan = getRemainingLoan(years);
+    const principalPaid = PRICE * (1 - DOWN_PCT) - remainingLoan;
+    const totalInterest = totalMortgage - principalPaid;
+
+    // 维护费（逐年按当年房价计算）
+    let maintenance = 0;
+    for (let y = 0; y < years; y++) {
+      maintenance += PRICE * Math.pow(1 + appreciation, y) * MAINTENANCE_RATE;
+    }
+
+    // 购房税费
+    const tax = PRICE * PURCHASE_TAX;
+
+    // 卖房所得
+    const saleValue = PRICE * Math.pow(1 + appreciation, years);
+
+    // 增值
+    const appreciationGain = saleValue - PRICE;
+
+    // 净成本 = 已付利息 + 税费 + 维护费 - 增值
+    const netCost = totalInterest + tax + maintenance - appreciationGain;
+
+    return { netCost, totalInterest, tax, maintenance, appreciationGain, saleValue, remainingLoan };
+  }
+
+  // 租房净成本
+  function calcRentCost(years) {
+    const initialAnnualRent = PRICE * RENT_YIELD;
+    let totalRent = 0;
+    for (let y = 0; y < years; y++) {
+      totalRent += initialAnnualRent * Math.pow(1 + RENT_GROWTH, y);
+    }
+    // 首付机会成本（如果租房，首付可以投资）
+    const downPayment = PRICE * DOWN_PCT;
+    const investGain = downPayment * (Math.pow(1 + INVEST_RETURN, years) - 1);
+    const netCost = totalRent - investGain;
+    return { netCost, totalRent, investGain };
+  }
+
+  // 盈亏平衡年数
+  function findBreakEven(appreciation) {
+    for (let years = 1; years <= 50; years++) {
+      const buy = calcBuyCost(years, appreciation);
+      const rent = calcRentCost(years);
+      if (buy.netCost < rent.netCost) return years;
+    }
+    return null;
+  }
+
+  // ============================================================
+  // 颜色编码
+  // ============================================================
+  function getColor(diff) {
+    // diff = 买房成本 - 租房成本
+    // 正 = 租房划算（红），负 = 买房划算（绿）
+    if (diff < -300000) return '#15803d';
+    if (diff < -50000) return '#22c55e';
+    if (diff <= 50000) return '#f59e0b';
+    if (diff <= 300000) return '#f97316';
+    return '#dc2626';
+  }
+
+  // ============================================================
+  // 格式化
+  // ============================================================
+  function formatWan(v) {
+    const abs = Math.abs(v);
+    if (abs >= 10000) return (abs / 10000).toFixed(0) + '万';
+    return Math.round(abs).toLocaleString();
+  }
+
+  function getConclusion(diff) {
+    if (diff < -50000) return '买房划算';
+    if (diff > 50000) return '租房划算';
+    return '打平';
+  }
+
+  // ============================================================
+  // 生成表格
+  // ============================================================
+  const yearsList = [3, 5, 8, 10, 15, 20, 30];
+  const appreciationList = [-0.02, 0, 0.01, 0.02, 0.03, 0.05, 0.08];
+
+  const table = document.getElementById('rentBuyTable');
+
+  yearsList.forEach(years => {
+    const tr = document.createElement('tr');
+    const th = document.createElement('th');
+    th.className = 'rowhead';
+    th.textContent = '住' + years + '年';
+    tr.appendChild(th);
+
+    appreciationList.forEach(app => {
+      const buy = calcBuyCost(years, app);
+      const rent = calcRentCost(years);
+      const diff = buy.netCost - rent.netCost;
+      const td = document.createElement('td');
+      td.style.background = getColor(diff);
+
+      const conclusion = getConclusion(diff);
+      let diffText = '';
+      if (Math.abs(diff) > 50000) {
+        diffText = (diff < 0 ? '买房省 ' : '租房省 ') + formatWan(diff);
+      } else {
+        diffText = '差距 ' + formatWan(diff);
+      }
+
+      td.innerHTML = `<div class="cell-conclusion">${conclusion}</div>
+                      <div class="cell-diff">${diffText}</div>`;
+      tr.appendChild(td);
+    });
+
+    table.appendChild(tr);
+  });
+
+  // ============================================================
+  // 盈亏平衡行
+  // ============================================================
+  const breakEvenRow = document.getElementById('breakevenRow');
+  const labels = ['-2%', '0%', '1%', '2%', '3%', '5%', '8%'];
+  let text = '<b>盈亏平衡（买房开始划算的年数）：</b><br>';
+  appreciationList.forEach((app, i) => {
+    const be = findBreakEven(app);
+    text += `房价涨 ${labels[i]}：`;
+    text += be ? `<b>${be} 年</b>` : '<b>&gt;50 年（租房始终更划算）</b>';
+    if (i < appreciationList.length - 1) text += '　|　';
+  });
+  breakEvenRow.innerHTML = text;
+
+  // ============================================================
+  // 动态插值：静态文案数字由同一计算函数生成（避免硬编码漂移）
+  // ============================================================
+  (function renderStatic() {
+    const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+    const fmtWan = v => Math.round(Math.abs(v) / 10000) + ' 万';
+    const d5 = calcBuyCost(5, 0.02).netCost - calcRentCost(5).netCost;
+    const d15 = calcBuyCost(15, 0.03).netCost - calcRentCost(15).netCost;
+    const monthly = getMonthlyPayment();
+    const rentMonthly = PRICE * RENT_YIELD / 12;
+    set('subPrice', '200 万'); set('subYears5', '5 年'); set('subApp2', '2%');
+    set('subDiff5', fmtWan(d5));
+    set('subYears15', '15 年'); set('subApp3', '3%');
+    set('subDiff15', fmtWan(d15));
+    set('convMonthly', Math.round(monthly) + ' 元');
+    set('convRent', Math.round(rentMonthly) + ' 元');
+    set('convRatio', (monthly / rentMonthly).toFixed(1) + ' 倍');
+    const be = findBreakEven(0.03);
+    set('insBe', be ? be + ' 年' : '50 年以上');
+  })();
+</script>
+</body></html>

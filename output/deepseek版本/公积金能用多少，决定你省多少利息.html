@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>公积金能用多少，决定你省多少利息</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:"Microsoft YaHei","PingFang SC",sans-serif; }
+  body { background:#f6f7fb; padding:24px; }
+  .card { background:#fff; border-radius:16px; box-shadow:0 4px 20px rgba(0,0,0,.08);
+          max-width:1100px; margin:0 auto; padding:28px 32px; }
+  h1 { font-size:28px; color:#111827; text-align:center; }
+  .subtitle { text-align:center; color:#6b7280; font-size:14px; margin:8px 0 18px; }
+  .emotion { display:inline-block; background:#dcfce7; color:#15803d; font-size:11px; padding:2px 8px;
+             border-radius:999px; margin-left:8px; vertical-align:middle; font-weight:700; }
+  .assume { background:#f3f4f6; border-radius:10px; padding:10px 14px; font-size:13px;
+            color:#374151; margin-bottom:16px; line-height:1.7; }
+  .highlight { background:#fef3c7; padding:2px 6px; border-radius:4px; font-weight:700; color:#b45309; }
+  .insight { background:#eef2ff; border-left:4px solid #4f46e5; border-radius:8px;
+             padding:10px 14px; font-size:13px; color:#374151; margin-bottom:16px; line-height:1.7; }
+  .insight b { color:#4f46e5; }
+  table { width:100%; border-collapse:separate; border-spacing:4px; }
+  th { padding:10px 8px; font-size:13px; color:#111827; background:#eef2ff; border-radius:8px; line-height:1.4; }
+  th small { font-weight:400; color:#6b7280; font-size:11px; }
+  th.rowhead { text-align:left; width:130px; }
+  td { padding:9px 5px; text-align:center; font-size:14px; font-weight:700;
+       color:#fff; border-radius:8px; min-width:60px; }
+  .cell-save { font-size:16px; }
+  .cell-detail { font-size:11px; opacity:0.92; margin-top:2px; font-weight:500; }
+  .cell-note { font-size:10px; opacity:0.82; margin-top:1px; font-weight:400; }
+  .foot { margin-top:16px; font-size:12px; color:#9ca3af; line-height:1.6; }
+  .watermark { margin-top:14px; text-align:center; font-size:12px; color:#9ca3af; letter-spacing:1px; }
+  .legend { display:flex; justify-content:center; gap:18px; margin:12px 0 16px; font-size:12px; color:#374151; flex-wrap:wrap; }
+  .legend span { display:inline-flex; align-items:center; gap:6px; }
+  .dot { width:14px; height:14px; border-radius:4px; display:inline-block; }
+</style></head><body>
+<div class="card">
+  <h1>公积金能用多少，决定你省多少利息</h1>
+  <div class="subtitle">同样贷 200 万，公积金能贷 50 万比只能贷 0 万，30 年少还 19 万——额度就是钱。<span class="emotion">省钱 + 紧迫</span></div>
+
+  <div class="assume">
+    假设：贷款年限 <b>30 年</b>，等额本息；公积金年利率 <b>3.1%</b>，商贷年利率 <b>4.9%</b>。公积金可贷额度受缴存年限、账户余额、城市上限约束，超出部分全部走商贷。<br>
+    换算：贷 200 万，公积金能贷 50 万 → 月供 <span class="highlight">9773 元</span>；公积金只能贷 0 万 → 月供 <b>10616 元</b>——每月多还 843 元，30 年多还 19 万。
+  </div>
+
+  <div class="insight">
+    <b>核心洞察：</b>公积金贷款利率比商贷低 1.8 个百分点。每多用 10 万公积金、少用 10 万商贷，30 年就省 <b>3.7 万</b>利息。公积金能贷多少，取决于你的<b>缴存年限、账户余额、城市上限</b>——这是可以提前规划的。<b>不要等到买房那天才发现公积金贷不了多少。</b>
+  </div>
+
+  <div class="legend">
+    <span><i class="dot" style="background:#15803d"></i>省 &gt;30万</span>
+    <span><i class="dot" style="background:#22c55e"></i>省 15-30万</span>
+    <span><i class="dot" style="background:#f59e0b"></i>省 5-15万</span>
+    <span><i class="dot" style="background:#f97316"></i>省 1-5万</span>
+    <span><i class="dot" style="background:#dc2626"></i>省 &lt;1万</span>
+  </div>
+
+  <table id="fundTable">
+    <tr>
+      <th class="rowhead">公积金可贷额度</th>
+      <th>总贷100万</th><th>总贷200万</th><th>总贷300万</th><th>总贷500万</th>
+    </tr>
+  </table>
+
+  <div class="foot">
+    测算基于固定利率 3.1%（公积金）和 4.9%（商贷）的简化假设；实际公积金贷款额度受各城市上限、缴存基数、缴存年限、账户余额、房屋总价等多因素影响。表中“省多少”为相比全部走商贷的利息差额。本图不构成任何投资建议。
+  </div>
+  <div class="watermark">投资平权 · fin-decision-matrix</div>
+</div>
+
+<script>
+  // ============================================================
+  // 参数
+  // ============================================================
+  const YEARS = 30;
+  const FUND_RATE = 0.031;   // 公积金利率
+  const LOAN_RATE = 0.049;   // 商贷利率
+
+  // ============================================================
+  // 核心计算
+  // ============================================================
+  function calcMonthly(loan, annualRate) {
+    const r = annualRate / 12;
+    const n = YEARS * 12;
+    const pow = Math.pow(1 + r, n);
+    return loan * r * pow / (pow - 1);
+  }
+
+  function calcTotalInterest(loan, annualRate) {
+    const monthly = calcMonthly(loan, annualRate);
+    return monthly * YEARS * 12 - loan;
+  }
+
+  // 组合贷款：公积金部分用公积金利率，剩余用商贷
+  function calcCombo(totalLoan, fundQuota) {
+    const fundPart = Math.min(fundQuota, totalLoan);
+    const loanPart = totalLoan - fundPart;
+
+    const fundMonthly = fundPart > 0 ? calcMonthly(fundPart, FUND_RATE) : 0;
+    const loanMonthly = loanPart > 0 ? calcMonthly(loanPart, LOAN_RATE) : 0;
+    const monthly = fundMonthly + loanMonthly;
+
+    const fundInterest = fundPart > 0 ? calcTotalInterest(fundPart, FUND_RATE) : 0;
+    const loanInterest = loanPart > 0 ? calcTotalInterest(loanPart, LOAN_RATE) : 0;
+    const totalInterest = fundInterest + loanInterest;
+
+    return { monthly, totalInterest, fundPart, loanPart };
+  }
+
+  // ============================================================
+  // 颜色编码：按节省利息金额
+  // ============================================================
+  function getColor(save) {
+    if (save >= 300000) return '#15803d';
+    if (save >= 150000) return '#22c55e';
+    if (save >= 50000) return '#f59e0b';
+    if (save >= 10000) return '#f97316';
+    return '#dc2626';
+  }
+
+  // ============================================================
+  // 格式化
+  // ============================================================
+  function formatMonthly(v) {
+    return Math.round(v).toLocaleString();
+  }
+
+  function formatWan(v) {
+    if (v >= 10000) return (v / 10000).toFixed(1) + '万';
+    return Math.round(v).toLocaleString();
+  }
+
+  // ============================================================
+  // 生成表格
+  // ============================================================
+  const fundQuotas = [0, 300000, 500000, 800000, 1200000];
+  const totalLoans = [1000000, 2000000, 3000000, 5000000];
+
+  const table = document.getElementById('fundTable');
+
+  fundQuotas.forEach(quota => {
+    const tr = document.createElement('tr');
+    const th = document.createElement('th');
+    th.className = 'rowhead';
+    th.textContent = quota === 0 ? '贷不了公积金' : (quota / 10000) + '万';
+    tr.appendChild(th);
+
+    totalLoans.forEach(total => {
+      const combo = calcCombo(total, quota);
+      const allLoan = calcTotalInterest(total, LOAN_RATE); // 全商贷
+      const save = allLoan - combo.totalInterest;
+
+      const td = document.createElement('td');
+      td.style.background = getColor(save);
+
+      // 实际公积金使用额（不能超过总额）
+      const actualFund = Math.min(quota, total);
+      const actualLoan = total - actualFund;
+
+      td.innerHTML = `<div class="cell-save">省 ${formatWan(save)}</div>
+                      <div class="cell-detail">月供 ${formatMonthly(combo.monthly)}</div>
+                      <div class="cell-note">公积金${formatWan(actualFund)} + 商贷${formatWan(actualLoan)}</div>`;
+      tr.appendChild(td);
+    });
+
+    table.appendChild(tr);
+  });
+</script>
+</body></html>

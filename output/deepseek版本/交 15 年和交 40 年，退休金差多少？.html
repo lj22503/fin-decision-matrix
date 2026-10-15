@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>交15年和交40年，退休金差多少？</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:"Microsoft YaHei","PingFang SC",sans-serif; }
+  body { background:#f6f7fb; padding:24px; }
+  .card { background:#fff; border-radius:16px; box-shadow:0 4px 20px rgba(0,0,0,.08);
+          max-width:1100px; margin:0 auto; padding:28px 32px; }
+  h1 { font-size:28px; color:#111827; text-align:center; }
+  .subtitle { text-align:center; color:#6b7280; font-size:14px; margin:8px 0 18px; }
+  .emotion { display:inline-block; background:#fee2e2; color:#b91c1c; font-size:11px; padding:2px 8px;
+             border-radius:999px; margin-left:8px; vertical-align:middle; font-weight:700; }
+  .assume { background:#f3f4f6; border-radius:10px; padding:10px 14px; font-size:13px;
+            color:#374151; margin-bottom:16px; line-height:1.7; }
+  .highlight { background:#fef3c7; padding:2px 6px; border-radius:4px; font-weight:700; color:#b45309; }
+  .insight { background:#eef2ff; border-left:4px solid #4f46e5; border-radius:8px;
+             padding:10px 14px; font-size:13px; color:#374151; margin-bottom:16px; line-height:1.7; }
+  .insight b { color:#4f46e5; }
+  table { width:100%; border-collapse:separate; border-spacing:4px; }
+  th { padding:10px 8px; font-size:13px; color:#111827; background:#eef2ff; border-radius:8px; line-height:1.4; }
+  th small { font-weight:400; color:#6b7280; font-size:11px; }
+  th.rowhead { text-align:left; width:110px; }
+  td { padding:9px 5px; text-align:center; font-size:15px; font-weight:700;
+       color:#fff; border-radius:8px; min-width:60px; }
+  .cell-income { font-size:16px; }
+  .cell-rate { font-size:11px; opacity:0.92; margin-top:2px; font-weight:500; }
+  .cell-gap { font-size:10px; opacity:0.82; margin-top:1px; font-weight:400; }
+  .foot { margin-top:16px; font-size:12px; color:#9ca3af; line-height:1.6; }
+  .watermark { margin-top:14px; text-align:center; font-size:12px; color:#9ca3af; letter-spacing:1px; }
+  .legend { display:flex; justify-content:center; gap:18px; margin:12px 0 16px; font-size:12px; color:#374151; flex-wrap:wrap; }
+  .legend span { display:inline-flex; align-items:center; gap:6px; }
+  .dot { width:14px; height:14px; border-radius:4px; display:inline-block; }
+</style></head><body>
+<div class="card">
+  <h1>交 15 年和交 40 年，退休金差多少？</h1>
+  <div class="subtitle">同样月薪 <span class="dyn" id="subSalary">2 万</span>，交 <span class="dyn" id="subYears1">15</span> 年替代率仅 <span class="dyn" id="subRate1">25%</span>，交 <span class="dyn" id="subYears2">40</span> 年能到 <span class="dyn" id="subRate2">56%</span>——多交 <span class="dyn" id="subDiffYears">25</span> 年，退休金约 <span class="dyn" id="subMult">2.7</span> 倍。<span class="emotion">焦虑 + 惊醒</span></div>
+
+  <div class="assume">
+    假设：当地社会平均工资 <b>8000 元/月</b>；缴费基数上限为社平工资的 <b>3 倍</b>（即 24000 元），下限为 <b>0.6 倍</b>（即 4800 元）；个人账户缴费比例 <b>8%</b>；60 岁退休计发月数 <b>139</b>；不考虑通胀、工资增长、社保政策调整。<br>
+    换算：月薪 <span class="dyn" id="convSalary">2 万</span>，交 <span class="dyn" id="convYears1">30</span> 年 → 退休后约领 <span class="highlight"><span class="dyn" id="convTotal1">8344</span> 元/月</span>（替代率 <span class="dyn" id="convRate1">42%</span>）；交 <span class="dyn" id="convYears2">40</span> 年 → 领 <b><span class="dyn" id="convTotal2">11125</span> 元/月</b>（替代率 <span class="dyn" id="convRate2">56%</span>）。
+  </div>
+
+  <div class="insight">
+    <b>核心洞察：</b>社保养老金 = <b>基础养老金</b>（与社平工资、缴费年限挂钩）+ <b>个人账户养老金</b>（与缴费基数、缴费年限挂钩）。缴费年限既是基础养老金的乘数，也是个人账户的乘数——<b>双重杠杆</b>。但高收入者受缴费基数上限约束，替代率天然更低，缺口必须靠个人储蓄补充。
+  </div>
+
+  <div class="legend">
+    <span><i class="dot" style="background:#15803d"></i>≥70%（基本维持）</span>
+    <span><i class="dot" style="background:#22c55e"></i>60-70%（略有下降）</span>
+    <span><i class="dot" style="background:#f59e0b"></i>40-60%（明显下降）</span>
+    <span><i class="dot" style="background:#f97316"></i>25-40%（大幅下降）</span>
+    <span><i class="dot" style="background:#dc2626"></i>&lt;25%（仅够生存）</span>
+  </div>
+
+  <table id="replaceTable">
+    <tr>
+      <th class="rowhead">退休前月薪</th>
+      <th>交15年</th><th>交20年</th><th>交25年</th><th>交30年</th><th>交35年</th><th>交40年</th>
+    </tr>
+  </table>
+
+  <div class="foot">
+    测算基于简化社保公式：基础养老金 =（社平工资 + 缴费基数）÷ 2 × 缴费年限 × 1%；个人账户养老金 = 缴费基数 × 8% × 12 × 缴费年限 ÷ 139。实际养老金受当地政策、工资增长、账户记账利率、过渡性养老金等多因素影响，结果可能存在较大差异。本图不构成任何金融建议。
+  </div>
+  <div class="watermark">投资平权 · fin-decision-matrix</div>
+</div>
+
+<script>
+  // ===== 参数 =====
+  const SOCIAL_AVG = 8000;          // 当地社平工资
+  const BASE_UPPER = SOCIAL_AVG * 3; // 缴费基数上限 24000
+  const BASE_LOWER = SOCIAL_AVG * 0.6; // 缴费基数下限 4800
+  const ACCOUNT_RATE = 0.08;         // 个人账户缴费比例
+  const MONTHS_DIVISOR = 139;        // 60岁退休计发月数
+
+  // ===== 核心计算 =====
+  // 给定月薪、缴费年限，返回退休金 + 替代率
+  function calcPension(salary, years) {
+    // 缴费基数（受上下限约束）
+    const base = Math.min(Math.max(salary, BASE_LOWER), BASE_UPPER);
+
+    // 基础养老金 = (社平 + 缴费基数) / 2 × 年限 × 1%
+    const basicPension = (SOCIAL_AVG + base) / 2 * years * 0.01;
+
+    // 个人账户养老金 = 缴费基数 × 8% × 12 × 年限 / 139
+    const accountBalance = base * ACCOUNT_RATE * 12 * years;
+    const accountPension = accountBalance / MONTHS_DIVISOR;
+
+    const total = basicPension + accountPension;
+    const rate = total / salary;
+    const gap = salary - total;
+
+    return { total, rate, gap, base, basicPension, accountPension };
+  }
+
+  // ===== 颜色编码：按替代率 =====
+  function getColor(rate) {
+    if (rate >= 0.70) return '#15803d';
+    if (rate >= 0.60) return '#22c55e';
+    if (rate >= 0.40) return '#f59e0b';
+    if (rate >= 0.25) return '#f97316';
+    return '#dc2626';
+  }
+
+  // ===== 格式化 =====
+  function formatIncome(v) {
+    if (v >= 10000) return (v / 10000).toFixed(1) + '万';
+    return Math.round(v).toLocaleString();
+  }
+
+  function formatRate(r) {
+    return (r * 100).toFixed(0) + '%';
+  }
+
+  function formatGap(v) {
+    if (v <= 0) return '无缺口';
+    if (v >= 10000) return '缺口' + (v / 10000).toFixed(1) + '万';
+    return '缺口' + Math.round(v).toLocaleString();
+  }
+
+  // ===== 数据 =====
+  const salaries = [5000, 8000, 10000, 20000, 30000, 50000];
+  const yearsList = [15, 20, 25, 30, 35, 40];
+
+  const table = document.getElementById('replaceTable');
+
+  salaries.forEach(salary => {
+    const tr = document.createElement('tr');
+    const th = document.createElement('th');
+    th.className = 'rowhead';
+    th.textContent = formatIncome(salary) + '/月';
+    tr.appendChild(th);
+
+    yearsList.forEach(years => {
+      const { total, rate, gap } = calcPension(salary, years);
+      const td = document.createElement('td');
+      td.style.background = getColor(rate);
+
+      td.innerHTML = `<div class="cell-income">${Math.round(total).toLocaleString()}</div>
+                      <div class="cell-rate">替代率 ${formatRate(rate)}</div>
+                      <div class="cell-gap">${formatGap(gap)}</div>`;
+      tr.appendChild(td);
+    });
+
+    table.appendChild(tr);
+  });
+
+  // ============================================================
+  // 动态插值：静态文案数字由同一计算函数生成（避免硬编码漂移）
+  // ============================================================
+  (function renderStatic() {
+    const salary = 20000, y1 = 15, y2 = 40;
+    const r1 = calcPension(salary, y1);
+    const r2 = calcPension(salary, y2);
+    const rMid = calcPension(salary, 30);
+    const fmtIncome = v => (v / 10000).toFixed(1) + '万';
+    const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+    set('subSalary', fmtIncome(salary));
+    set('subYears1', y1);
+    set('subRate1', formatRate(r1.rate));
+    set('subYears2', y2);
+    set('subRate2', formatRate(r2.rate));
+    set('subDiffYears', y2 - y1);
+    set('subMult', (r2.total / r1.total).toFixed(1));
+    set('convSalary', fmtIncome(salary));
+    set('convYears1', 30);
+    set('convTotal1', Math.round(rMid.total).toLocaleString());
+    set('convRate1', formatRate(rMid.rate));
+    set('convYears2', y2);
+    set('convTotal2', Math.round(r2.total).toLocaleString());
+    set('convRate2', formatRate(r2.rate));
+  })();
+</script>
+</body></html>

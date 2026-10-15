@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>退休后你的收入会掉多少？</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:"Microsoft YaHei","PingFang SC",sans-serif; }
+  body { background:#f6f7fb; padding:24px; }
+  .card { background:#fff; border-radius:16px; box-shadow:0 4px 20px rgba(0,0,0,.08);
+          max-width:1060px; margin:0 auto; padding:28px 32px; }
+  h1 { font-size:28px; color:#111827; text-align:center; }
+  .subtitle { text-align:center; color:#6b7280; font-size:14px; margin:8px 0 18px; }
+  .emotion { display:inline-block; background:#fee2e2; color:#b91c1c; font-size:11px; padding:2px 8px;
+             border-radius:999px; margin-left:8px; vertical-align:middle; font-weight:700; }
+  .assume { background:#f3f4f6; border-radius:10px; padding:10px 14px; font-size:13px;
+            color:#374151; margin-bottom:16px; line-height:1.7; }
+  .highlight { background:#fef3c7; padding:2px 6px; border-radius:4px; font-weight:700; color:#b45309; }
+  .insight { background:#eef2ff; border-left:4px solid #4f46e5; border-radius:8px;
+             padding:10px 14px; font-size:13px; color:#374151; margin-bottom:16px; line-height:1.7; }
+  .insight b { color:#4f46e5; }
+  table { width:100%; border-collapse:separate; border-spacing:4px; }
+  th { padding:10px 8px; font-size:13px; color:#111827; background:#eef2ff; border-radius:8px; line-height:1.4; }
+  th small { font-weight:400; color:#6b7280; font-size:11px; }
+  th.rowhead { text-align:left; width:120px; }
+  td { padding:10px 6px; text-align:center; font-size:15px; font-weight:700;
+       color:#fff; border-radius:8px; min-width:64px; }
+  .cell-income { font-size:17px; }
+  .cell-gap { font-size:11px; opacity:0.92; margin-top:2px; font-weight:500; }
+  .cell-note { font-size:10px; opacity:0.85; margin-top:1px; font-weight:400; }
+  .foot { margin-top:16px; font-size:12px; color:#9ca3af; line-height:1.6; }
+  .watermark { margin-top:14px; text-align:center; font-size:12px; color:#9ca3af; letter-spacing:1px; }
+  .legend { display:flex; justify-content:center; gap:18px; margin:12px 0 16px; font-size:12px; color:#374151; flex-wrap:wrap; }
+  .legend span { display:inline-flex; align-items:center; gap:6px; }
+  .dot { width:14px; height:14px; border-radius:4px; display:inline-block; }
+
+  /* 替换率进度条 */
+  .bar-wrap { display:flex; align-items:center; gap:8px; margin-top:4px; }
+  .bar-bg { flex:1; height:6px; background:rgba(255,255,255,0.35); border-radius:3px; overflow:hidden; }
+  .bar-fill { height:100%; border-radius:3px; }
+</style></head><body>
+<div class="card">
+  <h1>退休后你的收入会掉多少？</h1>
+  <div class="subtitle">现在月薪 2 万，退休后可能只有 8 千——替代率 40%，生活直接降两档。<span class="emotion">焦虑 + 惊醒</span></div>
+
+  <div class="assume">
+    假设：养老金替代率 = 退休后月收入 ÷ 退休前月收入；不考虑通胀、社保政策变化、企业年金等；缺口 = 退休前月收入 − 退休后月收入。<br>
+    换算：月薪 <b>2 万</b>，替代率 <b>60%</b> → 退休后月领 <span class="highlight">1.2 万</span>，每月缺口 <b>8000 元</b>，一年少 <b>9.6 万</b>。
+  </div>
+
+  <div class="insight">
+    <b>核心洞察：</b>国际经验认为替代率 <b>70% 以上</b>才能维持退休前生活水平；<b>40%</b> 只能维持基本生存。而我国社保养老金替代率目前约 <b>40%-45%</b>——意味着如果你只靠社保，退休后收入可能不到工作时的一半。
+  </div>
+
+  <div class="legend">
+    <span><i class="dot" style="background:#15803d"></i>≥80%（生活水平不降）</span>
+    <span><i class="dot" style="background:#22c55e"></i>70-80%（基本维持）</span>
+    <span><i class="dot" style="background:#f59e0b"></i>60-70%（略有下降）</span>
+    <span><i class="dot" style="background:#f97316"></i>40-60%（明显下降）</span>
+    <span><i class="dot" style="background:#dc2626"></i>&lt;40%（生存线）</span>
+  </div>
+
+  <table id="replaceTable">
+    <tr>
+      <th class="rowhead">退休前月收入</th>
+      <th>40%<br><small>生存线</small></th>
+      <th>50%<br><small>基本保障</small></th>
+      <th>60%<br><small>略有下降</small></th>
+      <th>70%<br><small>基本维持</small></th>
+      <th>80%<br><small>不降级</small></th>
+      <th>100%<br><small>完全维持</small></th>
+    </tr>
+  </table>
+
+  <div class="foot">
+    测算基于固定替代率的简化假设；实际养老金受缴费年限、缴费基数、当地社平工资、社保政策等多因素影响。我国社保养老金替代率因地区、缴费水平差异较大，一般在 40%-60% 之间。本图不构成任何金融建议。
+  </div>
+  <div class="watermark">投资平权 · fin-decision-matrix</div>
+</div>
+
+<script>
+  // ===== 参数 =====
+  const incomes = [5000, 10000, 20000, 30000, 50000];
+  const rates = [0.40, 0.50, 0.60, 0.70, 0.80, 1.00];
+
+  // ===== 颜色编码：按替代率 =====
+  function getColor(rate) {
+    if (rate >= 0.80) return '#15803d';
+    if (rate >= 0.70) return '#22c55e';
+    if (rate >= 0.60) return '#f59e0b';
+    if (rate >= 0.40) return '#f97316';
+    return '#dc2626';
+  }
+
+  // ===== 格式化 =====
+  function formatIncome(v) {
+    if (v >= 10000) return (v / 10000).toFixed(1) + '万';
+    return Math.round(v).toLocaleString() + '元';
+  }
+
+  function formatGap(v) {
+    if (v <= 0) return '无缺口';
+    if (v >= 10000) return '缺口 ' + (v / 10000).toFixed(1) + '万';
+    return '缺口 ' + Math.round(v).toLocaleString() + '元';
+  }
+
+  function getNote(rate, income) {
+    const annualGap = (income * (1 - rate)) * 12;
+    if (rate >= 0.80) return '生活水平不降';
+    if (rate >= 0.70) return '基本维持';
+    if (rate >= 0.60) return '略有下降';
+    if (rate >= 0.40) return '明显下降';
+    return '仅够基本生存';
+  }
+
+  // ===== 生成表格 =====
+  const table = document.getElementById('replaceTable');
+
+  incomes.forEach(income => {
+    const tr = document.createElement('tr');
+    const th = document.createElement('th');
+    th.className = 'rowhead';
+    th.textContent = formatIncome(income) + '/月';
+    tr.appendChild(th);
+
+    rates.forEach(rate => {
+      const retiredIncome = income * rate;
+      const gap = income - retiredIncome;
+      const td = document.createElement('td');
+      td.style.background = getColor(rate);
+
+      // 进度条填充比例
+      const barPct = Math.round(rate * 100);
+
+      td.innerHTML = `
+        <div class="cell-income">${formatIncome(retiredIncome)}/月</div>
+        <div class="cell-gap">${formatGap(gap)}</div>
+        <div class="bar-wrap">
+          <div class="bar-bg">
+            <div class="bar-fill" style="width:${barPct}%;background:rgba(255,255,255,0.9)"></div>
+          </div>
+        </div>
+        <div class="cell-note">${getNote(rate, income)}</div>
+      `;
+      tr.appendChild(td);
+    });
+
+    table.appendChild(tr);
+  });
+</script>
+</body></html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>你的安全感，值几个月工资？</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:"Microsoft YaHei","PingFang SC",sans-serif; }
+  body { background:#f6f7fb; padding:24px; }
+  .card { background:#fff; border-radius:16px; box-shadow:0 4px 20px rgba(0,0,0,.08);
+          max-width:1100px; margin:0 auto; padding:28px 32px; }
+  h1 { font-size:28px; color:#111827; text-align:center; }
+  .subtitle { text-align:center; color:#6b7280; font-size:14px; margin:8px 0 18px; }
+  .emotion { display:inline-block; background:#dcfce7; color:#15803d; font-size:11px; padding:2px 8px;
+             border-radius:999px; margin-left:8px; vertical-align:middle; font-weight:700; }
+  .assume { background:#f3f4f6; border-radius:10px; padding:10px 14px; font-size:13px;
+            color:#374151; margin-bottom:16px; line-height:1.7; }
+  .highlight { background:#fef3c7; padding:2px 6px; border-radius:4px; font-weight:700; color:#b45309; }
+  .insight { background:#eef2ff; border-left:4px solid #4f46e5; border-radius:8px;
+             padding:10px 14px; font-size:13px; color:#374151; margin-bottom:16px; line-height:1.7; }
+  .insight b { color:#4f46e5; }
+  table { width:100%; border-collapse:separate; border-spacing:4px; }
+  th { padding:10px 8px; font-size:13px; color:#111827; background:#eef2ff; border-radius:8px; line-height:1.4; }
+  th small { font-weight:400; color:#6b7280; font-size:11px; }
+  th.rowhead { text-align:left; width:110px; }
+  td { padding:9px 5px; text-align:center; font-size:14px; font-weight:700;
+       color:#fff; border-radius:8px; min-width:60px; }
+  .cell-amount { font-size:16px; }
+  .cell-months { font-size:10px; opacity:0.92; margin-top:2px; font-weight:500; }
+  .cell-note { font-size:10px; opacity:0.82; margin-top:1px; font-weight:400; }
+  .foot { margin-top:16px; font-size:12px; color:#9ca3af; line-height:1.6; }
+  .watermark { margin-top:14px; text-align:center; font-size:12px; color:#9ca3af; letter-spacing:1px; }
+  .legend { display:flex; justify-content:center; gap:18px; margin:12px 0 16px; font-size:12px; color:#374151; flex-wrap:wrap; }
+  .legend span { display:inline-flex; align-items:center; gap:6px; }
+  .dot { width:14px; height:14px; border-radius:4px; display:inline-block; }
+</style></head><body>
+<div class="card">
+  <h1>你的安全感，值几个月工资？</h1>
+  <div class="subtitle">月支出 1 万，双职工留 3 万；自由职业留 12 万——同样生活，安全感贵 4 倍。<span class="emotion">掌控 + 安心</span></div>
+
+  <div class="assume">
+    假设：应急金 = 月固定支出 × 覆盖月数；固定支出包括房贷/房租、餐饮、交通、保险、教育等刚性支出；覆盖月数按家庭收入稳定性分档：<b>双职工稳定 3 个月、单职工稳定 6 个月、单职工不稳定 9 个月、自由职业/创业 12 个月</b>。<br>
+    换算：月支出 <span class="highlight">1 万</span>，双职工 → 留 <b>3 万</b>（每天约 82 元的安全感成本）；自由职业 → 留 <b>12 万</b>（每天约 329 元）——同样的生活，安全感贵 4 倍。
+  </div>
+
+  <div class="insight">
+    <b>核心洞察：</b>应急金不是越多越好，也不是越少越好——它取决于<b>你多久能找到下一份收入</b>。收入越不稳定，需要的缓冲越厚。但应急金的机会成本也很高：留太多，钱在活期里贬值；留太少，一次意外就崩盘。<b>3-12 个月支出是合理区间，对应不同的收入结构。</b>
+  </div>
+
+  <div class="legend">
+    <span><i class="dot" style="background:#15803d"></i>≤3万（轻松）</span>
+    <span><i class="dot" style="background:#22c55e"></i>3-8万</span>
+    <span><i class="dot" style="background:#f59e0b"></i>8-15万</span>
+    <span><i class="dot" style="background:#f97316"></i>15-25万</span>
+    <span><i class="dot" style="background:#dc2626"></i>&gt;25万（压力大）</span>
+  </div>
+
+  <table id="emergencyTable">
+    <tr>
+      <th class="rowhead">月固定支出</th>
+      <th>双职工<br><small>稳定行业</small></th>
+      <th>单职工<br><small>稳定行业</small></th>
+      <th>单职工<br><small>不稳定行业</small></th>
+      <th>自由职业<br><small>创业/接单</small></th>
+    </tr>
+  </table>
+
+  <div class="foot">
+    测算基于简化假设：应急金 = 月固定支出 × 覆盖月数；固定支出不含弹性消费（旅游、娱乐等）；未考虑失业金、配偶收入、副业收入、存款利息等。实际应急金需求因个人情况差异较大，建议结合自身收入结构、行业周期、家庭负担综合判断。本图不构成任何投资建议。
+  </div>
+  <div class="watermark">投资平权 · fin-decision-matrix</div>
+</div>
+
+<script>
+  // ============================================================
+  // 参数
+  // ============================================================
+  const SCENARIOS = [
+    { name: '双职工稳定', months: 3,  note: '双收入，行业稳定' },
+    { name: '单职工稳定', months: 6,  note: '单收入，行业稳定' },
+    { name: '单职工不稳定', months: 9, note: '单收入，行业波动大' },
+    { name: '自由职业',   months: 12, note: '无固定雇主，收入波动' }
+  ];
+
+  // ============================================================
+  // 核心计算
+  // ============================================================
+  function calcEmergency(monthlyExpense, months) {
+    return monthlyExpense * months;
+  }
+
+  // ============================================================
+  // 颜色编码：按应急金金额
+  // ============================================================
+  function getColor(amount) {
+    if (amount <= 30000) return '#15803d';
+    if (amount <= 80000) return '#22c55e';
+    if (amount <= 150000) return '#f59e0b';
+    if (amount <= 250000) return '#f97316';
+    return '#dc2626';
+  }
+
+  // ============================================================
+  // 格式化
+  // ============================================================
+  function formatWan(v) {
+    if (v >= 10000) return (v / 10000).toFixed(1) + '万';
+    return Math.round(v).toLocaleString();
+  }
+
+  function formatMonths(months) {
+    return '覆盖' + months + '个月';
+  }
+
+  // ============================================================
+  // 生成表格
+  // ============================================================
+  const monthlyExpenses = [3000, 5000, 8000, 12000, 20000];
+
+  const table = document.getElementById('emergencyTable');
+
+  monthlyExpenses.forEach(expense => {
+    const tr = document.createElement('tr');
+    const th = document.createElement('th');
+    th.className = 'rowhead';
+    th.textContent = (expense / 10000).toFixed(1).replace('.0', '') + '万';
+    tr.appendChild(th);
+
+    SCENARIOS.forEach(scenario => {
+      const amount = calcEmergency(expense, scenario.months);
+      const td = document.createElement('td');
+      td.style.background = getColor(amount);
+
+      td.innerHTML = `<div class="cell-amount">${formatWan(amount)}</div>
+                      <div class="cell-months">${formatMonths(scenario.months)}</div>
+                      <div class="cell-note">${scenario.note}</div>`;
+      tr.appendChild(td);
+    });
+
+    table.appendChild(tr);
+  });
+</script>
+</body></html>

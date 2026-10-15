@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>公积金 vs 商贷，30年利息差多少？</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:"Microsoft YaHei","PingFang SC",sans-serif; }
+  body { background:#f6f7fb; padding:24px; }
+  .card { background:#fff; border-radius:16px; box-shadow:0 4px 20px rgba(0,0,0,.08);
+          max-width:1100px; margin:0 auto; padding:28px 32px; }
+  h1 { font-size:28px; color:#111827; text-align:center; }
+  .subtitle { text-align:center; color:#6b7280; font-size:14px; margin:8px 0 18px; }
+  .emotion { display:inline-block; background:#dcfce7; color:#15803d; font-size:11px; padding:2px 8px;
+             border-radius:999px; margin-left:8px; vertical-align:middle; font-weight:700; }
+  .assume { background:#f3f4f6; border-radius:10px; padding:10px 14px; font-size:13px;
+            color:#374151; margin-bottom:16px; line-height:1.7; }
+  .highlight { background:#fef3c7; padding:2px 6px; border-radius:4px; font-weight:700; color:#b45309; }
+  .insight { background:#eef2ff; border-left:4px solid #4f46e5; border-radius:8px;
+             padding:10px 14px; font-size:13px; color:#374151; margin-bottom:16px; line-height:1.7; }
+  .insight b { color:#4f46e5; }
+  table { width:100%; border-collapse:separate; border-spacing:4px; }
+  th { padding:10px 8px; font-size:13px; color:#111827; background:#eef2ff; border-radius:8px; line-height:1.4; }
+  th small { font-weight:400; color:#6b7280; font-size:11px; }
+  th.rowhead { text-align:left; width:100px; }
+  td { padding:9px 5px; text-align:center; font-size:14px; font-weight:700;
+       color:#fff; border-radius:8px; min-width:60px; }
+  .cell-monthly { font-size:16px; }
+  .cell-interest { font-size:11px; opacity:0.92; margin-top:2px; font-weight:500; }
+  .cell-diff { font-size:10px; opacity:0.82; margin-top:1px; font-weight:400; }
+  .foot { margin-top:16px; font-size:12px; color:#9ca3af; line-height:1.6; }
+  .watermark { margin-top:14px; text-align:center; font-size:12px; color:#9ca3af; letter-spacing:1px; }
+  .legend { display:flex; justify-content:center; gap:18px; margin:12px 0 16px; font-size:12px; color:#374151; flex-wrap:wrap; }
+  .legend span { display:inline-flex; align-items:center; gap:6px; }
+  .dot { width:14px; height:14px; border-radius:4px; display:inline-block; }
+  .extra-note { margin-top:12px; padding:10px 14px; background:#fafafa;
+                border-radius:10px; font-size:12px; color:#374151; line-height:1.8; }
+  .extra-note b { color:#4f46e5; }
+</style></head><body>
+<div class="card">
+  <h1>公积金 vs 商贷，30 年利息差多少？</h1>
+  <div class="subtitle">100 万贷款，公积金比商贷省 37 万利息——白捡一辆车。<span class="emotion">省钱 + 爽感</span></div>
+
+  <div class="assume">
+    假设：贷款年限 <b>30 年</b>，等额本息；公积金年利率 <b>3.1%</b>，商贷年利率 <b>4.9%</b>；组合贷按 <b>50% 公积金 + 50% 商贷</b> 计算。<br>
+    换算：100 万贷款，公积金月供 <span class="highlight">4270 元</span>，商贷月供 <b>5308 元</b>——每月少还 1038 元，30 年少还 37 万。
+  </div>
+
+  <div class="insight">
+    <b>核心洞察：</b>公积金贷款利率比商贷低 <b>1.8 个百分点</b>，这个利差在 30 年复利下被放大成巨大的金额差距。贷款 200 万时，公积金比商贷省 <b>74.7 万</b>——相当于一套小城市房子的首付。<b>能用公积金就用满，这是普通人能拿到的最便宜的钱。</b>
+  </div>
+
+  <div class="legend">
+    <span><i class="dot" style="background:#15803d"></i>公积金（最省）</span>
+    <span><i class="dot" style="background:#f59e0b"></i>组合贷（中等）</span>
+    <span><i class="dot" style="background:#dc2626"></i>商贷（最贵）</span>
+  </div>
+
+  <table id="loanTable">
+    <tr>
+      <th class="rowhead">贷款金额</th>
+      <th>公积金<br><small>3.1%</small></th>
+      <th>组合贷<br><small>50%+50%</small></th>
+      <th>商贷<br><small>4.9%</small></th>
+      <th>公积金 vs 商贷<br><small>省多少</small></th>
+    </tr>
+  </table>
+
+  <div class="extra-note" id="extraNote"></div>
+
+  <div class="foot">
+    测算基于固定利率 3.1%（公积金）和 4.9%（商贷）的简化假设；实际公积金贷款有额度上限（各城市不同，通常 60-120 万），且需满足缴存条件。组合贷按 50% 公积金 + 50% 商贷简化计算，实际比例受公积金上限约束。本图不构成任何投资建议。
+  </div>
+  <div class="watermark">投资平权 · fin-decision-matrix</div>
+</div>
+
+<script>
+  // ============================================================
+  // 参数
+  // ============================================================
+  const YEARS = 30;
+  const FUND_RATE = 0.031;   // 公积金利率 3.1%
+  const LOAN_RATE = 0.049;   // 商贷利率 4.9%
+
+  // ============================================================
+  // 核心计算
+  // ============================================================
+  function calcMonthly(loan, annualRate, years) {
+    const r = annualRate / 12;
+    const n = years * 12;
+    const pow = Math.pow(1 + r, n);
+    return loan * r * pow / (pow - 1);
+  }
+
+  function calcTotalInterest(loan, annualRate, years) {
+    const monthly = calcMonthly(loan, annualRate, years);
+    return monthly * years * 12 - loan;
+  }
+
+  // 组合贷：50%公积金 + 50%商贷
+  function calcCombo(loan) {
+    const half = loan / 2;
+    const fundInterest = calcTotalInterest(half, FUND_RATE, YEARS);
+    const loanInterest = calcTotalInterest(half, LOAN_RATE, YEARS);
+    const totalInterest = fundInterest + loanInterest;
+    const monthly = calcMonthly(half, FUND_RATE, YEARS) + calcMonthly(half, LOAN_RATE, YEARS);
+    return { monthly, totalInterest };
+  }
+
+  // ============================================================
+  // 颜色编码
+  // ============================================================
+  function getColor(type) {
+    if (type === 'fund') return '#15803d';
+    if (type === 'combo') return '#f59e0b';
+    return '#dc2626';
+  }
+
+  // ============================================================
+  // 格式化
+  // ============================================================
+  function formatMonthly(v) {
+    return Math.round(v).toLocaleString();
+  }
+
+  function formatWan(v) {
+    if (v >= 10000) return (v / 10000).toFixed(1) + '万';
+    return Math.round(v).toLocaleString();
+  }
+
+  // ============================================================
+  // 生成表格
+  // ============================================================
+  const loans = [500000, 1000000, 1500000, 2000000, 3000000];
+
+  const table = document.getElementById('loanTable');
+
+  loans.forEach(loan => {
+    const tr = document.createElement('tr');
+    const th = document.createElement('th');
+    th.className = 'rowhead';
+    th.textContent = (loan / 10000) + '万';
+    tr.appendChild(th);
+
+    // 公积金
+    const fundMonthly = calcMonthly(loan, FUND_RATE, YEARS);
+    const fundInterest = calcTotalInterest(loan, FUND_RATE, YEARS);
+    const tdFund = document.createElement('td');
+    tdFund.style.background = getColor('fund');
+    tdFund.innerHTML = `<div class="cell-monthly">${formatMonthly(fundMonthly)}</div>
+                        <div class="cell-interest">利息${formatWan(fundInterest)}</div>`;
+    tr.appendChild(tdFund);
+
+    // 组合贷
+    const combo = calcCombo(loan);
+    const tdCombo = document.createElement('td');
+    tdCombo.style.background = getColor('combo');
+    tdCombo.innerHTML = `<div class="cell-monthly">${formatMonthly(combo.monthly)}</div>
+                         <div class="cell-interest">利息${formatWan(combo.totalInterest)}</div>`;
+    tr.appendChild(tdCombo);
+
+    // 商贷
+    const loanMonthly = calcMonthly(loan, LOAN_RATE, YEARS);
+    const loanInterest = calcTotalInterest(loan, LOAN_RATE, YEARS);
+    const tdLoan = document.createElement('td');
+    tdLoan.style.background = getColor('loan');
+    tdLoan.innerHTML = `<div class="cell-monthly">${formatMonthly(loanMonthly)}</div>
+                        <div class="cell-interest">利息${formatWan(loanInterest)}</div>`;
+    tr.appendChild(tdLoan);
+
+    // 差额
+    const save = loanInterest - fundInterest;
+    const tdDiff = document.createElement('td');
+    tdDiff.style.background = '#eef2ff';
+    tdDiff.style.color = '#111827';
+    tdDiff.innerHTML = `<div class="cell-monthly" style="color:#15803d">省 ${formatWan(save)}</div>
+                        <div class="cell-diff" style="color:#6b7280">月供少 ${formatMonthly(loanMonthly - fundMonthly)}</div>`;
+    tr.appendChild(tdDiff);
+
+    table.appendChild(tr);
+  });
+
+  // ============================================================
+  // 补充说明
+  // ============================================================
+  const note = document.getElementById('extraNote');
+  note.innerHTML = `<b>关键提醒：</b><br>
+    · 公积金贷款有额度上限，各城市不同（通常 60-120 万），超出部分需用商贷<br>
+    · 公积金缴存满 6-12 个月才能申请贷款，且账户状态需正常<br>
+    · 组合贷审批流程更复杂，放款时间可能更长<br>
+    · 如果公积金余额充足，还可以办理<b>公积金冲还贷</b>，进一步减少月供压力<br>
+    · 公积金是普通人能拿到的最便宜的钱——<b>能用就用满，不要浪费</b>`;
+</script>
+</body></html>

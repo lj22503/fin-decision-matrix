@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>房贷提前还款，每月多还一点能省多少？</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:"Microsoft YaHei","PingFang SC",sans-serif; }
+  body { background:#f6f7fb; padding:24px; }
+  .card { background:#fff; border-radius:16px; box-shadow:0 4px 20px rgba(0,0,0,.08);
+          max-width:1040px; margin:0 auto; padding:28px 32px; }
+  h1 { font-size:28px; color:#111827; text-align:center; }
+  .subtitle { text-align:center; color:#6b7280; font-size:14px; margin:8px 0 18px; }
+  .emotion { display:inline-block; background:#dbeafe; color:#1d4ed8; font-size:11px; padding:2px 8px;
+             border-radius:999px; margin-left:8px; vertical-align:middle; font-weight:700; }
+  .assume { background:#f3f4f6; border-radius:10px; padding:10px 14px; font-size:13px;
+            color:#374151; margin-bottom:16px; line-height:1.7; }
+  table { width:100%; border-collapse:separate; border-spacing:4px; }
+  th { padding:10px 8px; font-size:14px; color:#111827; background:#eef2ff; border-radius:8px; }
+  th.rowhead { text-align:left; width:110px; }
+  td { padding:10px 6px; text-align:center; font-size:15px; font-weight:700;
+       color:#fff; border-radius:8px; min-width:64px; }
+  .cell-years { font-size:17px; }
+  .cell-save { font-size:11px; opacity:0.9; margin-top:2px; font-weight:500; }
+  .foot { margin-top:16px; font-size:12px; color:#9ca3af; line-height:1.6; }
+  .watermark { margin-top:14px; text-align:center; font-size:12px; color:#9ca3af; letter-spacing:1px; }
+  .legend { display:flex; justify-content:center; gap:18px; margin:12px 0 16px; font-size:12px; color:#374151; flex-wrap:wrap; }
+  .legend span { display:inline-flex; align-items:center; gap:6px; }
+  .dot { width:14px; height:14px; border-radius:4px; display:inline-block; }
+  .highlight { background:#fef3c7; padding:2px 6px; border-radius:4px; font-weight:700; color:#b45309; }
+</style></head><body>
+<div class="card">
+  <h1>每月多还一点，你的房贷能少还好几年？</h1>
+  <div class="subtitle">100万房贷，每月多还2000元 → 少还13年、少付44万利息。<span class="emotion">杠杆 + 爽感</span></div>
+  <div class="assume">
+    假设：等额本息，贷款 <b>30年</b>，年利率 <b>4.9%</b>（固定）；无提前一次性还款、无罚息；提前还款额计入每月月供一起还。<br>
+    换算：每月多还1000元 ≈ 每天多还33元 ≈ <span class="highlight">少喝1杯咖啡</span>，却能让100万房贷少还8.7年。
+  </div>
+  <div class="legend">
+    <span><i class="dot" style="background:#15803d"></i>≤15年（大幅缩短）</span>
+    <span><i class="dot" style="background:#22c55e"></i>15-20年</span>
+    <span><i class="dot" style="background:#f59e0b"></i>20-25年</span>
+    <span><i class="dot" style="background:#f97316"></i>25-28年</span>
+    <span><i class="dot" style="background:#dc2626"></i>&gt;28年（几乎没有缩短）</span>
+  </div>
+  <table id="mortgageTable">
+    <tr><th class="rowhead">贷款余额</th><th>不额外还</th><th>+500元/月</th><th>+1000元/月</th><th>+2000元/月</th><th>+5000元/月</th></tr>
+  </table>
+  <div class="foot">
+    测算基于固定利率4.9%、30年期、等额本息的简化假设；实际房贷多为浮动利率（LPR），提前还款可能有违约金或次数限制。本图不构成任何金融建议。
+  </div>
+  <div class="watermark">投资平权 · fin-decision-matrix</div>
+</div>
+<script>
+  // ===== 参数配置 =====
+  const ANNUAL_RATE = 0.049;   // 年利率 4.9%
+  const TERM_YEARS = 30;       // 贷款年限
+  const MAX_MONTHS = 720;      // 60年上限（防止死循环）
+
+  // 计算基础月供（等额本息）
+  function baseMonthlyPayment(principal, annualRate, years) {
+    const r = annualRate / 12;
+    const n = years * 12;
+    const pow = Math.pow(1 + r, n);
+    return principal * r * pow / (pow - 1);
+  }
+
+  // 核心计算：给定本金+额外月供，返回 {还清年限, 节省利息, 基础利息}
+  function calcMortgage(principal, extraMonthly) {
+    const r = ANNUAL_RATE / 12;
+    const baseMonthly = baseMonthlyPayment(principal, ANNUAL_RATE, TERM_YEARS);
+    const baseTotal = baseMonthly * TERM_YEARS * 12;
+    const baseInterest = baseTotal - principal;
+
+    // 带额外还款的逐月模拟
+    let balance = principal;
+    let months = 0;
+    let totalPaid = 0;
+
+    while (balance > 0.01 && months < MAX_MONTHS) {
+      const interest = balance * r;
+      let payment = baseMonthly + extraMonthly;
+      if (payment > balance + interest) payment = balance + interest; // 最后一期
+      balance = balance + interest - payment;
+      totalPaid += payment;
+      months++;
+    }
+
+    const newInterest = totalPaid - principal;
+    const savedInterest = baseInterest - newInterest;
+    return {
+      years: months / 12,
+      savedInterest: savedInterest,
+      baseInterest: baseInterest
+    };
+  }
+
+  // 颜色：按还清年限
+  function getColor(years) {
+    if (years <= 15) return '#15803d';
+    if (years <= 20) return '#22c55e';
+    if (years <= 25) return '#f59e0b';
+    if (years <= 28) return '#f97316';
+    return '#dc2626';
+  }
+
+  // 格式化年限
+  function formatYears(y) {
+    if (Math.abs(y - TERM_YEARS) < 0.05) return TERM_YEARS + '年';
+    return y.toFixed(1) + '年';
+  }
+
+  // 格式化节省金额
+  function formatSaved(v) {
+    if (v <= 0) return '—';
+    if (v < 10000) return '省 ' + Math.round(v / 1000) + '千';
+    return '省 ' + (v / 10000).toFixed(1) + '万';
+  }
+
+  // ===== 数据：行=贷款余额，列=额外月供 =====
+  const balances = [500000, 1000000, 1500000, 2000000, 3000000];
+  const extras = [0, 500, 1000, 2000, 5000];
+
+  const table = document.getElementById('mortgageTable');
+
+  balances.forEach(p => {
+    const tr = document.createElement('tr');
+    const th = document.createElement('th');
+    th.className = 'rowhead';
+    th.textContent = (p / 10000) + '万';
+    tr.appendChild(th);
+
+    extras.forEach(e => {
+      const result = calcMortgage(p, e);
+      const td = document.createElement('td');
+      td.style.background = getColor(result.years);
+
+      const yearsDiv = document.createElement('div');
+      yearsDiv.className = 'cell-years';
+      yearsDiv.textContent = formatYears(result.years);
+
+      const saveDiv = document.createElement('div');
+      saveDiv.className = 'cell-save';
+      saveDiv.textContent = formatSaved(result.savedInterest);
+
+      td.appendChild(yearsDiv);
+      td.appendChild(saveDiv);
+      tr.appendChild(td);
+    });
+
+    table.appendChild(tr);
+  });
+</script>
+</body></html>

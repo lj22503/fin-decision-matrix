@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>决定你财富的，不是赚多少，是留下多少</title>
+<meta name="description" content="月薪 5 万存 10%，10 年 77.6 万；月薪 1 万存 40%，10 年 62.1 万。提高储蓄率 10 个点，相当于薪资翻倍。">
+<meta name="keywords" content="储蓄率,存钱,复利,财富积累,工资,fin-decision-matrix">
+<meta property="og:type" content="article" />
+<meta property="og:title" content="决定你财富的，不是赚多少，是留下多少" />
+<meta property="og:description" content="月薪 5 万存 10%，10 年 77.6 万；月薪 1 万存 40%，10 年 62.1 万。提高储蓄率 10 个点，相当于薪资翻倍。" />
+<meta property="og:url" content="https://fintools.mangofolio.com/guide/%E5%86%B3%E5%AE%9A%E4%BD%A0%E8%B4%A2%E5%AF%8C%E7%9A%84%EF%BC%8C%E4%B8%8D%E6%98%AF%E8%B5%9A%E5%A4%9A%E5%B0%91%EF%BC%8C%E6%98%AF%E7%95%99%E4%B8%8B%E5%A4%9A%E5%B0%91.html" />
+<meta property="og:image" content="https://fintools.mangofolio.com/images/og-cover.png?v=2" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:site_name" content="财务工具箱 FinTools" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="决定你财富的，不是赚多少，是留下多少" />
+<meta name="twitter:description" content="月薪 5 万存 10%，10 年 77.6 万；月薪 1 万存 40%，10 年 62.1 万。" />
+<meta name="twitter:image" content="https://fintools.mangofolio.com/images/og-cover.png?v=2" />
+<link rel="canonical" href="https://fintools.mangofolio.com/guide/%E5%86%B3%E5%AE%9A%E4%BD%A0%E8%B4%A2%E5%AF%8C%E7%9A%84%EF%BC%8C%E4%B8%8D%E6%98%AF%E8%B5%9A%E5%A4%9A%E5%B0%91%EF%BC%8C%E6%98%AF%E7%95%99%E4%B8%8B%E5%A4%9A%E5%B0%91.html" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"决定你财富的，不是赚多少，是留下多少","description":"月薪 5 万存 10%，10 年 77.6 万；月薪 1 万存 40%，10 年 62.1 万。","image":"https://fintools.mangofolio.com/images/og-cover.png?v=2","datePublished":"2026-10-14","dateModified":"2026-10-14","author":{"@type":"Organization","name":"财务工具箱 FinTools","url":"https://fintools.mangofolio.com/"},"publisher":{"@type":"Organization","name":"mangofolio","logo":{"@type":"ImageObject","url":"https://fintools.mangofolio.com/images/og-cover.png?v=2"}},"mainEntityOfPage":"https://fintools.mangofolio.com/guide/%E5%86%B3%E5%AE%9A%E4%BD%A0%E8%B4%A2%E5%AF%8C%E7%9A%84%EF%BC%8C%E4%B8%8D%E6%98%AF%E8%B5%9A%E5%A4%9A%E5%B0%91%EF%BC%8C%E6%98%AF%E7%95%99%E4%B8%8B%E5%A4%9A%E5%B0%91.html","about":"储蓄率,复利,财富积累"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"存钱真的比赚钱重要吗？","acceptedAnswer":{"@type":"Answer","text":"以 10 年复利 5% 看：月薪 5 万存 10%（月存 5000）10 年 77.6 万；月薪 1 万存 40%（月存 4000）10 年 62.1 万。提高储蓄率 10 个点，相当于薪资翻倍——前者你能控制，后者不一定。"}},{"@type":"Question","name":"储蓄率多重要？","acceptedAnswer":{"@type":"Answer","text":"储蓄率每提高 10 个百分点，10 年累计资产约相当于薪资翻倍的效果，而薪资翻倍远难控制。"}},{"@type":"Question","name":"收益怎么算？","acceptedAnswer":{"@type":"Answer","text":"按月定投复利：每月储蓄 = 月薪 × 储蓄率；年化收益率 5%，10 年后 FV = 月存 × ((1+r)^n − 1)/r。"}}]}</script>
+
+<link rel="stylesheet" href="assets/mangofolio-tokens-v09.css">
+<style>
+  :root {
+    --page-bg: var(--mf-colors-background);
+    --page-card: var(--mf-colors-background-surface);
+    --page-panel: var(--mf-colors-background-neutral);
+    --page-ink: var(--mf-colors-text);
+    --page-ink-strong: var(--mf-colors-text-strong);
+    --page-ink-weak: var(--mf-colors-text-weak);
+    --page-accent: var(--mf-colors-text-link);
+    --page-accent-deep: var(--mf-colors-text-accent-mango);
+    --page-hairline: var(--mf-colors-border-weak);
+    --lvl1-bg: #B8221E;   /* <20万（红） */
+    --lvl2-bg: #D4543E;   /* 20-50万 */
+    --lvl3-bg: #F59E0B;   /* 50-100万 */
+    --lvl4-bg: #1F8A4C;   /* 100-200万 */
+    --lvl5-bg: #11693D;   /* ≥200万（绿） */
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--page-bg); padding:12px; font-family:var(--mf-fonts-sans); color:var(--page-ink); }
+  .card { background:var(--page-card); border:1px solid var(--page-hairline); border-radius:var(--mf-radii-card); box-shadow:var(--mf-shadows-card); max-width:1100px; margin:8px auto; padding:20px 26px; }
+  .eyebrow { font-size:var(--mf-font-sizes-eyebrow); font-weight:500; color:var(--page-accent); letter-spacing:.3em; text-transform:uppercase; text-align:center; margin-bottom:4px; }
+  h1 { font-family:var(--mf-fonts-display); font-size:clamp(1.6rem,3.6vw,2.3rem); font-weight:800; color:var(--page-ink-strong); text-align:center; line-height:1.3; }
+  .conclusion { margin:8px auto 6px; max-width:900px; text-align:center; font-size:var(--mf-font-sizes-100); line-height:1.6; color:var(--page-ink-strong); font-weight:600; }
+  .hero { background:var(--page-panel); border-left:3px solid var(--page-accent); border-radius:var(--mf-radii-large); padding:12px 16px; margin:4px 0 12px; }
+  .hero p { color:var(--page-ink); font-size:var(--mf-font-sizes-100); line-height:1.8; margin:0; }
+  .hero b, .hero strong { color:var(--page-ink-strong); }
+  .section-title { font-size:var(--mf-font-sizes-200); font-weight:700; color:var(--page-ink-strong); margin:14px 0 6px; }
+  .assume { background:var(--page-panel); border-radius:var(--mf-radii-large); padding:12px 16px; font-size:var(--mf-font-sizes-30); color:var(--page-ink); margin:14px 0; line-height:1.8; }
+  .assume b, .assume strong { color:var(--page-ink-strong); }
+  details.l2 { border:1px solid var(--page-hairline); border-radius:var(--mf-radii-large); padding:10px 14px; margin:14px 0; font-size:var(--mf-font-sizes-30); line-height:1.8; color:var(--page-ink); }
+  details.l2 summary { cursor:pointer; font-weight:700; color:var(--page-accent); }
+  table { width:100%; border-collapse:separate; border-spacing:3px; }
+  th { padding:8px 6px; font-size:var(--mf-font-sizes-30); color:var(--page-ink-strong); background:var(--mf-colors-primitives-mango-050); border-radius:var(--mf-radii-small); line-height:1.4; }
+  th small { font-weight:400; color:var(--page-ink-weak); font-size:var(--mf-font-sizes-25); }
+  th.rowhead { text-align:left; width:90px; background:var(--page-panel); }
+  td { padding:7px 4px; text-align:center; font-size:var(--mf-font-sizes-50); font-weight:700; color:var(--mf-colors-primitives-white-100); border-radius:var(--mf-radii-small); min-width:104px; line-height:1.35; }
+  .cell-total { font-size:var(--mf-font-sizes-100); }
+  .cell-year { font-size:var(--mf-font-sizes-25); opacity:.9; font-weight:500; }
+  .cell-note { font-size:var(--mf-font-sizes-25); opacity:.9; font-weight:500; }
+  .lvl1 { background:var(--lvl1-bg); } .lvl2 { background:var(--lvl2-bg); } .lvl3 { background:var(--lvl3-bg); color:var(--page-ink-strong); }
+  .lvl4 { background:var(--lvl4-bg); } .lvl5 { background:var(--lvl5-bg); }
+  .legend { display:flex; justify-content:center; gap:14px; margin:8px 0 10px; font-size:var(--mf-font-sizes-25); color:var(--page-ink); flex-wrap:wrap; }
+  .legend span { display:inline-flex; align-items:center; gap:6px; }
+  .dot { width:13px; height:13px; border-radius:var(--mf-radii-small); display:inline-block; }
+  .dot.lvl1 { background:var(--lvl1-bg); } .dot.lvl2 { background:var(--lvl2-bg); } .dot.lvl3 { background:var(--lvl3-bg); } .dot.lvl4 { background:var(--lvl4-bg); } .dot.lvl5 { background:var(--lvl5-bg); }
+  .note-box { background:var(--page-panel); border-left:4px solid var(--page-accent); border-radius:var(--mf-radii-large); padding:12px 16px; margin:14px 0; font-size:var(--mf-font-sizes-30); line-height:2; color:var(--page-ink); }
+  .note-box b { color:var(--page-ink-strong); }
+  .foot { margin-top:14px; font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.7; }
+  footer { max-width:1100px; margin:0 auto 20px; padding:16px 24px; text-align:center; font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.8; border-top:1px solid var(--page-hairline); }
+  .faq-title { font-size:var(--mf-font-sizes-300); font-weight:700; color:var(--page-ink-strong); margin:24px 0 10px; }
+  .cta { margin:18px 0 6px; padding:14px 18px; background:var(--page-panel); border-left:4px solid var(--page-accent); border-radius:var(--mf-radii-large); font-size:var(--mf-font-sizes-30); line-height:1.8; color:var(--page-ink); }
+  .cta b { color:var(--page-ink-strong); }
+  details.faq { border:1px solid var(--page-hairline); border-radius:var(--mf-radii-large); padding:10px 14px; margin:10px 0; font-size:var(--mf-font-sizes-30); line-height:1.8; color:var(--page-ink); }
+  details.faq summary { cursor:pointer; font-weight:700; color:var(--page-accent); }
+  .calc-btn { display:inline-block; margin-top:10px; padding:10px 26px; font-size:var(--mf-font-sizes-100); font-weight:700; color:var(--mf-colors-primitives-white-100); background:var(--page-accent); border:none; border-radius:var(--mf-radii-large); cursor:pointer; }
+  .calc-btn:hover { opacity:.88; }
+  .calc-modal[hidden] { display:none; }
+  .calc-modal { position:fixed; inset:0; z-index:1000; display:flex; align-items:center; justify-content:center; padding:16px; }
+  .calc-overlay { position:absolute; inset:0; background:rgba(0,0,0,.45); }
+  .calc-dialog { position:relative; background:var(--page-card); border:1px solid var(--mf-colors-border-strong); border-radius:var(--mf-radii-card); box-shadow:var(--mf-shadows-card); max-width:460px; width:100%; padding:24px 26px; }
+  .calc-close { position:absolute; top:10px; right:12px; font-size:var(--mf-font-sizes-300); font-weight:700; color:var(--page-ink-weak); background:none; border:none; cursor:pointer; line-height:1; }
+  .calc-title { font-size:var(--mf-font-sizes-200); font-weight:700; color:var(--page-ink-strong); margin-bottom:16px; }
+  .calc-field { margin-bottom:14px; }
+  .calc-field label { display:block; font-size:var(--mf-font-sizes-30); color:var(--page-ink); margin-bottom:4px; font-weight:600; }
+  .calc-field input { width:100%; padding:8px 10px; font-size:var(--mf-font-sizes-100); font-weight:700; color:var(--page-ink-strong); border:1px solid var(--mf-colors-border-weak); border-radius:var(--mf-radii-small); background:var(--page-card); box-sizing:border-box; }
+  .calc-field .hint { display:block; font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); margin-top:2px; }
+  .calc-result { margin-top:16px; padding:14px 16px; background:var(--page-panel); border-left:4px solid var(--page-accent); border-radius:var(--mf-radii-large); font-size:var(--mf-font-sizes-100); font-weight:700; color:var(--page-ink-strong); line-height:1.7; }
+  .calc-result b { color:var(--page-accent-deep); }
+  .calc-ratio { margin-top:6px; font-size:var(--mf-font-sizes-30); font-weight:400; color:var(--page-ink); line-height:1.7; }
+</style>
+</head>
+<body>
+<div class="card">
+<div class="eyebrow">Savings Rate</div>
+  <h1>决定你财富的，不是赚多少，是留下多少</h1>
+  <div class="conclusion">月薪 <span class="dyn" id="subSalary1">5 万</span>存 <span class="dyn" id="subRate1">10%</span>，10 年后 <span class="dyn" id="subFv1">77.6 万</span>；月薪 <span class="dyn" id="subSalary2">1 万</span>存 <span class="dyn" id="subRate2">40%</span>，10 年后 <span class="dyn" id="subFv2">62.1 万</span>——<b>留下多少，比赚多少更决定你的财富</b>。</div>
+  <div class="hero">
+  <p>先记住结论：<strong>储蓄率每提高 10 个百分点，相当于薪资翻倍的效果</strong>。月薪 5 万存 10%（月存 5000）10 年 77.6 万；月薪 1 万存 40%（月存 4000）10 年 62.1 万。<b>提高储蓄率你能控制，涨工资不一定</b>。</p>
+</div>
+
+  <div class="section-title">表格：月薪 × 储蓄率 → 10 年后累计（年化 5%）</div>
+  <div class="legend">
+    <span><i class="dot lvl5"></i>≥200万</span>
+    <span><i class="dot lvl4"></i>100-200万</span>
+    <span><i class="dot lvl3"></i>50-100万</span>
+    <span><i class="dot lvl2"></i>20-50万</span>
+    <span><i class="dot lvl1"></i>&lt;20万</span>
+  </div>
+  <table id="saveRateTable">
+    <tr>
+      <th class="rowhead">月薪</th>
+      <th>存10%</th><th>存20%</th><th>存30%</th><th>存40%</th><th>存50%</th>
+    </tr>
+  </table>
+
+  <div class="section-title">等效储蓄率对照</div>
+  <div class="note-box" id="extraNote"></div>
+
+  <div class="section-title">为什么？</div>
+  <details class="l2">
+    <summary>讲给我听：储蓄率为什么比薪资重要？</summary>
+    <p>收入高但存不下，财富积累依然是零；收入一般但坚持储蓄，复利会慢慢滚大。<b>10 年复利 5% 下，月存 5000 → 77.6 万，其中本金 60 万、收益 17.6 万</b>。</p>
+    <p>更反直觉的是：月薪 1 万存 40%（月存 4000）10 年 62.1 万，接近月薪 5 万存 10%（月存 5000）的 77.6 万——<b>储蓄率的差距，可以用更低的薪资追平</b>。先从「先储蓄后消费」开始，比纠结涨薪更可控。</p>
+  </details>
+
+  <div class="section-title">底层假设（L3）</div>
+  <div class="assume">
+    假设：年化收益率 <b>5%</b>，按月定投复利，持续 <b>10 年</b>；月储蓄 = 月薪 × 储蓄率。<br>
+    换算：月薪 <b>5 万</b>、存 <b>10%</b> → 月存 5000，10 年累计 <b>77.6 万</b>；月薪 <b>1 万</b>、存 <b>40%</b> → 月存 4000，10 年累计 <b>62.1 万</b>。
+  </div>
+  <div class="foot">
+    测算基于固定年化 5% 的简化假设，实际投资收益率波动较大；长期定投不保证收益。本图不构成任何投资建议。
+  </div>
+<div class="faq-title">常见问题（FAQ）</div>
+  <details class="faq"><summary>存钱真的比赚钱重要吗？</summary><p>以 10 年复利 5% 看：月薪 5 万存 10%（月存 5000）10 年 77.6 万；月薪 1 万存 40%（月存 4000）10 年 62.1 万。提高储蓄率 10 个点，相当于薪资翻倍——前者你能控制，后者不一定。</p></details>
+  <details class="faq"><summary>储蓄率多重要？</summary><p>储蓄率每提高 10 个百分点，10 年累计资产约相当于薪资翻倍的效果，而薪资翻倍远难控制。</p></details>
+  <details class="faq"><summary>收益怎么算？</summary><p>按月定投复利：每月储蓄 = 月薪 × 储蓄率；年化收益率 5%，10 年后 FV = 月存 × ((1+r)^n − 1)/r。</p></details>
+  <div class="cta"><b>用你自己的数字算一遍：</b>上面的结果基于分档假设；把月薪、储蓄率、年限换成真实情况，答案可能完全不同——本页提供算法框架，你的数字才是决策依据。<br><button class="calc-btn" id="openCalc">算一算</button></div>
+</div>
+<div class="calc-modal" id="calcModal" hidden>
+  <div class="calc-overlay" id="calcOverlay"></div>
+  <div class="calc-dialog" role="dialog" aria-modal="true" aria-label="用你自己的数字算一算">
+    <button class="calc-close" id="closeCalc" aria-label="关闭">×</button>
+    <div class="calc-title">用你自己的数字算一算</div>
+    <div class="calc-field">
+      <label for="calcSalary">月薪（元）</label>
+      <input type="number" id="calcSalary" value="20000" min="1000" step="1000">
+      <span class="hint">例如：2 万</span>
+    </div>
+    <div class="calc-field">
+      <label for="calcRate">储蓄率（%）</label>
+      <input type="number" id="calcRate" value="20" min="1" max="90" step="1">
+      <span class="hint">每月存下的比例</span>
+    </div>
+    <div class="calc-field">
+      <label for="calcYears">定投年限（年）</label>
+      <input type="number" id="calcYears" value="10" min="1" max="40" step="1">
+    </div>
+    <div class="calc-result">
+      10 年后累计 <b id="calcOutFv">—</b>
+      <div class="calc-ratio" id="calcOutDetail">月存 —，本金 —，收益 —。</div>
+    </div>
+  </div>
+</div>
+<footer>
+  mangofolio · fin-decision-matrix<br>
+  免责声明：<br>
+  ① 本页仅为财务教育与计算演示，不构成任何投资、保险、税务或法律建议。<br>
+  ② 测算基于简化模型与假设参数，实际收益受市场波动、通胀及个人情况影响，结果可能与现实存在显著差异。<br>
+  ③ 重大财务决策请结合自身情况，必要时咨询持牌专业人士。© 2026 mangofolio
+</footer>
+<script>
+  // ============================================================
+  // 参数
+  // ============================================================
+  const REAL_RETURN = 0.05;
+  const YEARS = 10;
+
+  // ============================================================
+  // 核心计算
+  // ============================================================
+  function calcCumulative(monthlySalary, saveRate, years = YEARS) {
+    const monthlySave = monthlySalary * saveRate;
+    const annualSave = monthlySave * 12;
+    const r = REAL_RETURN / 12;
+    const n = years * 12;
+    const fv = monthlySave * (Math.pow(1 + r, n) - 1) / r;
+    const principal = monthlySave * n;
+    const interest = fv - principal;
+    return { fv, annualSave, monthlySave, principal, interest };
+  }
+
+  // 档位：按10年累计（1=少 … 5=多）
+  function getLevel(fv) {
+    if (fv >= 2000000) return 5;
+    if (fv >= 1000000) return 4;
+    if (fv >= 500000) return 3;
+    if (fv >= 200000) return 2;
+    return 1;
+  }
+
+  function formatWan(v) {
+    if (v >= 10000) return (v / 10000).toFixed(1) + '万';
+    return Math.round(v).toLocaleString();
+  }
+
+  function formatMonthly(v) {
+    if (v >= 10000) return (v / 10000).toFixed(1) + '万';
+    return Math.round(v).toLocaleString();
+  }
+
+  // ============================================================
+  // 生成表格
+  // ============================================================
+  const salaries = [5000, 10000, 20000, 30000, 50000];
+  const saveRates = [0.10, 0.20, 0.30, 0.40, 0.50];
+
+  const table = document.getElementById('saveRateTable');
+
+  salaries.forEach(salary => {
+    const tr = document.createElement('tr');
+    const th = document.createElement('th');
+    th.className = 'rowhead';
+    th.textContent = (salary / 10000).toFixed(1).replace('.0', '') + '万';
+    tr.appendChild(th);
+
+    saveRates.forEach(rate => {
+      const { fv, annualSave, monthlySave } = calcCumulative(salary, rate);
+      const td = document.createElement('td');
+      td.className = 'lvl' + getLevel(fv);
+
+      td.innerHTML = `<div class="cell-total">${formatWan(fv)}</div>
+                      <div class="cell-year">年存${formatWan(annualSave)}</div>
+                      <div class="cell-note">月存${formatMonthly(monthlySave)}</div>`;
+      tr.appendChild(td);
+    });
+
+    table.appendChild(tr);
+  });
+
+  // ============================================================
+  // 补充说明：等效储蓄率
+  // ============================================================
+  const note = document.getElementById('extraNote');
+  note.innerHTML = `<b>等效储蓄率对照（10年累计相同）：</b><br>
+    · 月薪 <b>5000 存 50%</b>（月存 2500）≈ 月薪 <b>12500 存 20%</b> ≈ 月薪 <b>25000 存 10%</b><br>
+    · 月薪 <b>1万 存 40%</b>（月存 4000）≈ 月薪 <b>2万 存 20%</b> ≈ 月薪 <b>4万 存 10%</b><br>
+    · 月薪 <b>2万 存 30%</b>（月存 6000）≈ 月薪 <b>6万 存 10%</b><br>
+    <b>结论：</b>提高储蓄率 10 个点，相当于薪资翻倍——但前者你能控制，后者不一定。`;
+
+  // ============================================================
+  // 动态插值：静态文案数字由同一计算函数生成
+  // ============================================================
+  (function renderStatic() {
+    const r1 = calcCumulative(50000, 0.10);   // 月薪5万存10%
+    const r2 = calcCumulative(10000, 0.40);   // 月薪1万存40%
+    const fmt = v => (v / 10000).toFixed(1) + '万';
+    const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+    set('subSalary1', '5 万'); set('subRate1', '10%'); set('subFv1', fmt(r1.fv));
+    set('subSalary2', '1 万'); set('subRate2', '40%'); set('subFv2', fmt(r2.fv));
+  })();
+
+  // ============================================================
+  // 算一算弹窗
+  // ============================================================
+  function renderCalc() {
+    const salary = Math.max(1000, Math.round(Number(document.getElementById('calcSalary').value) || 20000));
+    const rate = Math.max(1, Math.min(90, Math.round(Number(document.getElementById('calcRate').value) || 20))) / 100;
+    const years = Math.max(1, Math.min(40, Math.round(Number(document.getElementById('calcYears').value) || 10)));
+    const r = calcCumulative(salary, rate, years);
+    document.getElementById('calcOutFv').textContent = formatWan(r.fv);
+    document.getElementById('calcOutDetail').textContent = `月存 ${formatMonthly(r.monthlySave)}，本金 ${formatWan(r.principal)}，收益 ${formatWan(r.interest)}。`;
+  }
+  function openCalc() { document.getElementById('calcModal').hidden = false; renderCalc(); }
+  function closeCalc() { document.getElementById('calcModal').hidden = true; }
+  document.getElementById('openCalc').addEventListener('click', openCalc);
+  document.getElementById('closeCalc').addEventListener('click', closeCalc);
+  document.getElementById('calcOverlay').addEventListener('click', closeCalc);
+  ['calcSalary', 'calcRate', 'calcYears'].forEach(id => document.getElementById(id).addEventListener('input', renderCalc));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCalc(); });
+</script>
+</body></html>

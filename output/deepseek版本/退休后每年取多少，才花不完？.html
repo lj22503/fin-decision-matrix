@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>退休后每年取多少，才花不完？</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:"Microsoft YaHei","PingFang SC",sans-serif; }
+  body { background:#f6f7fb; padding:24px; }
+  .card { background:#fff; border-radius:16px; box-shadow:0 4px 20px rgba(0,0,0,.08);
+          max-width:1060px; margin:0 auto; padding:28px 32px; }
+  h1 { font-size:28px; color:#111827; text-align:center; }
+  .subtitle { text-align:center; color:#6b7280; font-size:14px; margin:8px 0 18px; }
+  .emotion { display:inline-block; background:#fef3c7; color:#b45309; font-size:11px; padding:2px 8px;
+             border-radius:999px; margin-left:8px; vertical-align:middle; font-weight:700; }
+  .assume { background:#f3f4f6; border-radius:10px; padding:10px 14px; font-size:13px;
+            color:#374151; margin-bottom:16px; line-height:1.7; }
+  .highlight { background:#fef3c7; padding:2px 6px; border-radius:4px; font-weight:700; color:#b45309; }
+  .insight { background:#eef2ff; border-left:4px solid #4f46e5; border-radius:8px;
+             padding:10px 14px; font-size:13px; color:#374151; margin-bottom:16px; line-height:1.7; }
+  .insight b { color:#4f46e5; }
+  table { width:100%; border-collapse:separate; border-spacing:4px; }
+  th { padding:10px 8px; font-size:14px; color:#111827; background:#eef2ff; border-radius:8px; }
+  th.rowhead { text-align:left; width:120px; }
+  td { padding:10px 6px; text-align:center; font-size:15px; font-weight:700;
+       color:#fff; border-radius:8px; min-width:64px; }
+  .cell-years { font-size:17px; }
+  .cell-rate { font-size:11px; opacity:0.9; margin-top:2px; font-weight:500; }
+  .foot { margin-top:16px; font-size:12px; color:#9ca3af; line-height:1.6; }
+  .watermark { margin-top:14px; text-align:center; font-size:12px; color:#9ca3af; letter-spacing:1px; }
+  .legend { display:flex; justify-content:center; gap:18px; margin:12px 0 16px; font-size:12px; color:#374151; flex-wrap:wrap; }
+  .legend span { display:inline-flex; align-items:center; gap:6px; }
+  .dot { width:14px; height:14px; border-radius:4px; display:inline-block; }
+</style></head><body>
+<div class="card">
+  <h1>退休后每年取多少，才花不完？</h1>
+  <div class="subtitle"><span class="dyn" id="subPrincipal">100 万</span>每年取 <span class="dyn" id="subW4">4 万</span>只够 <span class="dyn" id="subYears4">46</span> 年，取 <span class="dyn" id="subW3">3 万</span>就花不完——差 <span class="dyn" id="subDiff">1 万</span>，差一辈子。<span class="emotion">理性 + 掌控</span></div>
+
+  <div class="assume">
+    假设：年化实际收益率 <b>3%</b>（已扣除通胀）；每年按固定金额提取；无其他收入、无大额一次性支出；超过 60 年视为「花不完」。<br>
+    换算：<span class="dyn" id="convPrincipal">100 万</span>资产，每年取 <b><span class="dyn" id="convW3">3 万</span></b>（<span class="dyn" id="convR3">3%</span>）≈ 每月 <span class="highlight"><span class="dyn" id="convM3">2500 元</span></span>，可以花一辈子；每年取 <b><span class="dyn" id="convW8">8 万</span></b>（<span class="dyn" id="convR8">8%</span>）≈ 每月 <span class="dyn" id="convM8">6600 元</span>，只够花 <b><span class="dyn" id="convY8">16 年</span></b>。
+  </div>
+
+  <div class="insight">
+    <b>核心洞察：</b>表格中每个单元格下方标注了对应的<b>提取率</b>。经验法则是：<b>≤4% 相对安全，>6% 风险陡增</b>。但安全线不是绝对的——资产越少，越要保守；资产越多，容错空间越大。
+  </div>
+
+  <div class="legend">
+    <span><i class="dot" style="background:#15803d"></i>花不完 / ≥50年</span>
+    <span><i class="dot" style="background:#22c55e"></i>35-50年</span>
+    <span><i class="dot" style="background:#f59e0b"></i>25-35年</span>
+    <span><i class="dot" style="background:#f97316"></i>15-25年</span>
+    <span><i class="dot" style="background:#dc2626"></i>&lt;15年</span>
+  </div>
+
+  <table id="withdrawTable">
+    <tr>
+      <th class="rowhead">年提取金额</th>
+      <th>100万</th><th>200万</th><th>300万</th><th>500万</th><th>1000万</th>
+    </tr>
+  </table>
+
+  <div class="foot">
+    测算基于固定实际收益率 3%、固定金额提取的简化假设；实际退休支出随年龄变化（先高后低再高）、市场波动、长寿风险均会影响结果。4% 规则仅为经验法则，不保证未来适用。本图不构成任何金融建议。
+  </div>
+  <div class="watermark">投资平权 · fin-decision-matrix</div>
+</div>
+
+<script>
+  // ===== 参数 =====
+  const REAL_RETURN = 0.03;
+  const MAX_YEARS = 60;
+
+  // ===== 核心计算 =====
+  // 给定本金、年提取金额，返回可持续年限（或 Infinity）
+  function calcSustainableYears(principal, annualWithdraw) {
+    const monthlyWithdraw = annualWithdraw / 12;
+    const monthlyRate = REAL_RETURN / 12;
+
+    // 每月提取 ≤ 每月利息 → 永续
+    if (monthlyWithdraw <= principal * monthlyRate) {
+      return Infinity;
+    }
+
+    // 年金公式反推耗尽月数
+    const n = -Math.log(1 - (principal * monthlyRate) / monthlyWithdraw) / Math.log(1 + monthlyRate);
+    return n / 12;
+  }
+
+  // ===== 颜色编码：按可持续年限 =====
+  function getColor(years) {
+    if (!isFinite(years)) return '#15803d';
+    if (years >= 50) return '#15803d';
+    if (years >= 35) return '#22c55e';
+    if (years >= 25) return '#f59e0b';
+    if (years >= 15) return '#f97316';
+    return '#dc2626';
+  }
+
+  // ===== 格式化 =====
+  function formatYears(y) {
+    if (!isFinite(y)) return '花不完';
+    if (y >= MAX_YEARS) return '花不完';
+    if (y < 1) return Math.round(y * 12) + '个月';
+    return Math.round(y) + '年';
+  }
+
+  function formatRate(principal, annualWithdraw) {
+    const rate = (annualWithdraw / principal) * 100;
+    return '提取率 ' + rate.toFixed(1) + '%';
+  }
+
+  // ===== 数据 =====
+  // 行：年提取金额（绝对值）
+  const annualWithdraws = [30000, 40000, 50000, 80000, 100000, 150000, 200000];
+  // 列：退休资产
+  const principals = [1000000, 2000000, 3000000, 5000000, 10000000];
+
+  const table = document.getElementById('withdrawTable');
+
+  annualWithdraws.forEach(w => {
+    const tr = document.createElement('tr');
+    const th = document.createElement('th');
+    th.className = 'rowhead';
+    th.textContent = (w / 10000) + '万/年';
+    tr.appendChild(th);
+
+    principals.forEach(p => {
+      const years = calcSustainableYears(p, w);
+      const td = document.createElement('td');
+      td.style.background = getColor(years);
+
+      td.innerHTML = `<div class="cell-years">${formatYears(years)}</div>
+                      <div class="cell-rate">${formatRate(p, w)}</div>`;
+      tr.appendChild(td);
+    });
+
+    table.appendChild(tr);
+  });
+
+  // ============================================================
+  // 动态插值：静态文案数字由同一计算函数生成（避免硬编码漂移）
+  // ============================================================
+  (function renderStatic() {
+    const P = 1000000;
+    const fmtWan = v => (v / 10000).toFixed(0) + ' 万';
+    const fmtYuan = v => Math.floor(v / 100) * 100 + ' 元';
+    const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+    const y4 = calcSustainableYears(P, 40000);
+    const y3 = calcSustainableYears(P, 30000);
+    const y8 = calcSustainableYears(P, 80000);
+    set('subPrincipal', fmtWan(P));
+    set('subW4', fmtWan(40000));
+    set('subYears4', isFinite(y4) ? Math.round(y4) : '花不完');
+    set('subW3', fmtWan(30000));
+    set('subDiff', '1 万');
+    set('convPrincipal', fmtWan(P));
+    set('convW3', fmtWan(30000)); set('convR3', '3%');
+    set('convM3', fmtYuan(30000 / 12));
+    set('convW8', fmtWan(80000)); set('convR8', '8%');
+    set('convM8', fmtYuan(80000 / 12));
+    set('convY8', isFinite(y8) ? Math.round(y8) + ' 年' : '花不完');
+  })();
+</script>
+</body></html>

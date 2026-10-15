@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>你的钱，能撑到几岁？退休现金流测算（2026测算）</title>
+<meta name="description" content="每年存 6 万、60 岁退休、退休后每年花 10 万、年化 3%：退休时攒约 363 万，到 95 岁还剩约 416 万。拖动滑块，亲眼看着资产曲线涨到顶、再滑向耗尽点。">
+<meta name="keywords" content="退休储蓄测算,钱能撑到几岁,资产耗尽,4%规则,养老现金流,储蓄曲线,fin-decision-matrix, 退休现金流,资产耗尽,提取率,储蓄规划,提前退休">
+<meta property="og:type" content="article" />
+<meta property="og:title" content="你的钱，能撑到几岁？退休现金流测算（2026测算）" />
+<meta property="og:description" content="每年存 6 万、60 岁退休、退休后每年花 10 万、年化 3%：退休时攒约 363 万，到 95 岁还剩约 416 万。拖动滑块，亲眼看着资产曲线涨到顶、再滑向耗尽点。" />
+<meta property="og:url" content="https://fintools.mangofolio.com/guide/%E4%BD%A0%E7%9A%84%E9%92%B1%EF%BC%8C%E8%83%BD%E6%92%91%E5%88%B0%E5%87%A0%E5%B2%81%EF%BC%9F.html" />
+<meta property="og:image" content="https://fintools.mangofolio.com/images/og-cover.png?v=2" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:site_name" content="财务工具箱 FinTools" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="你的钱，能撑到几岁？退休现金流测算（2026测算）" />
+<meta name="twitter:description" content="每年存 6 万、60 岁退休、退休后每年花 10 万、年化 3%：退休时攒约 363 万，到 95 岁还剩约 416 万。拖动滑块，亲眼看着资产曲线涨到顶、再滑向耗尽点。" />
+<meta name="twitter:image" content="https://fintools.mangofolio.com/images/og-cover.png?v=2" />
+<link rel="canonical" href="https://fintools.mangofolio.com/guide/%E4%BD%A0%E7%9A%84%E9%92%B1%EF%BC%8C%E8%83%BD%E6%92%91%E5%88%B0%E5%87%A0%E5%B2%81%EF%BC%9F.html" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"你的钱，能撑到几岁？退休现金流测算（2026测算）","description":"每年存 6 万、60 岁退休、退休后每年花 10 万、年化 3%：退休时攒约 363 万，到 95 岁还剩约 416 万。拖动滑块，亲眼看着资产曲线涨到顶、再滑向耗尽点。","image":"https://fintools.mangofolio.com/images/og-cover.png?v=2","datePublished":"2026-10-14","dateModified":"2026-10-14","author":{"@type":"Organization","name":"财务工具箱 FinTools","url":"https://fintools.mangofolio.com/"},"publisher":{"@type":"Organization","name":"mangofolio","logo":{"@type":"ImageObject","url":"https://fintools.mangofolio.com/images/og-cover.png?v=2"}},"mainEntityOfPage":"https://fintools.mangofolio.com/guide/%E4%BD%A0%E7%9A%84%E9%92%B1%EF%BC%8C%E8%83%BD%E6%92%91%E5%88%B0%E5%87%A0%E5%B2%81%EF%BC%9F.html","about":"退休现金流,资产耗尽,提取率,储蓄规划,提前退休"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"默认参数下，钱能撑到几岁？","acceptedAnswer":{"@type":"Answer","text":"25 岁起每年存 6 万、60 岁退休后每年花 10 万、年化 3%：退休时约攒 363 万，到 95 岁还剩约 416 万——花不完。"}},{"@type":"Question","name":"哪些变量决定会不会花完？","acceptedAnswer":{"@type":"Answer","text":"四个旋钮：每年存多少、几岁退休、退休后每年花多少、年化收益率——任意一个变小都可能让曲线\"掉头向下\"。"}},{"@type":"Question","name":"收益率降到多少会有风险？","acceptedAnswer":{"@type":"Answer","text":"默认 3% 足够；收益率越低，资产曲线越早见顶回落，可拖动滑块直观对比不同参数。"}}]}</script>
+<link rel="stylesheet" href="assets/mangofolio-tokens-v09.css">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--mf-colors-background-neutral); padding:16px; font-family:var(--mf-fonts-sans); color:var(--mf-colors-text); }
+  .statusbar { background:var(--mf-colors-background-neutral); color:var(--mf-colors-text-weak); font-size:var(--mf-font-sizes-25); text-align:center; padding:6px 12px; letter-spacing:.02em; }
+  .card { background:var(--mf-colors-background-surface); border:1px solid var(--mf-colors-border-weak); border-radius:var(--mf-radii-card); box-shadow:var(--mf-shadows-card); max-width:1100px; margin:16px auto; padding:28px 32px; }
+  .eyebrow { font-size:var(--mf-font-sizes-eyebrow); font-weight:500; color:var(--mf-colors-text-link); letter-spacing:.3em; text-transform:uppercase; text-align:center; margin-bottom:8px; }
+  h1 { font-family:var(--mf-fonts-display); font-size:clamp(1.8rem,4vw,2.8rem); font-weight:800; color:var(--mf-colors-text-strong); text-align:center; line-height:1.3; }
+  .conclusion { margin:18px auto 10px; max-width:900px; text-align:center; font-size:var(--mf-font-sizes-200); line-height:1.8; color:var(--mf-colors-text-strong); font-weight:600; }
+  .lead { text-align:center; color:var(--mf-colors-text-weak); font-size:var(--mf-font-sizes-lead); margin:0 0 18px; line-height:1.8; }
+  .section-title { font-size:var(--mf-font-sizes-300); font-weight:700; color:var(--mf-colors-text-strong); margin:24px 0 10px; }
+  .controls { display:grid; grid-template-columns:repeat(2,1fr); gap:16px 32px; margin-bottom:20px; }
+  @media (max-width:640px) { .controls { grid-template-columns:1fr; } }
+  .ctrl { display:flex; flex-direction:column; gap:6px; }
+  .ctrl-label { display:flex; justify-content:space-between; font-size:var(--mf-font-sizes-30); color:var(--mf-colors-text); }
+  .ctrl-label b { color:var(--mf-colors-text-strong); font-size:var(--mf-font-sizes-50); }
+  .ctrl input[type="range"] { width:100%; accent-color:var(--mf-colors-background-primary); height:6px; cursor:pointer; }
+  .result-card { display:flex; gap:12px; flex-wrap:wrap; margin-bottom:16px; }
+  .result-item { flex:1; min-width:140px; background:var(--mf-colors-background-neutral); border:1px solid var(--mf-colors-border-weak); border-radius:var(--mf-radii-large); padding:12px 16px; }
+  .result-item .k { font-size:var(--mf-font-sizes-25); color:var(--mf-colors-text-weak); margin-bottom:4px; }
+  .result-item .v { font-size:var(--mf-font-sizes-200); font-weight:800; color:var(--mf-colors-text-strong); }
+  .result-item .v.green { color:var(--mf-colors-text-success); }
+  .result-item .v.red { color:var(--mf-colors-text-critical); }
+  .result-item .v.orange { color:var(--mf-colors-text-warning); }
+  .chart-wrap { width:100%; background:var(--mf-colors-background-neutral); border-radius:var(--mf-radii-large); padding:8px; }
+  .chart-wrap svg { width:100%; height:auto; display:block; }
+  .insight { background:var(--mf-colors-background-info); border-left:4px solid var(--mf-colors-text-link-secondary); border-radius:var(--mf-radii-large); padding:12px 16px; font-size:var(--mf-font-sizes-30); color:var(--mf-colors-text); margin:14px 0; line-height:1.8; }
+  .insight b { color:var(--mf-colors-text-accent-mango); }
+  .foot { margin-top:14px; font-size:var(--mf-font-sizes-25); color:var(--mf-colors-text-weak); line-height:1.7; }
+  footer { max-width:1100px; margin:0 auto 24px; padding:18px 24px; text-align:center; font-size:var(--mf-font-sizes-25); color:var(--mf-colors-text-weak); line-height:1.8; border-top:1px solid var(--mf-colors-border-weak); }
+  .faq-title { font-size:var(--mf-font-sizes-300); font-weight:700; color:var(--mf-colors-text-strong); margin:26px 0 10px; }
+  .cta { margin:20px 0 6px; padding:14px 18px; background:var(--mf-colors-background-neutral); border-left:4px solid var(--mf-colors-text-link); border-radius:var(--mf-radii-large); font-size:var(--mf-font-sizes-30); line-height:1.8; color:var(--mf-colors-text); }
+  .cta b { color:var(--mf-colors-text-link); }
+  details.faq { border:1px solid var(--mf-colors-border-weak); border-radius:var(--mf-radii-large); padding:10px 14px; margin:10px 0; font-size:var(--mf-font-sizes-30); line-height:1.8; color:var(--mf-colors-text); }
+  details.faq summary { cursor:pointer; font-weight:700; color:var(--mf-colors-text-link); }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="eyebrow">Retirement Runway</div>
+  <h1>你的钱，能撑到几岁？</h1>
+  <div class="conclusion">每年存 <span class="dyn" id="subSave">6 万</span>、<span class="dyn" id="subRetire">60</span> 岁退休、退休后每年花 <span class="dyn" id="subSpend">10 万</span>：退休时攒约 <span class="dyn" id="subPeak">363 万</span>，这笔钱到 95 岁还剩约 <span class="dyn" id="subLeft">416 万</span>——<b>花不完</b>。</div>
+  <p class="lead">先记住结论：<strong>退休后能不能"花不完"，由 4 个旋钮决定——每年存多少、几岁退休、退休后每年花多少、年化收益率</strong>。默认节奏（25 岁起每年存 6 万，60 岁退休后每年花 10 万，年化 3%）下，退休时约 <span class="dyn" id="leadPeak">363 万</span>，到 95 岁还剩约 <span class="dyn" id="leadLeft">416 万</span>。拖一拖下面的滑块，看看哪个旋钮最先让曲线"掉头向下"。</p>
+  <div class="section-title">拖一拖，亲眼看看资产曲线怎么走</div>
+  <div class="controls">
+    <div class="ctrl">
+      <div class="ctrl-label"><span>每年储蓄（工作期）</span><b id="v-save">6 万</b></div>
+      <input type="range" id="s-save" min="1" max="50" value="6" step="1">
+    </div>
+    <div class="ctrl">
+      <div class="ctrl-label"><span>退休年龄</span><b id="v-retire">60 岁</b></div>
+      <input type="range" id="s-retire" min="45" max="75" value="60" step="1">
+    </div>
+    <div class="ctrl">
+      <div class="ctrl-label"><span>退休后年支出</span><b id="v-spend">10 万</b></div>
+      <input type="range" id="s-spend" min="3" max="50" value="10" step="1">
+    </div>
+    <div class="ctrl">
+      <div class="ctrl-label"><span>年化实际收益率</span><b id="v-rate">3%</b></div>
+      <input type="range" id="s-rate" min="0" max="8" value="3" step="0.5">
+    </div>
+  </div>
+  <div class="result-card">
+    <div class="result-item">
+      <div class="k">退休时资产</div>
+      <div class="v" id="r-peak">—</div>
+    </div>
+    <div class="result-item">
+      <div class="k">钱能撑到</div>
+      <div class="v" id="r-end">—</div>
+    </div>
+    <div class="result-item">
+      <div class="k">退休后每月可花</div>
+      <div class="v" id="r-monthly">—</div>
+    </div>
+    <div class="result-item">
+      <div class="k">状态</div>
+      <div class="v" id="r-status">—</div>
+    </div>
+  </div>
+  <div class="chart-wrap">
+    <svg id="lifeChart" viewBox="0 0 900 420" preserveAspectRatio="xMidYMid meet"></svg>
+  </div>
+  <div class="insight" id="insightText">
+    <b>提示：</b>拖动滑块，观察曲线的拐点和耗尽点。
+  </div>
+  <div class="section-title">为什么？（L2）</div>
+  <details class="l2">
+    <summary>讲给我听：为什么退休后每年只花 10 万，钱却越花越多？</summary>
+    <p>因为退休时攒下的 <b>363 万</b>，按年化 3% 每年产生约 <b>10.9 万</b>的收益——比每年 10 万的支出还多。本金没被动到，资产自然越滚越多。</p>
+    <p>一旦把收益率调低、或把年支出调高，净消耗就会转正：<b>资产曲线的拐点就是"收益跑不赢支出"的那一天</b>，此后本金加速流失，直到耗尽点。数学上，可持续的临界约等于「年支出 ≤ 资产 × 收益率」，这也是 4% 规则（支出 ≤ 资产 × 4%）背后的直觉。</p>
+  </details>
+  <div class="foot">
+    测算基于固定实际收益率、恒定储蓄和支出的简化假设；未考虑收入增长、通胀波动、大额支出、社保养老金、长寿风险（活过 95 岁）等。本图仅为示意，不构成任何金融建议。
+  </div>
+<div class="faq-title">常见问题（FAQ）</div>
+  <details class="faq"><summary>默认参数下，钱能撑到几岁？</summary><p>25 岁起每年存 6 万、60 岁退休后每年花 10 万、年化 3%：退休时约攒 363 万，到 95 岁还剩约 416 万——花不完。</p></details>
+  <details class="faq"><summary>哪些变量决定会不会花完？</summary><p>四个旋钮：每年存多少、几岁退休、退休后每年花多少、年化收益率——任意一个变小都可能让曲线"掉头向下"。</p></details>
+  <details class="faq"><summary>收益率降到多少会有风险？</summary><p>默认 3% 足够；收益率越低，资产曲线越早见顶回落，可拖动滑块直观对比不同参数。</p></details>
+  <div class="cta"><b>用你自己的数字算一遍：</b>上面的结果基于简化假设；把金额、年限、利率换成你的真实数字，答案可能完全不同——本页提供算法框架，你的数字才是决策依据。</div>
+</div>
+<footer>
+  mangofolio · fin-decision-matrix<br>
+  免责声明：<br>
+  ① 本页仅为财务教育与计算演示，不构成任何投资、保险、税务或法律建议。<br>
+  ② 测算基于简化模型与假设参数，实际收益受市场波动、通胀及个人情况影响，结果可能与现实存在显著差异。<br>
+  ③ 重大财务决策请结合自身情况，必要时咨询持牌专业人士。© 2026 mangofolio
+</footer>
+<script>
+  // ============================================================
+  // 配置
+  // ============================================================
+  const START_AGE = 25;
+  const MAX_AGE = 95;
+  const INITIAL_ASSET = 0; // 从0开始
+  // SVG 尺寸
+  const SVG_W = 900, SVG_H = 420;
+  const M = { top: 30, right: 60, bottom: 50, left: 80 };
+  const PLOT_W = SVG_W - M.left - M.right;
+  const PLOT_H = SVG_H - M.top - M.bottom;
+  // ============================================================
+  // 状态
+  // ============================================================
+  let state = {
+    annualSave: 60000,
+    retireAge: 60,
+    annualSpend: 100000,
+    rate: 0.03
+  };
+  // ============================================================
+  // 核心模拟：逐年计算资产
+  // ============================================================
+  function simulate() {
+    const points = [];
+    let asset = INITIAL_ASSET;
+    for (let age = START_AGE; age <= MAX_AGE; age++) {
+      points.push({ age, asset });
+      if (age < state.retireAge) {
+        asset = asset * (1 + state.rate) + state.annualSave;
+      } else {
+        asset = asset * (1 + state.rate) - state.annualSpend;
+      }
+      if (asset < 0) asset = 0;
+    }
+    return points;
+  }
+  // ============================================================
+  // 找关键点
+  // ============================================================
+  function findKeyPoints(points) {
+    const retirePoint = points.find(p => p.age === state.retireAge) || points[0];
+    let endAge = null;
+    for (const p of points) {
+      if (p.age >= state.retireAge && p.asset <= 0) {
+        endAge = p.age;
+        break;
+      }
+    }
+    const isSustainable = endAge === null && points[points.length - 1].asset > 0;
+    return { retirePoint, endAge, isSustainable };
+  }
+  // ============================================================
+  // 格式化
+  // ============================================================
+  function fmtWan(v) {
+    if (v >= 10000) return (v / 10000).toFixed(1) + '万';
+    return Math.round(v).toLocaleString();
+  }
+  function fmtMonthly(v) {
+    const m = v / 12;
+    if (m >= 10000) return (m / 10000).toFixed(1) + '万/月';
+    return Math.round(m).toLocaleString() + '元/月';
+  }
+  // ============================================================
+  // 绘图（全部颜色使用 var(--mf-*) 语义令牌）
+  // ============================================================
+  function draw() {
+    const points = simulate();
+    const { retirePoint, endAge, isSustainable } = findKeyPoints(points);
+    // Y 轴最大值（动态）
+    const maxAsset = Math.max(...points.map(p => p.asset), retirePoint.asset, 1);
+    const yMax = Math.ceil(maxAsset / 1000000) * 1000000 || 1000000;
+    const xScale = age => M.left + (age - START_AGE) / (MAX_AGE - START_AGE) * PLOT_W;
+    const yScale = v => M.top + PLOT_H - (v / yMax) * PLOT_H;
+    let parts = [];
+    // --- 网格 ---
+    const yStep = yMax / 4;
+    for (let i = 0; i <= 4; i++) {
+      const v = yStep * i;
+      const y = yScale(v);
+      parts.push(`<line x1="${M.left}" y1="${y}" x2="${M.left + PLOT_W}" y2="${y}"
+        style="stroke:var(--mf-colors-dataviz-grid)" stroke-width="1" ${i === 0 ? '' : 'stroke-dasharray="3,3"'} />`);
+      parts.push(`<text x="${M.left - 8}" y="${y + 4}" text-anchor="end"
+        font-size="11" style="fill:var(--mf-colors-text-weak)">${(v / 10000).toFixed(0)}万</text>`);
+    }
+    for (let age = 30; age <= 90; age += 10) {
+      const x = xScale(age);
+      parts.push(`<line x1="${x}" y1="${M.top}" x2="${x}" y2="${M.top + PLOT_H}"
+        style="stroke:var(--mf-colors-dataviz-grid)" stroke-width="1" stroke-dasharray="3,3" />`);
+      parts.push(`<text x="${x}" y="${M.top + PLOT_H + 20}" text-anchor="middle"
+        font-size="11" style="fill:var(--mf-colors-text-weak)">${age}岁</text>`);
+    }
+    // --- 坐标轴 ---
+    parts.push(`<line x1="${M.left}" y1="${M.top + PLOT_H}" x2="${M.left + PLOT_W}" y2="${M.top + PLOT_H}"
+      style="stroke:var(--mf-colors-border-strong)" stroke-width="1.5" />`);
+    parts.push(`<line x1="${M.left}" y1="${M.top}" x2="${M.left}" y2="${M.top + PLOT_H}"
+      style="stroke:var(--mf-colors-border-strong)" stroke-width="1.5" />`);
+    // --- 退休点竖线（品牌橙） ---
+    const retireX = xScale(state.retireAge);
+    parts.push(`<line x1="${retireX}" y1="${M.top}" x2="${retireX}" y2="${M.top + PLOT_H}"
+      style="stroke:var(--mf-colors-text-link)" stroke-width="1.5" stroke-dasharray="6,4" />`);
+    parts.push(`<text x="${retireX}" y="${M.top - 8}" text-anchor="middle"
+      font-size="12" font-weight="700" style="fill:var(--mf-colors-text-link)">退休 ${state.retireAge}岁</text>`);
+    // --- 面积 + 曲线（能撑住=绿/安全，撑不住=红/警示） ---
+    const linePath = points.map((p, i) =>
+      (i === 0 ? 'M' : 'L') + xScale(p.age).toFixed(1) + ',' + yScale(p.asset).toFixed(1)
+    ).join(' ');
+    const areaPath = `M${xScale(START_AGE)},${yScale(0)} ` +
+      points.map(p => `L${xScale(p.age).toFixed(1)},${yScale(p.asset).toFixed(1)}`).join(' ') +
+      ` L${xScale(MAX_AGE)},${yScale(0)} Z`;
+    const mainColor = isSustainable ? 'var(--mf-colors-text-success)' : 'var(--mf-colors-text-critical)';
+    const fillColor = isSustainable ? 'var(--mf-colors-background-success-weak)' : 'var(--mf-colors-background-critical)';
+    parts.push(`<path d="${areaPath}" style="fill:${fillColor}" fill-opacity="0.35" />`);
+    parts.push(`<path d="${linePath}" fill="none" style="stroke:${mainColor}" stroke-width="3"
+      stroke-linecap="round" stroke-linejoin="round" />`);
+    // --- 峰值标注 ---
+    if (retirePoint) {
+      const px = xScale(retirePoint.age);
+      const py = yScale(retirePoint.asset);
+      parts.push(`<circle cx="${px}" cy="${py}" r="5" style="fill:${mainColor}" />`);
+      parts.push(`<text x="${px}" y="${py - 12}" text-anchor="middle"
+        font-size="13" font-weight="700" style="fill:${mainColor}">${fmtWan(retirePoint.asset)}</text>`);
+    }
+    // --- 耗尽点标注 ---
+    if (endAge) {
+      const ex = xScale(endAge);
+      const ey = yScale(0);
+      parts.push(`<circle cx="${ex}" cy="${ey}" r="6" style="fill:var(--mf-colors-text-critical)" />`);
+      parts.push(`<text x="${ex}" y="${ey - 14}" text-anchor="middle"
+        font-size="14" font-weight="800" style="fill:var(--mf-colors-text-critical)">${endAge}岁花完</text>`);
+    } else if (isSustainable) {
+      const lastP = points[points.length - 1];
+      const lx = xScale(lastP.age);
+      const ly = yScale(lastP.asset);
+      parts.push(`<circle cx="${lx}" cy="${ly}" r="5" style="fill:var(--mf-colors-text-success)" />`);
+      parts.push(`<text x="${lx - 10}" y="${ly - 12}" text-anchor="end"
+        font-size="13" font-weight="700" style="fill:var(--mf-colors-text-success)">95岁还剩 ${fmtWan(lastP.asset)}</text>`);
+    }
+    // --- Y 轴标题 ---
+    parts.push(`<text x="18" y="${M.top + PLOT_H / 2}" font-size="12" style="fill:var(--mf-colors-text-weak)"
+      transform="rotate(-90, 18, ${M.top + PLOT_H / 2})" text-anchor="middle">资产（万元）</text>`);
+    document.getElementById('lifeChart').innerHTML = parts.join('');
+    // ============================================================
+    // 更新结果卡片
+    // ============================================================
+    document.getElementById('r-peak').textContent = fmtWan(retirePoint.asset);
+    document.getElementById('r-monthly').textContent = fmtMonthly(state.annualSpend);
+    const rEnd = document.getElementById('r-end');
+    const rStatus = document.getElementById('r-status');
+    if (isSustainable) {
+      rEnd.textContent = '95岁+';
+      rEnd.className = 'v green';
+      rStatus.textContent = '花不完';
+      rStatus.className = 'v green';
+    } else {
+      rEnd.textContent = endAge + '岁';
+      rEnd.className = 'v red';
+      rStatus.textContent = '会花完';
+      rStatus.className = 'v red';
+    }
+    // ============================================================
+    // 更新洞察文案
+    // ============================================================
+    const insight = document.getElementById('insightText');
+    if (isSustainable) {
+      insight.innerHTML = `<b>当前状态：</b>按这个节奏，你的钱到 95 岁还剩
+        <b>${fmtWan(points[points.length - 1].asset)}</b>，可以安心。
+        试试把「退休后年支出」调高，看看曲线什么时候开始撑不住。`;
+    } else {
+      const gap = state.retireAge - endAge;
+      insight.innerHTML = `<b>当前状态：</b>你的钱会在 <b>${endAge} 岁</b>花完，
+        距退休仅 ${Math.abs(gap)} 年。
+        想撑到 95 岁，要么<b>每年少花一些</b>，要么<b>多存几年</b>——拖动上面的滑块试试。`;
+    }
+  }
+  // ============================================================
+  // 绑定滑块
+  // ============================================================
+  function bindSlider(id, key, formatter) {
+    const el = document.getElementById(id);
+    const label = document.getElementById('v-' + id.split('-')[1]);
+    el.addEventListener('input', () => {
+      state[key] = parseFloat(el.value) * (key === 'rate' ? 0.01 : (key === 'annualSave' || key === 'annualSpend' ? 10000 : 1));
+      label.textContent = formatter(parseFloat(el.value));
+      draw();
+    });
+  }
+  bindSlider('s-save', 'annualSave', v => v + ' 万');
+  bindSlider('s-retire', 'retireAge', v => v + ' 岁');
+  bindSlider('s-spend', 'annualSpend', v => v + ' 万');
+  bindSlider('s-rate', 'rate', v => v + '%');
+  // 初始绘制
+  draw();
+  // ============================================================
+  // 动态插值：静态文案数字与默认参数同源（避免硬编码漂移）
+  // ============================================================
+  (function renderStatic() {
+    const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+    const save = 60000, retire = 60, spend = 100000, rate = 0.03;
+    // 退休时资产（年金终值，与 simulate 同递推）
+    let asset = INITIAL_ASSET;
+    for (let age = START_AGE; age < retire; age++) {
+      asset = asset * (1 + rate) + save;
+    }
+    const peak = asset;
+    // 95 岁时剩余（继续递推）
+    let left = asset;
+    for (let age = retire; age < MAX_AGE; age++) {
+      left = left * (1 + rate) - spend;
+      if (left < 0) left = 0;
+    }
+    set('subSave', (save / 10000) + ' 万');
+    set('subRetire', retire);
+    set('subSpend', (spend / 10000) + ' 万');
+    set('subPeak', fmtWan(peak));
+    set('subLeft', fmtWan(left));
+    set('leadPeak', fmtWan(peak));
+    set('leadLeft', fmtWan(left));
+  })();
+</script>
+</body></html>

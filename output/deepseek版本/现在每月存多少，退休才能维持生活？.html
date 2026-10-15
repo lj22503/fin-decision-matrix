@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>现在每月存多少，退休才够花？</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:"Microsoft YaHei","PingFang SC",sans-serif; }
+  body { background:#f6f7fb; padding:24px; }
+  .card { background:#fff; border-radius:16px; box-shadow:0 4px 20px rgba(0,0,0,.08);
+          max-width:1060px; margin:0 auto; padding:28px 32px; }
+  h1 { font-size:28px; color:#111827; text-align:center; }
+  .subtitle { text-align:center; color:#6b7280; font-size:14px; margin:8px 0 18px; }
+  .emotion { display:inline-block; background:#dcfce7; color:#15803d; font-size:11px; padding:2px 8px;
+             border-radius:999px; margin-left:8px; vertical-align:middle; font-weight:700; }
+  .assume { background:#f3f4f6; border-radius:10px; padding:10px 14px; font-size:13px;
+            color:#374151; margin-bottom:16px; line-height:1.7; }
+  .highlight { background:#fef3c7; padding:2px 6px; border-radius:4px; font-weight:700; color:#b45309; }
+  table { width:100%; border-collapse:separate; border-spacing:4px; }
+  th { padding:10px 8px; font-size:14px; color:#111827; background:#eef2ff; border-radius:8px; }
+  th.rowhead { text-align:left; width:120px; }
+  td { padding:10px 6px; text-align:center; font-size:15px; font-weight:700;
+       color:#fff; border-radius:8px; min-width:64px; }
+  .cell-amount { font-size:16px; }
+  .cell-note { font-size:11px; opacity:0.9; margin-top:2px; font-weight:500; }
+  .foot { margin-top:16px; font-size:12px; color:#9ca3af; line-height:1.6; }
+  .watermark { margin-top:14px; text-align:center; font-size:12px; color:#9ca3af; letter-spacing:1px; }
+  .legend { display:flex; justify-content:center; gap:18px; margin:12px 0 16px; font-size:12px; color:#374151; flex-wrap:wrap; }
+  .legend span { display:inline-flex; align-items:center; gap:6px; }
+  .dot { width:14px; height:14px; border-radius:4px; display:inline-block; }
+  .chart-title { text-align:center; font-size:16px; font-weight:700; color:#111827; margin:28px 0 4px; }
+  .chart-sub { text-align:center; font-size:12px; color:#6b7280; margin-bottom:10px; }
+  .chart-wrap { width:100%; overflow:hidden; }
+  .chart-wrap svg { width:100%; height:auto; display:block; }
+</style></head><body>
+<div class="card">
+  <h1>现在每月存多少，退休才能维持生活？</h1>
+  <div class="subtitle"><span class="dyn" id="subAge1">30</span> 岁开始每月存 <span class="dyn" id="subMonthly1">3000</span>，<span class="dyn" id="subAge2">45</span> 岁开始要存 <span class="dyn" id="subNeed">9300</span>——差的不是钱，是时间。<span class="emotion">焦虑 + 紧迫</span></div>
+
+  <div class="assume">
+    假设：退休年龄 <b>60 岁</b>；年化实际收益率 <b>5%</b>（已扣除通胀）；退休后按 <b>4% 提取规则</b>支取（所需本金 = 年花费 × 25）；当前无存款，从零开始。<br>
+    换算：退休后每年花 <b><span class="dyn" id="convSpend">12 万</span></b> ≈ 退休时需攒够 <b><span class="dyn" id="convTarget">300 万</span></b>；从 <span class="dyn" id="convAge">30</span> 岁开始每月存 <b><span class="dyn" id="convMonthly">3600 元</span></b> ≈ 每天 <span class="highlight"><span class="dyn" id="convDaily">120 元</span> ≈ 一顿简餐</span>。
+  </div>
+
+  <div class="legend">
+    <span><i class="dot" style="background:#15803d"></i>≤2000元/月（轻松）</span>
+    <span><i class="dot" style="background:#22c55e"></i>2000-4000元/月</span>
+    <span><i class="dot" style="background:#f59e0b"></i>4000-7000元/月</span>
+    <span><i class="dot" style="background:#f97316"></i>7000-12000元/月</span>
+    <span><i class="dot" style="background:#dc2626"></i>&gt;12000元/月（压力大）</span>
+  </div>
+
+  <table id="pensionTable">
+    <tr>
+      <th class="rowhead">期望退休年花费</th>
+      <th>25岁</th><th>30岁</th><th>35岁</th><th>40岁</th><th>45岁</th><th>50岁</th>
+    </tr>
+  </table>
+
+  <div class="chart-title">同样每月存 3000 元，25 岁开始 vs 35 岁开始</div>
+  <div class="chart-sub">到 60 岁时，早 10 年开始 = 多 162 万——这就是时间复利的力量</div>
+  <div class="chart-wrap">
+    <svg id="curveChart" viewBox="0 0 900 440" preserveAspectRatio="xMidYMid meet"></svg>
+  </div>
+
+  <div class="foot">
+    测算基于固定实际收益率 5%、4% 提取规则的简化假设；未考虑社保养老金、企业年金、房产等其他资产，也未考虑长寿风险（活过 85 岁）和大额医疗支出。实际所需储蓄可能更高。本图不构成任何金融建议。
+  </div>
+  <div class="watermark">投资平权 · fin-decision-matrix</div>
+</div>
+
+<script>
+  // ============================================================
+  // 第一部分：表格（沿用原逻辑）
+  // ============================================================
+  const RETIRE_AGE = 60;
+  const REAL_RATE = 0.05;
+  const WITHDRAW_RATE = 0.04;
+
+  function calcMonthlySaving(annualSpend, currentAge) {
+    const targetWealth = annualSpend * (1 / WITHDRAW_RATE);
+    const months = (RETIRE_AGE - currentAge) * 12;
+    if (months <= 0) return Infinity;
+    const r = REAL_RATE / 12;
+    const pow = Math.pow(1 + r, months);
+    return targetWealth * r / (pow - 1);
+  }
+
+  function getColor(monthly) {
+    if (monthly <= 2000) return '#15803d';
+    if (monthly <= 4000) return '#22c55e';
+    if (monthly <= 7000) return '#f59e0b';
+    if (monthly <= 12000) return '#f97316';
+    return '#dc2626';
+  }
+
+  function formatAmount(v) {
+    if (!isFinite(v)) return '无法达成';
+    if (v >= 10000) return (v / 10000).toFixed(1) + '万';
+    return Math.round(v).toLocaleString() + '元';
+  }
+
+  function formatNote(v, currentAge) {
+    const years = RETIRE_AGE - currentAge;
+    if (!isFinite(v)) return '';
+    return '需存' + years + '年';
+  }
+
+  const annualSpends = [60000, 80000, 120000, 200000, 300000];
+  const ages = [25, 30, 35, 40, 45, 50];
+  const table = document.getElementById('pensionTable');
+
+  annualSpends.forEach(spend => {
+    const tr = document.createElement('tr');
+    const th = document.createElement('th');
+    th.className = 'rowhead';
+    th.textContent = (spend / 10000) + '万/年';
+    tr.appendChild(th);
+    ages.forEach(age => {
+      const monthly = calcMonthlySaving(spend, age);
+      const td = document.createElement('td');
+      td.style.background = getColor(monthly);
+      td.innerHTML = `<div class="cell-amount">${formatAmount(monthly)}</div>
+                      <div class="cell-note">${formatNote(monthly, age)}</div>`;
+      tr.appendChild(td);
+    });
+    table.appendChild(tr);
+  });
+
+  // ============================================================
+  // 第二部分：曲线图（两条曲线）
+  // ============================================================
+
+  // 生成某年龄开始、每月存固定金额，到60岁的逐年财富数据
+  function generateCurveData(startAge, monthlySaving, endAge = 60, annualRate = 0.05) {
+    const monthlyRate = annualRate / 12;
+    const points = [{ age: startAge, value: 0 }];
+    let balance = 0;
+    for (let age = startAge; age < endAge; age++) {
+      for (let m = 0; m < 12; m++) {
+        balance = balance * (1 + monthlyRate) + monthlySaving;
+      }
+      points.push({ age: age + 1, value: balance });
+    }
+    return points;
+  }
+
+  const MONTHLY = 3000;
+  const curveEarly = generateCurveData(25, MONTHLY); // 25岁开始
+  const curveLate  = generateCurveData(35, MONTHLY); // 35岁开始
+
+  // SVG 尺寸与坐标映射
+  const SVG_W = 900, SVG_H = 440;
+  const M = { top: 30, right: 110, bottom: 55, left: 90 };
+  const PLOT_W = SVG_W - M.left - M.right;   // 700
+  const PLOT_H = SVG_H - M.top - M.bottom;   // 355
+
+  const X_MIN = 25, X_MAX = 60;
+  const Y_MIN = 0,   Y_MAX = 3600000; // 360万
+
+  const xScale = age => M.left + (age - X_MIN) / (X_MAX - X_MIN) * PLOT_W;
+  const yScale = v   => M.top + PLOT_H - (v - Y_MIN) / (Y_MAX - Y_MIN) * PLOT_H;
+
+  // 生成 path 字符串
+  function buildPath(points) {
+    return points.map((p, i) =>
+      (i === 0 ? 'M' : 'L') + xScale(p.age).toFixed(1) + ',' + yScale(p.value).toFixed(1)
+    ).join(' ');
+  }
+
+  // 生成带面积填充的 path（基线 + 曲线）
+  function buildAreaPath(points) {
+    const baseline = yScale(0);
+    let d = 'M' + xScale(points[0].age).toFixed(1) + ',' + baseline;
+    points.forEach(p => {
+      d += ' L' + xScale(p.age).toFixed(1) + ',' + yScale(p.value).toFixed(1);
+    });
+    d += ' L' + xScale(points[points.length - 1].age).toFixed(1) + ',' + baseline + ' Z';
+    return d;
+  }
+
+  // 格式化 Y 轴标签（万元）
+  function fmtY(v) {
+    if (v === 0) return '0';
+    return (v / 10000) + '万';
+  }
+
+  // 构建 SVG
+  const svg = document.getElementById('curveChart');
+  let svgParts = [];
+
+  // --- 1. 网格线 ---
+  // 水平网格线（Y轴刻度）
+  const yTicks = [0, 600000, 1200000, 1800000, 2400000, 3000000, 3600000];
+  yTicks.forEach(v => {
+    const y = yScale(v);
+    svgParts.push(`<line x1="${M.left}" y1="${y}" x2="${M.left + PLOT_W}" y2="${y}"
+      stroke="#e5e7eb" stroke-width="1" ${v === 0 ? 'stroke-opacity="1"' : 'stroke-dasharray="3,3"'} />`);
+    svgParts.push(`<text x="${M.left - 10}" y="${y + 4}" text-anchor="end"
+      font-size="12" fill="#6b7280">${fmtY(v)}</text>`);
+  });
+
+  // 垂直网格线（X轴刻度）
+  const xTicks = [25, 30, 35, 40, 45, 50, 55, 60];
+  xTicks.forEach(age => {
+    const x = xScale(age);
+    svgParts.push(`<line x1="${x}" y1="${M.top}" x2="${x}" y2="${M.top + PLOT_H}"
+      stroke="#e5e7eb" stroke-width="1" stroke-dasharray="3,3" />`);
+    svgParts.push(`<text x="${x}" y="${M.top + PLOT_H + 22}" text-anchor="middle"
+      font-size="12" fill="#6b7280">${age}岁</text>`);
+  });
+
+  // --- 2. 坐标轴 ---
+  svgParts.push(`<line x1="${M.left}" y1="${M.top + PLOT_H}" x2="${M.left + PLOT_W}" y2="${M.top + PLOT_H}"
+    stroke="#9ca3af" stroke-width="1.5" />`);
+  svgParts.push(`<line x1="${M.left}" y1="${M.top}" x2="${M.left}" y2="${M.top + PLOT_H}"
+    stroke="#9ca3af" stroke-width="1.5" />`);
+
+  // --- 3. 面积填充（两条曲线各自的浅色底） ---
+  svgParts.push(`<path d="${buildAreaPath(curveEarly)}" fill="#15803d" fill-opacity="0.08" />`);
+  svgParts.push(`<path d="${buildAreaPath(curveLate)}"  fill="#1d4ed8" fill-opacity="0.08" />`);
+
+  // --- 4. 曲线 ---
+  svgParts.push(`<path d="${buildPath(curveEarly)}" fill="none" stroke="#15803d" stroke-width="3"
+    stroke-linecap="round" stroke-linejoin="round" />`);
+  svgParts.push(`<path d="${buildPath(curveLate)}"  fill="none" stroke="#1d4ed8" stroke-width="3"
+    stroke-linecap="round" stroke-linejoin="round" />`);
+
+  // --- 5. 终点标记与数值标注 ---
+  const endEarly = curveEarly[curveEarly.length - 1];
+  const endLate  = curveLate[curveLate.length - 1];
+
+  // 25岁曲线终点
+  svgParts.push(`<circle cx="${xScale(endEarly.age)}" cy="${yScale(endEarly.value)}" r="5" fill="#15803d" />`);
+  svgParts.push(`<text x="${xScale(endEarly.age) + 8}" y="${yScale(endEarly.value) - 8}"
+    font-size="14" font-weight="700" fill="#15803d">25岁开始：${(endEarly.value / 10000).toFixed(0)}万</text>`);
+
+  // 35岁曲线终点
+  svgParts.push(`<circle cx="${xScale(endLate.age)}" cy="${yScale(endLate.value)}" r="5" fill="#1d4ed8" />`);
+  svgParts.push(`<text x="${xScale(endLate.age) + 8}" y="${yScale(endLate.value) + 20}"
+    font-size="14" font-weight="700" fill="#1d4ed8">35岁开始：${(endLate.value / 10000).toFixed(0)}万</text>`);
+
+  // --- 6. 差距标注（在55岁处画竖线 + 差值） ---
+  const gapAge = 57;
+  const gapEarlyVal = curveEarly.find(p => p.age === gapAge)?.value || 0;
+  const gapLateVal  = curveLate.find(p => p.age === gapAge)?.value || 0;
+  const gapX = xScale(gapAge);
+  const gapY1 = yScale(gapEarlyVal);
+  const gapY2 = yScale(gapLateVal);
+
+  svgParts.push(`<line x1="${gapX}" y1="${gapY1}" x2="${gapX}" y2="${gapY2}"
+    stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4,3" />`);
+  svgParts.push(`<circle cx="${gapX}" cy="${gapY1}" r="3" fill="#15803d" />`);
+  svgParts.push(`<circle cx="${gapX}" cy="${gapY2}" r="3" fill="#1d4ed8" />`);
+
+  const midY = (gapY1 + gapY2) / 2;
+  const gapValue = gapEarlyVal - gapLateVal;
+  svgParts.push(`<rect x="${gapX - 52}" y="${midY - 14}" width="104" height="28" rx="6" fill="#fee2e2" />`);
+  svgParts.push(`<text x="${gapX}" y="${midY + 6}" text-anchor="middle"
+    font-size="13" font-weight="700" fill="#b91c1c">差 ${(gapValue / 10000).toFixed(0)} 万</text>`);
+
+  // --- 7. 图例 ---
+  const legendY = SVG_H - 14;
+  svgParts.push(`<line x1="${M.left}" y1="${legendY}" x2="${M.left + 24}" y2="${legendY}"
+    stroke="#15803d" stroke-width="3" stroke-linecap="round" />`);
+  svgParts.push(`<text x="${M.left + 30}" y="${legendY + 5}" font-size="13" fill="#374151">25岁开始，每月存3000</text>`);
+
+  svgParts.push(`<line x1="${M.left + 260}" y1="${legendY}" x2="${M.left + 284}" y2="${legendY}"
+    stroke="#1d4ed8" stroke-width="3" stroke-linecap="round" />`);
+  svgParts.push(`<text x="${M.left + 290}" y="${legendY + 5}" font-size="13" fill="#374151">35岁开始，每月存3000</text>`);
+
+  // --- 8. 左侧 Y 轴标题 ---
+  svgParts.push(`<text x="18" y="${M.top + PLOT_H / 2}" font-size="12" fill="#6b7280"
+    transform="rotate(-90, 18, ${M.top + PLOT_H / 2})" text-anchor="middle">累计财富（万元）</text>`);
+
+  svg.innerHTML = svgParts.join('');
+
+  // ============================================================
+  // 动态插值：静态文案数字由同一计算函数生成（避免硬编码漂移）
+  // ============================================================
+  (function renderStatic() {
+    const fmtHundred = v => Math.round(v / 100) * 100;
+    const spend = 120000;
+    const target = spend * (1 / WITHDRAW_RATE);
+    const monthly = calcMonthlySaving(spend, 30);   // 30岁起存够300万
+    const need45 = calcMonthlySaving(fvOfMonthly(3000, 30), 45); // 30岁存3000等效45岁月存
+    const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+
+    function fvOfMonthly(monthly, years) {
+      const r = REAL_RATE / 12;
+      return monthly * (Math.pow(1 + r, years * 12) - 1) / r;
+    }
+
+    set('subAge1', 30); set('subMonthly1', fmtHundred(3000));
+    set('subAge2', 45); set('subNeed', fmtHundred(need45));
+    set('convSpend', (spend / 10000) + ' 万');
+    set('convTarget', Math.round(target / 10000) + ' 万');
+    set('convAge', 30);
+    set('convMonthly', fmtHundred(monthly) + ' 元');
+    set('convDaily', Math.round(fmtHundred(monthly) / 30) + ' 元');
+  })();
+</script>
+</body></html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>退休后你的收入会掉多少？（2026 测算）</title>
+<meta name="description" content="现在月薪 2 万，退休后可能只有 8 千——替代率 40%，生活直接降两档。焦虑 + 惊醒">
+<meta name="keywords" content="退休后你的收入会掉多少？,财务决策,投教,理财计算,复利,替代率">
+<link rel="canonical" href="https://fintools.mangofolio.com/退休后你的收入会掉多少？.html">
+<meta property="og:title" content="退休后你的收入会掉多少？（2026 测算）">
+<meta property="og:description" content="现在月薪 2 万，退休后可能只有 8 千——替代率 40%，生活直接降两档。焦虑 + 惊醒">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"question": "退休后你的收入会掉多少？", "answer": "现在月薪 2 万，退休后可能只有 8 千——替代率 40%，生活直接降两档。焦虑 + 惊醒"}, {"question": "测算基于什么假设？", "answer": "假设：养老金替代率 = 退休后月收入 ÷ 退休前月收入；不考虑通胀、社保政策变化、企业年金等；缺口 = 退休前月收入 − 退休后月收入。 换算：月薪 2 万，替代率 60% → 退休后月领 1.2 万，每月缺口 8000 元，一年少 9.6 万。"}, {"question": "结果有多可靠？", "answer": "测算基于固定替代率的简化假设；实际养老金受缴费年限、缴费基数、当地社平工资、社保政策等多因素影响。我国社保养老金替代率因地区、缴费水平差异较大，一般在 40%-60% 之间。本图不构成任何金融建议。"}]}</script>
+<link rel="stylesheet" href="assets/mangofolio-tokens-v09.css">
+<style>
+
+  /* ---- 页面局部配色（对齐 fintools 线上版 guide 页视觉基准：纯白底 / 白卡 / 暖墨正文 / 芒果橙点缀） ---- */
+  :root {
+    --page-bg: var(--mf-colors-background);            /* #FFFFFF 纯白主底 */
+    --page-card: var(--mf-colors-background-surface);   /* #FFFFFF 卡片面 */
+    --page-panel: var(--mf-colors-background-neutral);  /* #F7F5F2 暖灰分区底（结论框/表头） */
+    --page-ink: var(--mf-colors-text);                  /* #3A332C 正文墨 */
+    --page-ink-strong: var(--mf-colors-text-strong);    /* #241610 深墨强调 */
+    --page-ink-weak: var(--mf-colors-text-weak);        /* #8A7D70 次级文字 */
+    --page-accent: var(--mf-colors-text-link);          /* #F97316 芒果橙电压色 */
+    --page-accent-deep: var(--mf-colors-text-accent-mango); /* #E05E0A 深橙 */
+    --page-hairline: var(--mf-colors-border-weak);      /* 1px 细线 */
+    /* 表格档位：中国习惯红涨绿跌——金额越高越红、越低越绿；mangofolio 亮橙系列实色，深底白字 / 浅底深字 */
+    --lvl1-bg: #B8221E;   /* ≥30万 涨红（好） */
+    --lvl2-bg: #D4543E;   /* 15-30万 橙红 */
+    --lvl3-bg: #F59E0B;   /* 5-15万 琥珀 */
+    --lvl4-bg: #1F8A4C;   /* 1-5万 中绿 */
+    --lvl5-bg: #11693D;   /* <1万 跌绿（差） */
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--page-bg); padding:12px; font-family:var(--mf-fonts-sans); color:var(--page-ink); }
+  .card { background:var(--page-card); border:1px solid var(--page-hairline); border-radius:var(--mf-radii-card); box-shadow:var(--mf-shadows-card); max-width:1100px; margin:8px auto; padding:20px 26px; }
+  .eyebrow { font-size:var(--mf-font-sizes-eyebrow); font-weight:500; color:var(--page-accent); letter-spacing:.3em; text-transform:uppercase; text-align:center; margin-bottom:4px; }
+  h1 { font-family:var(--mf-fonts-display); font-size:clamp(1.6rem,3.6vw,2.3rem); font-weight:800; color:var(--page-ink-strong); text-align:center; line-height:1.3; }
+  .conclusion { margin:8px auto 6px; max-width:900px; text-align:center; font-size:var(--mf-font-sizes-100); line-height:1.6; color:var(--page-ink-strong); font-weight:600; }
+  .hero { background:var(--page-panel); border-left:3px solid var(--page-accent); border-radius:var(--mf-radii-large); padding:12px 16px; margin:4px 0 12px; }
+  .hero .lead, .hero p { color:var(--page-ink); font-size:var(--mf-font-sizes-100); line-height:1.8; margin:0; }
+  .hero b, .hero strong { color:var(--page-ink-strong); }
+  .section-title { font-size:var(--mf-font-sizes-200); font-weight:700; color:var(--page-ink-strong); margin:14px 0 6px; }
+  .assume { background:var(--page-panel); border-radius:var(--mf-radii-large); padding:12px 16px; font-size:var(--mf-font-sizes-30); color:var(--page-ink); margin:14px 0; line-height:1.8; }
+  .assume b, .assume strong { color:var(--page-ink-strong); }
+  .highlight { background:var(--mf-colors-background-warning); color:var(--page-accent-deep); padding:2px 6px; border-radius:var(--mf-radii-small); font-weight:700; }
+  details.l2 { border:1px solid var(--page-hairline); border-radius:var(--mf-radii-large); padding:10px 14px; margin:14px 0; font-size:var(--mf-font-sizes-30); line-height:1.8; color:var(--page-ink); }
+  details.l2 summary { cursor:pointer; font-weight:700; color:var(--page-accent); }
+  table { width:100%; border-collapse:separate; border-spacing:3px; }
+  th { padding:8px 6px; font-size:var(--mf-font-sizes-30); color:var(--page-ink-strong); background:var(--mf-colors-primitives-mango-050); border-radius:var(--mf-radii-small); line-height:1.4; }
+  th small { font-weight:400; color:var(--page-ink-weak); font-size:var(--mf-font-sizes-25); }
+  th.rowhead { text-align:left; width:96px; background:var(--page-panel); }
+  td { padding:7px 4px; text-align:center; font-size:var(--mf-font-sizes-50); font-weight:700; color:var(--mf-colors-primitives-white-100); border-radius:var(--mf-radii-small); min-width:60px; line-height:1.35; }
+  .cell-amount { font-size:var(--mf-font-sizes-100); }
+  .cell-note { font-size:var(--mf-font-sizes-25); opacity:.92; margin-top:1px; font-weight:500; }
+  .lvl1 { background:var(--lvl1-bg); }
+  .lvl2 { background:var(--lvl2-bg); }
+  .lvl3 { background:var(--lvl3-bg); color:var(--page-ink-strong); }
+  .lvl4 { background:var(--lvl4-bg); }
+  .lvl5 { background:var(--lvl5-bg); }
+  .legend { display:flex; justify-content:center; gap:14px; margin:8px 0 10px; font-size:var(--mf-font-sizes-25); color:var(--page-ink); flex-wrap:wrap; }
+  .legend span { display:inline-flex; align-items:center; gap:6px; }
+  .dot { width:13px; height:13px; border-radius:var(--mf-radii-small); display:inline-block; }
+  .dot.lvl1 { background:var(--lvl1-bg); }
+  .dot.lvl2 { background:var(--lvl2-bg); }
+  .dot.lvl3 { background:var(--lvl3-bg); }
+  .dot.lvl4 { background:var(--lvl4-bg); }
+  .dot.lvl5 { background:var(--lvl5-bg); }
+  .extra-note { margin-top:10px; padding:10px 14px; background:var(--page-panel); border-radius:var(--mf-radii-large); font-size:var(--mf-font-sizes-30); color:var(--page-ink); line-height:1.8; }
+  .extra-note b { color:var(--page-accent-deep); }
+  .chart-title { text-align:center; font-size:var(--mf-font-sizes-200); font-weight:700; color:var(--page-ink-strong); margin:24px 0 4px; }
+  .chart-sub { text-align:center; font-size:var(--mf-font-sizes-30); color:var(--page-ink-weak); margin-bottom:8px; }
+  .chart-wrap { width:100%; overflow:hidden; }
+  .chart-wrap svg { width:100%; height:auto; display:block; }
+  .foot { margin-top:14px; font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.7; }
+  footer { max-width:1100px; margin:0 auto 20px; padding:16px 24px; text-align:center; font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.8; border-top:1px solid var(--page-hairline); }
+
+  .faq-title { font-size:var(--mf-font-sizes-300); font-weight:700; color:var(--page-ink-strong); margin:24px 0 10px; }
+  .cta { margin:18px 0 6px; padding:14px 18px; background:var(--page-panel); border-left:4px solid var(--page-accent); border-radius:var(--mf-radii-large); font-size:var(--mf-font-sizes-30); line-height:1.8; color:var(--page-ink); }
+  .cta b { color:var(--page-ink-strong); }
+  details.faq { border:1px solid var(--page-hairline); border-radius:var(--mf-radii-large); padding:10px 14px; margin:10px 0; font-size:var(--mf-font-sizes-30); line-height:1.8; color:var(--page-ink); }
+  details.faq summary { cursor:pointer; font-weight:700; color:var(--page-accent); }
+  .calc-btn { display:inline-block; margin-top:10px; padding:10px 26px; font-size:var(--mf-font-sizes-100); font-weight:700; color:var(--mf-colors-primitives-white-100); background:var(--page-accent); border:none; border-radius:var(--mf-radii-large); cursor:pointer; }
+  .calc-btn:hover { opacity:.88; }
+  .calc-modal[hidden] { display:none; }
+  .calc-modal { position:fixed; inset:0; z-index:1000; display:flex; align-items:center; justify-content:center; padding:16px; }
+  .calc-overlay { position:absolute; inset:0; background:rgba(0,0,0,.45); }
+  .calc-dialog { position:relative; background:var(--page-card); border:1px solid var(--mf-colors-border-strong); border-radius:var(--mf-radii-card); box-shadow:var(--mf-shadows-card); max-width:460px; width:100%; padding:24px 26px; }
+  .calc-close { position:absolute; top:10px; right:12px; font-size:var(--mf-font-sizes-300); font-weight:700; color:var(--page-ink-weak); background:none; border:none; cursor:pointer; line-height:1; }
+  .calc-title { font-size:var(--mf-font-sizes-200); font-weight:700; color:var(--page-ink-strong); margin-bottom:16px; }
+  .calc-field { margin-bottom:14px; }
+  .calc-field label { display:block; font-size:var(--mf-font-sizes-30); color:var(--page-ink); margin-bottom:4px; font-weight:600; }
+  .calc-field input { width:100%; padding:8px 10px; font-size:var(--mf-font-sizes-100); font-weight:700; color:var(--page-ink-strong); border:1px solid var(--mf-colors-border-weak); border-radius:var(--mf-radii-small); background:var(--page-card); box-sizing:border-box; }
+  .calc-field .hint { display:block; font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); margin-top:2px; }
+  .calc-result { margin-top:16px; padding:14px 16px; background:var(--page-panel); border-left:4px solid var(--page-accent); border-radius:var(--mf-radii-large); font-size:var(--mf-font-sizes-100); font-weight:700; color:var(--page-ink-strong); line-height:1.7; }
+  .calc-result b { color:var(--page-accent-deep); }
+  .calc-ratio { margin-top:6px; font-size:var(--mf-font-sizes-30); font-weight:400; color:var(--page-ink); line-height:1.7; }
+
+</style>
+</head>
+<body>
+<div class="card">
+<div class="eyebrow">Retirement Planning</div>
+  <h1>退休后你的收入会掉多少？</h1>
+  <div class="conclusion">现在月薪 2 万，退休后可能只有 8 千——替代率 40%，生活直接降两档。<span class="emotion">焦虑 + 惊醒</span></div>
+  <div class="hero">
+  <p>先记住结论：<strong>国际经验认为替代率 70% 以上才能维持退休前生活水平；40% 只能维持基本生存。而我国社保养老金替代率目前约 40%-45%——意味着如果你只靠社保，退休后收入可能不到工作时的一半。</strong></p>
+</div>
+
+  <div class="section-title">表格：退休后你的收入会掉多少？</div>
+  <div class="legend">
+    <span><i class="dot lvl1"></i>≥80%（生活水平不降）</span>
+    <span><i class="dot lvl2"></i>70-80%（基本维持）</span>
+    <span><i class="dot lvl3"></i>60-70%（略有下降）</span>
+    <span><i class="dot lvl4"></i>40-60%（明显下降）</span>
+    <span><i class="dot lvl5"></i>&lt;40%（生存线）</span>
+  </div>
+  <table id="replaceTable">
+    <tr>
+      <th class="rowhead">退休前月收入</th>
+      <th>40%<br><small>生存线</small></th>
+      <th>50%<br><small>基本保障</small></th>
+      <th>60%<br><small>略有下降</small></th>
+      <th>70%<br><small>基本维持</small></th>
+      <th>80%<br><small>不降级</small></th>
+      <th>100%<br><small>完全维持</small></th>
+    </tr>
+  </table>
+
+
+  <div class="section-title">为什么？</div>
+  <details class="l2">
+    <summary>讲给我听：退休后你的收入会掉多少？</summary>
+    <p>国际经验认为替代率 70% 以上才能维持退休前生活水平；40% 只能维持基本生存。而我国社保养老金替代率目前约 40%-45%——意味着如果你只靠社保，退休后收入可能不到工作时的一半。</p>
+    <p>假设：养老金替代率 = 退休后月收入 ÷ 退休前月收入；不考虑通胀、社保政策变化、企业年金等；缺口 = 退休前月收入 − 退休后月收入。 换算：月薪 2 万，替代率 60% → 退休后月领 1.2 万，每月缺口 8000 元，一年少 9.6 万。</p>
+  </details>
+
+  <div class="section-title">底层假设（L3）</div>
+  <div class="assume">
+    假设：养老金替代率 = 退休后月收入 ÷ 退休前月收入；不考虑通胀、社保政策变化、企业年金等；缺口 = 退休前月收入 − 退休后月收入。<br>
+    换算：月薪 <b>2 万</b>，替代率 <b>60%</b> → 退休后月领 <span class="highlight">1.2 万</span>，每月缺口 <b>8000 元</b>，一年少 <b>9.6 万</b>。
+  </div>
+  <div class="foot">
+    测算基于固定替代率的简化假设；实际养老金受缴费年限、缴费基数、当地社平工资、社保政策等多因素影响。我国社保养老金替代率因地区、缴费水平差异较大，一般在 40%-60% 之间。本图不构成任何金融建议。
+  </div>
+<div class="faq-title">常见问题（FAQ）</div>
+  <details class="faq"><summary>退休后你的收入会掉多少？</summary><p>现在月薪 2 万，退休后可能只有 8 千——替代率 40%，生活直接降两档。焦虑 + 惊醒</p></details>
+  <details class="faq"><summary>测算基于什么假设？</summary><p>假设：养老金替代率 = 退休后月收入 ÷ 退休前月收入；不考虑通胀、社保政策变化、企业年金等；缺口 = 退休前月收入 − 退休后月收入。 换算：月薪 2 万，替代率 60% → 退休后月领 1.2 万，每月缺口 8000 元，一年少 9.6 万。</p></details>
+  <details class="faq"><summary>结果有多可靠？</summary><p>测算基于固定替代率的简化假设；实际养老金受缴费年限、缴费基数、当地社平工资、社保政策等多因素影响。我国社保养老金替代率因地区、缴费水平差异较大，一般在 40%-60% 之间。本图不构成任何金融建议。</p></details>
+<footer>
+  mangofolio · fin-decision-matrix<br>
+  免责声明：<br>
+  ① 本页仅为财务教育与计算演示，不构成任何投资、保险、税务或法律建议。<br>
+  ② 测算基于简化模型与假设参数，实际收益受市场波动、通胀及个人情况影响，结果可能与现实存在显著差异。<br>
+  ③ 重大财务决策请结合自身情况，必要时咨询持牌专业人士。© 2026 mangofolio
+</footer>
+<script>
+// ===== 参数 =====
+  const incomes = [5000, 10000, 20000, 30000, 50000];
+  const rates = [0.40, 0.50, 0.60, 0.70, 0.80, 1.00];
+
+  // ===== 颜色编码：按替代率 =====
+  function getColor(rate) {
+    if (rate >= 0.80) return '#B8221E';
+    if (rate >= 0.70) return '#D4543E';
+    if (rate >= 0.60) return '#F59E0B';
+    if (rate >= 0.40) return '#1F8A4C';
+    return '#11693D';
+  }
+
+  // ===== 格式化 =====
+  function formatIncome(v) {
+    if (v >= 10000) return (v / 10000).toFixed(1) + '万';
+    return Math.round(v).toLocaleString() + '元';
+  }
+
+  function formatGap(v) {
+    if (v <= 0) return '无缺口';
+    if (v >= 10000) return '缺口 ' + (v / 10000).toFixed(1) + '万';
+    return '缺口 ' + Math.round(v).toLocaleString() + '元';
+  }
+
+  function getNote(rate, income) {
+    const annualGap = (income * (1 - rate)) * 12;
+    if (rate >= 0.80) return '生活水平不降';
+    if (rate >= 0.70) return '基本维持';
+    if (rate >= 0.60) return '略有下降';
+    if (rate >= 0.40) return '明显下降';
+    return '仅够基本生存';
+  }
+
+  // ===== 生成表格 =====
+  const table = document.getElementById('replaceTable');
+
+  incomes.forEach(income => {
+    const tr = document.createElement('tr');
+    const th = document.createElement('th');
+    th.className = 'rowhead';
+    th.textContent = formatIncome(income) + '/月';
+    tr.appendChild(th);
+
+    rates.forEach(rate => {
+      const retiredIncome = income * rate;
+      const gap = income - retiredIncome;
+      const td = document.createElement('td');
+      td.style.background = getColor(rate);
+
+      // 进度条填充比例
+      const barPct = Math.round(rate * 100);
+
+      td.innerHTML = `
+        <div class="cell-income">${formatIncome(retiredIncome)}/月</div>
+        <div class="cell-gap">${formatGap(gap)}</div>
+        <div class="bar-wrap">
+          <div class="bar-bg">
+            <div class="bar-fill" style="width:${barPct}%;background:rgba(255,255,255,0.9)"></div>
+          </div>
+        </div>
+        <div class="cell-note">${getNote(rate, income)}</div>
+      `;
+      tr.appendChild(td);
+    });
+
+    table.appendChild(tr);
+  });
+</script>
+</div>
+</body>
+</html>
