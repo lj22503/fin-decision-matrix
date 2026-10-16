@@ -106,7 +106,7 @@
 <div class="card">
 <div class="eyebrow">Housing Fund</div>
   <h1>每月缴多少公积金，决定你买房能省多少</h1>
-  <div class="conclusion">月缴 <span class="dyn" id="subContrib1"></span> 等 <span class="dyn" id="subYears1"></span> 年，可贷 <span class="dyn" id="subQuota1"></span>；月缴 <span class="dyn" id="subContrib2"></span> 等 <span class="dyn" id="subYears2"></span> 年，可贷 <span class="dyn" id="subQuota2"></span>——多省 <span class="dyn" id="subSaveDiff"></span> 利息。<span class="emotion">规划 + 省钱</span></div>
+  <div class="conclusion">月缴 <span class="dyn" id="subContrib1"></span> 等 <span class="dyn" id="subYears1"></span> 年，可贷 <span class="dyn" id="subQuota1"></span>；月缴 <span class="dyn" id="subContrib2"></span> 等 <span class="dyn" id="subYears2"></span> 年，可贷 <span class="dyn" id="subQuota2"></span>——多省 <span class="dyn" id="subSaveDiff"></span> 利息。</div>
   <div class="hero">
   <p>先记住结论：<strong>公积金的价值 = 可贷额度 × 每万元省的利息（约 <span class="dyn" id="per10k"></span> 元/30年）。</strong>可贷额度取决于你的<span class="hl">月缴存额</span>和<span class="hl">缴存年限</span>——两者都是你可以提前规划的。很多人等到买房前才发现公积金只能贷几万，白白多付几十万利息。</p>
 </div>
@@ -123,7 +123,6 @@
       <th>等1年</th><th>等3年</th><th>等5年</th><th>等8年</th><th>等10年</th><th>等15年</th>
     </tr>
   </table>
-
 
   <div class="section-title">为什么？</div>
   <details class="l2">
@@ -220,7 +219,6 @@
     if (v >= 10000) return (v / 10000).toFixed(1) + '万';
     return Math.round(v).toLocaleString();
   }
-
 
   // 给定可贷额(万)，返回相比全商贷省的万元数（供 legend/文案复用）
   function saveWan(qWan) {
