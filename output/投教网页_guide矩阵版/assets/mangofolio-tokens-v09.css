@@ -672,3 +672,37 @@
 @keyframes mf-accordion-up { 0% { height: var(--radix-accordion-content-height); } to { height: 0; } }
 @keyframes mf-shimmer-pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } to { opacity: 1; } }
 @keyframes mf-placeholder-chart-pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } to { opacity: 1; } }
+
+
+/* ===== 统一页尾（guide 风格）===== */
+.site-footer {
+  border-top: 1px solid var(--page-line-weak);
+  padding: 22px 0 34px;
+  margin-top: 8px;
+}
+.site-footer .wrap {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+.footer-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem 1.5rem;
+  font-size: 13px;
+  color: var(--page-ink-weak);
+}
+.footer-row p { margin: 0; }
+.footer-row .disclaimer {
+  flex-basis: 100%;
+  line-height: 1.8;
+  margin-top: 10px;
+}
+.copyright-line {
+  margin: 14px 0 0;
+  font-size: 13px;
+  color: var(--page-ink-weak);
+  text-align: center;
+}

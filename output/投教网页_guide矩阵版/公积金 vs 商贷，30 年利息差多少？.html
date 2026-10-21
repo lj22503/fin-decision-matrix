@@ -47,8 +47,8 @@
     --page-accent: var(--mf-colors-text-link);
     --page-accent-deep: var(--mf-colors-text-accent-mango);
     --page-hairline: var(--mf-colors-border-weak);
-    --page-line-strong: rgba(36,22,16,.10);
-    --page-line-weak: rgba(36,22,16,.06);
+    --page-line-strong: var(--mf-colors-border-weak, rgba(36,22,16,.10));
+    --page-line-weak: var(--mf-colors-border, rgba(36,22,16,.06));
     /* 矩阵色阶（柔和版：浅底深字，红涨绿跌） */
     --lvl1-bg: #FDECEA;  --lvl1-ink: #B8221E;
     --lvl2-bg: #FDEBD8;  --lvl2-ink: #C2410C;
@@ -65,7 +65,7 @@
 
   .paper-head { margin-bottom:12px; }
   .paper-eyebrow { font-size:var(--mf-font-sizes-eyebrow); font-weight:500; color:var(--page-accent); letter-spacing:.24em; text-transform:uppercase; margin-bottom:6px; }
-  .paper-title { font-family:var(--mf-fonts-display); font-size:clamp(1.55rem,3.4vw,2.05rem); font-weight:800; color:var(--page-ink-strong); line-height:1.3; padding-bottom:10px; border-bottom:4px dashed var(--mf-colors-border-focused,rgba(249,115,22,.40)); }
+  .paper-title { font-family:var(--mf-fonts-display); font-size:clamp(1.55rem,3.4vw,2.05rem); font-weight:800; color:var(--page-ink-strong); line-height:1.3; padding-bottom:10px; border-bottom:4px dashed var(--mf-colors-text-link,rgba(249,115,22,.40)); }
 
   .lead-box { background:var(--page-panel); border-left:3px solid var(--page-accent); border-radius:12px; padding:9px 14px; margin:0 0 12px; }
   .lead-box p { font-size:.95em; line-height:1.7; color:var(--page-ink); margin:0; }
@@ -99,7 +99,7 @@
   .matrix-note { margin:2px 0 0; font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.4; }
   .matrix-note b { color:var(--page-accent-deep); }
 
-  .sec-title, .section-title { font-family:var(--mf-fonts-display); font-size:clamp(1.25rem,2.6vw,1.45rem); font-weight:800; color:var(--page-ink-strong); line-height:1.4; padding-bottom:10px; border-bottom:3px dashed var(--mf-colors-border-focused,rgba(249,115,22,.30)); margin:26px 0 12px; }
+  .sec-title, .section-title { font-family:var(--mf-fonts-display); font-size:clamp(1.25rem,2.6vw,1.45rem); font-weight:800; color:var(--page-ink-strong); line-height:1.4; padding-bottom:10px; border-bottom:3px dashed var(--mf-colors-text-link,rgba(249,115,22,.30)); margin:26px 0 12px; }
   .sec p { margin:0 0 12px; }
   .sec b, .sec strong { color:var(--page-ink-strong); }
   details.l2, details.faq-item { border:1px solid var(--page-line-strong); border-radius:12px; padding:10px 14px; margin:12px 0; font-size:var(--mf-font-sizes-30); line-height:1.8; color:var(--page-ink); background:var(--page-card); }
@@ -161,8 +161,8 @@
   .dot { width:10px !important; height:10px !important; }
   .matrix-note { margin:1px 0 0 !important; font-size:8.5px !important; line-height:1.2 !important; }
   </style>
-<link rel="canonical" href="https://fintools.mangofolio.com/decisions/%E5%85%AC%E7%A7%AF%E9%87%91%20vs%20%E5%95%86%E8%B4%B7%EF%BC%8C30%20%E5%B9%B4%E5%88%A9%E6%81%AF%E5%B7%AE%E5%A4%9A%E5%B0%91%EF%BC%9F.html">
-<meta property="og:url" content="https://fintools.mangofolio.com/decisions/%E5%85%AC%E7%A7%AF%E9%87%91%20vs%20%E5%95%86%E8%B4%B7%EF%BC%8C30%20%E5%B9%B4%E5%88%A9%E6%81%AF%E5%B7%AE%E5%A4%9A%E5%B0%91%EF%BC%9F.html">
+<link rel="canonical" href="https://fintools.mangofolio.com/guide/%E5%85%AC%E7%A7%AF%E9%87%91%20vs%20%E5%95%86%E8%B4%B7%EF%BC%8C30%20%E5%B9%B4%E5%88%A9%E6%81%AF%E5%B7%AE%E5%A4%9A%E5%B0%91%EF%BC%9F.html">
+<meta property="og:url" content="https://fintools.mangofolio.com/guide/%E5%85%AC%E7%A7%AF%E9%87%91%20vs%20%E5%95%86%E8%B4%B7%EF%BC%8C30%20%E5%B9%B4%E5%88%A9%E6%81%AF%E5%B7%AE%E5%A4%9A%E5%B0%91%EF%BC%9F.html">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Article","headline":"公积金 vs 商贷，30 年利息差多少？","dateModified":"2026-10-21","author":{"@type":"Organization","name":"Mangofolio 财务工具箱"}}
 </script>
@@ -220,7 +220,7 @@
     <div class="sec-title">条形图：100 万贷款，三种方式 30 年总利息</div>
     <div class="chart-sub">条越短越省钱；绿（公积金）比红（商贷）短一截 = 省下的 37 万</div>
     <div class="chart-wrap">
-      <svg id="loanBar" viewBox="0 0 900 380" preserveAspectRatio="xMidYMid meet"></svg>
+      <svg id="loanBar" viewBox="0 0 1000 450" preserveAspectRatio="xMidYMid meet"></svg>
     </div>
 
     <div class="foot">
@@ -258,8 +258,16 @@
     </div>
   </div>
 </div>
-<footer>
-  mangofolio · fin-decision-matrix · © 2026 mangofolio
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-row">
+      <p>© 2026 mangofolio · 财务工具箱 FinTools · 人生财务决策 · 中立 · 开源 · 不推荐任何理财产品 · 数据来源公开可核验 · fintools.mangofolio.com</p>
+    </div>
+    <div class="footer-row">
+      <p class="disclaimer">免责声明：本页仅为财务教育与计算演示，不构成任何投资、保险、税务或法律建议；测算基于简化模型与假设参数，实际收益受市场波动、通胀及个人情况影响，结果可能与现实存在显著差异；重大财务决策请结合自身情况，必要时咨询持牌专业人士。</p>
+    </div>
+    <p class="copyright-line">© 2026 mangofolio · fin-decision-matrix</p>
+  </div>
 </footer>
 <script>
   const FUND_RATE = 0.031;
@@ -318,7 +326,7 @@
       tbody.appendChild(tr);
     });
   })();
-  const SVG_W = 900, SVG_H = 380;
+  const SVG_W = 1000, SVG_H = 450;
   const M = { top: 40, right: 130, bottom: 55, left: 120 };
   const PLOT_W = SVG_W - M.left - M.right;
   const PLOT_H = SVG_H - M.top - M.bottom;
@@ -336,16 +344,16 @@
   yTicks.forEach(v => {
     const y = yScale(v);
     svgParts.push('<line x1="' + M.left + '" y1="' + y + '" x2="' + (M.left + PLOT_W) + '" y2="' + y + '" style="stroke:var(--mf-colors-dataviz-grid)" stroke-width="1" ' + (v === 0 ? 'stroke-opacity="1"' : 'stroke-dasharray="3,3"') + ' />');
-    svgParts.push('<text x="' + (M.left - 10) + '" y="' + (y + 4) + '" text-anchor="end" font-size="12" style="fill:var(--mf-colors-text-weak)">' + (v / 10000).toFixed(0) + '万</text>');
+    svgParts.push('<text x="' + (M.left - 10) + '" y="' + (y + 4) + '" text-anchor="end" font-size="15" font-weight="600" style="fill:var(--mf-colors-text-weak)">' + (v / 10000).toFixed(0) + '万</text>');
   });
-  const barW = 90;
+  const barW = 110;
   bars.forEach((b, i) => {
     const x = M.left + 30 + i * (PLOT_W - 60) / bars.length;
     const h = yScale(0) - yScale(b.v);
     const y = yScale(b.v);
     svgParts.push('<rect x="' + x + '" y="' + y + '" width="' + barW + '" height="' + h + '" rx="8" style="fill:' + b.cls + '" />');
-    svgParts.push('<text x="' + (x + barW / 2) + '" y="' + (y - 10) + '" text-anchor="middle" font-size="14" font-weight="700" style="fill:var(--mf-colors-text-strong)">' + (b.v / 10000).toFixed(0) + '万</text>');
-    svgParts.push('<text x="' + (x + barW / 2) + '" y="' + (M.top + PLOT_H + 22) + '" text-anchor="middle" font-size="13" style="fill:var(--mf-colors-text)">' + b.name + '</text>');
+    svgParts.push('<text x="' + (x + barW / 2) + '" y="' + (y - 10) + '" text-anchor="middle" font-size="17" font-weight="700" style="fill:var(--mf-colors-text-strong)">' + (b.v / 10000).toFixed(0) + '万</text>');
+    svgParts.push('<text x="' + (x + barW / 2) + '" y="' + (M.top + PLOT_H + 24) + '" text-anchor="middle" font-size="16" font-weight="600" style="fill:var(--mf-colors-text)">' + b.name + '</text>');
   });
   svgParts.push('<line x1="' + M.left + '" y1="' + yScale(0) + '" x2="' + (M.left + PLOT_W) + '" y2="' + yScale(0) + '" style="stroke:var(--mf-colors-border-strong)" stroke-width="1.5" />');
   svg.innerHTML = svgParts.join('');

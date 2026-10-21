@@ -27,8 +27,8 @@
     --page-accent: var(--mf-colors-text-link);          /* #F97316 芒果橙 */
     --page-accent-deep: var(--mf-colors-text-accent-mango); /* #E05E0A 深橙 */
     --page-hairline: var(--mf-colors-border-weak);      /* 1px 细线 */
-    --page-line-strong: rgba(36,22,16,.10);
-    --page-line-weak: rgba(36,22,16,.06);
+    --page-line-strong: var(--mf-colors-border-weak, rgba(36,22,16,.10));
+    --page-line-weak: var(--mf-colors-border, rgba(36,22,16,.06));
     /* 矩阵色阶（柔和版：浅底深字，红涨绿跌——还清越快越红） */
     --lvl1-bg: #FDECEA;  --lvl1-ink: #B8221E;  /* ≤18个月 */
     --lvl2-bg: #FDEBD8;  --lvl2-ink: #C2410C;  /* 19-30个月 */
@@ -46,7 +46,7 @@
   /* 标题区：衬线 + 橙虚线装饰 */
   .paper-head { margin-bottom:20px; }
   .paper-eyebrow { font-size:var(--mf-font-sizes-eyebrow); font-weight:500; color:var(--page-accent); letter-spacing:.24em; text-transform:uppercase; margin-bottom:10px; }
-  .paper-title { font-family:var(--mf-fonts-display); font-size:clamp(1.6rem,3.6vw,2.2rem); font-weight:800; color:var(--page-ink-strong); line-height:1.3; padding-bottom:14px; border-bottom:4px dashed var(--mf-colors-border-focused,rgba(249,115,22,.40)); }
+  .paper-title { font-family:var(--mf-fonts-display); font-size:clamp(1.6rem,3.6vw,2.2rem); font-weight:800; color:var(--page-ink-strong); line-height:1.3; padding-bottom:14px; border-bottom:4px dashed var(--mf-colors-text-link,rgba(249,115,22,.40)); }
 
   /* 结论框：浅中性底 + 3px 橙左线（只放核心结论，一行内说清） */
   .lead-box { background:var(--page-panel); border-left:3px solid var(--page-accent); border-radius:12px; padding:12px 16px; margin:0 0 18px; }
@@ -94,7 +94,7 @@
 
   /* 章节：h2 衬线 + 橙虚线 */
   .sec { margin:26px 0 0; }
-  .sec h2 { font-family:var(--mf-fonts-display); font-size:clamp(1.25rem,2.6vw,1.45rem); font-weight:800; color:var(--page-ink-strong); line-height:1.4; padding-bottom:10px; border-bottom:3px dashed var(--mf-colors-border-focused,rgba(249,115,22,.30)); margin-bottom:12px; }
+  .sec h2 { font-family:var(--mf-fonts-display); font-size:clamp(1.25rem,2.6vw,1.45rem); font-weight:800; color:var(--page-ink-strong); line-height:1.4; padding-bottom:10px; border-bottom:3px dashed var(--mf-colors-text-link,rgba(249,115,22,.30)); margin-bottom:12px; }
   .sec p { margin:0 0 12px; }
   .sec ul, .sec ol { margin:0 0 14px; padding-left:1.4em; }
   .sec li { margin-bottom:6px; }
@@ -111,7 +111,7 @@
 
   /* FAQ */
   .faq-sec { margin:26px 0 0; }
-  .faq-sec h2 { font-family:var(--mf-fonts-display); font-size:clamp(1.25rem,2.6vw,1.45rem); font-weight:800; color:var(--page-ink-strong); padding-bottom:10px; border-bottom:3px dashed var(--mf-colors-border-focused,rgba(249,115,22,.30)); margin-bottom:12px; }
+  .faq-sec h2 { font-family:var(--mf-fonts-display); font-size:clamp(1.25rem,2.6vw,1.45rem); font-weight:800; color:var(--page-ink-strong); padding-bottom:10px; border-bottom:3px dashed var(--mf-colors-text-link,rgba(249,115,22,.30)); margin-bottom:12px; }
   details.faq-item { border:1px solid var(--page-line-strong); border-radius:12px; padding:10px 14px; margin:10px 0; font-size:var(--mf-font-sizes-30); line-height:1.8; color:var(--page-ink); background:var(--page-card); }
   details.faq-item summary { cursor:pointer; font-weight:700; color:var(--page-ink-strong); }
   details.faq-item summary::marker { color:var(--page-accent); }
@@ -144,7 +144,7 @@
   .calc-debt input { width:100%; padding:6px 8px; font-size:var(--mf-font-sizes-100); font-weight:700; color:var(--page-ink-strong); border:1px solid var(--mf-colors-border-weak); border-radius:8px; background:var(--page-card); box-sizing:border-box; }
 
 </style>
-<meta property="og:url" content="https://fintools.mangofolio.com/decisions/%E5%A4%9A%E7%AC%94%E5%80%BA%E5%8A%A1%E5%85%88%E8%BF%98%E5%93%AA%E7%AC%94%EF%BC%9F%E9%9B%AA%E5%B4%A9%E6%B3%95%20vs%20%E9%9B%AA%E7%90%83%E6%B3%95.html">
+<meta property="og:url" content="https://fintools.mangofolio.com/guide/%E5%A4%9A%E7%AC%94%E5%80%BA%E5%8A%A1%E5%85%88%E8%BF%98%E5%93%AA%E7%AC%94%EF%BC%9F%E9%9B%AA%E5%B4%A9%E6%B3%95%20vs%20%E9%9B%AA%E7%90%83%E6%B3%95.html">
 </head>
 <body>
 <div class="statusbar" style="max-width:860px;margin:0 auto;padding:0 12px;font-size:11px;line-height:1.8;color:var(--mf-colors-text-weak,#8A7D70);text-align:center;">数据来源：FinTools 财务工具箱 · 2026-10-21 · 非投资建议</div>
@@ -237,8 +237,16 @@
   </article>
 </main>
 
-<footer>
-  mangofolio · fin-decision-matrix · © 2026 mangofolio
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-row">
+      <p>© 2026 mangofolio · 财务工具箱 FinTools · 人生财务决策 · 中立 · 开源 · 不推荐任何理财产品 · 数据来源公开可核验 · fintools.mangofolio.com</p>
+    </div>
+    <div class="footer-row">
+      <p class="disclaimer">免责声明：本页仅为财务教育与计算演示，不构成任何投资、保险、税务或法律建议；测算基于简化模型与假设参数，实际收益受市场波动、通胀及个人情况影响，结果可能与现实存在显著差异；重大财务决策请结合自身情况，必要时咨询持牌专业人士。</p>
+    </div>
+    <p class="copyright-line">© 2026 mangofolio · fin-decision-matrix</p>
+  </div>
 </footer>
 
 <div class="calc-modal" id="calcModal" hidden>

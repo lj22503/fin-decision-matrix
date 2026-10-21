@@ -33,8 +33,8 @@
     --page-accent: var(--mf-colors-text-link);
     --page-accent-deep: var(--mf-colors-text-accent-mango);
     --page-hairline: var(--mf-colors-border-weak);
-    --page-line-strong: rgba(36,22,16,.10);
-    --page-line-weak: rgba(36,22,16,.06);
+    --page-line-strong: var(--mf-colors-border-weak, rgba(36,22,16,.10));
+    --page-line-weak: var(--mf-colors-border, rgba(36,22,16,.06));
     /* 矩阵色阶（柔和版：浅底深字，红涨绿跌） */
     --lvl1-bg: #FDECEA;  --lvl1-ink: #B8221E;
     --lvl2-bg: #FDEBD8;  --lvl2-ink: #C2410C;
@@ -51,7 +51,7 @@
 
   .paper-head { margin-bottom:12px; }
   .paper-eyebrow { font-size:var(--mf-font-sizes-eyebrow); font-weight:500; color:var(--page-accent); letter-spacing:.24em; text-transform:uppercase; margin-bottom:6px; }
-  .paper-title { font-family:var(--mf-fonts-display); font-size:clamp(1.55rem,3.4vw,2.05rem); font-weight:800; color:var(--page-ink-strong); line-height:1.3; padding-bottom:10px; border-bottom:4px dashed var(--mf-colors-border-focused,rgba(249,115,22,.40)); }
+  .paper-title { font-family:var(--mf-fonts-display); font-size:clamp(1.55rem,3.4vw,2.05rem); font-weight:800; color:var(--page-ink-strong); line-height:1.3; padding-bottom:10px; border-bottom:4px dashed var(--mf-colors-text-link,rgba(249,115,22,.40)); }
 
   .lead-box { background:var(--page-panel); border-left:3px solid var(--page-accent); border-radius:12px; padding:9px 14px; margin:0 0 12px; }
   .lead-box p { font-size:.95em; line-height:1.7; color:var(--page-ink); margin:0; }
@@ -85,7 +85,7 @@
   .matrix-note { margin:2px 0 0; font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.4; }
   .matrix-note b { color:var(--page-accent-deep); }
 
-  .sec-title, .section-title { font-family:var(--mf-fonts-display); font-size:clamp(1.25rem,2.6vw,1.45rem); font-weight:800; color:var(--page-ink-strong); line-height:1.4; padding-bottom:10px; border-bottom:3px dashed var(--mf-colors-border-focused,rgba(249,115,22,.30)); margin:26px 0 12px; }
+  .sec-title, .section-title { font-family:var(--mf-fonts-display); font-size:clamp(1.25rem,2.6vw,1.45rem); font-weight:800; color:var(--page-ink-strong); line-height:1.4; padding-bottom:10px; border-bottom:3px dashed var(--mf-colors-text-link,rgba(249,115,22,.30)); margin:26px 0 12px; }
   .sec p { margin:0 0 12px; }
   .sec b, .sec strong { color:var(--page-ink-strong); }
   details.l2, details.faq-item { border:1px solid var(--page-line-strong); border-radius:12px; padding:10px 14px; margin:12px 0; font-size:var(--mf-font-sizes-30); line-height:1.8; color:var(--page-ink); background:var(--page-card); }
@@ -131,8 +131,7 @@
 
 
   </style>
-<link rel="canonical" href="https://fintools.mangofolio.com/decisions/%E5%A4%9A%E5%B9%B2%205%20%E5%B9%B4%EF%BC%8C%E4%BD%A0%E7%9A%84%E9%92%B1%E8%83%BD%E5%A4%9A%E7%BB%99%E4%BD%A0%E5%A4%9A%E5%B0%91%EF%BC%9F.html">
-<meta property="og:url" content="https://fintools.mangofolio.com/decisions/%E5%A4%9A%E5%B9%B2%205%20%E5%B9%B4%EF%BC%8C%E4%BD%A0%E7%9A%84%E9%92%B1%E8%83%BD%E5%A4%9A%E7%BB%99%E4%BD%A0%E5%A4%9A%E5%B0%91%EF%BC%9F.html">
+<link rel="canonical" href="https://fintools.mangofolio.com/guide/%E5%A4%9A%E5%B9%B2%205%20%E5%B9%B4%EF%BC%8C%E4%BD%A0%E7%9A%84%E9%92%B1%E8%83%BD%E5%A4%9A%E7%BB%99%E4%BD%A0%E5%A4%9A%E5%B0%91%EF%BC%9F.html">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Article","headline":"多干 5 年，你的钱能多给你多少？（2026测算）","dateModified":"2026-10-21","author":{"@type":"Organization","name":"Mangofolio 财务工具箱"}}
 </script>
@@ -224,8 +223,16 @@
     </div>
   </div>
 </div>
-<footer>
-  mangofolio · fin-decision-matrix · © 2026 mangofolio
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-row">
+      <p>© 2026 mangofolio · 财务工具箱 FinTools · 人生财务决策 · 中立 · 开源 · 不推荐任何理财产品 · 数据来源公开可核验 · fintools.mangofolio.com</p>
+    </div>
+    <div class="footer-row">
+      <p class="disclaimer">免责声明：本页仅为财务教育与计算演示，不构成任何投资、保险、税务或法律建议；测算基于简化模型与假设参数，实际收益受市场波动、通胀及个人情况影响，结果可能与现实存在显著差异；重大财务决策请结合自身情况，必要时咨询持牌专业人士。</p>
+    </div>
+    <p class="copyright-line">© 2026 mangofolio · fin-decision-matrix</p>
+  </div>
 </footer>
 <script>
 // ===== 参数 =====
@@ -273,8 +280,8 @@
     const xs = [55, 60, 65, 70, 75, 80];
     const series = [
       { asset: 2000000, color: '#F97316' },
-      { asset: 5000000, color: '#E05E0A' },
-      { asset: 10000000, color: '#B45309' }
+      { asset: 5000000, color: '#2563EB' },
+      { asset: 10000000, color: '#16A34A' }
     ];
     const xMin = 55, xMax = 80;
     let yMax = 0;
@@ -287,11 +294,11 @@
       const v = yMax * i / 4;
       const y = Y(v);
       g += '<line x1="' + padL + '" y1="' + y + '" x2="' + (W - padR) + '" y2="' + y + '" stroke="#E5E7EB" stroke-width="1"/>';
-      g += '<text x="' + (padL - 10) + '" y="' + (y + 5) + '" text-anchor="end" font-size="12" fill="#6B7280">' + (v / 10000).toFixed(0) + '万</text>';
+      g += '<text x="' + (padL - 10) + '" y="' + (y + 5) + '" text-anchor="end" font-size="14" fill="#374151">' + (v / 10000).toFixed(0) + '万</text>';
     }
     xs.forEach(a => {
       const x = X(a);
-      g += '<text x="' + x + '" y="' + (H - padB + 20) + '" text-anchor="middle" font-size="12" fill="#6B7280">' + a + '岁</text>';
+      g += '<text x="' + x + '" y="' + (H - padB + 20) + '" text-anchor="middle" font-size="14" fill="#374151">' + a + '岁</text>';
     });
     series.forEach(s => {
       let path = '';
@@ -300,9 +307,16 @@
         const x = X(a), y = Y(r.monthly);
         path += (i === 0 ? 'M' : 'L') + x.toFixed(1) + ' ' + y.toFixed(1) + ' ';
       });
-      g += '<path d="' + path + '" fill="none" stroke="' + s.color + '" stroke-width="2.5"/>';
+      g += '<path d="' + path + '" fill="none" stroke="' + s.color + '" stroke-width="3"/>';
       const lastR = calcRetire(s.asset, xs[xs.length - 1]);
-      g += '<text x="' + (X(xs[xs.length - 1]) - 6) + '" y="' + (Y(lastR.monthly) - 8) + '" text-anchor="end" font-size="12" fill="' + s.color + '">' + (s.asset / 10000).toFixed(0) + '万</text>';
+      g += '<text x="' + (X(xs[xs.length - 1]) - 6) + '" y="' + (Y(lastR.monthly) - 8) + '" text-anchor="end" font-size="14" font-weight="700" fill="' + s.color + '">' + (s.asset / 10000).toFixed(0) + '万</text>';
+    });
+    // 图例（右上角）
+    let ly = padT + 6;
+    series.forEach(s => {
+      g += '<rect x="' + (W - padR - 168) + '" y="' + ly + '" width="13" height="13" rx="2" fill="' + s.color + '"/>';
+      g += '<text x="' + (W - padR - 150) + '" y="' + (ly + 11) + '" font-size="14" fill="#111827">资产 ' + (s.asset / 10000).toFixed(0) + '万</text>';
+      ly += 20;
     });
     svg.innerHTML = g;
   })();

@@ -69,7 +69,7 @@
 
   .paper-head { margin-bottom:10px; }
   .paper-eyebrow { font-size:var(--mf-font-sizes-eyebrow); font-weight:500; color:var(--mf-colors-text-link); letter-spacing:.24em; text-transform:uppercase; margin-bottom:6px; }
-  .paper-title { font-family:var(--mf-fonts-display); font-size:clamp(1.55rem,3.4vw,2.05rem); font-weight:800; color:var(--mf-colors-text-strong); line-height:1.3; padding-bottom:10px; border-bottom:4px dashed var(--mf-colors-border-focused,rgba(249,115,22,.40)); }
+  .paper-title { font-family:var(--mf-fonts-display); font-size:clamp(1.55rem,3.4vw,2.05rem); font-weight:800; color:var(--mf-colors-text-strong); line-height:1.3; padding-bottom:10px; border-bottom:4px dashed var(--mf-colors-text-link,rgba(249,115,22,.40)); }
 
   .lead-box { background:var(--mf-colors-background-neutral); border-left:3px solid var(--mf-colors-text-link); border-radius:12px; padding:10px 14px; margin:0 0 14px; }
   .lead-box p { font-size:.95em; line-height:1.7; color:var(--mf-colors-text); margin:0; }
@@ -79,7 +79,7 @@
   .lead-stat .num { font-size:24px; font-weight:800; color:var(--mf-colors-text-strong); }
   .lead-stat .lbl { font-size:11px; color:var(--mf-colors-text-weak); }
 
-  .sec-title { font-family:var(--mf-fonts-display); font-size:clamp(1.2rem,2.6vw,1.45rem); font-weight:800; color:var(--mf-colors-text-strong); line-height:1.4; padding-bottom:8px; border-bottom:3px dashed var(--mf-colors-border-focused,rgba(249,115,22,.30)); margin:24px 0 12px; }
+  .sec-title { font-family:var(--mf-fonts-display); font-size:clamp(1.2rem,2.6vw,1.45rem); font-weight:800; color:var(--mf-colors-text-strong); line-height:1.4; padding-bottom:8px; border-bottom:3px dashed var(--mf-colors-text-link,rgba(249,115,22,.30)); margin:24px 0 12px; }
 
   details.l2 { background:var(--mf-colors-background-surface); border:1px solid var(--mf-colors-border-weak); border-radius:12px; padding:12px 16px; margin:0 0 14px; font-size:var(--mf-font-sizes-30); line-height:1.8; color:var(--mf-colors-text); }
   details.l2 summary { cursor:pointer; font-weight:700; color:var(--mf-colors-text-link); }
@@ -188,12 +188,16 @@
   <div class="cta-box"><b>用你自己的数字算一遍：</b>上面的结果基于简化假设；把金额、年限、利率换成你的真实数字，答案可能完全不同——本页提供算法框架，你的数字才是决策依据。</div>
   </article>
 </main>
-<footer>
-  mangofolio · fin-decision-matrix<br>
-  免责声明：<br>
-  ① 本页仅为财务教育与计算演示，不构成任何投资、保险、税务或法律建议。<br>
-  ② 测算基于简化模型与假设参数，实际收益受市场波动、通胀及个人情况影响，结果可能与现实存在显著差异。<br>
-  ③ 重大财务决策请结合自身情况，必要时咨询持牌专业人士。© 2026 mangofolio
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-row">
+      <p>© 2026 mangofolio · 财务工具箱 FinTools · 人生财务决策 · 中立 · 开源 · 不推荐任何理财产品 · 数据来源公开可核验 · fintools.mangofolio.com</p>
+    </div>
+    <div class="footer-row">
+      <p class="disclaimer">免责声明：本页仅为财务教育与计算演示，不构成任何投资、保险、税务或法律建议；测算基于简化模型与假设参数，实际收益受市场波动、通胀及个人情况影响，结果可能与现实存在显著差异；重大财务决策请结合自身情况，必要时咨询持牌专业人士。</p>
+    </div>
+    <p class="copyright-line">© 2026 mangofolio · fin-decision-matrix</p>
+  </div>
 </footer>
 <script>
   // ============================================================
