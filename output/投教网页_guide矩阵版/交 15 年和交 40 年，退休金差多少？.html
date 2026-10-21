@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>交 15 年和交 40 年，退休金差多少？（2026测算）</title>
+<meta name="description" content="同样月薪 2 万，社保交 15 年退休后替代率仅 21%，交 40 年可达 56%——多交 25 年，退休金约 2.7 倍。缴费年限是基础养老金和个人账户的双重杠杆，越晚交越吃亏。">
+<meta name="keywords" content="社保缴费年限,交15年交40年,养老金替代率,基础养老金,个人账户,退休金测算,fin-decision-matrix">
+<meta property="og:type" content="article" />
+<meta property="og:title" content="交 15 年和交 40 年，退休金差多少？（2026测算）" />
+<meta property="og:description" content="同样月薪 2 万，社保交 15 年退休后替代率仅 21%，交 40 年可达 56%——多交 25 年，退休金约 2.7 倍。缴费年限是基础养老金和个人账户的双重杠杆，越晚交越吃亏。" />
+<meta property="og:url" content="https://fintools.mangofolio.com/guide/%E4%BA%A4%2015%20%E5%B9%B4%E5%92%8C%E4%BA%A4%2040%20%E5%B9%B4%EF%BC%8C%E9%80%80%E4%BC%91%E9%87%91%E5%B7%AE%E5%A4%9A%E5%B0%91%EF%BC%9F.html" />
+<meta property="og:image" content="https://fintools.mangofolio.com/images/og-cover.png?v=2" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:site_name" content="财务工具箱 FinTools" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="交 15 年和交 40 年，退休金差多少？（2026测算）" />
+<meta name="twitter:description" content="同样月薪 2 万，社保交 15 年退休后替代率仅 21%，交 40 年可达 56%——多交 25 年，退休金约 2.7 倍。缴费年限是基础养老金和个人账户的双重杠杆，越晚交越吃亏。" />
+<meta name="twitter:image" content="https://fintools.mangofolio.com/images/og-cover.png?v=2" />
+<link rel="canonical" href="https://fintools.mangofolio.com/guide/%E4%BA%A4%2015%20%E5%B9%B4%E5%92%8C%E4%BA%A4%2040%20%E5%B9%B4%EF%BC%8C%E9%80%80%E4%BC%91%E9%87%91%E5%B7%AE%E5%A4%9A%E5%B0%91%EF%BC%9F.html" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"交 15 年和交 40 年，退休金差多少？（2026测算）","description":"同样月薪 2 万，社保交 15 年退休后替代率仅 21%，交 40 年可达 56%——多交 25 年，退休金约 2.7 倍。缴费年限是基础养老金和个人账户的双重杠杆，越晚交越吃亏。","image":"https://fintools.mangofolio.com/images/og-cover.png?v=2","datePublished":"2026-10-14","dateModified":"2026-10-14","author":{"@type":"Organization","name":"财务工具箱 FinTools","url":"https://fintools.mangofolio.com/"},"publisher":{"@type":"Organization","name":"mangofolio","logo":{"@type":"ImageObject","url":"https://fintools.mangofolio.com/images/og-cover.png?v=2"}},"mainEntityOfPage":"https://fintools.mangofolio.com/guide/%E4%BA%A4%2015%20%E5%B9%B4%E5%92%8C%E4%BA%A4%2040%20%E5%B9%B4%EF%BC%8C%E9%80%80%E4%BC%91%E9%87%91%E5%B7%AE%E5%A4%9A%E5%B0%91%EF%BC%9F.html","about":"社保养老金,缴费年限,养老金替代率,基础养老金,个人账户养老金"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"交 15 年社保，退休后每月能领多少？","acceptedAnswer":{"@type":"Answer","text":"以月薪 2 万、当地社平工资 8000 元测算：交 15 年退休后约领 4172 元/月，替代率仅 21%。"}},{"@type":"Question","name":"交 40 年比交 15 年多拿多少？","acceptedAnswer":{"@type":"Answer","text":"交 40 年约领 11125 元/月，替代率 56%——多交 25 年，退休金约 2.7 倍。"}},{"@type":"Question","name":"交 30 年是多少？","acceptedAnswer":{"@type":"Answer","text":"约领 8344 元/月，替代率 42%，介于交 15 年与 40 年之间。"}},{"@type":"Question","name":"为什么高收入者替代率反而更低？","acceptedAnswer":{"@type":"Answer","text":"缴费基数上限为社平工资的 3 倍（24000 元），超出部分不计入养老金，因此高收入人群替代率天然更低，缺口要靠个人储蓄补充。"}}]}</script>
+
+<link rel="stylesheet" href="assets/mangofolio-tokens-v09.css">
+<style>
+
+  :root {
+    --page-bg: var(--mf-colors-background);
+    --page-card: var(--mf-colors-background-surface);
+    --page-panel: var(--mf-colors-background-neutral);
+    --page-ink: var(--mf-colors-text);
+    --page-ink-strong: var(--mf-colors-text-strong);
+    --page-ink-weak: var(--mf-colors-text-weak);
+    --page-accent: var(--mf-colors-text-link);
+    --page-accent-deep: var(--mf-colors-text-accent-mango);
+    --page-hairline: var(--mf-colors-border-weak);
+    --page-line-strong: rgba(36,22,16,.10);
+    --page-line-weak: rgba(36,22,16,.06);
+    /* 矩阵色阶（柔和版：浅底深字，红涨绿跌） */
+    --lvl1-bg: #FDECEA;  --lvl1-ink: #B8221E;
+    --lvl2-bg: #FDEBD8;  --lvl2-ink: #C2410C;
+    --lvl3-bg: #FDF3DE;  --lvl3-ink: #B45309;
+    --lvl4-bg: #E8F3EC;  --lvl4-ink: #1F8A4C;
+    --lvl5-bg: #E1EEE6;  --lvl5-ink: #11693D;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--page-bg); padding:12px; font-family:var(--mf-fonts-sans); color:var(--page-ink); font-size:17px; line-height:1.9; letter-spacing:.01em; }
+  .guide-article-wrap { max-width:860px; margin:0 auto; }
+  .paper { background:var(--page-card); border:1px solid var(--page-line-strong); border-radius:16px; box-shadow:var(--mf-shadows-card); max-width:780px; margin:6px auto; padding:28px 40px; }
+  @media (max-width:640px) { .paper { padding:24px 20px; } body { font-size:16px; padding:8px; } }
+
+  .paper-head { margin-bottom:12px; }
+  .paper-eyebrow { font-size:var(--mf-font-sizes-eyebrow); font-weight:500; color:var(--page-accent); letter-spacing:.24em; text-transform:uppercase; margin-bottom:6px; }
+  .paper-title { font-family:var(--mf-fonts-display); font-size:clamp(1.55rem,3.4vw,2.05rem); font-weight:800; color:var(--page-ink-strong); line-height:1.3; padding-bottom:10px; border-bottom:4px dashed rgba(249,115,22,.40); }
+
+  .lead-box { background:var(--page-panel); border-left:3px solid var(--page-accent); border-radius:12px; padding:9px 14px; margin:0 0 12px; }
+  .lead-box p { font-size:.95em; line-height:1.7; color:var(--page-ink); margin:0; }
+  .lead-box b, .lead-box strong { color:var(--page-ink-strong); }
+  .hl { color:var(--page-accent); font-weight:700; }
+
+  .matrix-head { display:flex; align-items:baseline; justify-content:space-between; gap:12px; flex-wrap:wrap; margin:0 0 8px; }
+  .matrix-title { font-family:var(--mf-fonts-display); font-size:clamp(1.15rem,2.4vw,1.3rem); font-weight:800; color:var(--page-ink-strong); }
+  .matrix-sub { font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.6; }
+  .matrix-table { width:100%; border-collapse:separate; border-spacing:2px; }
+  .matrix-table caption { caption-side:top; text-align:left; font-size:var(--mf-font-sizes-30); color:var(--page-ink-weak); padding:0 0 6px; line-height:1.6; }
+  .matrix-table thead th { background:var(--page-panel); color:var(--page-ink-strong); font-weight:700; text-align:center; padding:5px 7px; border-radius:8px; font-size:var(--mf-font-sizes-30); line-height:1.25; white-space:nowrap; }
+  .matrix-table th.rowhead { text-align:left; width:108px; background:var(--page-panel); font-size:var(--mf-font-sizes-30); }
+  .matrix-table td { padding:4px 3px; text-align:center; font-size:var(--mf-font-sizes-50); font-weight:700; border-radius:8px; min-width:60px; line-height:1.25; }
+  .matrix-table td.rowhead { background:var(--page-panel); color:var(--page-ink-strong); font-weight:700; text-align:left; width:104px; font-size:var(--mf-font-sizes-30); white-space:nowrap; padding:4px 7px; }
+  .cell-amount { font-size:var(--mf-font-sizes-100); display:block; }
+  .cell-note { font-size:var(--mf-font-sizes-25); opacity:.9; margin-top:0; font-weight:500; display:block; line-height:1.25; }
+  .lvl1 { background:var(--lvl1-bg); color:var(--lvl1-ink); }
+  .lvl2 { background:var(--lvl2-bg); color:var(--lvl2-ink); }
+  .lvl3 { background:var(--lvl3-bg); color:var(--lvl3-ink); }
+  .lvl4 { background:var(--lvl4-bg); color:var(--lvl4-ink); }
+  .lvl5 { background:var(--lvl5-bg); color:var(--lvl5-ink); }
+  .legend { display:flex; justify-content:center; gap:8px; margin:1px 0 0; font-size:var(--mf-font-sizes-25); color:var(--page-ink); flex-wrap:wrap; }
+  .legend span { display:inline-flex; align-items:center; gap:6px; }
+  .dot { width:12px; height:12px; border-radius:4px; display:inline-block; }
+  .dot.lvl1 { background:var(--lvl1-bg); border:1px solid var(--lvl1-ink); }
+  .dot.lvl2 { background:var(--lvl2-bg); border:1px solid var(--lvl2-ink); }
+  .dot.lvl3 { background:var(--lvl3-bg); border:1px solid var(--lvl3-ink); }
+  .dot.lvl4 { background:var(--lvl4-bg); border:1px solid var(--lvl4-ink); }
+  .dot.lvl5 { background:var(--lvl5-bg); border:1px solid var(--lvl5-ink); }
+  .matrix-note { margin:2px 0 0; font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.4; }
+  .matrix-note b { color:var(--page-accent-deep); }
+
+  .sec-title, .section-title { font-family:var(--mf-fonts-display); font-size:clamp(1.25rem,2.6vw,1.45rem); font-weight:800; color:var(--page-ink-strong); line-height:1.4; padding-bottom:10px; border-bottom:3px dashed rgba(249,115,22,.30); margin:26px 0 12px; }
+  .sec p { margin:0 0 12px; }
+  .sec b, .sec strong { color:var(--page-ink-strong); }
+  details.l2, details.faq-item { border:1px solid var(--page-line-strong); border-radius:12px; padding:10px 14px; margin:12px 0; font-size:var(--mf-font-sizes-30); line-height:1.8; color:var(--page-ink); background:var(--page-card); }
+  details.l2 summary, details.faq-item summary { cursor:pointer; font-weight:700; color:var(--page-ink-strong); }
+  details.l2 summary::marker, details.faq-item summary::marker { color:var(--page-accent); }
+  details.l2[open] summary, details.faq-item[open] summary { color:var(--page-accent-deep); }
+  .assume, .breakeven, .extra-note { background:var(--page-panel); border-radius:12px; padding:12px 16px; font-size:var(--mf-font-sizes-30); color:var(--page-ink); margin:12px 0; line-height:1.8; }
+  .assume b, .breakeven b, .extra-note b, .assume strong, .breakeven strong { color:var(--page-ink-strong); }
+  .foot { margin:16px 0 0; padding-top:14px; border-top:1px solid var(--page-line-strong); font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.8; }
+
+  .chart-title { text-align:center; font-size:var(--mf-font-sizes-200); font-weight:700; color:var(--page-ink-strong); margin:24px 0 4px; }
+  .chart-sub { text-align:center; font-size:var(--mf-font-sizes-30); color:var(--page-ink-weak); margin-bottom:8px; }
+  .chart-wrap { width:100%; overflow:hidden; }
+  .chart-wrap svg { width:100%; height:auto; display:block; }
+
+  .cta-box { margin:26px 0 0; padding:24px 26px; background:var(--page-panel); border:1px solid var(--page-line-strong); border-radius:16px; text-align:center; }
+  .cta-box p { font-size:var(--mf-font-sizes-30); color:var(--page-ink); line-height:1.8; margin:0 0 12px; }
+  .cta-box p:first-child { font-size:var(--mf-font-sizes-100); font-weight:700; color:var(--page-ink-strong); }
+  .cta-box b { color:var(--page-ink-strong); }
+  .calc-btn { display:inline-block; padding:11px 30px; font-size:var(--mf-font-sizes-100); font-weight:700; color:#FFFFFF; background:var(--page-accent); border:none; border-radius:16px; cursor:pointer; }
+  .calc-btn:hover { background:var(--page-accent-deep); }
+
+  .guide-disclaimer { margin:26px 0 0; padding-top:14px; border-top:1px solid var(--page-line-strong); font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.8; }
+  .disclaimer-title { font-weight:700; color:var(--page-ink); margin-bottom:4px; }
+  .disclaimer-text { margin-bottom:6px; }
+
+  footer { max-width:780px; margin:8px auto 24px; padding:14px 24px 0; text-align:center; font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.8; border-top:1px solid var(--page-line-weak); }
+
+  .calc-modal[hidden] { display:none; }
+  .calc-modal { position:fixed; inset:0; z-index:1000; display:flex; align-items:center; justify-content:center; padding:16px; }
+  .calc-overlay { position:absolute; inset:0; background:rgba(36,22,16,.45); }
+  .calc-dialog { position:relative; background:var(--page-card); border:1px solid var(--page-line-strong); border-radius:16px; box-shadow:var(--mf-shadows-card); max-width:480px; width:100%; padding:24px 26px; }
+  .calc-close { position:absolute; top:10px; right:14px; font-size:1.6rem; font-weight:700; color:var(--page-ink-weak); background:none; border:none; cursor:pointer; line-height:1; }
+  .calc-title { font-family:var(--mf-fonts-display); font-size:var(--mf-font-sizes-200); font-weight:800; color:var(--page-ink-strong); margin-bottom:16px; }
+  .calc-field { margin-bottom:14px; }
+  .calc-field label { display:block; font-size:var(--mf-font-sizes-30); color:var(--page-ink); margin-bottom:4px; font-weight:600; }
+  .calc-field input { width:100%; padding:8px 10px; font-size:var(--mf-font-sizes-100); font-weight:700; color:var(--page-ink-strong); border:1px solid var(--mf-colors-border-weak); border-radius:8px; background:var(--page-card); box-sizing:border-box; }
+  .calc-field .hint { display:block; font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); margin-top:2px; }
+  .calc-result { margin-top:16px; padding:14px 16px; background:var(--page-panel); border-left:3px solid var(--page-accent); border-radius:12px; font-size:var(--mf-font-sizes-100); font-weight:700; color:var(--page-ink-strong); line-height:1.7; }
+  .calc-result b { color:var(--page-accent-deep); }
+  .calc-ratio { margin-top:6px; font-size:var(--mf-font-sizes-30); font-weight:400; color:var(--page-ink); line-height:1.7; }
+
+</style>
+</head>
+<body>
+<main class="guide-article-wrap">
+  <article class="paper">
+<header class="paper-head">
+      <p class="paper-eyebrow">Pension Planning</p>
+  <h1 class="paper-title">交 15 年和交 40 年，退休金差多少？</h1>
+    </header>
+  <div class="lead-box">
+  <p>先记住结论：<strong>社保养老金 = 基础养老金 + 个人账户养老金，缴费年限是双重杠杆</strong>。月薪 2 万：交 15 年退休后约领 <span class="dyn" id="leadTotal1">4172 元/月</span>（替代率 <span class="dyn" id="leadRate1">21%</span>），交 40 年约领 <b><span class="dyn" id="leadTotal2">11125 元/月</span></b>（替代率 <span class="dyn" id="leadRate2">56%</span>）——<b>多交 25 年，退休金约 2.7 倍</b>。但高收入者受缴费基数上限约束，替代率天然更低，缺口必须靠个人储蓄补充。</p>
+</div>
+
+  <div class="matrix-head">
+      <div class="matrix-title">退休前月薪 × 缴费年限</div>
+      <div class="matrix-sub">替代率越高越红（好）</div>
+    </div>
+      <table class="matrix-table" id="replaceTable">
+        <caption>表1：不同月薪 × 缴费年限下的退休金（元/月）与替代率</caption>
+        <thead>
+    <tr>
+      <th class="rowhead">退休前月薪</th>
+      <th>交15年</th><th>交20年</th><th>交25年</th><th>交30年</th><th>交35年</th><th>交40年</th>
+    </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <div class="legend">
+    <span><i class="dot lvl1"></i>≥70%（基本维持）</span>
+    <span><i class="dot lvl2"></i>60-70%（略有下降）</span>
+    <span><i class="dot lvl3"></i>40-60%（明显下降）</span>
+    <span><i class="dot lvl4"></i>25-40%（大幅下降）</span>
+    <span><i class="dot lvl5"></i>&lt;25%（仅够生存）</span>
+  </div>
+      <p class="matrix-note">注：替代率 = 退休金 ÷ 退休前月薪；红档代表替代率较高（基本维持生活），橙/黄档为过渡档，绿档代表替代率低（仅够生存）。</p>
+ class="sec-title">为什么？</h2>
+  <details class="l2">
+    <summary>讲给我听：为什么多交 25 年，退休金能翻 2.7 倍？</summary>
+    <p>因为缴费年限是<b>双重杠杆</b>：基础养老金按"（社平工资 + 缴费基数）÷ 2 × 年限 × 1%"逐年放大；个人账户每年多存 12 个月 × 8% 基数，退休后再按 139 个月摊回。</p>
+    <p>以月薪 2 万为例：交 15 年 → 约 <b>4172 元/月</b>，交 40 年 → 约 <b>11125 元/月</b>，多出的约 <b>6953 元/月</b>，一半来自基础养老金随年限翻倍，另一半来自个人账户多交 25 年的本金与记账收益。更关键的是：缴费基数以 3 倍社平工资封顶，月薪 2.4 万以上的人，<b>缴费年限是唯一还能撬动的杠杆</b>。</p>
+  </details>
+
+  <div class="chart-sub">曲线：月薪 2 万，退休金随缴费年限增长（芒果橙），标注交 15 年与 40 年对比</div>
+  <div class="chart-wrap">
+    <svg id="pensionCurve" viewBox="0 0 900 440" preserveAspectRatio="xMidYMid meet"></svg>
+  </div>
+
+  <h2 class="sec-title">底层假设（L3）</h2>
+  <div class="assume">
+    假设：当地社会平均工资 <b>8000 元/月</b>；缴费基数上限为社平工资的 <b>3 倍</b>（即 24000 元），下限为 <b>0.6 倍</b>（即 4800 元）；个人账户缴费比例 <b>8%</b>；60 岁退休计发月数 <b>139</b>；不考虑通胀、工资增长、社保政策调整。<br>
+    换算：月薪 <span class="dyn" id="convSalary">2 万</span>，交 <span class="dyn" id="convYears1">30</span> 年 → 退休后约领 <span class="highlight"><span class="dyn" id="convTotal1">8344</span> 元/月</span>（替代率 <span class="dyn" id="convRate1">42%</span>）；交 <span class="dyn" id="convYears2">40</span> 年 → 领 <b><span class="dyn" id="convTotal2">11125</span> 元/月</b>（替代率 <span class="dyn" id="convRate2">56%</span>）。
+  </div>
+  <div class="foot">
+    测算基于简化社保公式：基础养老金 =（社平工资 + 缴费基数）÷ 2 × 缴费年限 × 1%；个人账户养老金 = 缴费基数 × 8% × 12 × 缴费年限 ÷ 139。实际养老金受当地政策、工资增长、账户记账利率、过渡性养老金等多因素影响，结果可能存在较大差异。本图不构成任何金融建议。
+  </div>
+<h2 class="sec-title">常见问题（FAQ）</h2>
+  <details class="faq-item"><summary>交 15 年社保，退休后每月能领多少？</summary><p>以月薪 2 万、当地社平工资 8000 元测算：交 15 年退休后约领 4172 元/月，替代率仅 21%。</p></details>
+  <details class="faq-item"><summary>交 40 年比交 15 年多拿多少？</summary><p>交 40 年约领 11125 元/月，替代率 56%——多交 25 年，退休金约 2.7 倍。</p></details>
+  <details class="faq-item"><summary>交 30 年是多少？</summary><p>约领 8344 元/月，替代率 42%，介于交 15 年与 40 年之间。</p></details>
+  <details class="faq-item"><summary>为什么高收入者替代率反而更低？</summary><p>缴费基数上限为社平工资的 3 倍（24000 元），超出部分不计入养老金，因此高收入人群替代率天然更低，缺口要靠个人储蓄补充。</p></details>
+  <div class="cta-box"><b>用你自己的数字算一遍：</b>上面的结果基于简化假设；把月薪、缴费年限换成你的真实数字，答案可能完全不同——本页提供算法框架，你的数字才是决策依据。<br><button class="calc-btn" id="openCalc">算一算</button></div>
+</article>
+</main>
+
+<div class="calc-modal" id="calcModal" hidden>
+  <div class="calc-overlay" id="calcOverlay"></div>
+  <div class="calc-dialog" role="dialog" aria-modal="true" aria-label="用你自己的数字算一算">
+    <button class="calc-close" id="closeCalc" aria-label="关闭">×</button>
+    <div class="calc-title">用你自己的数字算一算</div>
+    <div class="calc-field">
+      <label for="calcSalary">你的月薪（元）</label>
+      <input type="number" id="calcSalary" value="20000" min="1000" step="1000">
+      <span class="hint">例如：月薪 2 万 = 20000</span>
+    </div>
+    <div class="calc-field">
+      <label for="calcYears">社保缴费年限</label>
+      <input type="number" id="calcYears" value="15" min="15" max="45" step="1">
+      <span class="hint">最少 15 年才能领退休金</span>
+    </div>
+    <div class="calc-result">
+      月薪 <b id="calcOutSalary">2 万</b>，交 <b id="calcOutYears">15</b> 年 → 退休后每月约领 <b id="calcOutPension">4172 元</b>（替代率 <span id="calcOutRate">21%</span>）
+      <div class="calc-ratio" id="calcOutGap">每月缺口约 15828 元——高收入者替代率天然偏低。</div>
+    </div>
+  </div>
+</div>
+<footer>
+  mangofolio · fin-decision-matrix · © 2026 mangofolio
+</footer>
+<script>
+  // ============================================================
+  // 参数
+  // ============================================================
+  const SOCIAL_AVG = 8000;           // 当地社平工资
+  const BASE_UPPER = SOCIAL_AVG * 3; // 缴费基数上限 24000
+  const BASE_LOWER = SOCIAL_AVG * 0.6; // 缴费基数下限 4800
+  const ACCOUNT_RATE = 0.08;         // 个人账户缴费比例
+  const MONTHS_DIVISOR = 139;        // 60岁退休计发月数
+
+  // ============================================================
+  // 核心计算
+  // ============================================================
+  // 给定月薪、缴费年限，返回退休金 + 替代率
+  function calcPension(salary, years) {
+    const base = Math.min(Math.max(salary, BASE_LOWER), BASE_UPPER);
+    const basicPension = (SOCIAL_AVG + base) / 2 * years * 0.01;
+    const accountBalance = base * ACCOUNT_RATE * 12 * years;
+    const accountPension = accountBalance / MONTHS_DIVISOR;
+    const total = basicPension + accountPension;
+    const rate = total / salary;
+    const gap = salary - total;
+    return { total, rate, gap, base, basicPension, accountPension };
+  }
+
+  // 风险档位：替代率越低越危险（1=基本维持 … 5=仅能生存）
+  function getLevel(rate) {
+    if (rate >= 0.70) return 1;
+    if (rate >= 0.60) return 2;
+    if (rate >= 0.40) return 3;
+    if (rate >= 0.25) return 4;
+    return 5;
+  }
+
+  function formatIncome(v) {
+    if (v >= 10000) return (v / 10000).toFixed(1) + '万';
+    return Math.round(v).toLocaleString();
+  }
+
+  function formatRate(r) {
+    return (r * 100).toFixed(0) + '%';
+  }
+
+  function formatGap(v) {
+    if (v <= 0) return '无缺口';
+    if (v >= 10000) return '缺口' + (v / 10000).toFixed(1) + '万';
+    return '缺口' + Math.round(v).toLocaleString();
+  }
+
+  // ============================================================
+  // 表格
+  // ============================================================
+  const salaries = [5000, 8000, 10000, 20000, 30000, 50000];
+  const yearsList = [15, 20, 25, 30, 35, 40];
+  const tbody = document.querySelector('#replaceTable tbody');
+
+  salaries.forEach(salary => {
+    const tr = document.createElement('tr');
+    const th = document.createElement('th');
+    th.className = 'rowhead';
+    th.textContent = formatIncome(salary) + '/月';
+    tr.appendChild(th);
+
+    yearsList.forEach(years => {
+      const { total, rate, gap } = calcPension(salary, years);
+      const td = document.createElement('td');
+      td.className = 'cell lvl' + getLevel(rate);
+      td.innerHTML = `<div class="cell-amount">${Math.round(total).toLocaleString()}</div>
+                      <div class="cell-note">替代率 ${formatRate(rate)} · ${formatGap(gap)}</div>`;
+      tr.appendChild(td);
+    });
+
+    tbody.appendChild(tr);
+  });
+
+  // ============================================================
+  // 曲线图：月薪 2 万，退休金随缴费年限变化
+  // ============================================================
+  const CURVE_SALARY = 20000;
+  const curveYears = [];
+  for (let y = 15; y <= 40; y++) curveYears.push(y);
+
+  const SVG_W = 900, SVG_H = 440;
+  const M = { top: 30, right: 110, bottom: 55, left: 90 };
+  const PLOT_W = SVG_W - M.left - M.right;
+  const PLOT_H = SVG_H - M.top - M.bottom;
+
+  const X_MIN = 15, X_MAX = 40;
+  const Y_MIN = 0, Y_MAX = 12000;
+
+  const xScale = y => M.left + (y - X_MIN) / (X_MAX - X_MIN) * PLOT_W;
+  const yScale = v => M.top + PLOT_H - (v - Y_MIN) / (Y_MAX - Y_MIN) * PLOT_H;
+
+  function buildPath(points) {
+    return points.map((p, i) =>
+      (i === 0 ? 'M' : 'L') + xScale(p.year).toFixed(1) + ',' + yScale(p.value).toFixed(1)
+    ).join(' ');
+  }
+
+  function buildAreaPath(points) {
+    const baseline = yScale(0);
+    let d = 'M' + xScale(points[0].year).toFixed(1) + ',' + baseline;
+    points.forEach(p => {
+      d += ' L' + xScale(p.year).toFixed(1) + ',' + yScale(p.value).toFixed(1);
+    });
+    d += ' L' + xScale(points[points.length - 1].year).toFixed(1) + ',' + baseline + ' Z';
+    return d;
+  }
+
+  const svg = document.getElementById('pensionCurve');
+  let svgParts = [];
+
+  // 网格线
+  const yTicks = [0, 2000, 4000, 6000, 8000, 10000, 12000];
+  yTicks.forEach(v => {
+    const y = yScale(v);
+    svgParts.push(`<line x1="${M.left}" y1="${y}" x2="${M.left + PLOT_W}" y2="${y}"
+      style="stroke:var(--mf-colors-dataviz-grid)" stroke-width="1" ${v === 0 ? 'stroke-opacity="1"' : 'stroke-dasharray="3,3"'} />`);
+    svgParts.push(`<text x="${M.left - 10}" y="${y + 4}" text-anchor="end"
+      font-size="12" style="fill:var(--mf-colors-text-weak)">${(v / 1000)}k</text>`);
+  });
+
+  const xTicks = [15, 20, 25, 30, 35, 40];
+  xTicks.forEach(y => {
+    const x = xScale(y);
+    svgParts.push(`<line x1="${x}" y1="${M.top}" x2="${x}" y2="${M.top + PLOT_H}"
+      style="stroke:var(--mf-colors-dataviz-grid)" stroke-width="1" stroke-dasharray="3,3" />`);
+    svgParts.push(`<text x="${x}" y="${M.top + PLOT_H + 22}" text-anchor="middle"
+      font-size="12" style="fill:var(--mf-colors-text-weak)">${y}年</text>`);
+  });
+
+  // 坐标轴
+  svgParts.push(`<line x1="${M.left}" y1="${M.top + PLOT_H}" x2="${M.left + PLOT_W}" y2="${M.top + PLOT_H}"
+    style="stroke:var(--mf-colors-border-strong)" stroke-width="1.5" />`);
+  svgParts.push(`<line x1="${M.left}" y1="${M.top}" x2="${M.left}" y2="${M.top + PLOT_H}"
+    style="stroke:var(--mf-colors-border-strong)" stroke-width="1.5" />`);
+
+  // 曲线数据
+  const points = curveYears.map(y => ({ year: y, value: calcPension(CURVE_SALARY, y).total }));
+
+  // 面积填充与曲线（mangofolio 主色芒果橙）
+  svgParts.push(`<path d="${buildAreaPath(points)}" style="fill:var(--mf-colors-dataviz-mango-2)" fill-opacity="0.15" />`);
+  svgParts.push(`<path d="${buildPath(points)}" fill="none" style="stroke:var(--mf-colors-dataviz-mango-2)" stroke-width="3"
+    stroke-linecap="round" stroke-linejoin="round" />`);
+
+  // 端点标注：交15年（红）vs 交40年（绿）
+  const p15 = points[0];
+  const p40 = points[points.length - 1];
+  const r15 = calcPension(CURVE_SALARY, 15).rate;
+  const r40 = calcPension(CURVE_SALARY, 40).rate;
+
+  svgParts.push(`<circle cx="${xScale(15)}" cy="${yScale(p15.value)}" r="6" style="fill:var(--lvl5-bg)" />`);
+  svgParts.push(`<text x="${xScale(15) - 8}" y="${yScale(p15.value) - 12}" text-anchor="end"
+    font-size="14" font-weight="700" style="fill:var(--lvl5-bg)">交15年：${Math.round(p15.value).toLocaleString()}元/月（替代率${formatRate(r15)}）</text>`);
+
+  svgParts.push(`<circle cx="${xScale(40)}" cy="${yScale(p40.value)}" r="6" style="fill:var(--lvl1-bg)" />`);
+  svgParts.push(`<text x="${xScale(40) - 8}" y="${yScale(p40.value) + 22}" text-anchor="end"
+    font-size="14" font-weight="700" style="fill:var(--lvl1-bg)">交40年：${Math.round(p40.value).toLocaleString()}元/月（替代率${formatRate(r40)}）</text>`);
+
+  // 差距标注
+  const gapX = xScale(27.5);
+  const gapY1 = yScale(p15.value);
+  const gapY2 = yScale(p40.value);
+  svgParts.push(`<line x1="${gapX}" y1="${gapY1}" x2="${gapX}" y2="${gapY2}"
+    style="stroke:var(--lvl1-bg)" stroke-width="1.5" stroke-dasharray="4,3" />`);
+  const midY = (gapY1 + gapY2) / 2;
+  const gapValue = p40.value - p15.value;
+  svgParts.push(`<rect x="${gapX - 78}" y="${midY - 14}" width="156" height="28" rx="6" style="fill:var(--mf-colors-background-warning)" />`);
+  svgParts.push(`<text x="${gapX}" y="${midY + 6}" text-anchor="middle"
+    font-size="13" font-weight="700" style="fill:var(--page-accent-deep)">每月多领 ${Math.round(gapValue).toLocaleString()} 元</text>`);
+
+  // 图例
+  const legendY = SVG_H - 14;
+  svgParts.push(`<line x1="${M.left}" y1="${legendY}" x2="${M.left + 24}" y2="${legendY}"
+    style="stroke:var(--mf-colors-dataviz-mango-2)" stroke-width="3" stroke-linecap="round" />`);
+  svgParts.push(`<text x="${M.left + 30}" y="${legendY + 5}" font-size="13" style="fill:var(--mf-colors-text)">退休金（月薪2万，随缴费年限增长）</text>`);
+  svgParts.push(`<circle cx="${M.left + 300}" cy="${legendY - 2}" r="4" style="fill:var(--lvl5-bg)" />`);
+  svgParts.push(`<text x="${M.left + 310}" y="${legendY + 5}" font-size="13" style="fill:var(--mf-colors-text)">交15年·仅够生存</text>`);
+  svgParts.push(`<circle cx="${M.left + 480}" cy="${legendY - 2}" r="4" style="fill:var(--lvl1-bg)" />`);
+  svgParts.push(`<text x="${M.left + 490}" y="${legendY + 5}" font-size="13" style="fill:var(--mf-colors-text)">交40年·明显改善</text>`);
+
+  // 左侧 Y 轴标题
+  svgParts.push(`<text x="18" y="${M.top + PLOT_H / 2}" font-size="12" style="fill:var(--mf-colors-text-weak)"
+    transform="rotate(-90, 18, ${M.top + PLOT_H / 2})" text-anchor="middle">退休金（元/月）</text>`);
+
+  svg.innerHTML = svgParts.join('');
+
+  // ============================================================
+  // 动态插值：静态文案数字由同一计算函数生成（避免硬编码漂移）
+  // ============================================================
+  (function renderStatic() {
+    const salary = 20000, y1 = 15, y2 = 40;
+    const r1 = calcPension(salary, y1);
+    const r2 = calcPension(salary, y2);
+    const rMid = calcPension(salary, 30);
+    const fmtIncome = v => (v / 10000).toFixed(1) + '万';
+    const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+    set('subSalary', fmtIncome(salary));
+    set('subYears1', y1);
+    set('subRate1', formatRate(r1.rate));
+    set('subYears2', y2);
+    set('subRate2', formatRate(r2.rate));
+    set('subDiffYears', y2 - y1);
+    set('subMult', (r2.total / r1.total).toFixed(1));
+    set('leadTotal1', Math.round(r1.total).toLocaleString() + ' 元/月');
+    set('leadRate1', formatRate(r1.rate));
+    set('leadTotal2', Math.round(r2.total).toLocaleString() + ' 元/月');
+    set('leadRate2', formatRate(r2.rate));
+    set('convSalary', fmtIncome(salary));
+    set('convYears1', 30);
+    set('convTotal1', Math.round(rMid.total).toLocaleString());
+    set('convRate1', formatRate(rMid.rate));
+    set('convYears2', y2);
+    set('convTotal2', Math.round(r2.total).toLocaleString());
+    set('convRate2', formatRate(r2.rate));
+  })();
+
+  // ============================================================
+  // 算一算弹窗
+  // ============================================================
+  function renderCalc() {
+    const salary = Math.max(1000, Math.round(Number(document.getElementById('calcSalary').value) || 20000));
+    const years = Math.min(45, Math.max(15, Math.round(Number(document.getElementById('calcYears').value) || 15)));
+    const res = calcPension(salary, years);
+    document.getElementById('calcOutSalary').textContent = formatIncome(salary);
+    document.getElementById('calcOutYears').textContent = years;
+    document.getElementById('calcOutPension').textContent = Math.round(res.total).toLocaleString() + ' 元';
+    document.getElementById('calcOutRate').textContent = formatRate(res.rate);
+    const gap = salary - res.total;
+    const tail = gap <= 0 ? '替代率超过 100%，退休金可覆盖原工资。' : (gap >= 10000 ? '高收入者替代率天然偏低，缺口要靠个人储蓄补充。' : '缺口不算大，但仍建议提前规划补充养老。');
+    document.getElementById('calcOutGap').textContent = '每月缺口约 ' + formatGap(gap) + '——' + tail;
+  }
+
+  function openCalc() { document.getElementById('calcModal').hidden = false; renderCalc(); }
+  function closeCalc() { document.getElementById('calcModal').hidden = true; }
+
+  document.getElementById('openCalc').addEventListener('click', openCalc);
+  document.getElementById('closeCalc').addEventListener('click', closeCalc);
+  document.getElementById('calcOverlay').addEventListener('click', closeCalc);
+  ['calcSalary', 'calcYears'].forEach(id =>
+    document.getElementById(id).addEventListener('input', renderCalc)
+  );
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCalc(); });
+</script>
+</body></html>

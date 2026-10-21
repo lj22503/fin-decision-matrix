@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>多笔债务先还哪笔？雪崩法 vs 雪球法（2026测算）</title>
+<meta name="description" content="同样每月多还1000元，先还高利率的雪崩法比雪球法更省利息；还款月数几乎持平，差异主要在利息。附完整测算矩阵与自算弹窗。">
+<meta name="keywords" content="多笔债务先还哪笔,雪崩法,雪球法,债务还款顺序,财务决策,投教,理财计算">
+<link rel="canonical" href="https://fintools.mangofolio.com/多笔债务先还哪笔？雪崩法 vs 雪球法.html">
+<meta property="og:title" content="多笔债务先还哪笔？雪崩法 vs 雪球法（2026测算）">
+<meta property="og:description" content="同样每月多还1000元，先还高利率的雪崩法比雪球法更省利息；还款月数几乎持平，差异主要在利息。">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"question": "多笔债务先还哪笔？雪崩法 vs 雪球法？", "answer": "同样每月多还1000元，先还高利率的雪崩法比雪球法更省利息；还款月数几乎持平，差异主要在利息。"}, {"question": "测算基于什么假设？", "answer": "假设：三笔债务同时存在，每月先各自还最低还款，剩余的钱按策略集中砸向一笔；无新增消费、利率不变；超过60年视为「还不清」。 雪崩法 = 先还利率最高的（省钱优先）；雪球法 = 先还余额最小的（爽感优先，快速消灭一笔）。"}, {"question": "结果有多可靠？", "answer": "测算基于固定利率、无新增消费、每月固定拿出一笔钱还债的简化假设；实际债务可能有违约金、还款日差异、征信影响等。本页不构成任何金融建议。"}]}</script>
+<link rel="stylesheet" href="assets/mangofolio-tokens-v09.css">
+<style>
+
+  /* ---- guide 文章页基准（线上 4% 法则页）：纯白底 / 白纸卡+1px细线 / 暖墨正文 / 芒果橙点缀 / 16px 圆角 ----
+     同时保留本系列招牌的二维色块矩阵：红涨绿跌（月数越短越红=优），柔和化浅底深字，避免大面积高饱和刺眼。 */
+  :root {
+    --page-bg: var(--mf-colors-background);            /* #FFFFFF 纯白主底 */
+    --page-card: var(--mf-colors-background-surface);   /* #FFFFFF 卡片面 */
+    --page-panel: var(--mf-colors-background-neutral);  /* #F7F5F2 暖灰分区底（结论框/表头/CTA） */
+    --page-ink: var(--mf-colors-text);                  /* #3A332C 正文墨 */
+    --page-ink-strong: var(--mf-colors-text-strong);    /* #241610 深墨强调 */
+    --page-ink-weak: var(--mf-colors-text-weak);        /* #8A7D70 次级文字 */
+    --page-accent: var(--mf-colors-text-link);          /* #F97316 芒果橙 */
+    --page-accent-deep: var(--mf-colors-text-accent-mango); /* #E05E0A 深橙 */
+    --page-hairline: var(--mf-colors-border-weak);      /* 1px 细线 */
+    --page-line-strong: rgba(36,22,16,.10);
+    --page-line-weak: rgba(36,22,16,.06);
+    /* 矩阵色阶（柔和版：浅底深字，红涨绿跌——还清越快越红） */
+    --lvl1-bg: #FDECEA;  --lvl1-ink: #B8221E;  /* ≤18个月 */
+    --lvl2-bg: #FDEBD8;  --lvl2-ink: #C2410C;  /* 19-30个月 */
+    --lvl3-bg: #FDF3DE;  --lvl3-ink: #B45309;  /* 31-48个月 */
+    --lvl4-bg: #E8F3EC;  --lvl4-ink: #1F8A4C;  /* 49-72个月 */
+    --lvl5-bg: #E1EEE6;  --lvl5-ink: #11693D;  /* >72个月 */
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--page-bg); padding:16px; font-family:var(--mf-fonts-sans); color:var(--page-ink); font-size:17px; line-height:1.9; letter-spacing:.01em; }
+  .guide-article-wrap { max-width:860px; margin:0 auto; }
+  .paper { background:var(--page-card); border:1px solid var(--page-line-strong); border-radius:16px; box-shadow:var(--mf-shadows-card); max-width:780px; margin:8px auto; padding:40px 44px; }
+  @media (max-width:640px) { .paper { padding:24px 20px; } body { font-size:16px; padding:8px; } }
+
+  /* 标题区：衬线 + 橙虚线装饰 */
+  .paper-head { margin-bottom:20px; }
+  .paper-eyebrow { font-size:var(--mf-font-sizes-eyebrow); font-weight:500; color:var(--page-accent); letter-spacing:.24em; text-transform:uppercase; margin-bottom:10px; }
+  .paper-title { font-family:var(--mf-fonts-display); font-size:clamp(1.6rem,3.6vw,2.2rem); font-weight:800; color:var(--page-ink-strong); line-height:1.3; padding-bottom:14px; border-bottom:4px dashed rgba(249,115,22,.40); }
+
+  /* 结论框：浅中性底 + 3px 橙左线（只放核心结论，一行内说清） */
+  .lead-box { background:var(--page-panel); border-left:3px solid var(--page-accent); border-radius:12px; padding:12px 16px; margin:0 0 18px; }
+  .lead-box p { font-size:1em; line-height:1.8; color:var(--page-ink); margin:0; }
+  .lead-box b, .lead-box strong { color:var(--page-ink-strong); }
+  .hl { color:var(--page-accent); font-weight:700; }
+
+  /* ===== 二维矩阵区（首屏核心） ===== */
+  .matrix-head { display:flex; align-items:baseline; justify-content:space-between; gap:12px; flex-wrap:wrap; margin:0 0 8px; }
+  .matrix-title { font-family:var(--mf-fonts-display); font-size:clamp(1.15rem,2.4vw,1.3rem); font-weight:800; color:var(--page-ink-strong); }
+  .matrix-sub { font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.6; }
+  .matrix-table { width:100%; border-collapse:separate; border-spacing:3px; }
+  .matrix-table caption { caption-side:top; text-align:left; font-size:var(--mf-font-sizes-30); color:var(--page-ink-weak); padding:0 0 6px; line-height:1.6; }
+  .matrix-table thead th { background:var(--page-panel); color:var(--page-ink-strong); font-weight:700; text-align:center; padding:9px 10px; border-radius:8px; font-size:var(--mf-font-sizes-30); line-height:1.4; white-space:nowrap; }
+  .matrix-table thead th small { font-weight:400; color:var(--page-ink); opacity:.8; font-size:var(--mf-font-sizes-25); }
+  .matrix-table th.rowhead { text-align:left; width:108px; background:var(--page-panel); font-size:var(--mf-font-sizes-30); }
+  .matrix-table td { padding:8px 6px; text-align:center; font-size:var(--mf-font-sizes-50); font-weight:700; border-radius:8px; min-width:64px; line-height:1.35; }
+  .matrix-table td.rowhead { background:var(--page-panel); color:var(--page-ink-strong); font-weight:700; text-align:left; width:108px; font-size:var(--mf-font-sizes-30); white-space:nowrap; }
+  .cell-amount { font-size:var(--mf-font-sizes-100); }
+  .cell-note { font-size:var(--mf-font-sizes-25); opacity:.9; margin-top:1px; font-weight:500; }
+  .lvl1 { background:var(--lvl1-bg); color:var(--lvl1-ink); }
+  .lvl2 { background:var(--lvl2-bg); color:var(--lvl2-ink); }
+  .lvl3 { background:var(--lvl3-bg); color:var(--lvl3-ink); }
+  .lvl4 { background:var(--lvl4-bg); color:var(--lvl4-ink); }
+  .lvl5 { background:var(--lvl5-bg); color:var(--lvl5-ink); }
+  .diff-cell { background:var(--page-panel); color:var(--page-ink); font-size:var(--mf-font-sizes-30); font-weight:400; line-height:1.5; }
+  .diff-cell b { color:var(--page-accent-deep); font-size:var(--mf-font-sizes-100); font-weight:700; }
+  .legend { display:flex; justify-content:center; gap:12px; margin:4px 0 0; font-size:var(--mf-font-sizes-25); color:var(--page-ink); flex-wrap:wrap; }
+  .legend span { display:inline-flex; align-items:center; gap:6px; }
+  .dot { width:13px; height:13px; border-radius:4px; display:inline-block; }
+  .dot.lvl1 { background:var(--lvl1-bg); border:1px solid var(--lvl1-ink); }
+  .dot.lvl2 { background:var(--lvl2-bg); border:1px solid var(--lvl2-ink); }
+  .dot.lvl3 { background:var(--lvl3-bg); border:1px solid var(--lvl3-ink); }
+  .dot.lvl4 { background:var(--lvl4-bg); border:1px solid var(--lvl4-ink); }
+  .dot.lvl5 { background:var(--lvl5-bg); border:1px solid var(--lvl5-ink); }
+  .matrix-note { margin:6px 0 0; font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.6; }
+  .matrix-note b { color:var(--page-accent-deep); }
+
+  /* 债务组合标签 */
+  .debt-info { display:flex; gap:8px; flex-wrap:wrap; margin:2px 0 14px; }
+  .debt-tag { background:var(--page-card); border:1px solid var(--page-line-strong); border-radius:12px; padding:5px 12px; font-size:var(--mf-font-sizes-30); color:var(--page-ink); line-height:1.6; }
+  .debt-tag b { color:var(--page-ink-strong); }
+  .debt-tag.total { background:var(--page-panel); border-left:3px solid var(--page-accent); font-weight:700; color:var(--page-ink-strong); }
+  .debt-tag.total b { color:var(--page-accent-deep); }
+
+  /* 章节：h2 衬线 + 橙虚线 */
+  .sec { margin:26px 0 0; }
+  .sec h2 { font-family:var(--mf-fonts-display); font-size:clamp(1.25rem,2.6vw,1.45rem); font-weight:800; color:var(--page-ink-strong); line-height:1.4; padding-bottom:10px; border-bottom:3px dashed rgba(249,115,22,.30); margin-bottom:12px; }
+  .sec p { margin:0 0 12px; }
+  .sec ul, .sec ol { margin:0 0 14px; padding-left:1.4em; }
+  .sec li { margin-bottom:6px; }
+  .sec li::marker { color:var(--page-accent); }
+  .sec b, .sec strong { color:var(--page-ink-strong); }
+
+  /* CTA：浅灰底 + 细线 + 圆角 + 居中 */
+  .cta-box { margin:26px 0 0; padding:24px 26px; background:var(--page-panel); border:1px solid var(--page-line-strong); border-radius:16px; text-align:center; }
+  .cta-box p { font-size:var(--mf-font-sizes-30); color:var(--page-ink); line-height:1.8; margin:0 0 12px; }
+  .cta-box p:first-child { font-size:var(--mf-font-sizes-100); font-weight:700; color:var(--page-ink-strong); }
+  .cta-box b { color:var(--page-ink-strong); }
+  .calc-btn { display:inline-block; padding:11px 30px; font-size:var(--mf-font-sizes-100); font-weight:700; color:#FFFFFF; background:var(--page-accent); border:none; border-radius:16px; cursor:pointer; }
+  .calc-btn:hover { background:var(--page-accent-deep); }
+
+  /* FAQ */
+  .faq-sec { margin:26px 0 0; }
+  .faq-sec h2 { font-family:var(--mf-fonts-display); font-size:clamp(1.25rem,2.6vw,1.45rem); font-weight:800; color:var(--page-ink-strong); padding-bottom:10px; border-bottom:3px dashed rgba(249,115,22,.30); margin-bottom:12px; }
+  details.faq-item { border:1px solid var(--page-line-strong); border-radius:12px; padding:10px 14px; margin:10px 0; font-size:var(--mf-font-sizes-30); line-height:1.8; color:var(--page-ink); background:var(--page-card); }
+  details.faq-item summary { cursor:pointer; font-weight:700; color:var(--page-ink-strong); }
+  details.faq-item summary::marker { color:var(--page-accent); }
+  details.faq-item[open] summary { color:var(--page-accent-deep); }
+
+  /* 免责声明 */
+  .guide-disclaimer { margin:26px 0 0; padding-top:14px; border-top:1px solid var(--page-line-strong); font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.8; }
+  .disclaimer-title { font-weight:700; color:var(--page-ink); margin-bottom:4px; }
+  .disclaimer-text { margin-bottom:6px; }
+
+  footer { max-width:780px; margin:8px auto 24px; padding:14px 24px 0; text-align:center; font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.8; border-top:1px solid var(--page-line-weak); }
+
+  /* 算一算弹窗（guide 风：白卡 + 1px 细线 + 橙按钮） */
+  .calc-modal[hidden] { display:none; }
+  .calc-modal { position:fixed; inset:0; z-index:1000; display:flex; align-items:center; justify-content:center; padding:16px; }
+  .calc-overlay { position:absolute; inset:0; background:rgba(36,22,16,.45); }
+  .calc-dialog { position:relative; background:var(--page-card); border:1px solid var(--page-line-strong); border-radius:16px; box-shadow:var(--mf-shadows-card); max-width:480px; width:100%; padding:24px 26px; }
+  .calc-close { position:absolute; top:10px; right:14px; font-size:1.6rem; font-weight:700; color:var(--page-ink-weak); background:none; border:none; cursor:pointer; line-height:1; }
+  .calc-title { font-family:var(--mf-fonts-display); font-size:var(--mf-font-sizes-200); font-weight:800; color:var(--page-ink-strong); margin-bottom:16px; }
+  .calc-field { margin-bottom:14px; }
+  .calc-field label { display:block; font-size:var(--mf-font-sizes-30); color:var(--page-ink); margin-bottom:4px; font-weight:600; }
+  .calc-field input { width:100%; padding:8px 10px; font-size:var(--mf-font-sizes-100); font-weight:700; color:var(--page-ink-strong); border:1px solid var(--mf-colors-border-weak); border-radius:8px; background:var(--page-card); box-sizing:border-box; }
+  .calc-field .hint { display:block; font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); margin-top:2px; line-height:1.6; }
+  .calc-result { margin-top:16px; padding:14px 16px; background:var(--page-panel); border-left:3px solid var(--page-accent); border-radius:12px; font-size:var(--mf-font-sizes-100); font-weight:700; color:var(--page-ink-strong); line-height:1.7; }
+  .calc-result b { color:var(--page-accent-deep); }
+  .calc-ratio { margin-top:6px; font-size:var(--mf-font-sizes-30); font-weight:400; color:var(--page-ink); line-height:1.7; }
+  .calc-debts { display:flex; flex-direction:column; gap:6px; }
+  .calc-debt { display:grid; grid-template-columns:64px 1fr 1fr; gap:8px; align-items:center; }
+  .calc-debt > span { font-size:var(--mf-font-sizes-30); color:var(--page-ink); font-weight:600; }
+  .calc-debt input { width:100%; padding:6px 8px; font-size:var(--mf-font-sizes-100); font-weight:700; color:var(--page-ink-strong); border:1px solid var(--mf-colors-border-weak); border-radius:8px; background:var(--page-card); box-sizing:border-box; }
+
+</style>
+</head>
+<body>
+<main class="guide-article-wrap">
+  <article class="paper">
+
+    <header class="paper-head">
+      <p class="paper-eyebrow">Debt Planning · 多笔债务</p>
+      <h1 class="paper-title">多笔债务先还哪笔？雪崩法 vs 雪球法</h1>
+    </header>
+
+    <div class="lead-box">
+      <p><b>结论先放这：</b>先还利率最高的那笔，整体更省利息。同样每月多还 <b>1000 元</b>，先攻 18% 的信用卡（雪崩法），还款月数约 <b id="leadMonths">16 个月</b>，与先还小余额的雪球法几乎持平，但利息能省下 <span class="hl" id="leadSave">180 元</span>。矩阵色块越红=还清越快，越绿=越慢。</p>
+    </div>
+
+    <!-- ===== 二维矩阵：首屏核心 ===== -->
+    <div class="matrix-head">
+      <div class="matrix-title">还款月数矩阵：雪崩 vs 雪球</div>
+      <div class="matrix-sub">基于下方固定债务组合测算</div>
+    </div>
+    <div class="debt-info" id="debtInfo"></div>
+    <div class="tbl-wrap">
+      <table class="matrix-table" id="debtTable">
+        <caption>表1：不同每月额外还款下的还款月数（色块越红=越快，数字为月数+总利息）</caption>
+        <thead>
+          <tr>
+            <th class="rowhead">每月额外还款</th>
+            <th>雪崩法<small>先还高利率</small></th>
+            <th>雪球法<small>先还小余额</small></th>
+            <th>差额<small>雪崩 vs 雪球</small></th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="legend">
+      <span><i class="dot lvl1"></i>≤18个月</span>
+      <span><i class="dot lvl2"></i>19-30个月</span>
+      <span><i class="dot lvl3"></i>31-48个月</span>
+      <span><i class="dot lvl4"></i>49-72个月</span>
+      <span><i class="dot lvl5"></i>&gt;72个月</span>
+    </div>
+    <p class="matrix-note">无论多还多少，雪崩法都不比雪球法慢；月数越短、省下的利息越多。唯一差别是雪球法中途能更快清掉一笔小额债务，获得心理上的「进度感」——代价是高息债务多背一阵。想用你的真实数字算，见文末「算一算」。</p>
+
+    <section class="sec" id="why">
+      <h2>一、为什么还款顺序会影响利息？</h2>
+      <p>同时背着多笔债务时，每个月的还款可以拆成两部分：<b>每笔债务的最低还款</b>，加上 <b>额外多还的钱</b>。最低还款把每笔都吊着，额外还款往哪里砸，决定了总利息的走向。</p>
+      <ul>
+        <li><b>雪崩法（Avalanche）</b>= 先还利率最高的，省钱优先。三笔里信用卡 18% 最贵，先攻它，整体利息最少。</li>
+        <li><b>雪球法（Snowball）</b>= 先还余额最小的，爽感优先。花呗 2 万最早清零，心理上更爽，但中间要一直背着高息的信用卡。</li>
+      </ul>
+      <p>模拟结果：两种策略的还款月数几乎持平（约 <span class="hl">16 个月</span>），差别主要在利息——雪崩法省下约 <span class="hl">180 元</span>。金额不大，但这是无痛的「换个顺序就省下来」的钱。</p>
+    </section>
+
+    <section class="sec" id="assume">
+      <h2>二、测算假设</h2>
+      <p>三笔债务同时存在，每月先各自还最低还款，剩余的钱按策略集中砸向一笔；无新增消费、利率不变；超过 60 年视为「还不清」。</p>
+      <p>实际债务可能有违约金、还款日差异、征信影响等；本页测算仅为算法演示，不构成任何金融建议。</p>
+    </section>
+
+    <div class="cta-box">
+      <p>用你自己的数字算一遍</p>
+      <p>把债务金额、利率、每月额外还款换成你的真实数字，答案可能完全不同——本页提供算法框架，你的数字才是决策依据。</p>
+      <p><button class="calc-btn" id="openCalc">算一算</button></p>
+    </div>
+
+    <section class="sec faq-sec" id="faq">
+      <h2>常见问题</h2>
+      <details class="faq-item">
+        <summary>多笔债务先还哪笔？雪崩法 vs 雪球法？</summary>
+        <p>同样每月多还1000元，先还高利率的雪崩法比雪球法更省利息；还款月数几乎持平，差异主要在利息。</p>
+      </details>
+      <details class="faq-item">
+        <summary>测算基于什么假设？</summary>
+        <p>假设：三笔债务同时存在，每月先各自还最低还款，剩余的钱按策略集中砸向一笔；无新增消费、利率不变；超过60年视为「还不清」。 雪崩法 = 先还利率最高的（省钱优先）；雪球法 = 先还余额最小的（爽感优先，快速消灭一笔）。</p>
+      </details>
+      <details class="faq-item">
+        <summary>结果有多可靠？</summary>
+        <p>测算基于固定利率、无新增消费、每月固定拿出一笔钱还债的简化假设；实际债务可能有违约金、还款日差异、征信影响等。本页不构成任何金融建议。</p>
+      </details>
+    </section>
+
+    <div class="guide-disclaimer">
+      <p class="disclaimer-title">数据来源与免责声明</p>
+      <p class="disclaimer-text">① 本页仅为财务教育与计算演示，不构成任何投资、保险、税务或法律建议。</p>
+      <p class="disclaimer-text">② 测算基于简化模型与假设参数，实际还款受违约金、利率变动及个人情况影响，结果可能与现实存在显著差异。</p>
+      <p class="disclaimer-text">③ 重大财务决策请结合自身情况，必要时咨询持牌专业人士。</p>
+    </div>
+
+  </article>
+</main>
+
+<footer>
+  mangofolio · fin-decision-matrix · © 2026 mangofolio
+</footer>
+
+<div class="calc-modal" id="calcModal" hidden>
+  <div class="calc-overlay" id="calcOverlay"></div>
+  <div class="calc-dialog" role="dialog" aria-modal="true" aria-label="用你自己的数字算一算">
+    <button class="calc-close" id="closeCalc" aria-label="关闭">×</button>
+    <div class="calc-title">用你自己的数字算一算</div>
+    <div class="calc-field">
+      <label>债务金额（元）与年利率（%）</label>
+      <div class="calc-debts">
+        <div class="calc-debt"><span>信用卡</span><input type="number" id="bal0" value="30000" min="0" step="1000"><input type="number" id="rate0" value="18" min="0" step="0.5"></div>
+        <div class="calc-debt"><span>消费贷</span><input type="number" id="bal1" value="50000" min="0" step="1000"><input type="number" id="rate1" value="10" min="0" step="0.5"></div>
+        <div class="calc-debt"><span>花呗</span><input type="number" id="bal2" value="20000" min="0" step="1000"><input type="number" id="rate2" value="15" min="0" step="0.5"></div>
+      </div>
+      <span class="hint">金额与利率换成你的真实数字；最低还款比例沿用页面假设（5% / 5% / 10%）</span>
+    </div>
+    <div class="calc-field">
+      <label for="calcExtra">每月额外还款多少元</label>
+      <input type="number" id="calcExtra" value="1000" min="0" step="100">
+      <span class="hint">0 = 只还最低还款</span>
+    </div>
+    <div class="calc-result">
+      每月多还 <b id="calcOutExtra">1000 元</b>：雪崩法 <b id="calcOutAv">16 个月</b> / 雪球法 <b id="calcOutSn">16 个月</b>，雪崩法省利息 <b id="calcOutSave">180 元</b>。
+      <div class="calc-ratio" id="calcOutRatio">月数几乎持平——差别主要在利息。</div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== 固定债务组合 =====
+  const DEBTS = [
+    { name: '信用卡', balance: 30000, rate: 0.18, minPct: 0.05, minFloor: 50 },
+    { name: '消费贷', balance: 50000, rate: 0.10, minPct: 0.05, minFloor: 50 },
+    { name: '花呗',   balance: 20000, rate: 0.15, minPct: 0.10, minFloor: 10 }
+  ];
+
+  const MAX_MONTHS = 720; // 60年上限
+
+  // ===== 核心模拟函数 =====
+  function simulate(extraMonthly, strategy, debts) {
+    const ds = (debts || DEBTS).map(d => ({ ...d }));
+
+    // 初始总月供 = 所有债务的最低还款额 + 额外月供
+    let totalMonthly = 0;
+    ds.forEach(d => {
+      totalMonthly += Math.max(d.balance * d.minPct, d.minFloor);
+    });
+    totalMonthly += extraMonthly;
+
+    let months = 0;
+    let totalInterest = 0;
+
+    while (ds.some(d => d.balance > 0.01) && months < MAX_MONTHS) {
+      // 1. 计算利息
+      ds.forEach(d => {
+        if (d.balance > 0.01) {
+          const interest = d.balance * d.rate / 12;
+          d.balance += interest;
+          totalInterest += interest;
+        }
+      });
+
+      // 2. 每笔债务支付最低还款
+      let remaining = totalMonthly;
+      ds.forEach(d => {
+        if (d.balance > 0.01) {
+          const minPay = Math.max(d.balance * d.minPct, d.minFloor);
+          const pay = Math.min(minPay, d.balance, remaining);
+          d.balance -= pay;
+          remaining -= pay;
+        }
+      });
+
+      // 3. 剩余的额外还款按策略集中分配
+      const active = ds.filter(d => d.balance > 0.01);
+      if (strategy === 'avalanche') {
+        active.sort((a, b) => b.rate - a.rate);       // 雪崩：先高利率
+      } else {
+        active.sort((a, b) => a.balance - b.balance); // 雪球：先小余额
+      }
+
+      for (const d of active) {
+        if (remaining <= 0) break;
+        const pay = Math.min(remaining, d.balance);
+        d.balance -= pay;
+        remaining -= pay;
+      }
+
+      months++;
+    }
+
+    return { months, totalInterest };
+  }
+
+  // ===== 矩阵色阶（柔和版：浅底深字，红涨绿跌——月数越短越红） =====
+  function getLevel(months) {
+    if (months <= 18) return 'lvl1';
+    if (months <= 30) return 'lvl2';
+    if (months <= 48) return 'lvl3';
+    if (months <= 72) return 'lvl4';
+    return 'lvl5';
+  }
+
+  // ===== 格式化 =====
+  function formatMonths(m) {
+    if (m >= MAX_MONTHS) return '还不清';
+    if (m < 12) return m + '个月';
+    const y = Math.floor(m / 12);
+    const mo = m % 12;
+    return mo === 0 ? y + '年' : y + '年' + mo + '个月';
+  }
+
+  function formatInterest(i) {
+    if (i >= 10000) return '利息 ' + (i / 10000).toFixed(1) + '万';
+    return '利息 ' + Math.round(i / 1000) + '千';
+  }
+
+  // ===== 生成二维矩阵 =====
+  const extras = [0, 500, 1000, 2000, 5000];
+  const tbody = document.querySelector('#debtTable tbody');
+
+  extras.forEach(e => {
+    const tr = document.createElement('tr');
+
+    // 行标题
+    const th = document.createElement('td');
+    th.className = 'rowhead';
+    th.textContent = e === 0 ? '不额外还' : '+' + e + '元/月';
+    tr.appendChild(th);
+
+    // 雪崩法
+    const avalanche = simulate(e, 'avalanche');
+    const tdA = document.createElement('td');
+    tdA.className = getLevel(avalanche.months);
+    tdA.innerHTML = `<div class="cell-amount">${formatMonths(avalanche.months)}</div>
+                     <div class="cell-note">${formatInterest(avalanche.totalInterest)}</div>`;
+    tr.appendChild(tdA);
+
+    // 雪球法
+    const snowball = simulate(e, 'snowball');
+    const tdB = document.createElement('td');
+    tdB.className = getLevel(snowball.months);
+    tdB.innerHTML = `<div class="cell-amount">${formatMonths(snowball.months)}</div>
+                     <div class="cell-note">${formatInterest(snowball.totalInterest)}</div>`;
+    tr.appendChild(tdB);
+
+    // 差额
+    const diffMonths = snowball.months - avalanche.months;
+    const diffInterest = snowball.totalInterest - avalanche.totalInterest;
+    const tdC = document.createElement('td');
+    tdC.className = 'diff-cell';
+
+    if (diffMonths <= 0 && diffInterest <= 0) {
+      tdC.innerHTML = '两种策略<br>几乎打平';
+    } else {
+      const monthText = diffMonths > 0 ? `快 <b>${diffMonths}</b> 个月` : '月数持平';
+      const interestText = diffInterest > 0 ? `省 <b>${Math.round(diffInterest)}</b> 元` : '利息持平';
+      tdC.innerHTML = `${monthText}<br>${interestText}`;
+    }
+    tr.appendChild(tdC);
+
+    tbody.appendChild(tr);
+  });
+
+  // ============================================================
+  // 动态插值：静态文案数字由同一模拟函数生成（避免硬编码漂移）
+  // ============================================================
+  (function renderStatic() {
+    const av = simulate(1000, 'avalanche');
+    const sn = simulate(1000, 'snowball');
+    const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+    const save = Math.max(0, Math.round(sn.totalInterest - av.totalInterest));
+    set('leadSave', save + ' 元');
+    set('leadMonths', formatMonths(sn.months));
+  })();
+
+  // ============================================================
+  // 债务组合背景：与 DEBTS 同源渲染
+  // ============================================================
+  (function renderDebtBg() {
+    const wrap = document.getElementById('debtInfo');
+    const fmtBal = d => d.balance >= 10000
+      ? (d.balance / 10000).toLocaleString('zh-CN', { maximumFractionDigits: 1 }) + ' 万'
+      : d.balance + ' 元';
+    DEBTS.forEach(d => {
+      const tag = document.createElement('div');
+      tag.className = 'debt-tag';
+      tag.textContent = d.name + '：';
+      const b = document.createElement('b');
+      b.textContent = fmtBal(d);
+      tag.append(b, ' · ' + Math.round(d.rate * 100) + '% · 最低' + Math.round(d.minPct * 100) + '%');
+      wrap.appendChild(tag);
+    });
+    const total = DEBTS.reduce((s, d) => s + d.balance, 0);
+    const tagTotal = document.createElement('div');
+    tagTotal.className = 'debt-tag total';
+    const tb = document.createElement('b');
+    tb.textContent = '合计 ' + (total / 10000).toLocaleString('zh-CN', { maximumFractionDigits: 1 }) + ' 万';
+    tagTotal.appendChild(tb);
+    wrap.appendChild(tagTotal);
+  })();
+
+  // ============================================================
+  // 算一算弹窗：输入自己的债务金额、利率、每月额外还款，看雪崩 vs 雪球差额
+  // ============================================================
+  function readDebts() {
+    const defs = [
+      { name: '信用卡', minPct: 0.05, minFloor: 50 },
+      { name: '消费贷', minPct: 0.05, minFloor: 50 },
+      { name: '花呗',   minPct: 0.10, minFloor: 10 }
+    ];
+    return defs.map((d, i) => ({
+      name: d.name,
+      balance: Math.max(0, Math.round(Number(document.getElementById('bal' + i).value) || 0)),
+      rate: Math.max(0, Number(document.getElementById('rate' + i).value) || 0) / 100,
+      minPct: d.minPct,
+      minFloor: d.minFloor
+    }));
+  }
+
+  function renderCalc() {
+    const extra = Math.max(0, Math.round(Number(document.getElementById('calcExtra').value) || 0));
+    const debts = readDebts();
+    if (debts.every(d => d.balance <= 0)) {
+      document.getElementById('calcOutRatio').textContent = '请先填入至少一笔债务金额，再点算一算。';
+      return;
+    }
+    const av = simulate(extra, 'avalanche', debts);
+    const sn = simulate(extra, 'snowball', debts);
+    const save = Math.max(0, Math.round(sn.totalInterest - av.totalInterest));
+    document.getElementById('calcOutExtra').textContent = extra.toLocaleString() + ' 元';
+    document.getElementById('calcOutAv').textContent = formatMonths(av.months);
+    document.getElementById('calcOutSn').textContent = formatMonths(sn.months);
+    document.getElementById('calcOutSave').textContent = save.toLocaleString() + ' 元';
+    const diff = sn.months - av.months;
+    document.getElementById('calcOutRatio').textContent =
+      diff > 0 ? '雪崩法还快 ' + diff + ' 个月，利息也更少。' :
+      diff < 0 ? '雪球法还快 ' + (-diff) + ' 个月，但利息更多。' :
+      '月数持平——差别主要在利息。';
+  }
+
+  function openCalc() { document.getElementById('calcModal').hidden = false; renderCalc(); }
+  function closeCalc() { document.getElementById('calcModal').hidden = true; }
+
+  document.getElementById('openCalc').addEventListener('click', openCalc);
+  document.getElementById('closeCalc').addEventListener('click', closeCalc);
+  document.getElementById('calcOverlay').addEventListener('click', closeCalc);
+  document.getElementById('calcExtra').addEventListener('input', renderCalc);
+  ['bal0', 'rate0', 'bal1', 'rate1', 'bal2', 'rate2'].forEach(id =>
+    document.getElementById(id).addEventListener('input', renderCalc)
+  );
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCalc(); });
+</script>
+</body>
+</html>

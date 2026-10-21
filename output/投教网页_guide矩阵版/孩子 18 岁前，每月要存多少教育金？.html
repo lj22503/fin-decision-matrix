@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title></title>
+<meta name="description" content="同样准备 15 万本科费用，0 岁开始每月存 429 元，10 岁开始每月存 1278 元——晚了 10 年，每月多存 3 倍。焦虑 + 紧迫">
+<meta name="keywords" content="孩子 18 岁前，每月要存多少教育金？,财务决策,投教,理财计算,复利,替代率">
+<meta property="og:title" content="孩子 18 岁前，每月要存多少教育金？（2026 测算）">
+<meta property="og:description" content="同样准备 15 万本科费用，0 岁开始每月存 429 元，10 岁开始每月存 1278 元——晚了 10 年，每月多存 3 倍。焦虑 + 紧迫">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="assets/mangofolio-tokens-v09.css">
+  <style>
+
+
+
+  :root {
+    --page-bg: var(--mf-colors-background);
+    --page-card: var(--mf-colors-background-surface);
+    --page-panel: var(--mf-colors-background-neutral);
+    --page-ink: var(--mf-colors-text);
+    --page-ink-strong: var(--mf-colors-text-strong);
+    --page-ink-weak: var(--mf-colors-text-weak);
+    --page-accent: var(--mf-colors-text-link);
+    --page-accent-deep: var(--mf-colors-text-accent-mango);
+    --page-hairline: var(--mf-colors-border-weak);
+    --page-line-strong: rgba(36,22,16,.10);
+    --page-line-weak: rgba(36,22,16,.06);
+    /* 矩阵色阶（柔和版：浅底深字，红涨绿跌） */
+    --lvl1-bg: #FDECEA;  --lvl1-ink: #B8221E;
+    --lvl2-bg: #FDEBD8;  --lvl2-ink: #C2410C;
+    --lvl3-bg: #FDF3DE;  --lvl3-ink: #B45309;
+    --lvl4-bg: #E8F3EC;  --lvl4-ink: #1F8A4C;
+    --lvl5-bg: #E1EEE6;  --lvl5-ink: #11693D;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--page-bg); padding:12px; font-family:var(--mf-fonts-sans); color:var(--page-ink); font-size:17px; line-height:1.9; letter-spacing:.01em; }
+  .guide-article-wrap { max-width:860px; margin:0 auto; }
+  .paper { background:var(--page-card); border:1px solid var(--page-line-strong); border-radius:16px; box-shadow:var(--mf-shadows-card); max-width:780px; margin:6px auto; padding:28px 40px; }
+  @media (max-width:640px) { .paper { padding:24px 20px; } body { font-size:16px; padding:8px; } }
+
+  .paper-head { margin-bottom:12px; }
+  .paper-eyebrow { font-size:var(--mf-font-sizes-eyebrow); font-weight:500; color:var(--page-accent); letter-spacing:.24em; text-transform:uppercase; margin-bottom:6px; }
+  .paper-title { font-family:var(--mf-fonts-display); font-size:clamp(1.55rem,3.4vw,2.05rem); font-weight:800; color:var(--page-ink-strong); line-height:1.3; padding-bottom:10px; border-bottom:4px dashed rgba(249,115,22,.40); }
+
+  .lead-box { background:var(--page-panel); border-left:3px solid var(--page-accent); border-radius:12px; padding:9px 14px; margin:0 0 12px; }
+  .lead-box p { font-size:.95em; line-height:1.7; color:var(--page-ink); margin:0; }
+  .lead-box b, .lead-box strong { color:var(--page-ink-strong); }
+  .hl { color:var(--page-accent); font-weight:700; }
+
+  .matrix-head { display:flex; align-items:baseline; justify-content:space-between; gap:12px; flex-wrap:wrap; margin:0 0 8px; }
+  .matrix-title { font-family:var(--mf-fonts-display); font-size:clamp(1.15rem,2.4vw,1.3rem); font-weight:800; color:var(--page-ink-strong); }
+  .matrix-sub { font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.6; }
+  .matrix-table { width:100%; border-collapse:separate; border-spacing:2px; }
+  .matrix-table caption { caption-side:top; text-align:left; font-size:var(--mf-font-sizes-30); color:var(--page-ink-weak); padding:0 0 6px; line-height:1.6; }
+  .matrix-table thead th { background:var(--page-panel); color:var(--page-ink-strong); font-weight:700; text-align:center; padding:5px 7px; border-radius:8px; font-size:var(--mf-font-sizes-30); line-height:1.25; white-space:nowrap; }
+  .matrix-table th.rowhead { text-align:left; width:108px; background:var(--page-panel); font-size:var(--mf-font-sizes-30); }
+  .matrix-table td { padding:4px 3px; text-align:center; font-size:var(--mf-font-sizes-50); font-weight:700; border-radius:8px; min-width:60px; line-height:1.25; }
+  .matrix-table td.rowhead { background:var(--page-panel); color:var(--page-ink-strong); font-weight:700; text-align:left; width:104px; font-size:var(--mf-font-sizes-30); white-space:nowrap; padding:4px 7px; }
+  .cell-amount { font-size:var(--mf-font-sizes-100); display:block; }
+  .cell-note { font-size:var(--mf-font-sizes-25); opacity:.9; margin-top:0; font-weight:500; display:block; line-height:1.25; }
+  .lvl1 { background:var(--lvl1-bg); color:var(--lvl1-ink); }
+  .lvl2 { background:var(--lvl2-bg); color:var(--lvl2-ink); }
+  .lvl3 { background:var(--lvl3-bg); color:var(--lvl3-ink); }
+  .lvl4 { background:var(--lvl4-bg); color:var(--lvl4-ink); }
+  .lvl5 { background:var(--lvl5-bg); color:var(--lvl5-ink); }
+  .legend { display:flex; justify-content:center; gap:8px; margin:1px 0 0; font-size:var(--mf-font-sizes-25); color:var(--page-ink); flex-wrap:wrap; }
+  .legend span { display:inline-flex; align-items:center; gap:6px; }
+  .dot { width:12px; height:12px; border-radius:4px; display:inline-block; }
+  .dot.lvl1 { background:var(--lvl1-bg); border:1px solid var(--lvl1-ink); }
+  .dot.lvl2 { background:var(--lvl2-bg); border:1px solid var(--lvl2-ink); }
+  .dot.lvl3 { background:var(--lvl3-bg); border:1px solid var(--lvl3-ink); }
+  .dot.lvl4 { background:var(--lvl4-bg); border:1px solid var(--lvl4-ink); }
+  .dot.lvl5 { background:var(--lvl5-bg); border:1px solid var(--lvl5-ink); }
+  .matrix-note { margin:2px 0 0; font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.4; }
+  .matrix-note b { color:var(--page-accent-deep); }
+
+  .sec-title, .section-title { font-family:var(--mf-fonts-display); font-size:clamp(1.25rem,2.6vw,1.45rem); font-weight:800; color:var(--page-ink-strong); line-height:1.4; padding-bottom:10px; border-bottom:3px dashed rgba(249,115,22,.30); margin:26px 0 12px; }
+  .sec p { margin:0 0 12px; }
+  .sec b, .sec strong { color:var(--page-ink-strong); }
+  details.l2, details.faq-item { border:1px solid var(--page-line-strong); border-radius:12px; padding:10px 14px; margin:12px 0; font-size:var(--mf-font-sizes-30); line-height:1.8; color:var(--page-ink); background:var(--page-card); }
+  details.l2 summary, details.faq-item summary { cursor:pointer; font-weight:700; color:var(--page-ink-strong); }
+  details.l2 summary::marker, details.faq-item summary::marker { color:var(--page-accent); }
+  details.l2[open] summary, details.faq-item[open] summary { color:var(--page-accent-deep); }
+  .assume, .breakeven, .extra-note { background:var(--page-panel); border-radius:12px; padding:12px 16px; font-size:var(--mf-font-sizes-30); color:var(--page-ink); margin:12px 0; line-height:1.8; }
+  .assume b, .breakeven b, .extra-note b, .assume strong, .breakeven strong { color:var(--page-ink-strong); }
+  .foot { margin:16px 0 0; padding-top:14px; border-top:1px solid var(--page-line-strong); font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.8; }
+
+  .chart-title { text-align:center; font-size:var(--mf-font-sizes-200); font-weight:700; color:var(--page-ink-strong); margin:24px 0 4px; }
+  .chart-sub { text-align:center; font-size:var(--mf-font-sizes-30); color:var(--page-ink-weak); margin-bottom:8px; }
+  .chart-wrap { width:100%; overflow:hidden; }
+  .chart-wrap svg { width:100%; height:auto; display:block; }
+
+  .cta-box { margin:26px 0 0; padding:24px 26px; background:var(--page-panel); border:1px solid var(--page-line-strong); border-radius:16px; text-align:center; }
+  .cta-box p { font-size:var(--mf-font-sizes-30); color:var(--page-ink); line-height:1.8; margin:0 0 12px; }
+  .cta-box p:first-child { font-size:var(--mf-font-sizes-100); font-weight:700; color:var(--page-ink-strong); }
+  .cta-box b { color:var(--page-ink-strong); }
+  .calc-btn { display:inline-block; padding:11px 30px; font-size:var(--mf-font-sizes-100); font-weight:700; color:#FFFFFF; background:var(--page-accent); border:none; border-radius:16px; cursor:pointer; }
+  .calc-btn:hover { background:var(--page-accent-deep); }
+
+  .guide-disclaimer { margin:26px 0 0; padding-top:14px; border-top:1px solid var(--page-line-strong); font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.8; }
+  .disclaimer-title { font-weight:700; color:var(--page-ink); margin-bottom:4px; }
+  .disclaimer-text { margin-bottom:6px; }
+
+  footer { max-width:780px; margin:8px auto 24px; padding:14px 24px 0; text-align:center; font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.8; border-top:1px solid var(--page-line-weak); }
+
+  .calc-modal[hidden] { display:none; }
+  .calc-modal { position:fixed; inset:0; z-index:1000; display:flex; align-items:center; justify-content:center; padding:16px; }
+  .calc-overlay { position:absolute; inset:0; background:rgba(36,22,16,.45); }
+  .calc-dialog { position:relative; background:var(--page-card); border:1px solid var(--page-line-strong); border-radius:16px; box-shadow:var(--mf-shadows-card); max-width:480px; width:100%; padding:24px 26px; }
+  .calc-close { position:absolute; top:10px; right:14px; font-size:1.6rem; font-weight:700; color:var(--page-ink-weak); background:none; border:none; cursor:pointer; line-height:1; }
+  .calc-title { font-family:var(--mf-fonts-display); font-size:var(--mf-font-sizes-200); font-weight:800; color:var(--page-ink-strong); margin-bottom:16px; }
+  .calc-field { margin-bottom:14px; }
+  .calc-field label { display:block; font-size:var(--mf-font-sizes-30); color:var(--page-ink); margin-bottom:4px; font-weight:600; }
+  .calc-field input { width:100%; padding:8px 10px; font-size:var(--mf-font-sizes-100); font-weight:700; color:var(--page-ink-strong); border:1px solid var(--mf-colors-border-weak); border-radius:8px; background:var(--page-card); box-sizing:border-box; }
+  .calc-field .hint { display:block; font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); margin-top:2px; }
+  .calc-result { margin-top:16px; padding:14px 16px; background:var(--page-panel); border-left:3px solid var(--page-accent); border-radius:12px; font-size:var(--mf-font-sizes-100); font-weight:700; color:var(--page-ink-strong); line-height:1.7; }
+  .calc-result b { color:var(--page-accent-deep); }
+  .calc-ratio { margin-top:6px; font-size:var(--mf-font-sizes-30); font-weight:400; color:var(--page-ink); line-height:1.7; }
+
+
+
+  
+  /* B类紧凑覆盖：压缩垂直间距，保证 matrix-note 入首屏 */
+  .paper { padding:20px 28px; }
+  .paper-head { margin-bottom:6px; }
+  .paper-eyebrow { margin-bottom:4px; }
+  .lead-box { padding:7px 12px; margin:0 0 8px; }
+  .lead-box p { line-height:1.55; }
+  .matrix-head { margin:0 0 4px; }
+  caption { padding:0 0 3px; line-height:1.4; }
+  thead th { padding:3px 6px; line-height:1.15; }
+  td { padding:2px 3px; line-height:1.15; }
+  .cell-note { line-height:1.1; }
+  .legend { gap:6px; margin:0; }
+  .legend span { gap:4px; }
+  .matrix-note { margin:1px 0 0; line-height:1.25; }
+  
+  </style>
+</head>
+<body>
+<main class="guide-article-wrap">
+  <article class="paper">
+<header class="paper-head">
+      <p class="paper-eyebrow">Education Planning</p>
+      <h1 class="paper-title">孩子 18 岁前，要存多少钱才够教育？</h1>
+    </header>
+  <div class="lead-box">
+  <p><p>先记住结论：<strong>教育金储备的关键变量不是“存多少”，而是“什么时候开始”。</strong>孩子越小，复利时间越长，每月压力越小。<span class="hl">0 岁开始存，每月 429 元就够了；10 岁才开始，每月要存 1278 元。</span>如果目标是出国本科 <span class="hl">100 万</span>，<span class="hl">10 岁</span>开始每月要存 <span class="hl">8500 元</span>——很多家庭根本扛不住。</p></p>
+  <p>同样准备 15 万本科费用，0 岁开始每月存 429 元，10 岁开始每月存 1278 元——晚了 10 年，每月多存 3 倍。</p>
+</div>
+
+  <div class="matrix-head">
+      <div class="matrix-title">教育目标 × 开始年龄</div>
+      <div class="matrix-sub">每月需存越少越红（轻松），越多越绿（压力大）</div>
+    </div>
+      <table class="matrix-table" id="educationTable">
+        <caption>表1：不同教育目标 × 开始存钱年龄下，每月需存金额（元）</caption>
+        <thead>
+    <tr>
+      <th class="rowhead">教育目标</th>
+      <th>0岁</th><th>3岁</th><th>6岁</th><th>10岁</th><th>15岁</th>
+    </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <div class="legend">
+    <span><i class="dot lvl1"></i>≤1000元/月（轻松）</span>
+    <span><i class="dot lvl2"></i>1000-3000元/月</span>
+    <span><i class="dot lvl3"></i>3000-6000元/月</span>
+    <span><i class="dot lvl4"></i>6000-10000元/月</span>
+    <span><i class="dot lvl5"></i>&gt;10000元/月（压力大）</span>
+  </div>
+  <table id="educationTable">
+    <tr>
+      <th class="rowhead">教育目标</th>
+      <th>0岁</th><th>3岁</th><th>6岁</th><th>10岁</th><th>15岁</th>
+    </tr>
+  </table>
+
+  <div class="section-title">为什么？</div>
+  <details class="l2">
+    <summary>讲给我听：孩子 18 岁前，每月要存多少教育金？</summary>
+    <p>教育金储备的关键变量不是“存多少”，而是“什么时候开始”。孩子越小，复利时间越长，每月压力越小。0 岁开始存，每月 429 元就够了；10 岁才开始，每月要存 1278 元。如果目标是出国本科 100 万，10 岁开始每月要存 8500 元——很多家庭根本扛不住。</p>
+    <p>假设：年化收益率 5%（已扣除通胀），按月复利、月末投入；目标金额为 18 岁时所需教育金总额（不含通胀调整，按当前购买力计算）。 换算：国内本科 15 万，0 岁开始每月存 429 元 ≈ 每天 14 元；10 岁开始每月存 1278 元 ≈ 每天 43 元——时间差 10 年，月存压力差 3 倍。</p>
+  </details>
+
+  <div class="section-title">底层假设（L3）
+  </div>
+      <p class="matrix-note">注：按年化 5% 复利，从当前年龄存到 18 岁；目标含国内本科 15 万、本科+硕士 25 万、出国硕士 50 万、出国本科 100 万；红档轻松，绿档压力大。</p>
+
+  <div class="sec-title">为什么？</div>
+  <details class="l2">
+    <summary>讲给我听：孩子 18 岁前，每月要存多少教育金？</summary>
+    <p>教育金储备的关键变量不是“存多少”，而是“什么时候开始”。孩子越小，复利时间越长，每月压力越小。0 岁开始存，每月 429 元就够了；10 岁才开始，每月要存 1278 元。如果目标是出国本科 100 万，10 岁开始每月要存 8500 元——很多家庭根本扛不住。</p>
+    <p>假设：年化收益率 5%（已扣除通胀），按月复利、月末投入；目标金额为 18 岁时所需教育金总额（不含通胀调整，按当前购买力计算）。 换算：国内本科 15 万，0 岁开始每月存 429 元 ≈ 每天 14 元；10 岁开始每月存 1278 元 ≈ 每天 43 元——时间差 10 年，月存压力差 3 倍。</p>
+  </details>
+  <div class="sec-title">底层假设（L3）</div>
+  <div class="assume">
+    假设：年化收益率 <b>5%</b>（已扣除通胀），按月复利、月末投入；目标金额为 18 岁时所需教育金总额（不含通胀调整，按当前购买力计算）。<br>
+    换算：国内本科 15 万，0 岁开始每月存 <span class="highlight">429 元</span> ≈ 每天 14 元；10 岁开始每月存 <b>1278 元</b> ≈ 每天 43 元——时间差 10 年，月存压力差 3 倍。
+  </div>
+  <div class="foot">
+    测算基于固定年化收益率 5%、按月复利的简化假设；教育费用因城市、学校类型、专业、国家差异较大，表中为目标金额假设值。未考虑通胀、汇率波动、奖学金、助学贷款等。本图不构成任何投资建议。
+  </div>
+<div class="sec-title">常见问题（FAQ）</div>
+  <details class="faq-item"><summary>孩子 18 岁前，每月要存多少教育金？</summary><p>同样准备 15 万本科费用，0 岁开始每月存 429 元，10 岁开始每月存 1278 元——晚了 10 年，每月多存 3 倍。焦虑 + 紧迫</p></details>
+  <details class="faq-item"><summary>测算基于什么假设？</summary><p>假设：年化收益率 5%（已扣除通胀），按月复利、月末投入；目标金额为 18 岁时所需教育金总额（不含通胀调整，按当前购买力计算）。 换算：国内本科 15 万，0 岁开始每月存 429 元 ≈ 每天 14 元；10 岁开始每月存 1278 元 ≈ 每天 43 元——时间差 10 年，月存压力差 3 倍。</p></details>
+  <details class="faq-item"><summary>结果有多可靠？</summary><p>测算基于固定年化收益率 5%、按月复利的简化假设；教育费用因城市、学校类型、专业、国家差异较大，表中为目标金额假设值。未考虑通胀、汇率波动、奖学金、助学贷款等。本图不构成任何投资建议。</p></details>
+<footer>
+  mangofolio · fin-decision-matrix<br>
+  免责声明：<br>
+  ① 本页仅为财务教育与计算演示，不构成任何投资、保险、税务或法律建议。<br>
+  ② 测算基于简化模型与假设参数，实际收益受市场波动、通胀及个人情况影响，结果可能与现实存在显著差异。<br>
+  ③ 重大财务决策请结合自身情况，必要时咨询持牌专业人士。© 2026 mangofolio
+</footer>
+
+</div>
+</body>
+</html>
+  <div class="cta-box"><b>用你自己的数字算一遍：</b>上面的结果基于固定假设；把你的真实数字换进去，答案可能完全不同——本页提供算法框架，你的数字才是决策依据。<br><button class="calc-btn" id="openCalc">算一算</button></div>
+</article>
+</main>
+
+<div class="calc-modal" id="calcModal" hidden>
+  <div class="calc-overlay" id="calcOverlay"></div>
+  <div class="calc-dialog" role="dialog" aria-modal="true" aria-label="用你自己的数字算一算">
+    <button class="calc-close" id="closeCalc" aria-label="关闭">×</button>
+    <div class="calc-title">用你自己的数字算一算</div>
+        <div class="calc-field">
+      <label for="calcTarget">教育目标</label>
+      <select id="calcTarget">
+        <option value="150000">国内本科（约 15 万）</option>
+        <option value="250000">国内本科+硕士（约 25 万）</option>
+        <option value="500000">出国硕士（约 50 万）</option>
+        <option value="1000000">出国本科（约 100 万）</option>
+      </select>
+    </div>
+    <div class="calc-field">
+      <label for="calcCurAge">孩子当前年龄（岁）</label>
+      <input type="number" id="calcCurAge" value="3" min="0" max="15" step="1">
+      <span class="hint">0-15 岁，离 18 岁越近每月需存越多</span>
+    </div>
+    <div class="calc-result">
+      目标 <b id="calcOutTarget">国内本科</b>、孩子 <b id="calcOutCurAge">3</b> 岁 → 每月需存 <b id="calcOutSaving">—</b>
+      <div class="calc-ratio" id="calcOutNote">—</div>
+    </div>
+  </div>
+</div>
+<footer>
+  mangofolio · fin-decision-matrix · © 2026 mangofolio
+</footer>
+<script>
+// ===== 参数 =====
+  const TARGET_AGE5 = 18;
+  const REAL_RETURN5 = 0.05;
+  const goals = [150000, 250000, 500000, 1000000];
+  const ages5 = [0, 3, 6, 10, 15];
+  function calcMonthlySaving(target, currentAge) {
+    const years = TARGET_AGE5 - currentAge;
+    if (years <= 0) return Infinity;
+    const r = REAL_RETURN5 / 12;
+    const n = years * 12;
+    const monthly = target * r / (Math.pow(1 + r, n) - 1);
+    return monthly;
+  }
+  function getLevel(monthly) {
+    if (!isFinite(monthly) || monthly > 10000) return 5;
+    if (monthly > 6000) return 4;
+    if (monthly > 3000) return 3;
+    if (monthly > 1000) return 2;
+    return 1;
+  }
+  function fmt(v) { if (!isFinite(v)) return '—'; return v >= 10000 ? (v / 10000).toFixed(1) + '万' : Math.round(v).toLocaleString(); }
+  (function () {
+    const tbody = document.querySelector('#' + 'educationTable' + ' tbody');
+    goals.forEach(target => {
+      const tr = document.createElement('tr');
+      const th = document.createElement('th'); th.className = 'rowhead'; th.textContent = (target / 10000).toFixed(0) + '万目标';
+      tr.appendChild(th);
+      ages5.forEach(age => {
+        const monthly = calcMonthlySaving(target, age);
+        const td = document.createElement('td');
+        td.className = 'cell lvl' + getLevel(monthly);
+        td.innerHTML = '<div class="cell-amount">' + fmt(monthly) + '</div><div class="cell-note">/月</div>';
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    });
+  })();
+  const modal = document.getElementById('calcModal');
+  document.getElementById('openCalc').addEventListener('click', () => { modal.hidden = false; });
+  document.getElementById('closeCalc').addEventListener('click', () => { modal.hidden = true; });
+  document.getElementById('calcOverlay').addEventListener('click', () => { modal.hidden = true; });
+  function renderCalc() {
+    const target = parseFloat(document.getElementById('calcTarget').value) || 150000;
+    const age = parseFloat(document.getElementById('calcCurAge').value) || 3;
+    const monthly = calcMonthlySaving(target, age);
+    const label = document.getElementById('calcTarget').selectedOptions[0].text;
+    document.getElementById('calcOutTarget').textContent = label.replace('（约 ', '（');
+    document.getElementById('calcOutCurAge').textContent = age;
+    document.getElementById('calcOutSaving').textContent = isFinite(monthly) ? fmt(monthly) + ' 元' : '—';
+    const years = TARGET_AGE5 - age;
+    document.getElementById('calcOutNote').textContent = isFinite(monthly) ? '按年化 5% 复利、存 ' + years + ' 年；共投入约 ' + fmt(monthly * years * 12) + ' 元' : '距离 18 岁不足 1 年，难以靠储蓄完成';
+  }
+  document.getElementById('calcTarget').addEventListener('change', renderCalc);
+  document.getElementById('calcCurAge').addEventListener('input', renderCalc);
+  renderCalc();
+</script>
+</body>
+</html>

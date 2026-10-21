@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title></title>
+<meta name="description" content="同样 300 万，55 岁退休取 5% 会在 86 岁破产；70 岁退休取 6% 还能剩 54 万。理性 + 紧迫">
+<meta name="keywords" content="几岁退休、每年取多少，才够花到 90 岁？,财务决策,投教,理财计算,复利,替代率">
+<meta property="og:title" content="几岁退休、每年取多少，才够花到 90 岁？（2026 测算）">
+<meta property="og:description" content="同样 300 万，55 岁退休取 5% 会在 86 岁破产；70 岁退休取 6% 还能剩 54 万。理性 + 紧迫">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="assets/mangofolio-tokens-v09.css">
+  <style>
+
+
+
+  :root {
+    --page-bg: var(--mf-colors-background);
+    --page-card: var(--mf-colors-background-surface);
+    --page-panel: var(--mf-colors-background-neutral);
+    --page-ink: var(--mf-colors-text);
+    --page-ink-strong: var(--mf-colors-text-strong);
+    --page-ink-weak: var(--mf-colors-text-weak);
+    --page-accent: var(--mf-colors-text-link);
+    --page-accent-deep: var(--mf-colors-text-accent-mango);
+    --page-hairline: var(--mf-colors-border-weak);
+    --page-line-strong: rgba(36,22,16,.10);
+    --page-line-weak: rgba(36,22,16,.06);
+    /* 矩阵色阶（柔和版：浅底深字，红涨绿跌） */
+    --lvl1-bg: #FDECEA;  --lvl1-ink: #B8221E;
+    --lvl2-bg: #FDEBD8;  --lvl2-ink: #C2410C;
+    --lvl3-bg: #FDF3DE;  --lvl3-ink: #B45309;
+    --lvl4-bg: #E8F3EC;  --lvl4-ink: #1F8A4C;
+    --lvl5-bg: #E1EEE6;  --lvl5-ink: #11693D;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--page-bg); padding:12px; font-family:var(--mf-fonts-sans); color:var(--page-ink); font-size:17px; line-height:1.9; letter-spacing:.01em; }
+  .guide-article-wrap { max-width:860px; margin:0 auto; }
+  .paper { background:var(--page-card); border:1px solid var(--page-line-strong); border-radius:16px; box-shadow:var(--mf-shadows-card); max-width:780px; margin:6px auto; padding:28px 40px; }
+  @media (max-width:640px) { .paper { padding:24px 20px; } body { font-size:16px; padding:8px; } }
+
+  .paper-head { margin-bottom:12px; }
+  .paper-eyebrow { font-size:var(--mf-font-sizes-eyebrow); font-weight:500; color:var(--page-accent); letter-spacing:.24em; text-transform:uppercase; margin-bottom:6px; }
+  .paper-title { font-family:var(--mf-fonts-display); font-size:clamp(1.55rem,3.4vw,2.05rem); font-weight:800; color:var(--page-ink-strong); line-height:1.3; padding-bottom:10px; border-bottom:4px dashed rgba(249,115,22,.40); }
+
+  .lead-box { background:var(--page-panel); border-left:3px solid var(--page-accent); border-radius:12px; padding:9px 14px; margin:0 0 12px; }
+  .lead-box p { font-size:.95em; line-height:1.7; color:var(--page-ink); margin:0; }
+  .lead-box b, .lead-box strong { color:var(--page-ink-strong); }
+  .hl { color:var(--page-accent); font-weight:700; }
+
+  .matrix-head { display:flex; align-items:baseline; justify-content:space-between; gap:12px; flex-wrap:wrap; margin:0 0 8px; }
+  .matrix-title { font-family:var(--mf-fonts-display); font-size:clamp(1.15rem,2.4vw,1.3rem); font-weight:800; color:var(--page-ink-strong); }
+  .matrix-sub { font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.6; }
+  .matrix-table { width:100%; border-collapse:separate; border-spacing:2px; }
+  .matrix-table caption { caption-side:top; text-align:left; font-size:var(--mf-font-sizes-30); color:var(--page-ink-weak); padding:0 0 6px; line-height:1.6; }
+  .matrix-table thead th { background:var(--page-panel); color:var(--page-ink-strong); font-weight:700; text-align:center; padding:5px 7px; border-radius:8px; font-size:var(--mf-font-sizes-30); line-height:1.25; white-space:nowrap; }
+  .matrix-table th.rowhead { text-align:left; width:108px; background:var(--page-panel); font-size:var(--mf-font-sizes-30); }
+  .matrix-table td { padding:4px 3px; text-align:center; font-size:var(--mf-font-sizes-50); font-weight:700; border-radius:8px; min-width:60px; line-height:1.25; }
+  .matrix-table td.rowhead { background:var(--page-panel); color:var(--page-ink-strong); font-weight:700; text-align:left; width:104px; font-size:var(--mf-font-sizes-30); white-space:nowrap; padding:4px 7px; }
+  .cell-amount { font-size:var(--mf-font-sizes-100); display:block; }
+  .cell-note { font-size:var(--mf-font-sizes-25); opacity:.9; margin-top:0; font-weight:500; display:block; line-height:1.25; }
+  .lvl1 { background:var(--lvl1-bg); color:var(--lvl1-ink); }
+  .lvl2 { background:var(--lvl2-bg); color:var(--lvl2-ink); }
+  .lvl3 { background:var(--lvl3-bg); color:var(--lvl3-ink); }
+  .lvl4 { background:var(--lvl4-bg); color:var(--lvl4-ink); }
+  .lvl5 { background:var(--lvl5-bg); color:var(--lvl5-ink); }
+  .legend { display:flex; justify-content:center; gap:8px; margin:1px 0 0; font-size:var(--mf-font-sizes-25); color:var(--page-ink); flex-wrap:wrap; }
+  .legend span { display:inline-flex; align-items:center; gap:6px; }
+  .dot { width:12px; height:12px; border-radius:4px; display:inline-block; }
+  .dot.lvl1 { background:var(--lvl1-bg); border:1px solid var(--lvl1-ink); }
+  .dot.lvl2 { background:var(--lvl2-bg); border:1px solid var(--lvl2-ink); }
+  .dot.lvl3 { background:var(--lvl3-bg); border:1px solid var(--lvl3-ink); }
+  .dot.lvl4 { background:var(--lvl4-bg); border:1px solid var(--lvl4-ink); }
+  .dot.lvl5 { background:var(--lvl5-bg); border:1px solid var(--lvl5-ink); }
+  .matrix-note { margin:2px 0 0; font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.4; }
+  .matrix-note b { color:var(--page-accent-deep); }
+
+  .sec-title, .section-title { font-family:var(--mf-fonts-display); font-size:clamp(1.25rem,2.6vw,1.45rem); font-weight:800; color:var(--page-ink-strong); line-height:1.4; padding-bottom:10px; border-bottom:3px dashed rgba(249,115,22,.30); margin:26px 0 12px; }
+  .sec p { margin:0 0 12px; }
+  .sec b, .sec strong { color:var(--page-ink-strong); }
+  details.l2, details.faq-item { border:1px solid var(--page-line-strong); border-radius:12px; padding:10px 14px; margin:12px 0; font-size:var(--mf-font-sizes-30); line-height:1.8; color:var(--page-ink); background:var(--page-card); }
+  details.l2 summary, details.faq-item summary { cursor:pointer; font-weight:700; color:var(--page-ink-strong); }
+  details.l2 summary::marker, details.faq-item summary::marker { color:var(--page-accent); }
+  details.l2[open] summary, details.faq-item[open] summary { color:var(--page-accent-deep); }
+  .assume, .breakeven, .extra-note { background:var(--page-panel); border-radius:12px; padding:12px 16px; font-size:var(--mf-font-sizes-30); color:var(--page-ink); margin:12px 0; line-height:1.8; }
+  .assume b, .breakeven b, .extra-note b, .assume strong, .breakeven strong { color:var(--page-ink-strong); }
+  .foot { margin:16px 0 0; padding-top:14px; border-top:1px solid var(--page-line-strong); font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.8; }
+
+  .chart-title { text-align:center; font-size:var(--mf-font-sizes-200); font-weight:700; color:var(--page-ink-strong); margin:24px 0 4px; }
+  .chart-sub { text-align:center; font-size:var(--mf-font-sizes-30); color:var(--page-ink-weak); margin-bottom:8px; }
+  .chart-wrap { width:100%; overflow:hidden; }
+  .chart-wrap svg { width:100%; height:auto; display:block; }
+
+  .cta-box { margin:26px 0 0; padding:24px 26px; background:var(--page-panel); border:1px solid var(--page-line-strong); border-radius:16px; text-align:center; }
+  .cta-box p { font-size:var(--mf-font-sizes-30); color:var(--page-ink); line-height:1.8; margin:0 0 12px; }
+  .cta-box p:first-child { font-size:var(--mf-font-sizes-100); font-weight:700; color:var(--page-ink-strong); }
+  .cta-box b { color:var(--page-ink-strong); }
+  .calc-btn { display:inline-block; padding:11px 30px; font-size:var(--mf-font-sizes-100); font-weight:700; color:#FFFFFF; background:var(--page-accent); border:none; border-radius:16px; cursor:pointer; }
+  .calc-btn:hover { background:var(--page-accent-deep); }
+
+  .guide-disclaimer { margin:26px 0 0; padding-top:14px; border-top:1px solid var(--page-line-strong); font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.8; }
+  .disclaimer-title { font-weight:700; color:var(--page-ink); margin-bottom:4px; }
+  .disclaimer-text { margin-bottom:6px; }
+
+  footer { max-width:780px; margin:8px auto 24px; padding:14px 24px 0; text-align:center; font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.8; border-top:1px solid var(--page-line-weak); }
+
+  .calc-modal[hidden] { display:none; }
+  .calc-modal { position:fixed; inset:0; z-index:1000; display:flex; align-items:center; justify-content:center; padding:16px; }
+  .calc-overlay { position:absolute; inset:0; background:rgba(36,22,16,.45); }
+  .calc-dialog { position:relative; background:var(--page-card); border:1px solid var(--page-line-strong); border-radius:16px; box-shadow:var(--mf-shadows-card); max-width:480px; width:100%; padding:24px 26px; }
+  .calc-close { position:absolute; top:10px; right:14px; font-size:1.6rem; font-weight:700; color:var(--page-ink-weak); background:none; border:none; cursor:pointer; line-height:1; }
+  .calc-title { font-family:var(--mf-fonts-display); font-size:var(--mf-font-sizes-200); font-weight:800; color:var(--page-ink-strong); margin-bottom:16px; }
+  .calc-field { margin-bottom:14px; }
+  .calc-field label { display:block; font-size:var(--mf-font-sizes-30); color:var(--page-ink); margin-bottom:4px; font-weight:600; }
+  .calc-field input { width:100%; padding:8px 10px; font-size:var(--mf-font-sizes-100); font-weight:700; color:var(--page-ink-strong); border:1px solid var(--mf-colors-border-weak); border-radius:8px; background:var(--page-card); box-sizing:border-box; }
+  .calc-field .hint { display:block; font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); margin-top:2px; }
+  .calc-result { margin-top:16px; padding:14px 16px; background:var(--page-panel); border-left:3px solid var(--page-accent); border-radius:12px; font-size:var(--mf-font-sizes-100); font-weight:700; color:var(--page-ink-strong); line-height:1.7; }
+  .calc-result b { color:var(--page-accent-deep); }
+  .calc-ratio { margin-top:6px; font-size:var(--mf-font-sizes-30); font-weight:400; color:var(--page-ink); line-height:1.7; }
+
+
+
+  </style>
+</head>
+<body>
+<main class="guide-article-wrap">
+  <article class="paper">
+<header class="paper-head">
+      <p class="paper-eyebrow">Retirement Planning</p>
+      <h1 class="paper-title">几岁退休、每年取多少，才够花到 90 岁？</h1>
+    </header>
+  <div class="lead-box">
+  <p><p>先记住结论：<strong>退休年龄和提取率，一个决定「要花多少年」，一个决定「每年花多少」。</strong><span class="hl">多干 5 年 ≈ 提取率降 1%</span>——两者对安全性的影响可以互相替代。</p></p>
+  <p>同样 <span class="dyn" id="subPrincipal">300 万</span>，<span class="dyn" id="subAge1">55</span> 岁退休取 <span class="dyn" id="subRate1">5%</span> 会在 <span class="dyn" id="subBkAge">86</span> 岁破产；<span class="dyn" id="subAge2">70</span> 岁退休取 <span class="dyn" id="subRate2">6%</span> 还能剩 <span class="dyn" id="subRemain">54 万</span>。</p>
+</div>
+
+  <div class="matrix-head">
+      <div class="matrix-title">退休年龄 × 提取率</div>
+      <div class="matrix-sub">剩余资产越多越红（很安全），破产为绿</div>
+    </div>
+      <table class="matrix-table" id="retireTable">
+        <caption>表1：不同退休年龄 × 提取率下，90 岁时的剩余资产（万元）</caption>
+        <thead>
+    <tr>
+      <th class="rowhead">退休年龄</th>
+      <th>提取率 3%</th><th>提取率 4%</th><th>提取率 5%</th><th>提取率 6%</th><th>提取率 8%</th>
+    </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <div class="legend">
+    <span><i class="dot lvl1"></i>≥200万（很安全）</span>
+    <span><i class="dot lvl2"></i>100-200万（安全）</span>
+    <span><i class="dot lvl3"></i>0-100万（勉强够）</span>
+    <span><i class="dot lvl5"></i>破产（不够花）</span>
+  </div>
+  <table id="retireTable">
+    <tr>
+      <th class="rowhead">退休年龄</th>
+      <th>提取率 3%</th><th>提取率 4%</th><th>提取率 5%</th><th>提取率 6%</th><th>提取率 8%</th>
+    </tr>
+  </table>
+
+  <div class="section-title">为什么？</div>
+  <details class="l2">
+    <summary>讲给我听：几岁退休、每年取多少，才够花到 90 岁？</summary>
+    <p>退休年龄和提取率，一个决定「要花多少年」，一个决定「每年花多少」。多干 5 年 ≈ 提取率降 1%——两者对安全性的影响可以互相替代。</p>
+    <p>假设：退休时资产 300 万；年化实际收益率 3%（已扣除通胀）；每年按固定金额提取；目标寿命 90 岁；无其他收入。 换算：300 万资产，55 岁退休需覆盖 35 年；70 岁退休只需覆盖 20 年——多干 15 年，少取 15 年，安全边际大不同。</p>
+  </details>
+
+  <div class="section-title">底层假设（L3）
+  </div>
+      <p class="matrix-note">注：退休时资产 300 万，年化实际收益 3%（已扣通胀），每年按固定金额提取至 90 岁；红档剩余充裕，绿档破产。</p>
+
+  <div class="sec-title">为什么？</div>
+  <details class="l2">
+    <summary>讲给我听：几岁退休、每年取多少，才够花到 90 岁？</summary>
+    <p>退休年龄和提取率，一个决定「要花多少年」，一个决定「每年花多少」。多干 5 年 ≈ 提取率降 1%——两者对安全性的影响可以互相替代。</p>
+    <p>假设：退休时资产 300 万；年化实际收益率 3%（已扣除通胀）；每年按固定金额提取；目标寿命 90 岁；无其他收入。 换算：300 万资产，55 岁退休需覆盖 35 年；70 岁退休只需覆盖 20 年——多干 15 年，少取 15 年，安全边际大不同。</p>
+  </details>
+  <div class="sec-title">底层假设（L3）</div>
+  <div class="assume">
+    假设：退休时资产 <b>300 万</b>；年化实际收益率 <b>3%</b>（已扣除通胀）；每年按固定金额提取；目标寿命 <b>90 岁</b>；无其他收入。<br>
+    换算：<span class="dyn" id="convPrincipal">300 万</span>资产，<span class="dyn" id="convAge1">55</span> 岁退休需覆盖 <b><span class="dyn" id="convYears1">35</span> 年</b>；<span class="dyn" id="convAge2">70</span> 岁退休只需覆盖 <b><span class="dyn" id="convYears2">20</span> 年</b>——多干 <span class="highlight"><span class="dyn" id="convDiff">15</span> 年</span>，少取 <span class="highlight"><span class="dyn" id="convDiff2">15</span> 年</span>，安全边际大不同。
+  </div>
+  <div class="foot">
+    测算基于固定实际收益率 3%、固定金额提取、活到 90 岁的简化假设；未考虑社保养老金、企业年金、房产、大额医疗支出、市场波动等。实际退休支出随年龄变化（通常先高后低再高），长寿风险可能超出 90 岁。本图不构成任何金融建议。
+  </div>
+<div class="sec-title">常见问题（FAQ）</div>
+  <details class="faq-item"><summary>几岁退休、每年取多少，才够花到 90 岁？</summary><p>同样 300 万，55 岁退休取 5% 会在 86 岁破产；70 岁退休取 6% 还能剩 54 万。理性 + 紧迫</p></details>
+  <details class="faq-item"><summary>测算基于什么假设？</summary><p>假设：退休时资产 300 万；年化实际收益率 3%（已扣除通胀）；每年按固定金额提取；目标寿命 90 岁；无其他收入。 换算：300 万资产，55 岁退休需覆盖 35 年；70 岁退休只需覆盖 20 年——多干 15 年，少取 15 年，安全边际大不同。</p></details>
+  <details class="faq-item"><summary>结果有多可靠？</summary><p>测算基于固定实际收益率 3%、固定金额提取、活到 90 岁的简化假设；未考虑社保养老金、企业年金、房产、大额医疗支出、市场波动等。实际退休支出随年龄变化（通常先高后低再高），长寿风险可能超出 90 岁。本图不构成任何金融建议。</p></details>
+<footer>
+  mangofolio · fin-decision-matrix<br>
+  免责声明：<br>
+  ① 本页仅为财务教育与计算演示，不构成任何投资、保险、税务或法律建议。<br>
+  ② 测算基于简化模型与假设参数，实际收益受市场波动、通胀及个人情况影响，结果可能与现实存在显著差异。<br>
+  ③ 重大财务决策请结合自身情况，必要时咨询持牌专业人士。© 2026 mangofolio
+</footer>
+
+</div>
+</body>
+</html>
+  <div class="cta-box"><b>用你自己的数字算一遍：</b>上面的结果基于固定假设；把你的真实数字换进去，答案可能完全不同——本页提供算法框架，你的数字才是决策依据。<br><button class="calc-btn" id="openCalc">算一算</button></div>
+</article>
+</main>
+
+<div class="calc-modal" id="calcModal" hidden>
+  <div class="calc-overlay" id="calcOverlay"></div>
+  <div class="calc-dialog" role="dialog" aria-modal="true" aria-label="用你自己的数字算一算">
+    <button class="calc-close" id="closeCalc" aria-label="关闭">×</button>
+    <div class="calc-title">用你自己的数字算一算</div>
+        <div class="calc-field">
+      <label for="calcAge">你的退休年龄（岁）</label>
+      <input type="number" id="calcAge" value="60" min="50" max="75" step="1">
+      <span class="hint">55 / 60 / 65 / 70 岁退休，对照矩阵</span>
+    </div>
+    <div class="calc-field">
+      <label for="calcRate">每年提取率（%）</label>
+      <input type="number" id="calcRate" value="5" min="1" max="10" step="0.5">
+      <span class="hint">例如 5 = 每年取 5%（300 万取 15 万/年）</span>
+    </div>
+    <div class="calc-result">
+      退休 <b id="calcOutAge">60</b> 岁、每年取 <b id="calcOutRate">5%</b> → <b id="calcOutMain">—</b>
+      <div class="calc-ratio" id="calcOutNote">—</div>
+    </div>
+  </div>
+</div>
+<footer>
+  mangofolio · fin-decision-matrix · © 2026 mangofolio
+</footer>
+<script>
+// ===== 参数 =====
+  const PRINCIPAL = 3000000;
+  const REAL_RETURN = 0.03;
+  const TARGET_AGE = 90;
+  const INITIAL_RATIO = 0.67;
+  const SAFE_RATIO = 0.33;
+  function calcRetirement(retireAge, withdrawRate) {
+    const yearsNeeded = TARGET_AGE - retireAge;
+    const annualWithdraw = PRINCIPAL * withdrawRate;
+    const monthlyWithdraw = annualWithdraw / 12;
+    const monthlyRate = REAL_RETURN / 12;
+    if (monthlyWithdraw <= PRINCIPAL * monthlyRate) {
+      return { finalValue: PRINCIPAL, bankruptcyAge: null, yearsNeeded };
+    }
+    const n = yearsNeeded * 12;
+    const pow = Math.pow(1 + monthlyRate, n);
+    const finalValue = PRINCIPAL * pow - monthlyWithdraw * (pow - 1) / monthlyRate;
+    if (finalValue >= 0) return { finalValue, bankruptcyAge: null, yearsNeeded };
+    const monthsToZero = -Math.log(1 - (PRINCIPAL * monthlyRate) / monthlyWithdraw) / Math.log(1 + monthlyRate);
+    const bankruptcyAge = retireAge + monthsToZero / 12;
+    return { finalValue: 0, bankruptcyAge, yearsNeeded };
+  }
+  function getLevel(result) {
+    if (result.bankruptcyAge !== null) return 5;
+    const ratio = result.finalValue / PRINCIPAL;
+    if (ratio >= INITIAL_RATIO) return 1;
+    if (ratio >= SAFE_RATIO) return 2;
+    return 3;
+  }
+  function formatResult(result) {
+    if (result.bankruptcyAge !== null) return { main: Math.round(result.bankruptcyAge) + '岁破产', note: '需撑到90岁' };
+    const v = result.finalValue;
+    return { main: v >= 10000 ? '剩 ' + (v / 10000).toFixed(0) + '万' : '剩 ' + Math.round(v) + '元', note: '90岁时' };
+  }
+  const retireAges = [55, 60, 65, 70];
+  const rates = [0.03, 0.04, 0.05, 0.06, 0.08];
+  (function () {
+    const tbody = document.querySelector('#retireTable tbody');
+    retireAges.forEach(age => {
+      const tr = document.createElement('tr');
+      const th = document.createElement('th'); th.className = 'rowhead'; th.textContent = age + '岁';
+      tr.appendChild(th);
+      rates.forEach(rate => {
+        const result = calcRetirement(age, rate);
+        const display = formatResult(result);
+        const td = document.createElement('td');
+        td.className = 'cell lvl' + getLevel(result);
+        td.innerHTML = '<div class="cell-amount">' + display.main + '</div><div class="cell-note">' + display.note + '</div>';
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    });
+  })();
+  (function renderStatic() {
+    const bk = calcRetirement(55, 0.05);
+    const ok = calcRetirement(70, 0.06);
+    const fmtWan = v => (v / 10000).toFixed(0) + ' 万';
+    const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+    if (bk.bankruptcyAge !== null) { set('dynBk', Math.round(bk.bankruptcyAge) + ' 岁'); }
+    set('dynOk', fmtWan(ok.finalValue));
+  })();
+  const modal = document.getElementById('calcModal');
+  document.getElementById('openCalc').addEventListener('click', () => { modal.hidden = false; });
+  document.getElementById('closeCalc').addEventListener('click', () => { modal.hidden = true; });
+  document.getElementById('calcOverlay').addEventListener('click', () => { modal.hidden = true; });
+  function renderCalc() {
+    const age = parseFloat(document.getElementById('calcAge').value) || 60;
+    const rate = parseFloat(document.getElementById('calcRate').value) / 100 || 0.05;
+    const result = calcRetirement(age, rate);
+    const display = formatResult(result);
+    document.getElementById('calcOutAge').textContent = age;
+    document.getElementById('calcOutRate').textContent = (rate * 100).toFixed(1);
+    document.getElementById('calcOutMain').textContent = display.main;
+    document.getElementById('calcOutNote').textContent = display.note + '（退休时资产按 300 万）';
+  }
+  document.getElementById('calcAge').addEventListener('input', renderCalc);
+  document.getElementById('calcRate').addEventListener('input', renderCalc);
+  renderCalc();
+</script>
+</body>
+</html>

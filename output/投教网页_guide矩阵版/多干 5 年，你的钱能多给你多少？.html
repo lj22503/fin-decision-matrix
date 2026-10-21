@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title></title>
+<meta name="description" content="200 万资产：55 岁退休每月花 8400 元；工作到 70 岁再退，每月能花 2.16 万。延迟退休 = 资产多增值几年 + 需要覆盖的年份更少，非线性放大。">
+<meta name="keywords" content="延迟退休,退休规划,每月可花多少,养老金计算,财务自由,fin-decision-matrix, 延迟退休,退休规划,资产增值,提取率,养老金">
+<meta property="og:type" content="article" />
+<meta property="og:title" content="多干 5 年，你的钱能多给你多少？（2026测算）" />
+<meta property="og:description" content="200 万资产：55 岁退休每月花 8400 元；工作到 70 岁再退，每月能花 2.16 万。延迟退休 = 资产多增值几年 + 需要覆盖的年份更少，非线性放大。" />
+<meta property="og:url" content="https://fintools.mangofolio.com/guide/%E5%A4%9A%E5%B9%B2%205%20%E5%B9%B4%EF%BC%8C%E4%BD%A0%E7%9A%84%E9%92%B1%E8%83%BD%E5%A4%9A%E7%BB%99%E4%BD%A0%E5%A4%9A%E5%B0%91%EF%BC%9F.html" />
+<meta property="og:image" content="https://fintools.mangofolio.com/images/og-cover.png?v=2" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:site_name" content="财务工具箱 FinTools" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="多干 5 年，你的钱能多给你多少？（2026测算）" />
+<meta name="twitter:description" content="200 万资产：55 岁退休每月花 8400 元；工作到 70 岁再退，每月能花 2.16 万。延迟退休 = 资产多增值几年 + 需要覆盖的年份更少，非线性放大。" />
+<meta name="twitter:image" content="https://fintools.mangofolio.com/images/og-cover.png?v=2" />
+  <link rel="stylesheet" href="assets/mangofolio-tokens-v09.css">
+  <style>
+
+
+
+  :root {
+    --page-bg: var(--mf-colors-background);
+    --page-card: var(--mf-colors-background-surface);
+    --page-panel: var(--mf-colors-background-neutral);
+    --page-ink: var(--mf-colors-text);
+    --page-ink-strong: var(--mf-colors-text-strong);
+    --page-ink-weak: var(--mf-colors-text-weak);
+    --page-accent: var(--mf-colors-text-link);
+    --page-accent-deep: var(--mf-colors-text-accent-mango);
+    --page-hairline: var(--mf-colors-border-weak);
+    --page-line-strong: rgba(36,22,16,.10);
+    --page-line-weak: rgba(36,22,16,.06);
+    /* 矩阵色阶（柔和版：浅底深字，红涨绿跌） */
+    --lvl1-bg: #FDECEA;  --lvl1-ink: #B8221E;
+    --lvl2-bg: #FDEBD8;  --lvl2-ink: #C2410C;
+    --lvl3-bg: #FDF3DE;  --lvl3-ink: #B45309;
+    --lvl4-bg: #E8F3EC;  --lvl4-ink: #1F8A4C;
+    --lvl5-bg: #E1EEE6;  --lvl5-ink: #11693D;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--page-bg); padding:12px; font-family:var(--mf-fonts-sans); color:var(--page-ink); font-size:17px; line-height:1.9; letter-spacing:.01em; }
+  .guide-article-wrap { max-width:860px; margin:0 auto; }
+  .paper { background:var(--page-card); border:1px solid var(--page-line-strong); border-radius:16px; box-shadow:var(--mf-shadows-card); max-width:780px; margin:6px auto; padding:28px 40px; }
+  @media (max-width:640px) { .paper { padding:24px 20px; } body { font-size:16px; padding:8px; } }
+
+  .paper-head { margin-bottom:12px; }
+  .paper-eyebrow { font-size:var(--mf-font-sizes-eyebrow); font-weight:500; color:var(--page-accent); letter-spacing:.24em; text-transform:uppercase; margin-bottom:6px; }
+  .paper-title { font-family:var(--mf-fonts-display); font-size:clamp(1.55rem,3.4vw,2.05rem); font-weight:800; color:var(--page-ink-strong); line-height:1.3; padding-bottom:10px; border-bottom:4px dashed rgba(249,115,22,.40); }
+
+  .lead-box { background:var(--page-panel); border-left:3px solid var(--page-accent); border-radius:12px; padding:9px 14px; margin:0 0 12px; }
+  .lead-box p { font-size:.95em; line-height:1.7; color:var(--page-ink); margin:0; }
+  .lead-box b, .lead-box strong { color:var(--page-ink-strong); }
+  .hl { color:var(--page-accent); font-weight:700; }
+
+  .matrix-head { display:flex; align-items:baseline; justify-content:space-between; gap:12px; flex-wrap:wrap; margin:0 0 8px; }
+  .matrix-title { font-family:var(--mf-fonts-display); font-size:clamp(1.15rem,2.4vw,1.3rem); font-weight:800; color:var(--page-ink-strong); }
+  .matrix-sub { font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.6; }
+  .matrix-table { width:100%; border-collapse:separate; border-spacing:2px; }
+  .matrix-table caption { caption-side:top; text-align:left; font-size:var(--mf-font-sizes-30); color:var(--page-ink-weak); padding:0 0 6px; line-height:1.6; }
+  .matrix-table thead th { background:var(--page-panel); color:var(--page-ink-strong); font-weight:700; text-align:center; padding:5px 7px; border-radius:8px; font-size:var(--mf-font-sizes-30); line-height:1.25; white-space:nowrap; }
+  .matrix-table th.rowhead { text-align:left; width:108px; background:var(--page-panel); font-size:var(--mf-font-sizes-30); }
+  .matrix-table td { padding:4px 3px; text-align:center; font-size:var(--mf-font-sizes-50); font-weight:700; border-radius:8px; min-width:60px; line-height:1.25; }
+  .matrix-table td.rowhead { background:var(--page-panel); color:var(--page-ink-strong); font-weight:700; text-align:left; width:104px; font-size:var(--mf-font-sizes-30); white-space:nowrap; padding:4px 7px; }
+  .cell-amount { font-size:var(--mf-font-sizes-100); display:block; }
+  .cell-note { font-size:var(--mf-font-sizes-25); opacity:.9; margin-top:0; font-weight:500; display:block; line-height:1.25; }
+  .lvl1 { background:var(--lvl1-bg); color:var(--lvl1-ink); }
+  .lvl2 { background:var(--lvl2-bg); color:var(--lvl2-ink); }
+  .lvl3 { background:var(--lvl3-bg); color:var(--lvl3-ink); }
+  .lvl4 { background:var(--lvl4-bg); color:var(--lvl4-ink); }
+  .lvl5 { background:var(--lvl5-bg); color:var(--lvl5-ink); }
+  .legend { display:flex; justify-content:center; gap:8px; margin:1px 0 0; font-size:var(--mf-font-sizes-25); color:var(--page-ink); flex-wrap:wrap; }
+  .legend span { display:inline-flex; align-items:center; gap:6px; }
+  .dot { width:12px; height:12px; border-radius:4px; display:inline-block; }
+  .dot.lvl1 { background:var(--lvl1-bg); border:1px solid var(--lvl1-ink); }
+  .dot.lvl2 { background:var(--lvl2-bg); border:1px solid var(--lvl2-ink); }
+  .dot.lvl3 { background:var(--lvl3-bg); border:1px solid var(--lvl3-ink); }
+  .dot.lvl4 { background:var(--lvl4-bg); border:1px solid var(--lvl4-ink); }
+  .dot.lvl5 { background:var(--lvl5-bg); border:1px solid var(--lvl5-ink); }
+  .matrix-note { margin:2px 0 0; font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.4; }
+  .matrix-note b { color:var(--page-accent-deep); }
+
+  .sec-title, .section-title { font-family:var(--mf-fonts-display); font-size:clamp(1.25rem,2.6vw,1.45rem); font-weight:800; color:var(--page-ink-strong); line-height:1.4; padding-bottom:10px; border-bottom:3px dashed rgba(249,115,22,.30); margin:26px 0 12px; }
+  .sec p { margin:0 0 12px; }
+  .sec b, .sec strong { color:var(--page-ink-strong); }
+  details.l2, details.faq-item { border:1px solid var(--page-line-strong); border-radius:12px; padding:10px 14px; margin:12px 0; font-size:var(--mf-font-sizes-30); line-height:1.8; color:var(--page-ink); background:var(--page-card); }
+  details.l2 summary, details.faq-item summary { cursor:pointer; font-weight:700; color:var(--page-ink-strong); }
+  details.l2 summary::marker, details.faq-item summary::marker { color:var(--page-accent); }
+  details.l2[open] summary, details.faq-item[open] summary { color:var(--page-accent-deep); }
+  .assume, .breakeven, .extra-note { background:var(--page-panel); border-radius:12px; padding:12px 16px; font-size:var(--mf-font-sizes-30); color:var(--page-ink); margin:12px 0; line-height:1.8; }
+  .assume b, .breakeven b, .extra-note b, .assume strong, .breakeven strong { color:var(--page-ink-strong); }
+  .foot { margin:16px 0 0; padding-top:14px; border-top:1px solid var(--page-line-strong); font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.8; }
+
+  .chart-title { text-align:center; font-size:var(--mf-font-sizes-200); font-weight:700; color:var(--page-ink-strong); margin:24px 0 4px; }
+  .chart-sub { text-align:center; font-size:var(--mf-font-sizes-30); color:var(--page-ink-weak); margin-bottom:8px; }
+  .chart-wrap { width:100%; overflow:hidden; }
+  .chart-wrap svg { width:100%; height:auto; display:block; }
+
+  .cta-box { margin:26px 0 0; padding:24px 26px; background:var(--page-panel); border:1px solid var(--page-line-strong); border-radius:16px; text-align:center; }
+  .cta-box p { font-size:var(--mf-font-sizes-30); color:var(--page-ink); line-height:1.8; margin:0 0 12px; }
+  .cta-box p:first-child { font-size:var(--mf-font-sizes-100); font-weight:700; color:var(--page-ink-strong); }
+  .cta-box b { color:var(--page-ink-strong); }
+  .calc-btn { display:inline-block; padding:11px 30px; font-size:var(--mf-font-sizes-100); font-weight:700; color:#FFFFFF; background:var(--page-accent); border:none; border-radius:16px; cursor:pointer; }
+  .calc-btn:hover { background:var(--page-accent-deep); }
+
+  .guide-disclaimer { margin:26px 0 0; padding-top:14px; border-top:1px solid var(--page-line-strong); font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.8; }
+  .disclaimer-title { font-weight:700; color:var(--page-ink); margin-bottom:4px; }
+  .disclaimer-text { margin-bottom:6px; }
+
+  footer { max-width:780px; margin:8px auto 24px; padding:14px 24px 0; text-align:center; font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.8; border-top:1px solid var(--page-line-weak); }
+
+  .calc-modal[hidden] { display:none; }
+  .calc-modal { position:fixed; inset:0; z-index:1000; display:flex; align-items:center; justify-content:center; padding:16px; }
+  .calc-overlay { position:absolute; inset:0; background:rgba(36,22,16,.45); }
+  .calc-dialog { position:relative; background:var(--page-card); border:1px solid var(--page-line-strong); border-radius:16px; box-shadow:var(--mf-shadows-card); max-width:480px; width:100%; padding:24px 26px; }
+  .calc-close { position:absolute; top:10px; right:14px; font-size:1.6rem; font-weight:700; color:var(--page-ink-weak); background:none; border:none; cursor:pointer; line-height:1; }
+  .calc-title { font-family:var(--mf-fonts-display); font-size:var(--mf-font-sizes-200); font-weight:800; color:var(--page-ink-strong); margin-bottom:16px; }
+  .calc-field { margin-bottom:14px; }
+  .calc-field label { display:block; font-size:var(--mf-font-sizes-30); color:var(--page-ink); margin-bottom:4px; font-weight:600; }
+  .calc-field input { width:100%; padding:8px 10px; font-size:var(--mf-font-sizes-100); font-weight:700; color:var(--page-ink-strong); border:1px solid var(--mf-colors-border-weak); border-radius:8px; background:var(--page-card); box-sizing:border-box; }
+  .calc-field .hint { display:block; font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); margin-top:2px; }
+  .calc-result { margin-top:16px; padding:14px 16px; background:var(--page-panel); border-left:3px solid var(--page-accent); border-radius:12px; font-size:var(--mf-font-sizes-100); font-weight:700; color:var(--page-ink-strong); line-height:1.7; }
+  .calc-result b { color:var(--page-accent-deep); }
+  .calc-ratio { margin-top:6px; font-size:var(--mf-font-sizes-30); font-weight:400; color:var(--page-ink); line-height:1.7; }
+
+
+
+  </style>
+</head>
+<body>
+<main class="guide-article-wrap">
+  <article class="paper">
+<header class="paper-head">
+      <p class="paper-eyebrow">Retirement Timing</p>
+      <h1 class="paper-title">多干 5 年，你的钱能多给你多少？</h1>
+    </header>
+  <div class="lead-box">
+  <p>200 万资产，70 岁退休比 55 岁退休累计多领 <span class="dyn" id="subExtra">85 万</span>——多干的 5 年，钱在替你加班。</p>
+  <p class="lead">先记住结论：<strong>延迟退休的收益来自两个方向——资产多增值几年 + 需要覆盖的年份更少</strong>，两者叠加产生非线性放大。200 万资产，55 岁退休每月只够花 <span class="dyn" id="leadM55">8400 元</span>；干到 70 岁再退，每月能花 <span class="dyn" id="leadM70">2.16 万</span>——<b>多干 15 年，月花销翻 2.5 倍</b>。</p>
+</div>
+
+  <div class="matrix-head">
+      <div class="matrix-title">退休年龄 × 55岁资产</div>
+      <div class="matrix-sub">每月可花越多越红（宽裕），越少越绿（很紧）</div>
+    </div>
+      <table class="matrix-table" id="retireTable">
+        <caption>表1：不同退休年龄 × 55 岁时资产下，85 岁前的每月可花金额（万元）</caption>
+        <thead>
+    <tr>
+      <th class="rowhead">退休年龄</th>
+      <th>200万</th><th>500万</th><th>1000万</th>
+    </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <div class="legend">
+    <span>&lt;1万/月（很紧）</span>
+    <span>1-1.5万/月（偏紧）</span>
+    <span>1.5-2.5万/月（够用）</span>
+    <span>2.5-4万/月（宽裕）</span>
+    <span>&gt;4万/月（很宽裕）</span>
+  </div>
+  
+      <p class="matrix-note">注：55 岁后资产按年化 3%（已扣通胀）增值、不提取，退休后按固定金额每月提取至 85 岁；红档宽裕，绿档很紧。</p>
+
+  <div class="sec-title">为什么？</div>
+  <details class="l2">
+    <summary>讲给我听：为什么晚退休 5 年，每月能花的钱不是多一点，而是多一大截？</summary>
+    <p>因为退休金是<b>两个力的合力</b>：① 晚退休的几年里，资产按 3% 继续增值——200 万放 15 年变成约 <b>313 万</b>；② 需要覆盖的年数从 30 年缩到 15 年，<b>同样的钱可以摊到更短的时间里</b>。</p>
+    <p>更关键的是第二个力：55 岁退休每月花 8400 元，是因为 200 万要撑 30 年；70 岁退休每月花 2.16 万，是因为 313 万只要撑 15 年——<b>资产涨了一半，年限砍了一半，月花销直接翻 2.5 倍</b>。这是"多干一年，胜过理财三年"的原因。</p>
+  </details>
+  <div class="insight"><b>核心洞察：</b>延迟退休的收益来自两个方向——<b>资产多增值几年</b> + <b>需要覆盖的年份更少</b>。两者叠加，产生非线性放大效应。55 岁退休到 85 岁要覆盖 30 年，70 岁退休只需覆盖 15 年，所需年数减半，每月可花金额翻倍不止。</div>
+  <div class="sec-title">曲线图：每月可花金额随退休年龄变化</div>
+  <div class="chart-sub">三档资产下，退休越晚，每月可花的钱涨得越快</div>
+  <div class="chart-wrap">
+    <svg id="delayCurve" viewBox="0 0 900 440" preserveAspectRatio="xMidYMid meet"></svg>
+  </div>
+  <div class="sec-title">底层假设（L3）</div>
+  <div class="assume">
+    假设：以 <b>55 岁</b>时拥有的资产为基准；不退休期间资产继续以年化 <b>3%</b>（已扣除通胀）增值、不提取；退休后按固定金额每月提取，目标寿命 <b>85 岁</b>。<br>
+    换算：200 万资产，55 岁退休每月能花 <span class="highlight"><span class="dyn" id="convM55">8400</span> 元</span>；工作到 70 岁再退，每月能花 <span class="highlight"><span class="dyn" id="convM70">2.16 万</span></span>——多干 <span class="dyn" id="convYears">15</span> 年，月花销翻 <span class="dyn" id="convTimes">2.5</span> 倍。
+  </div>
+  <div class="foot">
+    测算基于固定实际收益率 3%、固定金额每月提取、目标寿命 85 岁的简化假设；未考虑社保养老金、企业年金、房产等其他资产，也未考虑长寿风险（活过 85 岁）和大额医疗支出。延迟退休还涉及工作意愿、健康状况、就业市场等非财务因素。本图不构成任何金融建议。
+  </div>
+<div class="sec-title">常见问题（FAQ）</div>
+  <details class="faq-item"><summary>200 万资产 55 岁退休，每月能花多少？</summary><p>约 8400 元/月。</p></details>
+  <details class="faq-item"><summary>干到 70 岁再退呢？</summary><p>每月能花约 2.16 万——晚退 15 年，月支出能力提升约 2.5 倍。</p></details>
+  <details class="faq-item"><summary>为什么晚退几年效果这么大？</summary><p>延迟退休 = 资产多增值几年 + 需要覆盖的年份更少，两个方向同时放大，形成非线性收益。</p></details>
+  
+  <div class="cta-box"><b>用你自己的数字算一遍：</b>上面的结果基于固定假设；把你的真实数字换进去，答案可能完全不同——本页提供算法框架，你的数字才是决策依据。<br><button class="calc-btn" id="openCalc">算一算</button></div>
+</article>
+</main>
+
+<div class="calc-modal" id="calcModal" hidden>
+  <div class="calc-overlay" id="calcOverlay"></div>
+  <div class="calc-dialog" role="dialog" aria-modal="true" aria-label="用你自己的数字算一算">
+    <button class="calc-close" id="closeCalc" aria-label="关闭">×</button>
+    <div class="calc-title">用你自己的数字算一算</div>
+        <div class="calc-field">
+      <label for="calcAsset">55 岁时你的资产（万元）</label>
+      <input type="number" id="calcAsset" value="200" min="50" step="10">
+      <span class="hint">例如 200 万</span>
+    </div>
+    <div class="calc-field">
+      <label for="calcRAge">计划退休年龄（岁）</label>
+      <input type="number" id="calcRAge" value="60" min="55" max="75" step="1">
+      <span class="hint">55 / 60 / 65 / 70 岁退休</span>
+    </div>
+    <div class="calc-result">
+      <b id="calcOutAsset">200</b> 万资产，<b id="calcOutRAge">60</b> 岁退休 → 每月可花 <b id="calcOutMonthly">—</b>
+      <div class="calc-ratio" id="calcOutNote">—</div>
+    </div>
+  </div>
+</div>
+<footer>
+  mangofolio · fin-decision-matrix · © 2026 mangofolio
+</footer>
+<script>
+// ===== 参数 =====
+  const BASE_AGE = 55;
+  const TARGET_AGE = 85;
+  const REAL_RETURN = 0.03;
+  const retireAges3 = [55, 60, 65, 70];
+  const assets = [2000000, 5000000, 10000000];
+  function calcRetire(assetAt55, retireAge) {
+    const growYears = retireAge - BASE_AGE;
+    const total = assetAt55 * Math.pow(1 + REAL_RETURN, growYears);
+    const coverYears = TARGET_AGE - retireAge;
+    const monthly = coverYears > 0 ? total / (coverYears * 12) : 0;
+    return { total, monthly, coverYears, growYears };
+  }
+  function getLevel(monthly) {
+    if (monthly < 10000) return 5;
+    if (monthly < 15000) return 4;
+    if (monthly < 25000) return 3;
+    if (monthly < 40000) return 2;
+    return 1;
+  }
+  function fmtMonth(v) { return v >= 10000 ? (v / 10000).toFixed(1) + '万' : Math.round(v).toLocaleString(); }
+  (function () {
+    const tbody = document.querySelector('#retireTable tbody');
+    retireAges3.forEach(age => {
+      const tr = document.createElement('tr');
+      const th = document.createElement('th'); th.className = 'rowhead'; th.textContent = age + '岁退休';
+      tr.appendChild(th);
+      assets.forEach(asset => {
+        const r = calcRetire(asset, age);
+        const td = document.createElement('td');
+        td.className = 'cell lvl' + getLevel(r.monthly);
+        td.innerHTML = '<div class="cell-amount">' + fmtMonth(r.monthly) + '</div><div class="cell-note">/月</div>';
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    });
+  })();
+  // ===== 曲线图 =====
+  (function drawCurve() {
+    const svg = document.getElementById('delayCurve');
+    if (!svg) return;
+    const W = 900, H = 440, padL = 70, padR = 20, padT = 30, padB = 50;
+    const xs = [55, 60, 65, 70, 75, 80];
+    const series = [
+      { asset: 2000000, color: '#F97316' },
+      { asset: 5000000, color: '#E05E0A' },
+      { asset: 10000000, color: '#B45309' }
+    ];
+    const xMin = 55, xMax = 80;
+    let yMax = 0;
+    series.forEach(s => { xs.forEach(a => { const r = calcRetire(s.asset, a); yMax = Math.max(yMax, r.monthly); }); });
+    yMax = Math.ceil(yMax / 10000) * 10000;
+    const X = a => padL + (a - xMin) / (xMax - xMin) * (W - padL - padR);
+    const Y = v => H - padB - (v / yMax) * (H - padT - padB);
+    let g = '';
+    for (let i = 0; i <= 4; i++) {
+      const v = yMax * i / 4;
+      const y = Y(v);
+      g += '<line x1="' + padL + '" y1="' + y + '" x2="' + (W - padR) + '" y2="' + y + '" stroke="#E5E7EB" stroke-width="1"/>';
+      g += '<text x="' + (padL - 10) + '" y="' + (y + 5) + '" text-anchor="end" font-size="12" fill="#6B7280">' + (v / 10000).toFixed(0) + '万</text>';
+    }
+    xs.forEach(a => {
+      const x = X(a);
+      g += '<text x="' + x + '" y="' + (H - padB + 20) + '" text-anchor="middle" font-size="12" fill="#6B7280">' + a + '岁</text>';
+    });
+    series.forEach(s => {
+      let path = '';
+      xs.forEach((a, i) => {
+        const r = calcRetire(s.asset, a);
+        const x = X(a), y = Y(r.monthly);
+        path += (i === 0 ? 'M' : 'L') + x.toFixed(1) + ' ' + y.toFixed(1) + ' ';
+      });
+      g += '<path d="' + path + '" fill="none" stroke="' + s.color + '" stroke-width="2.5"/>';
+      const lastR = calcRetire(s.asset, xs[xs.length - 1]);
+      g += '<text x="' + (X(xs[xs.length - 1]) - 6) + '" y="' + (Y(lastR.monthly) - 8) + '" text-anchor="end" font-size="12" fill="' + s.color + '">' + (s.asset / 10000).toFixed(0) + '万</text>';
+    });
+    svg.innerHTML = g;
+  })();
+  const modal = document.getElementById('calcModal');
+  document.getElementById('openCalc').addEventListener('click', () => { modal.hidden = false; });
+  document.getElementById('closeCalc').addEventListener('click', () => { modal.hidden = true; });
+  document.getElementById('calcOverlay').addEventListener('click', () => { modal.hidden = true; });
+  function renderCalc() {
+    const assetWan = parseFloat(document.getElementById('calcAsset').value) || 200;
+    const age = parseFloat(document.getElementById('calcRAge').value) || 60;
+    const asset = assetWan * 10000;
+    const r = calcRetire(asset, age);
+    const r55 = calcRetire(asset, 55);
+    document.getElementById('calcOutAsset').textContent = assetWan;
+    document.getElementById('calcOutRAge').textContent = age;
+    document.getElementById('calcOutMonthly').textContent = fmtMonth(r.monthly) + ' 元';
+    document.getElementById('calcOutNote').textContent = '55 岁退休每月可花 ' + fmtMonth(r55.monthly) + ' 元；晚退 ' + r.growYears + ' 年，月花销提升 ' + (r.monthly / r55.monthly).toFixed(1) + ' 倍';
+  }
+  document.getElementById('calcAsset').addEventListener('input', renderCalc);
+  document.getElementById('calcRAge').addEventListener('input', renderCalc);
+  renderCalc();
+</script>
+</body>
+</html>

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>每月多还一点，你的房贷能少还好几年？</title>
+<meta name="description" content="100万房贷，每月多还2000元 → 少还13年、少付44万利息。杠杆 + 爽感">
+<meta name="keywords" content="房贷,提前还款,月供,等额本息,利息,财务决策,投教">
+<meta property="og:title" content="每月多还一点，你的房贷能少还好几年？">
+<style>
+
+
+
+  :root {
+  /* mf tokens 自包含补齐 */
+  --mf-font-sizes-100: 16px;
+  --mf-font-sizes-200: 18px;
+  --mf-font-sizes-25: 12px;
+  --mf-font-sizes-30: 13px;
+  --mf-font-sizes-50: 14px;
+  --mf-font-sizes-eyebrow: 0.78rem;
+  --mf-fonts-display: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "SimSun", serif;
+  --mf-fonts-sans: "Inter", "Source Han Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --mf-shadows-card: 0 4px 8px rgba(36, 22, 16, 0.08), 0 12px 32px rgba(36, 22, 16, 0.10);
+
+  /* mf-colors tokens（自包含补齐） */
+  --mf-colors-background: #FFFFFF;
+  --mf-colors-background-neutral: #F7F5F2;
+  --mf-colors-background-surface: #FFFFFF;
+  --mf-colors-border-weak: rgba(36,22,16,.10);
+  --mf-colors-text: #3A332C;
+  --mf-colors-text-accent-mango: #E05E0A;
+  --mf-colors-text-link: #F97316;
+  --mf-colors-text-strong: #241610;
+  --mf-colors-text-weak: #8A7D70;
+
+    --page-bg: var(--mf-colors-background);
+    --page-card: var(--mf-colors-background-surface);
+    --page-panel: var(--mf-colors-background-neutral);
+    --page-ink: var(--mf-colors-text);
+    --page-ink-strong: var(--mf-colors-text-strong);
+    --page-ink-weak: var(--mf-colors-text-weak);
+    --page-accent: var(--mf-colors-text-link);
+    --page-accent-deep: var(--mf-colors-text-accent-mango);
+    --page-hairline: var(--mf-colors-border-weak);
+    --page-line-strong: rgba(36,22,16,.10);
+    --page-line-weak: rgba(36,22,16,.06);
+    /* 矩阵色阶（柔和版：浅底深字，红涨绿跌） */
+    --lvl1-bg: #FDECEA;  --lvl1-ink: #B8221E;
+    --lvl2-bg: #FDEBD8;  --lvl2-ink: #C2410C;
+    --lvl3-bg: #FDF3DE;  --lvl3-ink: #B45309;
+    --lvl4-bg: #E8F3EC;  --lvl4-ink: #1F8A4C;
+    --lvl5-bg: #E1EEE6;  --lvl5-ink: #11693D;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--page-bg); padding:12px; font-family:var(--mf-fonts-sans); color:var(--page-ink); font-size:17px; line-height:1.9; letter-spacing:.01em; }
+  .guide-article-wrap { max-width:860px; margin:0 auto; }
+  .paper { background:var(--page-card); border:1px solid var(--page-line-strong); border-radius:16px; box-shadow:var(--mf-shadows-card); max-width:780px; margin:6px auto; padding:28px 40px; }
+  @media (max-width:640px) { .paper { padding:24px 20px; } body { font-size:16px; padding:8px; } }
+
+  .paper-head { margin-bottom:12px; }
+  .paper-eyebrow { font-size:var(--mf-font-sizes-eyebrow); font-weight:500; color:var(--page-accent); letter-spacing:.24em; text-transform:uppercase; margin-bottom:6px; }
+  .paper-title { font-family:var(--mf-fonts-display); font-size:clamp(1.55rem,3.4vw,2.05rem); font-weight:800; color:var(--page-ink-strong); line-height:1.3; padding-bottom:10px; border-bottom:4px dashed rgba(249,115,22,.40); }
+
+  .lead-box { background:var(--page-panel); border-left:3px solid var(--page-accent); border-radius:12px; padding:9px 14px; margin:0 0 12px; }
+  .lead-box p { font-size:.95em; line-height:1.7; color:var(--page-ink); margin:0; }
+  .lead-box b, .lead-box strong { color:var(--page-ink-strong); }
+  .hl { color:var(--page-accent); font-weight:700; }
+
+  .matrix-head { display:flex; align-items:baseline; justify-content:space-between; gap:12px; flex-wrap:wrap; margin:0 0 8px; }
+  .matrix-title { font-family:var(--mf-fonts-display); font-size:clamp(1.15rem,2.4vw,1.3rem); font-weight:800; color:var(--page-ink-strong); }
+  .matrix-sub { font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.6; }
+  .matrix-table { width:100%; border-collapse:separate; border-spacing:2px; }
+  .matrix-table caption { caption-side:top; text-align:left; font-size:var(--mf-font-sizes-30); color:var(--page-ink-weak); padding:0 0 6px; line-height:1.6; }
+  .matrix-table thead th { background:var(--page-panel); color:var(--page-ink-strong); font-weight:700; text-align:center; padding:5px 7px; border-radius:8px; font-size:var(--mf-font-sizes-30); line-height:1.25; white-space:nowrap; }
+  .matrix-table th.rowhead { text-align:left; width:108px; background:var(--page-panel); font-size:var(--mf-font-sizes-30); }
+  .matrix-table td { padding:4px 3px; text-align:center; font-size:var(--mf-font-sizes-50); font-weight:700; border-radius:8px; min-width:60px; line-height:1.25; }
+  .matrix-table td.rowhead { background:var(--page-panel); color:var(--page-ink-strong); font-weight:700; text-align:left; width:104px; font-size:var(--mf-font-sizes-30); white-space:nowrap; padding:4px 7px; }
+  .cell-amount { font-size:var(--mf-font-sizes-100); display:block; }
+  .cell-note { font-size:var(--mf-font-sizes-25); opacity:.9; margin-top:0; font-weight:500; display:block; line-height:1.25; }
+  .lvl1 { background:var(--lvl1-bg); color:var(--lvl1-ink); }
+  .lvl2 { background:var(--lvl2-bg); color:var(--lvl2-ink); }
+  .lvl3 { background:var(--lvl3-bg); color:var(--lvl3-ink); }
+  .lvl4 { background:var(--lvl4-bg); color:var(--lvl4-ink); }
+  .lvl5 { background:var(--lvl5-bg); color:var(--lvl5-ink); }
+  .legend { display:flex; justify-content:center; gap:8px; margin:1px 0 0; font-size:var(--mf-font-sizes-25); color:var(--page-ink); flex-wrap:wrap; }
+  .legend span { display:inline-flex; align-items:center; gap:6px; }
+  .dot { width:12px; height:12px; border-radius:4px; display:inline-block; }
+  .dot.lvl1 { background:var(--lvl1-bg); border:1px solid var(--lvl1-ink); }
+  .dot.lvl2 { background:var(--lvl2-bg); border:1px solid var(--lvl2-ink); }
+  .dot.lvl3 { background:var(--lvl3-bg); border:1px solid var(--lvl3-ink); }
+  .dot.lvl4 { background:var(--lvl4-bg); border:1px solid var(--lvl4-ink); }
+  .dot.lvl5 { background:var(--lvl5-bg); border:1px solid var(--lvl5-ink); }
+  .matrix-note { margin:2px 0 0; font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.4; }
+  .matrix-note b { color:var(--page-accent-deep); }
+
+  .sec-title, .section-title { font-family:var(--mf-fonts-display); font-size:clamp(1.25rem,2.6vw,1.45rem); font-weight:800; color:var(--page-ink-strong); line-height:1.4; padding-bottom:10px; border-bottom:3px dashed rgba(249,115,22,.30); margin:26px 0 12px; }
+  .sec p { margin:0 0 12px; }
+  .sec b, .sec strong { color:var(--page-ink-strong); }
+  details.l2, details.faq-item { border:1px solid var(--page-line-strong); border-radius:12px; padding:10px 14px; margin:12px 0; font-size:var(--mf-font-sizes-30); line-height:1.8; color:var(--page-ink); background:var(--page-card); }
+  details.l2 summary, details.faq-item summary { cursor:pointer; font-weight:700; color:var(--page-ink-strong); }
+  details.l2 summary::marker, details.faq-item summary::marker { color:var(--page-accent); }
+  details.l2[open] summary, details.faq-item[open] summary { color:var(--page-accent-deep); }
+  .assume, .breakeven, .extra-note { background:var(--page-panel); border-radius:12px; padding:12px 16px; font-size:var(--mf-font-sizes-30); color:var(--page-ink); margin:12px 0; line-height:1.8; }
+  .assume b, .breakeven b, .extra-note b, .assume strong, .breakeven strong { color:var(--page-ink-strong); }
+  .foot { margin:16px 0 0; padding-top:14px; border-top:1px solid var(--page-line-strong); font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.8; }
+
+  .chart-title { text-align:center; font-size:var(--mf-font-sizes-200); font-weight:700; color:var(--page-ink-strong); margin:24px 0 4px; }
+  .chart-sub { text-align:center; font-size:var(--mf-font-sizes-30); color:var(--page-ink-weak); margin-bottom:8px; }
+  .chart-wrap { width:100%; overflow:hidden; }
+  .chart-wrap svg { width:100%; height:auto; display:block; }
+
+  .cta-box { margin:26px 0 0; padding:24px 26px; background:var(--page-panel); border:1px solid var(--page-line-strong); border-radius:16px; text-align:center; }
+  .cta-box p { font-size:var(--mf-font-sizes-30); color:var(--page-ink); line-height:1.8; margin:0 0 12px; }
+  .cta-box p:first-child { font-size:var(--mf-font-sizes-100); font-weight:700; color:var(--page-ink-strong); }
+  .cta-box b { color:var(--page-ink-strong); }
+  .calc-btn { display:inline-block; padding:11px 30px; font-size:var(--mf-font-sizes-100); font-weight:700; color:#FFFFFF; background:var(--page-accent); border:none; border-radius:16px; cursor:pointer; }
+  .calc-btn:hover { background:var(--page-accent-deep); }
+
+  .guide-disclaimer { margin:26px 0 0; padding-top:14px; border-top:1px solid var(--page-line-strong); font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.8; }
+  .disclaimer-title { font-weight:700; color:var(--page-ink); margin-bottom:4px; }
+  .disclaimer-text { margin-bottom:6px; }
+
+  footer { max-width:780px; margin:8px auto 24px; padding:14px 24px 0; text-align:center; font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.8; border-top:1px solid var(--page-line-weak); }
+
+  .calc-modal[hidden] { display:none; }
+  .calc-modal { position:fixed; inset:0; z-index:1000; display:flex; align-items:center; justify-content:center; padding:16px; }
+  .calc-overlay { position:absolute; inset:0; background:rgba(36,22,16,.45); }
+  .calc-dialog { position:relative; background:var(--page-card); border:1px solid var(--page-line-strong); border-radius:16px; box-shadow:var(--mf-shadows-card); max-width:480px; width:100%; padding:24px 26px; }
+  .calc-close { position:absolute; top:10px; right:14px; font-size:1.6rem; font-weight:700; color:var(--page-ink-weak); background:none; border:none; cursor:pointer; line-height:1; }
+  .calc-title { font-family:var(--mf-fonts-display); font-size:var(--mf-font-sizes-200); font-weight:800; color:var(--page-ink-strong); margin-bottom:16px; }
+  .calc-field { margin-bottom:14px; }
+  .calc-field label { display:block; font-size:var(--mf-font-sizes-30); color:var(--page-ink); margin-bottom:4px; font-weight:600; }
+  .calc-field input { width:100%; padding:8px 10px; font-size:var(--mf-font-sizes-100); font-weight:700; color:var(--page-ink-strong); border:1px solid var(--mf-colors-border-weak); border-radius:8px; background:var(--page-card); box-sizing:border-box; }
+  .calc-field .hint { display:block; font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); margin-top:2px; }
+  .calc-result { margin-top:16px; padding:14px 16px; background:var(--page-panel); border-left:3px solid var(--page-accent); border-radius:12px; font-size:var(--mf-font-sizes-100); font-weight:700; color:var(--page-ink-strong); line-height:1.7; }
+  .calc-result b { color:var(--page-accent-deep); }
+  .calc-ratio { margin-top:6px; font-size:var(--mf-font-sizes-30); font-weight:400; color:var(--page-ink); line-height:1.7; }
+
+
+
+</style>
+</head>
+<body>
+<main class="guide-article-wrap">
+  <article class="paper">
+    <header class="paper-head">
+      <p class="paper-eyebrow">Mortgage Planning</p>
+      <h1 class="paper-title">每月多还一点，你的房贷能少还好几年？</h1>
+    </header>
+    <div class="lead-box">
+      <p>先记住结论：<strong>每月多还一点，本质是提前还本金。</strong>房贷利息按剩余本金计息，多还的钱直接冲减本金，本金少得快，利息就省得多。<span class="hl">100 万房贷，每月多还 2000 元 → 少还 13 年、少付 44 万利息。</span></p>
+      <p>换算：每月多还 1000 元 ≈ 每天多还 33 元 ≈ <span class="hl">少喝 1 杯咖啡</span>，却能让 100 万房贷少还 8.7 年。</p>
+    </div>
+    <div class="matrix-head">
+      <div class="matrix-title">贷款余额 × 每月额外还款</div>
+      <div class="matrix-sub">红 = 大幅缩短，绿 = 几乎没有缩短</div>
+    </div>
+    <table class="matrix-table" id="mortgageTable">
+      <caption>表1：等额本息 30 年、年利率 4.9%，不同贷款余额 × 额外月供下的还清年限与节省利息</caption>
+      <thead>
+        <tr>
+          <th class="rowhead">贷款余额</th>
+          <th>不额外还</th><th>+500元/月</th><th>+1000元/月</th><th>+2000元/月</th><th>+5000元/月</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <div class="legend">
+      <span><i class="dot lvl1"></i>≤15年（大幅缩短）</span>
+      <span><i class="dot lvl2"></i>15-20年</span>
+      <span><i class="dot lvl3"></i>20-25年</span>
+      <span><i class="dot lvl4"></i>25-28年</span>
+      <span><i class="dot lvl5"></i>&gt;28年（几乎没有缩短）</span>
+    </div>
+    <p class="matrix-note">注：额外还款额计入每月月供一起还；还清年限按逐月模拟计算，节省利息 = 基础总利息 − 带额外还款的总利息。</p>
+
+    <div class="sec-title">为什么？</div>
+    <details class="l2">
+      <summary>讲给我听：每月多还一点，你的房贷能少还好几年？</summary>
+      <p>每月多还一点，本质是提前还本金。房贷利息按剩余本金计息，多还的钱直接冲减本金，本金少得快，利息就省得多。100 万房贷，每月多还 2000 元 → 少还 13 年、少付 44 万利息。</p>
+      <p>假设：等额本息，贷款 30 年，年利率 4.9%（固定）；无提前一次性还款、无罚息；提前还款额计入每月月供一起还。换算：每月多还 1000 元 ≈ 每天多还 33 元 ≈ 少喝 1 杯咖啡，却能让 100 万房贷少还 8.7 年。</p>
+    </details>
+
+    <div class="sec-title">底层假设（L3）</div>
+    <div class="assume">
+      假设：等额本息，贷款 <b>30年</b>，年利率 <b>4.9%</b>（固定）；无提前一次性还款、无罚息；提前还款额计入每月月供一起还。<br>
+      换算：每月多还1000元 ≈ 每天多还33元 ≈ <b>少喝1杯咖啡</b>，却能让100万房贷少还8.7年。
+    </div>
+    <div class="foot">
+      测算基于固定利率4.9%、30年期、等额本息的简化假设；实际房贷多为浮动利率（LPR），提前还款可能有违约金或次数限制。本图不构成任何金融建议。
+    </div>
+
+    <div class="sec-title">常见问题（FAQ）</div>
+    <details class="faq-item"><summary>每月多还一点，你的房贷能少还好几年？</summary><p>100万房贷，每月多还2000元 → 少还13年、少付44万利息。杠杆 + 爽感</p></details>
+    <details class="faq-item"><summary>测算基于什么假设？</summary><p>假设：等额本息，贷款 30年，年利率 4.9%（固定）；无提前一次性还款、无罚息；提前还款额计入每月月供一起还。换算：每月多还1000元 ≈ 每天多还33元 ≈ 少喝1杯咖啡，却能让100万房贷少还8.7年。</p></details>
+    <details class="faq-item"><summary>结果有多可靠？</summary><p>测算基于固定利率4.9%、30年期、等额本息的简化假设；实际房贷多为浮动利率（LPR），提前还款可能有违约金或次数限制。本图不构成任何金融建议。</p></details>
+
+    <div class="cta-box"><b>用你自己的数字算一遍：</b>把贷款余额和每月能多还的钱换进去，看看你能少还好几年、省多少利息。<br><button class="calc-btn" id="openCalc">算一算</button></div>
+  </article>
+</main>
+
+<div class="calc-modal" id="calcModal" hidden>
+  <div class="calc-overlay" id="calcOverlay"></div>
+  <div class="calc-dialog" role="dialog" aria-modal="true" aria-label="用你自己的数字算一算">
+    <button class="calc-close" id="closeCalc" aria-label="关闭">×</button>
+    <div class="calc-title">用你自己的数字算一算</div>
+    <div class="calc-field">
+      <label for="calcBalance">贷款余额（元）</label>
+      <input type="number" id="calcBalance" value="1000000" min="100000" max="10000000" step="100000">
+      <span class="hint">例如 1000000 = 100 万贷款</span>
+    </div>
+    <div class="calc-field">
+      <label for="calcExtra">每月额外还款（元/月）</label>
+      <input type="number" id="calcExtra" value="2000" min="0" max="50000" step="500">
+      <span class="hint">例如 2000 = 每月多还 2000 元</span>
+    </div>
+    <div class="calc-result">
+      <b id="calcOutMain">—</b>还清
+      <div class="calc-ratio" id="calcOutNote">—</div>
+    </div>
+  </div>
+</div>
+<footer>
+  mangofolio · fin-decision-matrix · © 2026 mangofolio
+</footer>
+<script>
+  const ANNUAL_RATE = 0.049;
+  const TERM_YEARS = 30;
+  const MAX_MONTHS = 720;
+  function baseMonthlyPayment(principal, annualRate, years) {
+    const r = annualRate / 12;
+    const n = years * 12;
+    const pow = Math.pow(1 + r, n);
+    return principal * r * pow / (pow - 1);
+  }
+  function calcMortgage(principal, extraMonthly) {
+    const r = ANNUAL_RATE / 12;
+    const baseMonthly = baseMonthlyPayment(principal, ANNUAL_RATE, TERM_YEARS);
+    const baseInterest = baseMonthly * TERM_YEARS * 12 - principal;
+    let balance = principal, months = 0, totalPaid = 0;
+    while (balance > 0.01 && months < MAX_MONTHS) {
+      const interest = balance * r;
+      let payment = baseMonthly + extraMonthly;
+      if (payment > balance + interest) payment = balance + interest;
+      balance = balance + interest - payment;
+      totalPaid += payment;
+      months++;
+    }
+    return { years: months / 12, savedInterest: baseInterest - (totalPaid - principal), baseInterest };
+  }
+  function getLevel(years) {
+    if (years <= 15) return 1;
+    if (years <= 20) return 2;
+    if (years <= 25) return 3;
+    if (years <= 28) return 4;
+    return 5;
+  }
+  function formatYears(y) {
+    if (Math.abs(y - TERM_YEARS) < 0.05) return TERM_YEARS + '年';
+    return y.toFixed(1) + '年';
+  }
+  function formatSaved(v) {
+    if (v <= 0) return '—';
+    if (v < 10000) return '省 ' + Math.round(v / 1000) + '千';
+    return '省 ' + (v / 10000).toFixed(1) + '万';
+  }
+  const balances = [500000, 1000000, 1500000, 2000000, 3000000];
+  const extras = [0, 500, 1000, 2000, 5000];
+  (function () {
+    const tbody = document.querySelector('#mortgageTable tbody');
+    balances.forEach(p => {
+      const tr = document.createElement('tr');
+      const th = document.createElement('th');
+      th.className = 'rowhead';
+      th.textContent = (p / 10000) + '万';
+      tr.appendChild(th);
+      extras.forEach(e => {
+        const result = calcMortgage(p, e);
+        const td = document.createElement('td');
+        td.className = 'cell lvl' + getLevel(result.years);
+        td.innerHTML = '<div class="cell-amount">' + formatYears(result.years) + '</div><div class="cell-note">' + formatSaved(result.savedInterest) + '</div>';
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    });
+  })();
+  const modal = document.getElementById('calcModal');
+  document.getElementById('openCalc').addEventListener('click', () => { modal.hidden = false; });
+  document.getElementById('closeCalc').addEventListener('click', () => { modal.hidden = true; });
+  document.getElementById('calcOverlay').addEventListener('click', () => { modal.hidden = true; });
+  function renderCalc() {
+    const p = parseFloat(document.getElementById('calcBalance').value) || 1000000;
+    const e = parseFloat(document.getElementById('calcExtra').value) || 0;
+    const result = calcMortgage(p, e);
+    document.getElementById('calcOutMain').textContent = formatYears(result.years);
+    document.getElementById('calcOutNote').textContent = '贷款 ' + (p / 10000).toFixed(0) + ' 万，每月多还 ' + e.toLocaleString() + ' 元 → ' + formatSaved(result.savedInterest);
+  }
+  document.getElementById('calcBalance').addEventListener('input', renderCalc);
+  document.getElementById('calcExtra').addEventListener('input', renderCalc);
+  renderCalc();
+</script>
+</body>
+</html>

@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>住多久买房才不亏？（2026测算）</title>
+<meta name="description" content="200 万房子住 5 年、房价涨 2%——买房比租房多花 14 万；住 15 年、涨 3%——买房反而省 24 万。盈亏平衡点通常在 3% 涨幅、8 年附近。">
+<meta name="keywords" content="买房租房,盈亏平衡点,买房划算,租房划算,首付机会成本,房价涨幅,fin-decision-matrix">
+<meta property="og:type" content="article" />
+<meta property="og:title" content="住多久买房才不亏？（2026测算）" />
+<meta property="og:description" content="200 万房子住 5 年、房价涨 2%——买房比租房多花 14 万；住 15 年、涨 3%——买房反而省 24 万。盈亏平衡点通常在 3% 涨幅、8 年附近。" />
+<meta property="og:url" content="https://fintools.mangofolio.com/guide/%E4%BD%8F%E5%A4%9A%E4%B9%85%E4%B9%B0%E6%88%BF%E6%89%8D%E4%B8%8D%E4%BA%8F%EF%BC%9F.html" />
+<meta property="og:image" content="https://fintools.mangofolio.com/images/og-cover.png?v=2" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:site_name" content="财务工具箱 FinTools" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="住多久买房才不亏？（2026测算）" />
+<meta name="twitter:description" content="200 万房子住 5 年、房价涨 2%——买房比租房多花 14 万；住 15 年、涨 3%——买房反而省 24 万。盈亏平衡点通常在 3% 涨幅、8 年附近。" />
+<meta name="twitter:image" content="https://fintools.mangofolio.com/images/og-cover.png?v=2" />
+<link rel="canonical" href="https://fintools.mangofolio.com/guide/%E4%BD%8F%E5%A4%9A%E4%B9%85%E4%B9%B0%E6%88%BF%E6%89%8D%E4%B8%8D%E4%BA%8F%EF%BC%9F.html" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"住多久买房才不亏？（2026测算）","description":"200 万房子住 5 年、房价涨 2%——买房比租房多花 14 万；住 15 年、涨 3%——买房反而省 24 万。盈亏平衡点通常在 3% 涨幅、8 年附近。","image":"https://fintools.mangofolio.com/images/og-cover.png?v=2","datePublished":"2026-10-14","dateModified":"2026-10-14","author":{"@type":"Organization","name":"财务工具箱 FinTools","url":"https://fintools.mangofolio.com/"},"publisher":{"@type":"Organization","name":"mangofolio","logo":{"@type":"ImageObject","url":"https://fintools.mangofolio.com/images/og-cover.png?v=2"}},"mainEntityOfPage":"https://fintools.mangofolio.com/guide/%E4%BD%8F%E5%A4%9A%E4%B9%85%E4%B9%B0%E6%88%BF%E6%89%8D%E4%B8%8D%E4%BA%8F%EF%BC%9F.html","about":"买房,租房,盈亏平衡,房价涨幅,机会成本"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"住多久买房才不亏？","acceptedAnswer":{"@type":"Answer","text":"在 3% 房价涨幅假设下，盈亏平衡点约 8 年：住超过 8 年买房更划算，少于 8 年租房更划算。"}},{"@type":"Question","name":"月供和租金差多少？","acceptedAnswer":{"@type":"Answer","text":"200 万房子、首付 30%、30 年贷款年利率 4.9%，月供约 7430 元；同地段月租约 3333 元，月供是租金的 2.2 倍。"}},{"@type":"Question","name":"房价不涨时买房划算吗？","acceptedAnswer":{"@type":"Answer","text":"房价 0% 涨幅时买房普遍不划算，盈亏平衡需要 30 年以上，多数情况租房更优。"}}]}</script>
+
+<link rel="stylesheet" href="assets/mangofolio-tokens-v09.css">
+<style>
+
+  :root {
+    --page-bg: var(--mf-colors-background);
+    --page-card: var(--mf-colors-background-surface);
+    --page-panel: var(--mf-colors-background-neutral);
+    --page-ink: var(--mf-colors-text);
+    --page-ink-strong: var(--mf-colors-text-strong);
+    --page-ink-weak: var(--mf-colors-text-weak);
+    --page-accent: var(--mf-colors-text-link);
+    --page-accent-deep: var(--mf-colors-text-accent-mango);
+    --page-hairline: var(--mf-colors-border-weak);
+    --page-line-strong: rgba(36,22,16,.10);
+    --page-line-weak: rgba(36,22,16,.06);
+    /* 矩阵色阶（柔和版：浅底深字，红涨绿跌） */
+    --lvl1-bg: #FDECEA;  --lvl1-ink: #B8221E;
+    --lvl2-bg: #FDEBD8;  --lvl2-ink: #C2410C;
+    --lvl3-bg: #FDF3DE;  --lvl3-ink: #B45309;
+    --lvl4-bg: #E8F3EC;  --lvl4-ink: #1F8A4C;
+    --lvl5-bg: #E1EEE6;  --lvl5-ink: #11693D;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--page-bg); padding:12px; font-family:var(--mf-fonts-sans); color:var(--page-ink); font-size:17px; line-height:1.9; letter-spacing:.01em; }
+  .guide-article-wrap { max-width:860px; margin:0 auto; }
+  .paper { background:var(--page-card); border:1px solid var(--page-line-strong); border-radius:16px; box-shadow:var(--mf-shadows-card); max-width:780px; margin:6px auto; padding:28px 40px; }
+  @media (max-width:640px) { .paper { padding:24px 20px; } body { font-size:16px; padding:8px; } }
+
+  .paper-head { margin-bottom:12px; }
+  .paper-eyebrow { font-size:var(--mf-font-sizes-eyebrow); font-weight:500; color:var(--page-accent); letter-spacing:.24em; text-transform:uppercase; margin-bottom:6px; }
+  .paper-title { font-family:var(--mf-fonts-display); font-size:clamp(1.55rem,3.4vw,2.05rem); font-weight:800; color:var(--page-ink-strong); line-height:1.3; padding-bottom:10px; border-bottom:4px dashed rgba(249,115,22,.40); }
+
+  .lead-box { background:var(--page-panel); border-left:3px solid var(--page-accent); border-radius:12px; padding:9px 14px; margin:0 0 12px; }
+  .lead-box p { font-size:.95em; line-height:1.7; color:var(--page-ink); margin:0; }
+  .lead-box b, .lead-box strong { color:var(--page-ink-strong); }
+  .hl { color:var(--page-accent); font-weight:700; }
+
+  .matrix-head { display:flex; align-items:baseline; justify-content:space-between; gap:12px; flex-wrap:wrap; margin:0 0 8px; }
+  .matrix-title { font-family:var(--mf-fonts-display); font-size:clamp(1.15rem,2.4vw,1.3rem); font-weight:800; color:var(--page-ink-strong); }
+  .matrix-sub { font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.6; }
+  .matrix-table { width:100%; border-collapse:separate; border-spacing:2px; }
+  .matrix-table caption { caption-side:top; text-align:left; font-size:var(--mf-font-sizes-30); color:var(--page-ink-weak); padding:0 0 6px; line-height:1.6; }
+  .matrix-table thead th { background:var(--page-panel); color:var(--page-ink-strong); font-weight:700; text-align:center; padding:5px 7px; border-radius:8px; font-size:var(--mf-font-sizes-30); line-height:1.25; white-space:nowrap; }
+  .matrix-table th.rowhead { text-align:left; width:108px; background:var(--page-panel); font-size:var(--mf-font-sizes-30); }
+  .matrix-table td { padding:4px 3px; text-align:center; font-size:var(--mf-font-sizes-50); font-weight:700; border-radius:8px; min-width:60px; line-height:1.25; }
+  .matrix-table td.rowhead { background:var(--page-panel); color:var(--page-ink-strong); font-weight:700; text-align:left; width:104px; font-size:var(--mf-font-sizes-30); white-space:nowrap; padding:4px 7px; }
+  .cell-amount { font-size:var(--mf-font-sizes-100); display:block; }
+  .cell-note { font-size:var(--mf-font-sizes-25); opacity:.9; margin-top:0; font-weight:500; display:block; line-height:1.25; }
+  .lvl1 { background:var(--lvl1-bg); color:var(--lvl1-ink); }
+  .lvl2 { background:var(--lvl2-bg); color:var(--lvl2-ink); }
+  .lvl3 { background:var(--lvl3-bg); color:var(--lvl3-ink); }
+  .lvl4 { background:var(--lvl4-bg); color:var(--lvl4-ink); }
+  .lvl5 { background:var(--lvl5-bg); color:var(--lvl5-ink); }
+  .legend { display:flex; justify-content:center; gap:8px; margin:1px 0 0; font-size:var(--mf-font-sizes-25); color:var(--page-ink); flex-wrap:wrap; }
+  .legend span { display:inline-flex; align-items:center; gap:6px; }
+  .dot { width:12px; height:12px; border-radius:4px; display:inline-block; }
+  .dot.lvl1 { background:var(--lvl1-bg); border:1px solid var(--lvl1-ink); }
+  .dot.lvl2 { background:var(--lvl2-bg); border:1px solid var(--lvl2-ink); }
+  .dot.lvl3 { background:var(--lvl3-bg); border:1px solid var(--lvl3-ink); }
+  .dot.lvl4 { background:var(--lvl4-bg); border:1px solid var(--lvl4-ink); }
+  .dot.lvl5 { background:var(--lvl5-bg); border:1px solid var(--lvl5-ink); }
+  .matrix-note { margin:2px 0 0; font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.4; }
+  .matrix-note b { color:var(--page-accent-deep); }
+
+  .sec-title, .section-title { font-family:var(--mf-fonts-display); font-size:clamp(1.25rem,2.6vw,1.45rem); font-weight:800; color:var(--page-ink-strong); line-height:1.4; padding-bottom:10px; border-bottom:3px dashed rgba(249,115,22,.30); margin:26px 0 12px; }
+  .sec p { margin:0 0 12px; }
+  .sec b, .sec strong { color:var(--page-ink-strong); }
+  details.l2, details.faq-item { border:1px solid var(--page-line-strong); border-radius:12px; padding:10px 14px; margin:12px 0; font-size:var(--mf-font-sizes-30); line-height:1.8; color:var(--page-ink); background:var(--page-card); }
+  details.l2 summary, details.faq-item summary { cursor:pointer; font-weight:700; color:var(--page-ink-strong); }
+  details.l2 summary::marker, details.faq-item summary::marker { color:var(--page-accent); }
+  details.l2[open] summary, details.faq-item[open] summary { color:var(--page-accent-deep); }
+  .assume, .breakeven, .extra-note { background:var(--page-panel); border-radius:12px; padding:12px 16px; font-size:var(--mf-font-sizes-30); color:var(--page-ink); margin:12px 0; line-height:1.8; }
+  .assume b, .breakeven b, .extra-note b, .assume strong, .breakeven strong { color:var(--page-ink-strong); }
+  .foot { margin:16px 0 0; padding-top:14px; border-top:1px solid var(--page-line-strong); font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.8; }
+
+  .chart-title { text-align:center; font-size:var(--mf-font-sizes-200); font-weight:700; color:var(--page-ink-strong); margin:24px 0 4px; }
+  .chart-sub { text-align:center; font-size:var(--mf-font-sizes-30); color:var(--page-ink-weak); margin-bottom:8px; }
+  .chart-wrap { width:100%; overflow:hidden; }
+  .chart-wrap svg { width:100%; height:auto; display:block; }
+
+  .cta-box { margin:26px 0 0; padding:24px 26px; background:var(--page-panel); border:1px solid var(--page-line-strong); border-radius:16px; text-align:center; }
+  .cta-box p { font-size:var(--mf-font-sizes-30); color:var(--page-ink); line-height:1.8; margin:0 0 12px; }
+  .cta-box p:first-child { font-size:var(--mf-font-sizes-100); font-weight:700; color:var(--page-ink-strong); }
+  .cta-box b { color:var(--page-ink-strong); }
+  .calc-btn { display:inline-block; padding:11px 30px; font-size:var(--mf-font-sizes-100); font-weight:700; color:#FFFFFF; background:var(--page-accent); border:none; border-radius:16px; cursor:pointer; }
+  .calc-btn:hover { background:var(--page-accent-deep); }
+
+  .guide-disclaimer { margin:26px 0 0; padding-top:14px; border-top:1px solid var(--page-line-strong); font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.8; }
+  .disclaimer-title { font-weight:700; color:var(--page-ink); margin-bottom:4px; }
+  .disclaimer-text { margin-bottom:6px; }
+
+  footer { max-width:780px; margin:8px auto 24px; padding:14px 24px 0; text-align:center; font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.8; border-top:1px solid var(--page-line-weak); }
+
+  .calc-modal[hidden] { display:none; }
+  .calc-modal { position:fixed; inset:0; z-index:1000; display:flex; align-items:center; justify-content:center; padding:16px; }
+  .calc-overlay { position:absolute; inset:0; background:rgba(36,22,16,.45); }
+  .calc-dialog { position:relative; background:var(--page-card); border:1px solid var(--page-line-strong); border-radius:16px; box-shadow:var(--mf-shadows-card); max-width:480px; width:100%; padding:24px 26px; }
+  .calc-close { position:absolute; top:10px; right:14px; font-size:1.6rem; font-weight:700; color:var(--page-ink-weak); background:none; border:none; cursor:pointer; line-height:1; }
+  .calc-title { font-family:var(--mf-fonts-display); font-size:var(--mf-font-sizes-200); font-weight:800; color:var(--page-ink-strong); margin-bottom:16px; }
+  .calc-field { margin-bottom:14px; }
+  .calc-field label { display:block; font-size:var(--mf-font-sizes-30); color:var(--page-ink); margin-bottom:4px; font-weight:600; }
+  .calc-field input { width:100%; padding:8px 10px; font-size:var(--mf-font-sizes-100); font-weight:700; color:var(--page-ink-strong); border:1px solid var(--mf-colors-border-weak); border-radius:8px; background:var(--page-card); box-sizing:border-box; }
+  .calc-field .hint { display:block; font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); margin-top:2px; }
+  .calc-result { margin-top:16px; padding:14px 16px; background:var(--page-panel); border-left:3px solid var(--page-accent); border-radius:12px; font-size:var(--mf-font-sizes-100); font-weight:700; color:var(--page-ink-strong); line-height:1.7; }
+  .calc-result b { color:var(--page-accent-deep); }
+  .calc-ratio { margin-top:6px; font-size:var(--mf-font-sizes-30); font-weight:400; color:var(--page-ink); line-height:1.7; }
+
+</style>
+</head>
+<body>
+<main class="guide-article-wrap">
+  <article class="paper">
+<header class="paper-head">
+      <p class="paper-eyebrow">Housing Decision</p>
+  <h1 class="paper-title">住多久买房才不亏？</h1>
+    </header>
+  <div class="lead-box">
+  <p>先记住结论：<strong>买房的成本不只是月供。</strong>首付被锁定、税费一次性支出、每年还要养房。租房的成本也不只是租金——你放弃了首付的投资收益。<span class="hl">房价涨幅越高、住得越久，买房越划算；反之租房越划算。</span>盈亏平衡点通常在 <span class="hl">3% 涨幅、<span class="dyn" id="insBe">8 年</span></span>附近。</p>
+</div>
+
+  <div class="matrix-head">
+      <div class="matrix-title">居住年限 × 房价年涨幅</div>
+      <div class="matrix-sub">红=租房划算 · 绿=买房划算</div>
+    </div>
+      <table class="matrix-table" id="rentBuyTable">
+        <caption>表1：不同居住年限 × 房价涨幅下，买房 vs 租房（红=租房划算 / 绿=买房划算，格内为结论与金额差）</caption>
+        <thead>
+    <tr>
+      <th class="rowhead">居住年限</th>
+      <th>-2%<small>下跌</small></th><th>0%<small>房价不涨</small></th><th>1%<small>微涨</small></th><th>2%<small>温和</small></th><th>3%<small>正常</small></th><th>5%<small>较快</small></th><th>8%<small>高速</small></th>
+    </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <div class="legend">
+    <span><i class="dot lvl5"></i>买房明显划算（省&gt;30万）</span>
+    <span><i class="dot lvl4"></i>买房略划算（省5-30万）</span>
+    <span><i class="dot lvl3"></i>打平（±5万）</span>
+    <span><i class="dot lvl2"></i>租房略划算（省5-30万）</span>
+    <span><i class="dot lvl1"></i>租房明显划算（省&gt;30万）</span>
+  </div>
+      <p class="matrix-note">注：红 = 租房比买房划算，绿 = 买房比租房划算；格内金额为十年累计差额（买 − 租），0 附近为盈亏平衡。</p>
+" id="breakevenRow"></div>
+
+  <h2 class="sec-title">为什么？</h2>
+  <details class="l2">
+    <summary>讲给我听：为什么住得越久，买房越划算？</summary>
+    <p>买房的钱分三块：<b>利息</b>（给银行）、<b>税费与养房</b>（一次性 + 每年）、<b>首付机会成本</b>（本可以投资）。而买房的回报是<b>房价增值</b>——它随居住年限复利放大。</p>
+    <p>住得越久，增值收益覆盖利息和养房成本后还能剩下；住得越短，增值还没积累起来，反而是税费和装修在拖累你。所以"住多久"是决策核心：短期住 → 租房，长期住 → 买房，边界大约在 3% 涨幅下住 8 年。</p>
+  </details>
+
+  <div class="chart-title">曲线：3% 房价涨幅下，买房 vs 租房净成本随居住年限变化</div>
+  <div class="chart-sub">买房曲线（芒果橙）与租房曲线（灰）交点即盈亏平衡点</div>
+  <div class="chart-wrap">
+    <svg id="buyRentCurve" viewBox="0 0 900 440" preserveAspectRatio="xMidYMid meet"></svg>
+  </div>
+
+  <h2 class="sec-title">底层假设（L3）</h2>
+  <div class="assume">
+    假设：房价 <b>200 万</b>，首付 <b>30%</b>，贷款 <b>70%</b>（30 年、年利率 4.9%、等额本息）；购房税费 <b>1.5%</b>；持有成本（物业/维修）为房价的 <b>1%/年</b>；租房年租金为房价的 <b>2%</b>，每年涨 <b>3%</b>；首付机会成本按 <b>3%</b> 年化计算。<br>
+    换算：月供约 <span class="dyn" id="convMonthly">7430 元</span>，同地段月租约 <span class="dyn" id="convRent">3333 元</span>——月供是租金的 <span class="dyn" id="convRatio">2.2 倍</span>。
+  </div>
+  <div class="foot">
+    测算基于固定利率、固定涨幅的简化假设；未考虑交易税费细节、装修折旧、搬家成本、学区/落户等附加价值、房产税试点、租金波动、收入变化等。实际决策还需考虑个人生活方式、职业稳定性、家庭规划等非财务因素。本图不构成任何投资建议。
+  </div>
+<h2 class="sec-title">常见问题（FAQ）</h2>
+  <details class="faq-item"><summary>住多久买房才不亏？</summary><p>在 3% 房价涨幅假设下，盈亏平衡点约 8 年：住超过 8 年买房更划算，少于 8 年租房更划算。</p></details>
+  <details class="faq-item"><summary>月供和租金差多少？</summary><p>200 万房子、首付 30%、30 年贷款年利率 4.9%，月供约 7430 元；同地段月租约 3333 元，月供是租金的 2.2 倍。</p></details>
+  <details class="faq-item"><summary>房价不涨时买房划算吗？</summary><p>房价 0% 涨幅时买房普遍不划算，盈亏平衡需要 30 年以上，多数情况租房更优。</p></details>
+  <div class="cta-box"><b>用你自己的数字算一遍：</b>上面的结果基于固定假设；把房价、首付比例、贷款利率、居住年限换成你的真实数字，答案可能完全不同——本页提供算法框架，你的数字才是决策依据。<br><button class="calc-btn" id="openCalc">算一算</button></div>
+</article>
+</main>
+
+<div class="calc-modal" id="calcModal" hidden>
+  <div class="calc-overlay" id="calcOverlay"></div>
+  <div class="calc-dialog" role="dialog" aria-modal="true" aria-label="用你自己的数字算一算">
+    <button class="calc-close" id="closeCalc" aria-label="关闭">×</button>
+    <div class="calc-title">用你自己的数字算一算</div>
+    <div class="calc-field">
+      <label for="calcYears">计划居住年限</label>
+      <input type="number" id="calcYears" value="8" min="1" max="50" step="1">
+      <span class="hint">例如：打算住 8 年</span>
+    </div>
+    <div class="calc-field">
+      <label for="calcApp">预计房价年涨幅（%）</label>
+      <input type="number" id="calcApp" value="3" min="-5" max="15" step="0.5">
+      <span class="hint">例如：房价每年涨 3%</span>
+    </div>
+    <div class="calc-result">
+      住 <b id="calcOutYears">8</b> 年、房价年涨 <b id="calcOutApp">3%</b> → <b id="calcOutVerdict">买房更划算</b>
+      <div class="calc-ratio" id="calcOutDiff">买房比租房省约 10 万元。</div>
+    </div>
+  </div>
+</div>
+<footer>
+  mangofolio · fin-decision-matrix · © 2026 mangofolio
+</footer>
+<script>
+  // ============================================================
+  // 参数
+  // ============================================================
+  const PRICE = 2000000;
+  const DOWN_PCT = 0.30;
+  const LOAN_RATE = 0.049;
+  const LOAN_YEARS = 30;
+  const PURCHASE_TAX = 0.015;
+  const MAINTENANCE_RATE = 0.01;
+  const RENT_YIELD = 0.02;
+  const RENT_GROWTH = 0.03;
+  const INVEST_RETURN = 0.03;
+
+  // ============================================================
+  // 核心计算
+  // ============================================================
+  function getMonthlyPayment() {
+    const loan = PRICE * (1 - DOWN_PCT);
+    const r = LOAN_RATE / 12;
+    const n = LOAN_YEARS * 12;
+    return loan * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1);
+  }
+
+  function getRemainingLoan(years) {
+    const loan = PRICE * (1 - DOWN_PCT);
+    const r = LOAN_RATE / 12;
+    const n = LOAN_YEARS * 12;
+    const m = Math.min(years * 12, n);
+    const monthly = getMonthlyPayment();
+    let balance = loan;
+    for (let i = 0; i < m; i++) {
+      const interest = balance * r;
+      balance = balance + interest - monthly;
+      if (balance < 0) { balance = 0; break; }
+    }
+    return Math.max(0, balance);
+  }
+
+  function calcBuyCost(years, appreciation) {
+    const monthly = getMonthlyPayment();
+    const totalMortgage = monthly * years * 12;
+    const remainingLoan = getRemainingLoan(years);
+    const principalPaid = PRICE * (1 - DOWN_PCT) - remainingLoan;
+    const totalInterest = totalMortgage - principalPaid;
+    let maintenance = 0;
+    for (let y = 0; y < years; y++) {
+      maintenance += PRICE * Math.pow(1 + appreciation, y) * MAINTENANCE_RATE;
+    }
+    const tax = PRICE * PURCHASE_TAX;
+    const saleValue = PRICE * Math.pow(1 + appreciation, years);
+    const appreciationGain = saleValue - PRICE;
+    const netCost = totalInterest + tax + maintenance - appreciationGain;
+    return { netCost, totalInterest, tax, maintenance, appreciationGain, saleValue, remainingLoan };
+  }
+
+  function calcRentCost(years) {
+    const initialAnnualRent = PRICE * RENT_YIELD;
+    let totalRent = 0;
+    for (let y = 0; y < years; y++) {
+      totalRent += initialAnnualRent * Math.pow(1 + RENT_GROWTH, y);
+    }
+    const downPayment = PRICE * DOWN_PCT;
+    const investGain = downPayment * (Math.pow(1 + INVEST_RETURN, years) - 1);
+    const netCost = totalRent - investGain;
+    return { netCost, totalRent, investGain };
+  }
+
+  function findBreakEven(appreciation) {
+    for (let years = 1; years <= 50; years++) {
+      const buy = calcBuyCost(years, appreciation);
+      const rent = calcRentCost(years);
+      if (buy.netCost < rent.netCost) return years;
+    }
+    return null;
+  }
+
+  // 档位：diff = 买房成本 - 租房成本；正=租房划算（红） 负=买房划算（绿）
+  function getLevel(diff) {
+    if (diff < -300000) return 5;
+    if (diff < -50000) return 4;
+    if (diff <= 50000) return 3;
+    if (diff <= 300000) return 2;
+    return 1;
+  }
+
+  function formatWan(v) {
+    const abs = Math.abs(v);
+    if (abs >= 10000) return (abs / 10000).toFixed(0) + '万';
+    return Math.round(abs).toLocaleString();
+  }
+
+  function getConclusion(diff) {
+    if (diff < -50000) return '买房划算';
+    if (diff > 50000) return '租房划算';
+    return '打平';
+  }
+
+  // ============================================================
+  // 表格
+  // ============================================================
+  const yearsList = [3, 5, 8, 10, 15, 20, 30];
+  const appreciationList = [-0.02, 0, 0.01, 0.02, 0.03, 0.05, 0.08];
+  const tbody = document.querySelector('#rentBuyTable tbody');
+
+  yearsList.forEach(years => {
+    const tr = document.createElement('tr');
+    const th = document.createElement('th');
+    th.className = 'rowhead';
+    th.textContent = '住' + years + '年';
+    tr.appendChild(th);
+
+    appreciationList.forEach(app => {
+      const buy = calcBuyCost(years, app);
+      const rent = calcRentCost(years);
+      const diff = buy.netCost - rent.netCost;
+      const td = document.createElement('td');
+      td.className = 'cell lvl' + getLevel(diff);
+      const conclusion = getConclusion(diff);
+      let diffText = '';
+      if (Math.abs(diff) > 50000) {
+        diffText = (diff < 0 ? '买房省 ' : '租房省 ') + formatWan(diff);
+      } else {
+        diffText = '差距 ' + formatWan(diff);
+      }
+      td.innerHTML = `<div class="cell-amount">${conclusion}</div>
+                      <div class="cell-note">${diffText}</div>`;
+      tr.appendChild(td);
+    });
+
+    tbody.appendChild(tr);
+  });
+
+  // 盈亏平衡行
+  const breakEvenRow = document.getElementById('breakevenRow');
+  const labels = ['-2%', '0%', '1%', '2%', '3%', '5%', '8%'];
+  let text = '<b>盈亏平衡（买房开始划算的年数）：</b><br>';
+  appreciationList.forEach((app, i) => {
+    const be = findBreakEven(app);
+    text += `房价涨 ${labels[i]}：`;
+    text += be ? `<b>${be} 年</b>` : '<b>&gt;50 年（租房始终更划算）</b>';
+    if (i < appreciationList.length - 1) text += '　|　';
+  });
+  breakEvenRow.innerHTML = text;
+
+  // ============================================================
+  // 曲线图：3% 涨幅，买房 vs 租房净成本
+  // ============================================================
+  const SVG_W = 900, SVG_H = 440;
+  const M = { top: 30, right: 130, bottom: 55, left: 100 };
+  const PLOT_W = SVG_W - M.left - M.right;
+  const PLOT_H = SVG_H - M.top - M.bottom;
+  const X_MIN = 1, X_MAX = 30;
+  const Y_MIN = -400000, Y_MAX = 800000;
+  const xScale = y => M.left + (y - X_MIN) / (X_MAX - X_MIN) * PLOT_W;
+  const yScale = v => M.top + PLOT_H - (v - Y_MIN) / (Y_MAX - Y_MIN) * PLOT_H;
+  function pathOf(points) {
+    return points.map((p, i) => (i === 0 ? 'M' : 'L') + xScale(p.x).toFixed(1) + ',' + yScale(p.y).toFixed(1)).join(' ');
+  }
+  const svg = document.getElementById('buyRentCurve');
+  let parts = [];
+
+  // 网格与Y轴
+  const yTicks = [-400000, -200000, 0, 200000, 400000, 600000, 800000];
+  yTicks.forEach(v => {
+    const y = yScale(v);
+    parts.push(`<line x1="${M.left}" y1="${y}" x2="${M.left + PLOT_W}" y2="${y}"
+      style="stroke:var(--mf-colors-dataviz-grid)" stroke-width="1" ${v === 0 ? 'stroke-opacity="1"' : 'stroke-dasharray="3,3"'} />`);
+    parts.push(`<text x="${M.left - 10}" y="${y + 4}" text-anchor="end" font-size="12" style="fill:var(--mf-colors-text-weak)">${v === 0 ? '0' : (v / 10000) + '万'}</text>`);
+  });
+  const xTicks = [1, 5, 8, 10, 15, 20, 25, 30];
+  xTicks.forEach(y => {
+    const x = xScale(y);
+    parts.push(`<line x1="${x}" y1="${M.top}" x2="${x}" y2="${M.top + PLOT_H}"
+      style="stroke:var(--mf-colors-dataviz-grid)" stroke-width="1" stroke-dasharray="3,3" />`);
+    parts.push(`<text x="${x}" y="${M.top + PLOT_H + 22}" text-anchor="middle" font-size="12" style="fill:var(--mf-colors-text-weak)">${y}年</text>`);
+  });
+  parts.push(`<line x1="${M.left}" y1="${M.top + PLOT_H}" x2="${M.left + PLOT_W}" y2="${M.top + PLOT_H}"
+    style="stroke:var(--mf-colors-border-strong)" stroke-width="1.5" />`);
+  parts.push(`<line x1="${M.left}" y1="${M.top}" x2="${M.left}" y2="${M.top + PLOT_H}"
+    style="stroke:var(--mf-colors-border-strong)" stroke-width="1.5" />`);
+
+  const curveYears = [];
+  for (let y = 1; y <= 30; y++) curveYears.push(y);
+  const buyPts = curveYears.map(y => ({ x: y, y: calcBuyCost(y, 0.03).netCost }));
+  const rentPts = curveYears.map(y => ({ x: y, y: calcRentCost(y).netCost }));
+
+  parts.push(`<path d="${pathOf(rentPts)}" fill="none" style="stroke:var(--mf-colors-border-strong)" stroke-width="3" stroke-dasharray="6,4" stroke-linecap="round" stroke-linejoin="round" />`);
+  parts.push(`<path d="${pathOf(buyPts)}" fill="none" style="stroke:var(--mf-colors-dataviz-mango-2)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />`);
+
+  // 盈亏平衡点（3% 涨幅）
+  const be = findBreakEven(0.03);
+  if (be) {
+    const beBuy = calcBuyCost(be, 0.03).netCost;
+    parts.push(`<circle cx="${xScale(be)}" cy="${yScale(beBuy)}" r="6" style="fill:var(--mf-colors-text-critical)" />`);
+    parts.push(`<text x="${xScale(be)}" y="${yScale(beBuy) - 14}" text-anchor="middle" font-size="14" font-weight="700" style="fill:var(--mf-colors-text-critical)">盈亏平衡 ≈ ${be} 年</text>`);
+  }
+
+  // 图例
+  const legendY = SVG_H - 14;
+  parts.push(`<line x1="${M.left}" y1="${legendY}" x2="${M.left + 24}" y2="${legendY}" style="stroke:var(--mf-colors-dataviz-mango-2)" stroke-width="3" stroke-linecap="round" />`);
+  parts.push(`<text x="${M.left + 30}" y="${legendY + 5}" font-size="13" style="fill:var(--mf-colors-text)">买房净成本（3% 涨幅）</text>`);
+  parts.push(`<line x1="${M.left + 230}" y1="${legendY}" x2="${M.left + 254}" y2="${legendY}" style="stroke:var(--mf-colors-border-strong)" stroke-width="3" stroke-dasharray="6,4" />`);
+  parts.push(`<text x="${M.left + 260}" y="${legendY + 5}" font-size="13" style="fill:var(--mf-colors-text)">租房净成本</text>`);
+
+  parts.push(`<text x="18" y="${M.top + PLOT_H / 2}" font-size="12" style="fill:var(--mf-colors-text-weak)"
+    transform="rotate(-90, 18, ${M.top + PLOT_H / 2})" text-anchor="middle">净成本（元）</text>`);
+
+  svg.innerHTML = parts.join('');
+
+  // ============================================================
+  // 动态插值
+  // ============================================================
+  (function renderStatic() {
+    const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+    const fmtWan = v => Math.round(Math.abs(v) / 10000) + ' 万';
+    const d5 = calcBuyCost(5, 0.02).netCost - calcRentCost(5).netCost;
+    const d15 = calcBuyCost(15, 0.03).netCost - calcRentCost(15).netCost;
+    const monthly = getMonthlyPayment();
+    const rentMonthly = PRICE * RENT_YIELD / 12;
+    set('subPrice', '200 万'); set('subYears5', '5 年'); set('subApp2', '2%');
+    set('subDiff5', fmtWan(d5));
+    set('subYears15', '15 年'); set('subApp3', '3%');
+    set('subDiff15', fmtWan(d15));
+    set('convMonthly', Math.round(monthly) + ' 元');
+    set('convRent', Math.round(rentMonthly) + ' 元');
+    set('convRatio', (monthly / rentMonthly).toFixed(1) + ' 倍');
+    const be = findBreakEven(0.03);
+    set('insBe', be ? be + ' 年' : '50 年以上');
+  })();
+
+  // ============================================================
+  // 算一算弹窗
+  // ============================================================
+  function renderCalc() {
+    const years = Math.max(1, Math.min(50, Math.round(Number(document.getElementById('calcYears').value) || 8)));
+    const app = Math.max(-5, Math.min(15, Number(document.getElementById('calcApp').value) || 3)) / 100;
+    const buy = calcBuyCost(years, app);
+    const rent = calcRentCost(years);
+    const diff = buy.netCost - rent.netCost;
+    document.getElementById('calcOutYears').textContent = years;
+    document.getElementById('calcOutApp').textContent = Math.round(app * 100) + '%';
+    const verdict = diff < -50000 ? '买房更划算' : (diff > 50000 ? '租房更划算' : '两者打平');
+    document.getElementById('calcOutVerdict').textContent = verdict;
+    document.getElementById('calcOutDiff').textContent = (diff < 0 ? '买房比租房省约 ' : '租房比买房省约 ') + formatWan(diff) + ' 元。';
+  }
+  function openCalc() { document.getElementById('calcModal').hidden = false; renderCalc(); }
+  function closeCalc() { document.getElementById('calcModal').hidden = true; }
+  document.getElementById('openCalc').addEventListener('click', openCalc);
+  document.getElementById('closeCalc').addEventListener('click', closeCalc);
+  document.getElementById('calcOverlay').addEventListener('click', closeCalc);
+  ['calcYears', 'calcApp'].forEach(id => document.getElementById(id).addEventListener('input', renderCalc));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCalc(); });
+</script>
+</body></html>

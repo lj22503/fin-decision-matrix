@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>退休后每年取多少，才花不完？</title>
+<meta name="description" content="100 万每年取 4 万只够 46 年，取 3 万就花不完——差 1 万，差一辈子。焦虑 + 紧迫">
+<meta name="keywords" content="退休,提取率,4%法则,养老金,资产规划,财务决策,投教">
+<meta property="og:title" content="退休后每年取多少，才花不完？">
+<style>
+
+
+
+  :root {
+  /* mf tokens 自包含补齐 */
+  --mf-font-sizes-100: 16px;
+  --mf-font-sizes-200: 18px;
+  --mf-font-sizes-25: 12px;
+  --mf-font-sizes-30: 13px;
+  --mf-font-sizes-50: 14px;
+  --mf-font-sizes-eyebrow: 0.78rem;
+  --mf-fonts-display: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "SimSun", serif;
+  --mf-fonts-sans: "Inter", "Source Han Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --mf-shadows-card: 0 4px 8px rgba(36, 22, 16, 0.08), 0 12px 32px rgba(36, 22, 16, 0.10);
+
+  /* mf-colors tokens（自包含补齐） */
+  --mf-colors-background: #FFFFFF;
+  --mf-colors-background-neutral: #F7F5F2;
+  --mf-colors-background-surface: #FFFFFF;
+  --mf-colors-border-weak: rgba(36,22,16,.10);
+  --mf-colors-text: #3A332C;
+  --mf-colors-text-accent-mango: #E05E0A;
+  --mf-colors-text-link: #F97316;
+  --mf-colors-text-strong: #241610;
+  --mf-colors-text-weak: #8A7D70;
+
+    --page-bg: var(--mf-colors-background);
+    --page-card: var(--mf-colors-background-surface);
+    --page-panel: var(--mf-colors-background-neutral);
+    --page-ink: var(--mf-colors-text);
+    --page-ink-strong: var(--mf-colors-text-strong);
+    --page-ink-weak: var(--mf-colors-text-weak);
+    --page-accent: var(--mf-colors-text-link);
+    --page-accent-deep: var(--mf-colors-text-accent-mango);
+    --page-hairline: var(--mf-colors-border-weak);
+    --page-line-strong: rgba(36,22,16,.10);
+    --page-line-weak: rgba(36,22,16,.06);
+    /* 矩阵色阶（柔和版：浅底深字，红涨绿跌） */
+    --lvl1-bg: #FDECEA;  --lvl1-ink: #B8221E;
+    --lvl2-bg: #FDEBD8;  --lvl2-ink: #C2410C;
+    --lvl3-bg: #FDF3DE;  --lvl3-ink: #B45309;
+    --lvl4-bg: #E8F3EC;  --lvl4-ink: #1F8A4C;
+    --lvl5-bg: #E1EEE6;  --lvl5-ink: #11693D;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--page-bg); padding:12px; font-family:var(--mf-fonts-sans); color:var(--page-ink); font-size:17px; line-height:1.9; letter-spacing:.01em; }
+  .guide-article-wrap { max-width:860px; margin:0 auto; }
+  .paper { background:var(--page-card); border:1px solid var(--page-line-strong); border-radius:16px; box-shadow:var(--mf-shadows-card); max-width:780px; margin:6px auto; padding:28px 40px; }
+  @media (max-width:640px) { .paper { padding:24px 20px; } body { font-size:16px; padding:8px; } }
+
+  .paper-head { margin-bottom:12px; }
+  .paper-eyebrow { font-size:var(--mf-font-sizes-eyebrow); font-weight:500; color:var(--page-accent); letter-spacing:.24em; text-transform:uppercase; margin-bottom:6px; }
+  .paper-title { font-family:var(--mf-fonts-display); font-size:clamp(1.55rem,3.4vw,2.05rem); font-weight:800; color:var(--page-ink-strong); line-height:1.3; padding-bottom:10px; border-bottom:4px dashed rgba(249,115,22,.40); }
+
+  .lead-box { background:var(--page-panel); border-left:3px solid var(--page-accent); border-radius:12px; padding:9px 14px; margin:0 0 12px; }
+  .lead-box p { font-size:.95em; line-height:1.7; color:var(--page-ink); margin:0; }
+  .lead-box b, .lead-box strong { color:var(--page-ink-strong); }
+  .hl { color:var(--page-accent); font-weight:700; }
+
+  .matrix-head { display:flex; align-items:baseline; justify-content:space-between; gap:12px; flex-wrap:wrap; margin:0 0 8px; }
+  .matrix-title { font-family:var(--mf-fonts-display); font-size:clamp(1.15rem,2.4vw,1.3rem); font-weight:800; color:var(--page-ink-strong); }
+  .matrix-sub { font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.6; }
+  .matrix-table { width:100%; border-collapse:separate; border-spacing:2px; }
+  .matrix-table caption { caption-side:top; text-align:left; font-size:var(--mf-font-sizes-30); color:var(--page-ink-weak); padding:0 0 6px; line-height:1.6; }
+  .matrix-table thead th { background:var(--page-panel); color:var(--page-ink-strong); font-weight:700; text-align:center; padding:5px 7px; border-radius:8px; font-size:var(--mf-font-sizes-30); line-height:1.25; white-space:nowrap; }
+  .matrix-table th.rowhead { text-align:left; width:108px; background:var(--page-panel); font-size:var(--mf-font-sizes-30); }
+  .matrix-table td { padding:4px 3px; text-align:center; font-size:var(--mf-font-sizes-50); font-weight:700; border-radius:8px; min-width:60px; line-height:1.25; }
+  .matrix-table td.rowhead { background:var(--page-panel); color:var(--page-ink-strong); font-weight:700; text-align:left; width:104px; font-size:var(--mf-font-sizes-30); white-space:nowrap; padding:4px 7px; }
+  .cell-amount { font-size:var(--mf-font-sizes-100); display:block; }
+  .cell-note { font-size:var(--mf-font-sizes-25); opacity:.9; margin-top:0; font-weight:500; display:block; line-height:1.25; }
+  .lvl1 { background:var(--lvl1-bg); color:var(--lvl1-ink); }
+  .lvl2 { background:var(--lvl2-bg); color:var(--lvl2-ink); }
+  .lvl3 { background:var(--lvl3-bg); color:var(--lvl3-ink); }
+  .lvl4 { background:var(--lvl4-bg); color:var(--lvl4-ink); }
+  .lvl5 { background:var(--lvl5-bg); color:var(--lvl5-ink); }
+  .legend { display:flex; justify-content:center; gap:8px; margin:1px 0 0; font-size:var(--mf-font-sizes-25); color:var(--page-ink); flex-wrap:wrap; }
+  .legend span { display:inline-flex; align-items:center; gap:6px; }
+  .dot { width:12px; height:12px; border-radius:4px; display:inline-block; }
+  .dot.lvl1 { background:var(--lvl1-bg); border:1px solid var(--lvl1-ink); }
+  .dot.lvl2 { background:var(--lvl2-bg); border:1px solid var(--lvl2-ink); }
+  .dot.lvl3 { background:var(--lvl3-bg); border:1px solid var(--lvl3-ink); }
+  .dot.lvl4 { background:var(--lvl4-bg); border:1px solid var(--lvl4-ink); }
+  .dot.lvl5 { background:var(--lvl5-bg); border:1px solid var(--lvl5-ink); }
+  .matrix-note { margin:2px 0 0; font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.4; }
+  .matrix-note b { color:var(--page-accent-deep); }
+
+  .sec-title, .section-title { font-family:var(--mf-fonts-display); font-size:clamp(1.25rem,2.6vw,1.45rem); font-weight:800; color:var(--page-ink-strong); line-height:1.4; padding-bottom:10px; border-bottom:3px dashed rgba(249,115,22,.30); margin:26px 0 12px; }
+  .sec p { margin:0 0 12px; }
+  .sec b, .sec strong { color:var(--page-ink-strong); }
+  details.l2, details.faq-item { border:1px solid var(--page-line-strong); border-radius:12px; padding:10px 14px; margin:12px 0; font-size:var(--mf-font-sizes-30); line-height:1.8; color:var(--page-ink); background:var(--page-card); }
+  details.l2 summary, details.faq-item summary { cursor:pointer; font-weight:700; color:var(--page-ink-strong); }
+  details.l2 summary::marker, details.faq-item summary::marker { color:var(--page-accent); }
+  details.l2[open] summary, details.faq-item[open] summary { color:var(--page-accent-deep); }
+  .assume, .breakeven, .extra-note { background:var(--page-panel); border-radius:12px; padding:12px 16px; font-size:var(--mf-font-sizes-30); color:var(--page-ink); margin:12px 0; line-height:1.8; }
+  .assume b, .breakeven b, .extra-note b, .assume strong, .breakeven strong { color:var(--page-ink-strong); }
+  .foot { margin:16px 0 0; padding-top:14px; border-top:1px solid var(--page-line-strong); font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.8; }
+
+  .chart-title { text-align:center; font-size:var(--mf-font-sizes-200); font-weight:700; color:var(--page-ink-strong); margin:24px 0 4px; }
+  .chart-sub { text-align:center; font-size:var(--mf-font-sizes-30); color:var(--page-ink-weak); margin-bottom:8px; }
+  .chart-wrap { width:100%; overflow:hidden; }
+  .chart-wrap svg { width:100%; height:auto; display:block; }
+
+  .cta-box { margin:26px 0 0; padding:24px 26px; background:var(--page-panel); border:1px solid var(--page-line-strong); border-radius:16px; text-align:center; }
+  .cta-box p { font-size:var(--mf-font-sizes-30); color:var(--page-ink); line-height:1.8; margin:0 0 12px; }
+  .cta-box p:first-child { font-size:var(--mf-font-sizes-100); font-weight:700; color:var(--page-ink-strong); }
+  .cta-box b { color:var(--page-ink-strong); }
+  .calc-btn { display:inline-block; padding:11px 30px; font-size:var(--mf-font-sizes-100); font-weight:700; color:#FFFFFF; background:var(--page-accent); border:none; border-radius:16px; cursor:pointer; }
+  .calc-btn:hover { background:var(--page-accent-deep); }
+
+  .guide-disclaimer { margin:26px 0 0; padding-top:14px; border-top:1px solid var(--page-line-strong); font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.8; }
+  .disclaimer-title { font-weight:700; color:var(--page-ink); margin-bottom:4px; }
+  .disclaimer-text { margin-bottom:6px; }
+
+  footer { max-width:780px; margin:8px auto 24px; padding:14px 24px 0; text-align:center; font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.8; border-top:1px solid var(--page-line-weak); }
+
+  .calc-modal[hidden] { display:none; }
+  .calc-modal { position:fixed; inset:0; z-index:1000; display:flex; align-items:center; justify-content:center; padding:16px; }
+  .calc-overlay { position:absolute; inset:0; background:rgba(36,22,16,.45); }
+  .calc-dialog { position:relative; background:var(--page-card); border:1px solid var(--page-line-strong); border-radius:16px; box-shadow:var(--mf-shadows-card); max-width:480px; width:100%; padding:24px 26px; }
+  .calc-close { position:absolute; top:10px; right:14px; font-size:1.6rem; font-weight:700; color:var(--page-ink-weak); background:none; border:none; cursor:pointer; line-height:1; }
+  .calc-title { font-family:var(--mf-fonts-display); font-size:var(--mf-font-sizes-200); font-weight:800; color:var(--page-ink-strong); margin-bottom:16px; }
+  .calc-field { margin-bottom:14px; }
+  .calc-field label { display:block; font-size:var(--mf-font-sizes-30); color:var(--page-ink); margin-bottom:4px; font-weight:600; }
+  .calc-field input { width:100%; padding:8px 10px; font-size:var(--mf-font-sizes-100); font-weight:700; color:var(--page-ink-strong); border:1px solid var(--mf-colors-border-weak); border-radius:8px; background:var(--page-card); box-sizing:border-box; }
+  .calc-field .hint { display:block; font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); margin-top:2px; }
+  .calc-result { margin-top:16px; padding:14px 16px; background:var(--page-panel); border-left:3px solid var(--page-accent); border-radius:12px; font-size:var(--mf-font-sizes-100); font-weight:700; color:var(--page-ink-strong); line-height:1.7; }
+  .calc-result b { color:var(--page-accent-deep); }
+  .calc-ratio { margin-top:6px; font-size:var(--mf-font-sizes-30); font-weight:400; color:var(--page-ink); line-height:1.7; }
+
+
+
+</style>
+</head>
+<body>
+<main class="guide-article-wrap">
+  <article class="paper">
+    <header class="paper-head">
+      <p class="paper-eyebrow">Retirement Planning</p>
+      <h1 class="paper-title">退休后每年取多少，才花不完？</h1>
+    </header>
+    <div class="lead-box">
+      <p>先记住结论：<strong>经验法则是：<span class="hl">≤4% 相对安全，&gt;6% 风险陡增</span>。</strong>但安全线不是绝对的——资产越少，越要保守；资产越多，容错空间越大。</p>
+      <p><span class="dyn" id="subPrincipal">100 万</span>每年取 <span class="dyn" id="subW4">4 万</span>只够 <span class="dyn" id="subYears4">46</span> 年，取 <span class="dyn" id="subW3">3 万</span>就花不完——差 <span class="dyn" id="subDiff">1 万</span>，差一辈子。</p>
+    </div>
+    <div class="matrix-head">
+      <div class="matrix-title">年提取金额 × 退休资产</div>
+      <div class="matrix-sub">红 = 花不完/可持续久，绿 = 很快耗尽</div>
+    </div>
+    <table class="matrix-table" id="withdrawTable">
+      <caption>表1：年提取金额 × 退休资产 → 可持续年限（年化实际收益 3%，超 60 年视为花不完）</caption>
+      <thead>
+        <tr>
+          <th class="rowhead">年提取金额</th>
+          <th>100万</th><th>200万</th><th>300万</th><th>500万</th><th>1000万</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <div class="legend">
+      <span><i class="dot lvl1"></i>花不完 / ≥50年</span>
+      <span><i class="dot lvl2"></i>35-50年</span>
+      <span><i class="dot lvl3"></i>25-35年</span>
+      <span><i class="dot lvl4"></i>15-25年</span>
+      <span><i class="dot lvl5"></i>&lt;15年</span>
+    </div>
+    <p class="matrix-note">注：年化实际收益率 3%（已扣除通胀）；每年按固定金额提取；无其他收入、无大额一次性支出；超过 60 年视为「花不完」。</p>
+
+    <div class="sec-title">为什么？</div>
+    <details class="l2">
+      <summary>讲给我听：退休后每年取多少，才花不完？</summary>
+      <p>表格中每个单元格下方标注了对应的提取率。经验法则是：≤4% 相对安全，&gt;6% 风险陡增。但安全线不是绝对的——资产越少，越要保守；资产越多，容错空间越大。</p>
+      <p>假设：年化实际收益率 3%（已扣除通胀）；每年按固定金额提取；无其他收入、无大额一次性支出；超过 60 年视为「花不完」。换算：100 万资产，每年取 3 万（3%）≈ 每月 2500 元，可以花一辈子；每年取 8 万（8%）≈ 每月 6600 元，只够花 16 年。</p>
+    </details>
+
+    <div class="sec-title">底层假设（L3）</div>
+    <div class="assume">
+      假设：年化实际收益率 <b>3%</b>（已扣除通胀）；每年按固定金额提取；无其他收入、无大额一次性支出；超过 60 年视为「花不完」。<br>
+      换算：<span class="dyn" id="convPrincipal">100 万</span>资产，每年取 <b><span class="dyn" id="convW3">3 万</span></b>（<span class="dyn" id="convR3">3%</span>）≈ 每月 <b><span class="dyn" id="convM3">2500 元</span></b>，可以花一辈子；每年取 <b><span class="dyn" id="convW8">8 万</span></b>（<span class="dyn" id="convR8">8%</span>）≈ 每月 <b><span class="dyn" id="convM8">6600 元</span></b>，只够花 <b><span class="dyn" id="convY8">16 年</span></b>。
+    </div>
+    <div class="foot">
+      测算基于年化实际收益 3%、固定金额提取、无其他收入与支出的简化假设；未考虑通胀波动、市场收益不确定性、医疗与护理等大额支出、房产变现难度，也未考虑社保/年金等被动收入对提取需求的降低。提取率越高，风险越大；实际建议保留更多安全垫。本图不构成任何财务建议。
+    </div>
+
+    <div class="sec-title">常见问题（FAQ）</div>
+    <details class="faq-item"><summary>退休后每年取多少，才花不完？</summary><p>100 万每年取 4 万只够 46 年，取 3 万就花不完——差 1 万，差一辈子。焦虑 + 紧迫</p></details>
+    <details class="faq-item"><summary>测算基于什么假设？</summary><p>假设：年化实际收益率 3%（已扣除通胀）；每年按固定金额提取；无其他收入、无大额一次性支出；超过 60 年视为「花不完」。</p></details>
+    <details class="faq-item"><summary>结果有多可靠？</summary><p>测算基于年化实际收益 3%、固定金额提取、无其他收入与支出的简化假设；未考虑通胀波动、市场收益不确定性、医疗与护理等大额支出、房产变现难度，也未考虑社保/年金等被动收入对提取需求的降低。提取率越高，风险越大；实际建议保留更多安全垫。本图不构成任何财务建议。</p></details>
+
+    <div class="cta-box"><b>用你自己的数字算一遍：</b>把退休资产和每年想取多少换进去，看看能花多少年——提取率每高一点，风险就陡增一截。<br><button class="calc-btn" id="openCalc">算一算</button></div>
+  </article>
+</main>
+
+<div class="calc-modal" id="calcModal" hidden>
+  <div class="calc-overlay" id="calcOverlay"></div>
+  <div class="calc-dialog" role="dialog" aria-modal="true" aria-label="用你自己的数字算一算">
+    <button class="calc-close" id="closeCalc" aria-label="关闭">×</button>
+    <div class="calc-title">用你自己的数字算一算</div>
+    <div class="calc-field">
+      <label for="calcPrincipal">退休资产（元）</label>
+      <input type="number" id="calcPrincipal" value="1000000" min="100000" max="50000000" step="100000">
+      <span class="hint">例如 1000000 = 100 万</span>
+    </div>
+    <div class="calc-field">
+      <label for="calcWithdraw">每年提取金额（元/年）</label>
+      <input type="number" id="calcWithdraw" value="40000" min="5000" max="5000000" step="5000">
+      <span class="hint">例如 40000 = 每年取 4 万</span>
+    </div>
+    <div class="calc-result">
+      <b id="calcOutMain">—</b>
+      <div class="calc-ratio" id="calcOutNote">—</div>
+    </div>
+  </div>
+</div>
+<footer>
+  mangofolio · fin-decision-matrix · © 2026 mangofolio
+</footer>
+<script>
+  const REAL_RETURN = 0.03;
+  const MAX_YEARS = 60;
+  function calcSustainableYears(principal, annualWithdraw) {
+    const monthlyWithdraw = annualWithdraw / 12;
+    const monthlyRate = REAL_RETURN / 12;
+    if (monthlyWithdraw <= principal * monthlyRate) return Infinity;
+    const n = -Math.log(1 - (principal * monthlyRate) / monthlyWithdraw) / Math.log(1 + monthlyRate);
+    return n / 12;
+  }
+  function getLevel(years) {
+    if (!isFinite(years)) return 1;
+    if (years >= 50) return 1;
+    if (years >= 35) return 2;
+    if (years >= 25) return 3;
+    if (years >= 15) return 4;
+    return 5;
+  }
+  function formatYears(y) {
+    if (!isFinite(y)) return '花不完';
+    if (y >= MAX_YEARS) return '花不完';
+    if (y < 1) return Math.round(y * 12) + '个月';
+    return Math.round(y) + '年';
+  }
+  function formatRate(principal, annualWithdraw) { return '提取率 ' + ((annualWithdraw / principal) * 100).toFixed(1) + '%'; }
+  const annualWithdraws = [30000, 40000, 50000, 80000, 100000, 150000, 200000];
+  const principals = [1000000, 2000000, 3000000, 5000000, 10000000];
+  (function () {
+    const tbody = document.querySelector('#withdrawTable tbody');
+    annualWithdraws.forEach(w => {
+      const tr = document.createElement('tr');
+      const th = document.createElement('th');
+      th.className = 'rowhead';
+      th.textContent = (w / 10000) + '万/年';
+      tr.appendChild(th);
+      principals.forEach(p => {
+        const years = calcSustainableYears(p, w);
+        const td = document.createElement('td');
+        td.className = 'cell lvl' + getLevel(years);
+        td.innerHTML = '<div class="cell-amount">' + formatYears(years) + '</div><div class="cell-note">' + formatRate(p, w) + '</div>';
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    });
+  })();
+  (function renderStatic() {
+    const P = 1000000;
+    const fmtWan = v => (v / 10000).toFixed(0) + ' 万';
+    const fmtYuan = v => Math.floor(v / 100) * 100 + ' 元';
+    const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+    const y4 = calcSustainableYears(P, 40000);
+    const y8 = calcSustainableYears(P, 80000);
+    set('subPrincipal', fmtWan(P));
+    set('subW4', fmtWan(40000));
+    set('subYears4', isFinite(y4) ? Math.round(y4) : '花不完');
+    set('subW3', fmtWan(30000));
+    set('subDiff', '1 万');
+    set('convPrincipal', fmtWan(P));
+    set('convW3', fmtWan(30000)); set('convR3', '3%');
+    set('convM3', fmtYuan(30000 / 12));
+    set('convW8', fmtWan(80000)); set('convR8', '8%');
+    set('convM8', fmtYuan(80000 / 12));
+    set('convY8', isFinite(y8) ? Math.round(y8) + ' 年' : '花不完');
+  })();
+  const modal = document.getElementById('calcModal');
+  document.getElementById('openCalc').addEventListener('click', () => { modal.hidden = false; });
+  document.getElementById('closeCalc').addEventListener('click', () => { modal.hidden = true; });
+  document.getElementById('calcOverlay').addEventListener('click', () => { modal.hidden = true; });
+  function renderCalc() {
+    const principal = parseFloat(document.getElementById('calcPrincipal').value) || 1000000;
+    const withdraw = parseFloat(document.getElementById('calcWithdraw').value) || 40000;
+    const years = calcSustainableYears(principal, withdraw);
+    document.getElementById('calcOutMain').textContent = formatYears(years);
+    document.getElementById('calcOutNote').textContent = '资产 ' + (principal / 10000).toFixed(0) + ' 万，每年取 ' + (withdraw / 10000).toFixed(0) + ' 万（' + ((withdraw / principal) * 100).toFixed(1) + '%）→ 可持续 ' + (isFinite(years) ? Math.round(years) : '∞') + ' 年';
+  }
+  document.getElementById('calcPrincipal').addEventListener('input', renderCalc);
+  document.getElementById('calcWithdraw').addEventListener('input', renderCalc);
+  renderCalc();
+</script>
+</body>
+</html>

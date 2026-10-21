@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>只还最低还款，你的信用卡要还多久？（最低还款 5% 版）</title>
+<meta name="description" content="每月还一点看起来轻松——但这些钱大半都在填利息的坑。年利率 18% 时，借 1 万每天利息约 5 元，一年 1825 元。">
+<meta name="keywords" content="信用卡,最低还款,复利,信用卡利息,债务,fin-decision-matrix">
+<meta property="og:type" content="article" />
+<meta property="og:title" content="只还最低还款，你的信用卡要还多久？（最低还款 5% 版）" />
+<meta property="og:description" content="每月还一点看起来轻松——但这些钱大半都在填利息的坑。年利率 18% 时，借 1 万每天利息约 5 元，一年 1825 元。" />
+<meta property="og:url" content="https://fintools.mangofolio.com/guide/%E4%BF%A1%E7%94%A8%E5%8D%A1%E6%9C%80%E4%BD%8E%E8%BF%98%E6%AC%BE%E9%99%B7%E9%98%B1-5.html" />
+<meta property="og:image" content="https://fintools.mangofolio.com/images/og-cover.png?v=2" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:site_name" content="财务工具箱 FinTools" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="只还最低还款，你的信用卡要还多久？（最低还款 5% 版）" />
+<meta name="twitter:description" content="每月还一点看起来轻松——但这些钱大半都在填利息的坑。" />
+<meta name="twitter:image" content="https://fintools.mangofolio.com/images/og-cover.png?v=2" />
+<link rel="canonical" href="https://fintools.mangofolio.com/guide/%E4%BF%A1%E7%94%A8%E5%8D%A1%E6%9C%80%E4%BD%8E%E8%BF%98%E6%AC%BE%E9%99%B7%E9%98%B1-5.html" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"只还最低还款，你的信用卡要还多久？（最低还款 5% 版）","description":"每月还一点看起来轻松——但这些钱大半都在填利息的坑。","image":"https://fintools.mangofolio.com/images/og-cover.png?v=2","datePublished":"2026-10-14","dateModified":"2026-10-14","author":{"@type":"Organization","name":"财务工具箱 FinTools","url":"https://fintools.mangofolio.com/"},"publisher":{"@type":"Organization","name":"mangofolio","logo":{"@type":"ImageObject","url":"https://fintools.mangofolio.com/images/og-cover.png?v=2"}},"mainEntityOfPage":"https://fintools.mangofolio.com/guide/%E4%BF%A1%E7%94%A8%E5%8D%A1%E6%9C%80%E4%BD%8E%E8%BF%98%E6%AC%BE%E9%99%B7%E9%98%B1-5.html","about":"信用卡,最低还款,复利,债务"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"只还最低还款，多久还得清？","acceptedAnswer":{"@type":"Answer","text":"最低还款 5% 比 2% 快得多：欠 1 万、年利率 18%，约 2.5 年还清；年利率 36% 时也要 10 年以上，且大半是利息。"}},{"@type":"Question","name":"利息到底有多贵？","acceptedAnswer":{"@type":"Answer","text":"年利率 18% ≈ 借 1 万每天利息约 5 元，一年 1825 元；年利率 36% ≈ 每天利息约 10 元，一年 3650 元。"}},{"@type":"Question","name":"利息怎么算？","acceptedAnswer":{"@type":"Answer","text":"按月复利：利息 = 余额 × 月利率；最低还款 = 余额 × 5%（最低 50 元）。"}}]}</script>
+
+<link rel="stylesheet" href="assets/mangofolio-tokens-v09.css">
+<style>
+
+
+  :root {
+    --page-bg: var(--mf-colors-background);
+    --page-card: var(--mf-colors-background-surface);
+    --page-panel: var(--mf-colors-background-neutral);
+    --page-ink: var(--mf-colors-text);
+    --page-ink-strong: var(--mf-colors-text-strong);
+    --page-ink-weak: var(--mf-colors-text-weak);
+    --page-accent: var(--mf-colors-text-link);
+    --page-accent-deep: var(--mf-colors-text-accent-mango);
+    --page-hairline: var(--mf-colors-border-weak);
+    --page-line-strong: rgba(36,22,16,.10);
+    --page-line-weak: rgba(36,22,16,.06);
+    /* 矩阵色阶（柔和版：浅底深字，红涨绿跌） */
+    --lvl1-bg: #FDECEA;  --lvl1-ink: #B8221E;
+    --lvl2-bg: #FDEBD8;  --lvl2-ink: #C2410C;
+    --lvl3-bg: #FDF3DE;  --lvl3-ink: #B45309;
+    --lvl4-bg: #E8F3EC;  --lvl4-ink: #1F8A4C;
+    --lvl5-bg: #E1EEE6;  --lvl5-ink: #11693D;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--page-bg); padding:12px; font-family:var(--mf-fonts-sans); color:var(--page-ink); font-size:17px; line-height:1.9; letter-spacing:.01em; }
+  .guide-article-wrap { max-width:860px; margin:0 auto; }
+  .paper { background:var(--page-card); border:1px solid var(--page-line-strong); border-radius:16px; box-shadow:var(--mf-shadows-card); max-width:780px; margin:6px auto; padding:28px 40px; }
+  @media (max-width:640px) { .paper { padding:24px 20px; } body { font-size:16px; padding:8px; } }
+
+  .paper-head { margin-bottom:12px; }
+  .paper-eyebrow { font-size:var(--mf-font-sizes-eyebrow); font-weight:500; color:var(--page-accent); letter-spacing:.24em; text-transform:uppercase; margin-bottom:6px; }
+  .paper-title { font-family:var(--mf-fonts-display); font-size:clamp(1.55rem,3.4vw,2.05rem); font-weight:800; color:var(--page-ink-strong); line-height:1.3; padding-bottom:10px; border-bottom:4px dashed rgba(249,115,22,.40); }
+
+  .lead-box { background:var(--page-panel); border-left:3px solid var(--page-accent); border-radius:12px; padding:9px 14px; margin:0 0 12px; }
+  .lead-box p { font-size:.95em; line-height:1.7; color:var(--page-ink); margin:0; }
+  .lead-box b, .lead-box strong { color:var(--page-ink-strong); }
+  .hl { color:var(--page-accent); font-weight:700; }
+
+  .matrix-head { display:flex; align-items:baseline; justify-content:space-between; gap:12px; flex-wrap:wrap; margin:0 0 8px; }
+  .matrix-title { font-family:var(--mf-fonts-display); font-size:clamp(1.15rem,2.4vw,1.3rem); font-weight:800; color:var(--page-ink-strong); }
+  .matrix-sub { font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.6; }
+  .matrix-table { width:100%; border-collapse:separate; border-spacing:2px; }
+  .matrix-table caption { caption-side:top; text-align:left; font-size:var(--mf-font-sizes-30); color:var(--page-ink-weak); padding:0 0 6px; line-height:1.6; }
+  .matrix-table thead th { background:var(--page-panel); color:var(--page-ink-strong); font-weight:700; text-align:center; padding:5px 7px; border-radius:8px; font-size:var(--mf-font-sizes-30); line-height:1.25; white-space:nowrap; }
+  .matrix-table th.rowhead { text-align:left; width:108px; background:var(--page-panel); font-size:var(--mf-font-sizes-30); }
+  .matrix-table td { padding:4px 3px; text-align:center; font-size:var(--mf-font-sizes-50); font-weight:700; border-radius:8px; min-width:60px; line-height:1.25; }
+  .matrix-table td.rowhead { background:var(--page-panel); color:var(--page-ink-strong); font-weight:700; text-align:left; width:104px; font-size:var(--mf-font-sizes-30); white-space:nowrap; padding:4px 7px; }
+  .cell-amount { font-size:var(--mf-font-sizes-100); display:block; }
+  .cell-note { font-size:var(--mf-font-sizes-25); opacity:.9; margin-top:0; font-weight:500; display:block; line-height:1.25; }
+  .lvl1 { background:var(--lvl1-bg); color:var(--lvl1-ink); }
+  .lvl2 { background:var(--lvl2-bg); color:var(--lvl2-ink); }
+  .lvl3 { background:var(--lvl3-bg); color:var(--lvl3-ink); }
+  .lvl4 { background:var(--lvl4-bg); color:var(--lvl4-ink); }
+  .lvl5 { background:var(--lvl5-bg); color:var(--lvl5-ink); }
+  .legend { display:flex; justify-content:center; gap:8px; margin:1px 0 0; font-size:var(--mf-font-sizes-25); color:var(--page-ink); flex-wrap:wrap; }
+  .legend span { display:inline-flex; align-items:center; gap:6px; }
+  .dot { width:12px; height:12px; border-radius:4px; display:inline-block; }
+  .dot.lvl1 { background:var(--lvl1-bg); border:1px solid var(--lvl1-ink); }
+  .dot.lvl2 { background:var(--lvl2-bg); border:1px solid var(--lvl2-ink); }
+  .dot.lvl3 { background:var(--lvl3-bg); border:1px solid var(--lvl3-ink); }
+  .dot.lvl4 { background:var(--lvl4-bg); border:1px solid var(--lvl4-ink); }
+  .dot.lvl5 { background:var(--lvl5-bg); border:1px solid var(--lvl5-ink); }
+  .matrix-note { margin:2px 0 0; font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.4; }
+  .matrix-note b { color:var(--page-accent-deep); }
+
+  .sec-title, .section-title { font-family:var(--mf-fonts-display); font-size:clamp(1.25rem,2.6vw,1.45rem); font-weight:800; color:var(--page-ink-strong); line-height:1.4; padding-bottom:10px; border-bottom:3px dashed rgba(249,115,22,.30); margin:26px 0 12px; }
+  .sec p { margin:0 0 12px; }
+  .sec b, .sec strong { color:var(--page-ink-strong); }
+  details.l2, details.faq-item { border:1px solid var(--page-line-strong); border-radius:12px; padding:10px 14px; margin:12px 0; font-size:var(--mf-font-sizes-30); line-height:1.8; color:var(--page-ink); background:var(--page-card); }
+  details.l2 summary, details.faq-item summary { cursor:pointer; font-weight:700; color:var(--page-ink-strong); }
+  details.l2 summary::marker, details.faq-item summary::marker { color:var(--page-accent); }
+  details.l2[open] summary, details.faq-item[open] summary { color:var(--page-accent-deep); }
+  .assume, .breakeven, .extra-note { background:var(--page-panel); border-radius:12px; padding:12px 16px; font-size:var(--mf-font-sizes-30); color:var(--page-ink); margin:12px 0; line-height:1.8; }
+  .assume b, .breakeven b, .extra-note b, .assume strong, .breakeven strong { color:var(--page-ink-strong); }
+  .foot { margin:16px 0 0; padding-top:14px; border-top:1px solid var(--page-line-strong); font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.8; }
+
+  .chart-title { text-align:center; font-size:var(--mf-font-sizes-200); font-weight:700; color:var(--page-ink-strong); margin:24px 0 4px; }
+  .chart-sub { text-align:center; font-size:var(--mf-font-sizes-30); color:var(--page-ink-weak); margin-bottom:8px; }
+  .chart-wrap { width:100%; overflow:hidden; }
+  .chart-wrap svg { width:100%; height:auto; display:block; }
+
+  .cta-box { margin:26px 0 0; padding:24px 26px; background:var(--page-panel); border:1px solid var(--page-line-strong); border-radius:16px; text-align:center; }
+  .cta-box p { font-size:var(--mf-font-sizes-30); color:var(--page-ink); line-height:1.8; margin:0 0 12px; }
+  .cta-box p:first-child { font-size:var(--mf-font-sizes-100); font-weight:700; color:var(--page-ink-strong); }
+  .cta-box b { color:var(--page-ink-strong); }
+  .calc-btn { display:inline-block; padding:11px 30px; font-size:var(--mf-font-sizes-100); font-weight:700; color:#FFFFFF; background:var(--page-accent); border:none; border-radius:16px; cursor:pointer; }
+  .calc-btn:hover { background:var(--page-accent-deep); }
+
+  .guide-disclaimer { margin:26px 0 0; padding-top:14px; border-top:1px solid var(--page-line-strong); font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.8; }
+  .disclaimer-title { font-weight:700; color:var(--page-ink); margin-bottom:4px; }
+  .disclaimer-text { margin-bottom:6px; }
+
+  footer { max-width:780px; margin:8px auto 24px; padding:14px 24px 0; text-align:center; font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); line-height:1.8; border-top:1px solid var(--page-line-weak); }
+
+  .calc-modal[hidden] { display:none; }
+  .calc-modal { position:fixed; inset:0; z-index:1000; display:flex; align-items:center; justify-content:center; padding:16px; }
+  .calc-overlay { position:absolute; inset:0; background:rgba(36,22,16,.45); }
+  .calc-dialog { position:relative; background:var(--page-card); border:1px solid var(--page-line-strong); border-radius:16px; box-shadow:var(--mf-shadows-card); max-width:480px; width:100%; padding:24px 26px; }
+  .calc-close { position:absolute; top:10px; right:14px; font-size:1.6rem; font-weight:700; color:var(--page-ink-weak); background:none; border:none; cursor:pointer; line-height:1; }
+  .calc-title { font-family:var(--mf-fonts-display); font-size:var(--mf-font-sizes-200); font-weight:800; color:var(--page-ink-strong); margin-bottom:16px; }
+  .calc-field { margin-bottom:14px; }
+  .calc-field label { display:block; font-size:var(--mf-font-sizes-30); color:var(--page-ink); margin-bottom:4px; font-weight:600; }
+  .calc-field input { width:100%; padding:8px 10px; font-size:var(--mf-font-sizes-100); font-weight:700; color:var(--page-ink-strong); border:1px solid var(--mf-colors-border-weak); border-radius:8px; background:var(--page-card); box-sizing:border-box; }
+  .calc-field .hint { display:block; font-size:var(--mf-font-sizes-25); color:var(--page-ink-weak); margin-top:2px; }
+  .calc-result { margin-top:16px; padding:14px 16px; background:var(--page-panel); border-left:3px solid var(--page-accent); border-radius:12px; font-size:var(--mf-font-sizes-100); font-weight:700; color:var(--page-ink-strong); line-height:1.7; }
+  .calc-result b { color:var(--page-accent-deep); }
+  .calc-ratio { margin-top:6px; font-size:var(--mf-font-sizes-30); font-weight:400; color:var(--page-ink); line-height:1.7; }
+
+
+</style>
+</head>
+<body>
+<main class="guide-article-wrap">
+  <article class="paper">
+<header class="paper-head">
+      <p class="paper-eyebrow">Credit Card Debt</p>
+      <h1 class="paper-title">只还最低还款，你的信用卡要还多久？</h1>
+    </header>
+  <div class="lead-box">
+  <p>先记住结论：<strong>最低还款 = 余额的 5%（最低 50 元），利息按月复利</strong>。比 2% 版快得多，但高利率下依然沉重：年利率 18% ≈ 借 1 万每天利息约 <b>5 元</b>、一年 <b>1825 元</b>；年利率 36% ≈ 每天 <b>10 元</b>。还进去的钱大半是利息，本金下降很慢。</p>
+</div>
+
+  <div class="matrix-head">
+      <div class="matrix-title">欠款金额 × 年利率</div>
+      <div class="matrix-sub">还清年限越长越红（越危险）</div>
+    </div>
+      <table class="matrix-table" id="debtTable">
+        <caption>表1：只还最低还款（余额 5%），不同欠款 × 利率下还清所需年限</caption>
+        <thead>
+    <tr>
+      <th class="rowhead">欠款金额</th>
+      <th>年利率12%<small>低息</small></th><th>15%</th><th>18%</th><th>24%</th><th>36%<small>高息</small></th>
+    </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <div class="legend">
+    <span><i class="dot lvl5"></i>≤2.5年</span>
+    <span><i class="dot lvl4"></i>2.5-5年</span>
+    <span><i class="dot lvl3"></i>5-10年</span>
+    <span><i class="dot lvl2"></i>10-20年</span>
+    <span><i class="dot lvl1"></i>20年以上</span>
+  </div>
+      <p class="matrix-note">注：最低还款 = 余额的 5%（最低 50 元），利息按月复利；红档代表 20 年以上甚至还不清，绿档 2.5 年内可还清。</p>
+
+  <h2 class="sec-title">为什么？</h2>
+  <details class="l2">
+    <summary>讲给我听：最低还款 5% 就安全了吗？</summary>
+    <p>最低还款比例从 2% 提到 5%，还清速度大幅加快——但<b>利息仍然是按月复利</b>。欠 1 万、年利率 18%，每月还 5% 约 2.5 年还清，可总利息约 1500 元；年利率 36% 时要 10 年以上，利息甚至超过本金。</p>
+    <p>关键数字：年利率 18% ≈ 每天利息 5 元/万、一年 1825 元/万；年利率 36% ≈ 每天 10 元/万、一年 3650 元/万。<b>先还高利率债务，永远是最优解</b>。</p>
+  </details>
+
+  <h2 class="sec-title">底层假设（L3）</h2>
+  <div class="assume">
+    假设：最低还款 = 余额的 <b>5%</b>（最低 50 元），利息按月复利；无新增消费、利率不变；超过 60 年视为「永不还清」。<br>
+    换算：年利率 18% ≈ 借 1 万，每天利息约 <b>5 元</b>，一年 1825 元；年利率 36% ≈ 每天利息约 <b>10 元</b>。
+  </div>
+  <div class="foot">
+    测算基于固定利率、无新增消费、只还最低还款额（5%）的简化假设；实际信用卡利息按日计息，且可能因账单日、还款日、消费入账时间不同而有差异。本图不构成任何金融建议。
+  </div>
+<h2 class="sec-title">常见问题（FAQ）</h2>
+  <details class="faq-item"><summary>只还最低还款，多久还得清？</summary><p>最低还款 5% 比 2% 快得多：欠 1 万、年利率 18%，约 2.5 年还清；年利率 36% 时也要 10 年以上，且大半是利息。</p></details>
+  <details class="faq-item"><summary>利息到底有多贵？</summary><p>年利率 18% ≈ 借 1 万每天利息约 5 元，一年 1825 元；年利率 36% ≈ 每天利息约 10 元，一年 3650 元。</p></details>
+  <details class="faq-item"><summary>利息怎么算？</summary><p>按月复利：利息 = 余额 × 月利率；最低还款 = 余额 × 5%（最低 50 元）。</p></details>
+  <div class="cta-box"><b>用你自己的数字算一遍：</b>上面的结果基于分档假设；把欠款金额、年利率、最低还款比例换成真实情况，答案可能完全不同——本页提供算法框架，你的数字才是决策依据。<br><button class="calc-btn" id="openCalc">算一算</button></div>
+</article>
+</main>
+
+<div class="calc-modal" id="calcModal" hidden>
+  <div class="calc-overlay" id="calcOverlay"></div>
+  <div class="calc-dialog" role="dialog" aria-modal="true" aria-label="用你自己的数字算一算">
+    <button class="calc-close" id="closeCalc" aria-label="关闭">×</button>
+    <div class="calc-title">用你自己的数字算一算</div>
+    <div class="calc-field">
+      <label for="calcPrincipal">欠款本金（元）</label>
+      <input type="number" id="calcPrincipal" value="10000" min="100" step="1000">
+      <span class="hint">例如：1 万</span>
+    </div>
+    <div class="calc-field">
+      <label for="calcRate">年利率（%）</label>
+      <input type="number" id="calcRate" value="18" min="1" max="60" step="1">
+      <span class="hint">信用卡常见 12%-36%</span>
+    </div>
+    <div class="calc-result">
+      还清需要 <b id="calcOutYears">—</b>
+      <div class="calc-ratio" id="calcOutInterest">总利息约为 —。</div>
+    </div>
+  </div>
+</div>
+<footer>
+  mangofolio · fin-decision-matrix · © 2026 mangofolio
+</footer>
+<script>
+  // ============================================================
+  // 核心计算：给定本金、年利率、最低还款比例，返回{年限, 总利息}
+  // ============================================================
+  const MIN_PCT = 0.05;      // 最低还款 5%
+  const MIN_FLOOR = 50;      // 最低还款额下限 50 元
+
+  function calcPayoff(principal, annualRate, minPct = MIN_PCT, minFloor = MIN_FLOOR) {
+    const m = annualRate / 12;
+    let balance = principal;
+    let months = 0;
+    let totalInterest = 0;
+    const maxMonths = 720; // 60年上限
+
+    while (balance > 0.01 && months < maxMonths) {
+      const interest = balance * m;
+      let payment = Math.max(balance * minPct, minFloor);
+      if (payment > balance + interest) payment = balance + interest;
+      if (payment <= interest) {
+        return { years: Infinity, interest: Infinity };
+      }
+      balance = balance + interest - payment;
+      totalInterest += interest;
+      months++;
+    }
+    return { years: months / 12, interest: totalInterest };
+  }
+
+  // 档位：年限越长越红（1=很久 … 5=很快还清）
+  function getLevel(years) {
+    if (!isFinite(years)) return 1;
+    if (years <= 2.5) return 5;
+    if (years <= 5) return 4;
+    if (years <= 10) return 3;
+    if (years <= 20) return 2;
+    return 1;
+  }
+
+  function formatYears(y) {
+    if (!isFinite(y)) return '还不清';
+    if (y < 1) return Math.round(y * 12) + '个月';
+    return y.toFixed(1) + '年';
+  }
+
+  function formatInterest(i) {
+    if (!isFinite(i)) return '';
+    if (i < 10000) return '利息 ' + Math.round(i / 1000) + '千';
+    return '利息 ' + (i / 10000).toFixed(1) + '万';
+  }
+
+  // ============================================================
+  // 数据：行=欠款金额，列=年利率
+  // ============================================================
+  const balances = [10000, 30000, 50000, 100000, 200000];
+  const rates = [0.12, 0.15, 0.18, 0.24, 0.36];
+  const tbody = document.querySelector('#debtTable tbody');
+
+  balances.forEach(b => {
+    const tr = document.createElement('tr');
+    const th = document.createElement('th');
+    th.className = 'rowhead';
+    th.textContent = (b / 10000) + '万';
+    tr.appendChild(th);
+
+    rates.forEach(r => {
+      const result = calcPayoff(b, r);
+      const td = document.createElement('td');
+      td.className = 'lvl' + getLevel(result.years);
+      const yearsDiv = document.createElement('div');
+      yearsDiv.className = 'cell-years';
+      yearsDiv.textContent = formatYears(result.years);
+      const interestDiv = document.createElement('div');
+      interestDiv.className = 'cell-interest';
+      interestDiv.textContent = formatInterest(result.interest);
+      td.appendChild(yearsDiv);
+      td.appendChild(interestDiv);
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
+
+  // ============================================================
+  // 动态插值：静态文案数字由同一计算函数生成
+  // ============================================================
+  (function renderStatic() {
+    const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+    set('subMinPct', '5%');
+  })();
+
+  // ============================================================
+  // 算一算弹窗
+  // ============================================================
+  function renderCalc() {
+    const principal = Math.max(100, Math.round(Number(document.getElementById('calcPrincipal').value) || 10000));
+    const rate = Math.max(1, Math.min(60, Math.round(Number(document.getElementById('calcRate').value) || 18))) / 100;
+    const result = calcPayoff(principal, rate);
+    document.getElementById('calcOutYears').textContent = formatYears(result.years);
+    document.getElementById('calcOutInterest').textContent = '总利息约为 ' + formatInterest(result.interest) + '。';
+  }
+  function openCalc() { document.getElementById('calcModal').hidden = false; renderCalc(); }
+  function closeCalc() { document.getElementById('calcModal').hidden = true; }
+  document.getElementById('openCalc').addEventListener('click', openCalc);
+  document.getElementById('closeCalc').addEventListener('click', closeCalc);
+  document.getElementById('calcOverlay').addEventListener('click', closeCalc);
+  ['calcPrincipal', 'calcRate'].forEach(id => document.getElementById(id).addEventListener('input', renderCalc));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCalc(); });
+</script>
+</body></html>
