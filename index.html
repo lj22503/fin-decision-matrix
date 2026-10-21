@@ -3,65 +3,77 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="人的一生，有多少个财务决策？从学费、应急金、信用卡到买房、养老、退休，用两个变量看懂每个决策。普通人财务决策计算器与二维决策矩阵。">
+<link rel="canonical" href="https://fintools.mangofolio.com/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="人的一生，有多少个财务决策？| 普通人财务决策计算器">
+<meta property="og:url" content="https://fintools.mangofolio.com/">
+<meta property="og:description" content="用两个变量看懂一生的财务决策：学费、应急金、信用卡、买房、养老、退休。">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","name":"Mangofolio 财务工具箱 · fin-decision-matrix","description":"人的一生，有多少个财务决策？普通人财务决策计算器与二维决策矩阵。","url":"https://fintools.mangofolio.com/"}
+</script>
+
 <title>人的一生，有多少个财务决策？| 普通人财务决策计算器</title>
 <!-- AIGC Content · fin-decision-matrix 场景首页 · 投资平权项目 -->
 <style>
   * { margin:0; padding:0; box-sizing:border-box; font-family:"Microsoft YaHei","PingFang SC",sans-serif; }
-  body { background:#f6f7fb; color:#111827; }
+  body { background:var(--mf-colors-background-neutral,#f6f7fb); color:var(--mf-colors-text,#111827); }
   .wrap { max-width:960px; margin:0 auto; padding:0 20px 60px; }
 
   /* Hero */
-  .hero { background:linear-gradient(160deg,#1e293b,#0f172a); color:#fff; padding:64px 20px 56px; text-align:center; }
-  .hero .tag { display:inline-block; background:rgba(251,191,36,.15); color:#fbbf24; border:1px solid rgba(251,191,36,.35);
+  .hero { background:linear-gradient(160deg,var(--mf-colors-background,#1e293b),var(--mf-colors-background,#0f172a)); color:var(--mf-colors-background-surface,#fff); padding:64px 20px 56px; text-align:center; }
+  .hero .tag { display:inline-block; background:var(--mf-colors-background-primary-weak,rgba(251,191,36,.15)); color:var(--mf-colors-text-link,#fbbf24); border:1px solid var(--mf-colors-border-focused,rgba(251,191,36,.35));
                border-radius:999px; padding:4px 14px; font-size:12px; letter-spacing:1px; margin-bottom:18px; }
   .hero h1 { font-size:38px; font-weight:800; line-height:1.4; }
-  .hero h1 em { color:#fbbf24; font-style:normal; }
-  .hero p { color:#cbd5e1; font-size:16px; line-height:1.9; margin-top:14px; max-width:640px; margin-left:auto; margin-right:auto; }
+  .hero h1 em { color:var(--mf-colors-text-link,#fbbf24); font-style:normal; }
+  .hero p { color:var(--mf-colors-text-weak,#cbd5e1); font-size:16px; line-height:1.9; margin-top:14px; max-width:640px; margin-left:auto; margin-right:auto; }
   .hero .stats { display:flex; justify-content:center; gap:44px; margin-top:26px; }
   .hero .stats div { text-align:center; }
-  .hero .stats b { display:block; font-size:30px; color:#fbbf24; }
-  .hero .stats span { font-size:12px; color:#94a3b8; }
+  .hero .stats b { display:block; font-size:30px; color:var(--mf-colors-text-link,#fbbf24); }
+  .hero .stats span { font-size:12px; color:var(--mf-colors-text-weak,#94a3b8); }
 
   /* 引言 */
-  .intro { background:#fff; border-radius:16px; box-shadow:0 4px 20px rgba(0,0,0,.06); padding:28px 30px; margin-top:-28px; }
+  .intro { background:var(--mf-colors-background-surface,#fff); border-radius:16px; box-shadow:0 4px 20px var(--mf-colors-shadow,rgba(0,0,0,.06)); padding:28px 30px; margin-top:-28px; }
   .intro h2 { font-size:18px; margin-bottom:10px; }
-  .intro p { color:#4b5563; line-height:1.9; font-size:14px; }
-  .intro .hl { color:#b45309; font-weight:700; }
+  .intro p { color:var(--mf-colors-text-secondary,#4b5563); line-height:1.9; font-size:14px; }
+  .intro .hl { color:var(--mf-colors-text-warning,#b45309); font-weight:700; }
 
   /* 时间线 */
   .tl { position:relative; margin-top:36px; }
-  .tl::before { content:""; position:absolute; left:22px; top:0; bottom:0; width:3px; background:linear-gradient(180deg,#fbbf24,#64748b); border-radius:2px; }
+  .tl::before { content:""; position:absolute; left:22px; top:0; bottom:0; width:3px; background:linear-gradient(180deg,var(--mf-colors-text-link,#fbbf24),var(--mf-colors-text-weak,#64748b)); border-radius:2px; }
   .tl-title { display:flex; align-items:center; gap:12px; margin-bottom:8px; }
   .tl-title h2 { font-size:24px; }
-  .tl-title span { font-size:13px; color:#6b7280; }
+  .tl-title span { font-size:13px; color:var(--mf-colors-text-weak,#6b7280); }
 
   .node { position:relative; margin-bottom:22px; padding-left:60px; }
   .node .dot { position:absolute; left:13px; top:20px; width:22px; height:22px; border-radius:50%;
-               background:#fff; border:5px solid #f59e0b; box-shadow:0 0 0 4px #fef3c7; z-index:1; }
-  .node.live .dot { border-color:#16a34a; box-shadow:0 0 0 4px #dcfce7; }
-  .node .card { background:#fff; border-radius:14px; box-shadow:0 3px 14px rgba(0,0,0,.06); padding:18px 20px; border-left:4px solid #f59e0b; }
-  .node.live .card { border-left-color:#16a34a; }
-  .node .age { font-size:12px; font-weight:700; color:#6b7280; letter-spacing:1px; }
-  .node.live .age { color:#16a34a; }
+               background:var(--mf-colors-background-surface,#fff); border:5px solid var(--mf-colors-text-link,#f59e0b); box-shadow:0 0 0 4px var(--mf-colors-background-surface-hover,#fef3c7); z-index:1; }
+  .node.live .dot { border-color:var(--mf-colors-text-success,#16a34a); box-shadow:0 0 0 4px var(--mf-colors-background-success-weak,#dcfce7); }
+  .node .card { background:var(--mf-colors-background-surface,#fff); border-radius:14px; box-shadow:0 3px 14px var(--mf-colors-shadow,rgba(0,0,0,.06)); padding:18px 20px; border-left:4px solid var(--mf-colors-text-link,#f59e0b); }
+  .node.live .card { border-left-color:var(--mf-colors-text-success,#16a34a); }
+  .node .age { font-size:12px; font-weight:700; color:var(--mf-colors-text-weak,#6b7280); letter-spacing:1px; }
+  .node.live .age { color:var(--mf-colors-text-success,#16a34a); }
   .node h3 { font-size:17px; margin:4px 0 6px; }
-  .node .q { font-size:13px; color:#4b5563; line-height:1.7; }
+  .node .q { font-size:13px; color:var(--mf-colors-text-secondary,#4b5563); line-height:1.7; }
   .node .domains { margin-top:8px; display:flex; flex-wrap:wrap; gap:6px; }
-  .node .domains span { font-size:11px; background:#f3f4f6; color:#374151; padding:2px 10px; border-radius:999px; }
+  .node .domains span { font-size:11px; background:var(--mf-colors-background-neutral,#f3f4f6); color:var(--mf-colors-text,#374151); padding:2px 10px; border-radius:999px; }
   .node .btns { margin-top:12px; display:flex; gap:10px; flex-wrap:wrap; }
   .btn { display:inline-block; text-decoration:none; font-size:13px; font-weight:700; padding:8px 18px; border-radius:10px; }
-  .btn-live { background:#16a34a; color:#fff; }
-  .btn-live:hover { background:#15803d; }
-  .btn-ghost { background:#f3f4f6; color:#6b7280; border-radius:10px; padding:8px 18px; font-size:13px; cursor:not-allowed; }
+  .btn-live { background:var(--mf-colors-text-success,#16a34a); color:var(--mf-colors-background-surface,#fff); }
+  .btn-live:hover { background:var(--mf-colors-text-success,#15803d); }
+  .btn-ghost { background:var(--mf-colors-background-neutral,#f3f4f6); color:var(--mf-colors-text-weak,#6b7280); border-radius:10px; padding:8px 18px; font-size:13px; cursor:not-allowed; }
   .badge { font-size:11px; font-weight:700; padding:2px 10px; border-radius:999px; margin-left:8px; }
-  .badge-live { background:#dcfce7; color:#15803d; }
-  .badge-soon { background:#fef3c7; color:#b45309; }
+  .badge-live { background:var(--mf-colors-background-success-weak,#dcfce7); color:var(--mf-colors-text-success,#15803d); }
+  .badge-soon { background:var(--mf-colors-background-surface-hover,#fef3c7); color:var(--mf-colors-text-warning,#b45309); }
 
   /* Footer */
-  .foot { text-align:center; margin-top:40px; color:#9ca3af; font-size:12px; line-height:2; }
-  .foot .watermark { letter-spacing:1px; color:#d1d5db; }
+  .foot { text-align:center; margin-top:40px; color:var(--mf-colors-text-weak,#9ca3af); font-size:12px; line-height:2; }
+  .foot .watermark { letter-spacing:1px; color:var(--mf-colors-text-weak,#d1d5db); }
 </style>
 </head>
 <body>
+<div class="statusbar" style="background:var(--mf-colors-background-surface,#FFFFFF);color:var(--mf-colors-text-weak,#8A7D70);font-size:11px;text-align:center;line-height:1.8;padding:2px 12px;">数据来源：FinTools 财务工具箱 · 2026-10-21 · 非投资建议</div>
+
 
 <div class="hero">
   <span class="tag">投资平权 · 二维决策图例法</span>
